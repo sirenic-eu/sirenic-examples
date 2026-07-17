@@ -5,8 +5,8 @@
  *   TEST_WALLET_KEY=0x... npm run pay-and-call
  *
  * TEST_WALLET_KEY is the private key of YOUR client test wallet (the payer)
- * — the server never holds any key. Fund it with test USDC on Base Sepolia
- * via https://faucet.circle.com. The "exact" scheme uses signed
+ * — the server never holds any key. Fund it with a few USDC on Base
+ * (mainnet). The "exact" scheme uses signed
  * authorizations: the client pays no gas.
  */
 import { privateKeyToAccount } from "viem/accounts";

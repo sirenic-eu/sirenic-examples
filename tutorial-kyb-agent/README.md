@@ -31,7 +31,7 @@ See [`kyb-agent.ts`](kyb-agent.ts) — the whole thing:
 
 ```bash
 npm install
-export TEST_WALLET_KEY=0x...   # throwaway wallet, test USDC from faucet.circle.com
+export TEST_WALLET_KEY=0x...   # throwaway wallet with a few USDC on Base
 npm run kyb-agent -- 552032534 # Danone
 ```
 
