@@ -97,13 +97,13 @@ response), `GET /openapi.json`, `GET /llms.txt`, `GET /healthz`.
 - [`examples/mcp-setup.md`](examples/mcp-setup.md) — MCP configuration for Claude, Cursor and generic clients.
 - [`tutorial-kyb-agent/`](tutorial-kyb-agent/) — **Build a KYB agent in 20 lines**.
 
-## Test wallet setup (Base Sepolia testnet)
+## Test wallet setup
 
 1. Create a throwaway wallet (e.g. in MetaMask) and export its private key.
-2. Get test USDC from the [Circle faucet](https://faucet.circle.com) (network: Base Sepolia).
+2. Fund it with a couple of dollars of USDC on **Base** (any exchange can withdraw to Base network).
 3. `export TEST_WALLET_KEY=0x...` — never commit it anywhere.
 
-Sirenic is currently settling on Base Sepolia (testnet); the same code works
+Sirenic settles on Base mainnet; the same code works
 unchanged on Base mainnet.
 
 ## Disclaimer

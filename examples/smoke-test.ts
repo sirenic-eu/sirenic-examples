@@ -1,6 +1,6 @@
 /**
  * Pay-and-call EVERY Sirenic endpoint once — a full smoke test with real
- * money (~$1.02 total on Base mainnet, or testnet USDC on Base Sepolia).
+ * money (~$1.02 total, USDC on Base mainnet).
  *
  *   TEST_WALLET_KEY=0x... npx tsx examples/smoke-test.ts
  *
