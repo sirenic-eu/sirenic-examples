@@ -1,0 +1,22 @@
+{
+  "name": "sirenic-examples",
+  "private": true,
+  "type": "module",
+  "description": "Examples for the Sirenic pay-per-call company data API (x402)",
+  "license": "MIT",
+  "scripts": {
+    "pay-and-call": "tsx examples/pay-and-call.ts",
+    "agent-demo": "tsx examples/agent-demo.ts",
+    "kyb-agent": "tsx tutorial-kyb-agent/kyb-agent.ts"
+  },
+  "dependencies": {
+    "@x402/core": "^2.18.0",
+    "@x402/evm": "^2.18.0",
+    "@x402/fetch": "^2.18.0",
+    "viem": "^2.55.2"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}
