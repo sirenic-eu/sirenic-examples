@@ -1,5 +1,7 @@
 # Sirenic Examples
 
+[![smithery badge](https://smithery.ai/badge/contact-erkc/sirenic)](https://smithery.ai/servers/contact-erkc/sirenic)
+
 Working examples for [Sirenic](https://api.sirenic.eu) — official French and
 European company data for AI agents. Pay-per-call in USDC via the
 [x402 protocol](https://github.com/x402-foundation/x402): **no account, no
