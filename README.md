@@ -64,8 +64,9 @@ Cursor / any MCP client (`mcpServers` config):
 { "mcpServers": { "sirenic": { "url": "https://api.sirenic.eu/mcp" } } }
 ```
 
-16 tools are exposed (search, company profiles, KYB files, sanctions
-screening, financials…). Each tool accepts an optional `x_payment` parameter:
+25 tools are exposed (search, company profiles, KYB files, sanctions
+screening, financials, capital structure, sector benchmarks, failure-risk
+score…). Each tool accepts an optional `x_payment` parameter:
 without it you get the 402 quote; sign it with an x402 client and call again.
 
 ## Endpoints and prices (USDC per call)
@@ -78,11 +79,22 @@ without it you get the 402 quote; sign it with an x402 client and call again.
 | `GET /v1/entreprise/{siren}/alertes` | $0.01 | BODACC legal alerts (insolvency…) |
 | `GET /v1/entreprise/{siren}/finances` | $0.01 | Filed financials + ratios |
 | `GET /v1/entreprise/{siren}/marches-publics` | $0.01 | Public procurement won |
+| `GET /v1/entreprise/{siren}/changements?depuis=` | $0.01 | New BODACC events since a date |
+| `GET /v1/entreprise/{siren}/pi` | $0.03 | Industrial property (trademarks, patents, designs) |
+| `GET /v1/entreprise/{siren}/comptes-pdf` | $0.15 | Accounts annexe notes, AI-extracted (structured) |
+| `GET /v1/entreprise/{siren}/capital` | $0.25 | Ownership from public articles, AI-extracted |
+| `GET /v1/entreprise/{siren}/liens-capitalistiques` | $0.15 | Single-level capital links between legal entities |
 | `GET /v1/entreprise/{siren}/sante` | $0.15 | AI health summary (7-day cache) |
+| `GET /v1/score/defaillance/{siren}` | $0.10 | Failure-risk score (deterministic) |
+| `GET /v1/secteur/{code_naf}/benchmarks` | $0.05 | Sector aggregates (k-anonymised) |
 | `GET /v1/kyb/{siren}` | $0.15 | Full KYB file + sanctions screening |
+| `GET /v1/kyb/batch?sirens=` | $0.105/co | Batch KYB (2–100 companies) |
 | `GET /v1/sanctions/check?name=` | $0.02 | 5 official sanctions lists, scored |
+| `GET /v1/dirigeant/recherche?nom=` | $0.02 | Reverse director search |
 | `GET /v1/prospection?...` | $0.02/page | Multi-criteria prospecting |
 | `GET /v1/rapport/{siren}` | $0.50 | PDF report |
+| `GET /v1/entreprise/{siren}/documents` | $0.02 | List filed documents (INPI) |
+| `GET /v1/documents/{type}/{id}` | $0.10 | Download a filed document (PDF) |
 | `GET /v1/tva/verifier/{numero}` | $0.003 | EU VAT validation (VIES) |
 | `GET /v1/eu/recherche?q=` | $0.003 | Search European registers + GLEIF |
 | `GET /v1/eu/entreprise/{pays}/{id}` | $0.01 | Unified European profile |
@@ -94,7 +106,7 @@ response), `GET /openapi.json`, `GET /llms.txt`, `GET /healthz`.
 
 - [`examples/quote.sh`](examples/quote.sh) — inspect a 402 quote with curl.
 - [`examples/pay-and-call.ts`](examples/pay-and-call.ts) — pay one request end to end.
-- [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call every endpoint once (~$1.02 total).
+- [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call every endpoint once (~$1.80 total).
 - [`examples/agent-demo.ts`](examples/agent-demo.ts) — a small autonomous agent that searches, pays and reads profiles.
 - [`examples/mcp-setup.md`](examples/mcp-setup.md) — MCP configuration for Claude, Cursor and generic clients.
 - [`tutorial-kyb-agent/`](tutorial-kyb-agent/) — **Build a KYB agent in 20 lines**.
@@ -105,8 +117,7 @@ response), `GET /openapi.json`, `GET /llms.txt`, `GET /healthz`.
 2. Fund it with a couple of dollars of USDC on **Base** (any exchange can withdraw to Base network).
 3. `export TEST_WALLET_KEY=0x...` — never commit it anywhere.
 
-Sirenic settles on Base mainnet; the same code works
-unchanged on Base mainnet.
+Sirenic settles on Base mainnet.
 
 ## Disclaimer
 
