@@ -1,5 +1,7 @@
 # Sirenic Examples
 
+> 🚀 Sirenic launches on Product Hunt this Wednesday (July 22). Take a look and say hi: https://www.producthunt.com/products/sirenic?launch=sirenic
+
 [![smithery badge](https://smithery.ai/badge/contact-erkc/sirenic)](https://smithery.ai/servers/contact-erkc/sirenic)
 
 Working examples for [Sirenic](https://api.sirenic.eu) — official French and
