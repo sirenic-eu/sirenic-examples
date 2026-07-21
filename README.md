@@ -5,9 +5,11 @@
 [![smithery badge](https://smithery.ai/badge/contact-erkc/sirenic)](https://smithery.ai/servers/contact-erkc/sirenic)
 
 Working examples for [Sirenic](https://api.sirenic.eu) — official French and
-European company data for AI agents. Pay-per-call in USDC via the
+European company data for AI agents. Pay-per-call in **USDC or EURC** via the
 [x402 protocol](https://github.com/x402-foundation/x402): **no account, no
-API key** — your agent pays each request on Base.
+API key** — your agent pays each request on Base. Every paid response is
+**Ed25519-signed** and verifiable offline
+([recipe](https://api.sirenic.eu/.well-known/sirenic-signing-key)).
 
 - Landing & pricing: https://api.sirenic.eu
 - OpenAPI: https://api.sirenic.eu/openapi.json
@@ -24,8 +26,11 @@ as published — every response carries `source` and `disclaimer` fields.
 curl -i "https://api.sirenic.eu/v1/entreprise/552032534" -H "Accept: application/json"
 ```
 
-You get `HTTP 402` with the x402 payment requirements (price, USDC contract,
-receiving address, network) in the `PAYMENT-REQUIRED` header and a JSON body.
+You get `HTTP 402` with the x402 payment requirements in the
+`PAYMENT-REQUIRED` header and a JSON body. Each quote carries **two payment
+options at the same numeric amount** — USDC (first, the default for existing
+clients) or EURC — with the official Circle contracts, receiving address and
+network.
 
 ## Quickstart 2 — pay and call in ~10 lines (TypeScript)
 
@@ -66,12 +71,13 @@ Cursor / any MCP client (`mcpServers` config):
 { "mcpServers": { "sirenic": { "url": "https://api.sirenic.eu/mcp" } } }
 ```
 
-25 tools are exposed (search, company profiles, KYB files, sanctions
-screening, financials, capital structure, sector benchmarks, failure-risk
-score…). Each tool accepts an optional `x_payment` parameter:
-without it you get the 402 quote; sign it with an x402 client and call again.
+28 tools are exposed (search with 0-1 confidence scores, company profiles,
+KYB files, sanctions screening, financials, capital structure, sector
+benchmarks, failure-risk score, Belgian annual accounts…). Each tool accepts
+an optional `x_payment` parameter: without it you get the 402 quote; sign it
+with an x402 client and call again.
 
-## Endpoints and prices (USDC per call)
+## Endpoints and prices (USDC or EURC per call, same amount)
 
 | Endpoint | Price | What you get |
 |---|---|---|
@@ -91,7 +97,7 @@ without it you get the 402 quote; sign it with an x402 client and call again.
 | `GET /v1/secteur/{code_naf}/benchmarks` | $0.05 | Sector aggregates (k-anonymised) |
 | `GET /v1/kyb/{siren}` | $0.15 | Full KYB file + sanctions screening |
 | `GET /v1/kyb/batch?sirens=` | $0.105/co | Batch KYB (2–100 companies) |
-| `GET /v1/sanctions/check?name=` | $0.02 | 5 official sanctions lists, scored |
+| `GET /v1/sanctions/check?name=` | $0.02 | 6 official sanctions lists (UN, EU, OFAC, UK, FR, Swiss SECO), scored |
 | `GET /v1/dirigeant/recherche?nom=` | $0.02 | Reverse director search |
 | `GET /v1/prospection?...` | $0.02/page | Multi-criteria prospecting |
 | `GET /v1/rapport/{siren}` | $0.50 | PDF report |
@@ -99,7 +105,9 @@ without it you get the 402 quote; sign it with an x402 client and call again.
 | `GET /v1/documents/{type}/{id}` | $0.10 | Download a filed document (PDF) |
 | `GET /v1/tva/verifier/{numero}` | $0.003 | EU VAT validation (VIES) |
 | `GET /v1/eu/recherche?q=` | $0.003 | Search European registers + GLEIF |
-| `GET /v1/eu/entreprise/{pays}/{id}` | $0.01 | Unified European profile |
+| `GET /v1/eu/entreprise/{pays}/{id}` | $0.01 | Unified European profile (BE: + NACEBEL activities & establishment units) |
+| `GET /v1/eu/entreprise/BE/{id}/comptes` | $0.01 | Belgian filings list (official NBB Central Balance Sheet Office) |
+| `GET /v1/eu/entreprise/BE/{id}/comptes/{ref}` | $0.15 | One Belgian annual-account deposit (JSON since 2022, PDF before) |
 
 Free: `GET /` (landing), `GET /preview/entreprise/55203253400646` (sample
 response), `GET /openapi.json`, `GET /llms.txt`, `GET /healthz`.
@@ -108,6 +116,7 @@ response), `GET /openapi.json`, `GET /llms.txt`, `GET /healthz`.
 
 - [`examples/quote.sh`](examples/quote.sh) — inspect a 402 quote with curl.
 - [`examples/pay-and-call.ts`](examples/pay-and-call.ts) — pay one request end to end.
+- [`examples/verify-signature.ts`](examples/verify-signature.ts) — **verify the Ed25519 signature** of a paid response offline (~$0.001).
 - [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call every endpoint once (~$1.80 total).
 - [`examples/agent-demo.ts`](examples/agent-demo.ts) — a small autonomous agent that searches, pays and reads profiles.
 - [`examples/mcp-setup.md`](examples/mcp-setup.md) — MCP configuration for Claude, Cursor and generic clients.
