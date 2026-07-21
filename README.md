@@ -71,9 +71,10 @@ Cursor / any MCP client (`mcpServers` config):
 { "mcpServers": { "sirenic": { "url": "https://api.sirenic.eu/mcp" } } }
 ```
 
-28 tools are exposed (search with 0-1 confidence scores, company profiles,
-KYB files, sanctions screening, financials, capital structure, sector
-benchmarks, failure-risk score, Belgian annual accounts…). Each tool accepts
+29 tools are exposed (search with 0-1 confidence scores, company profiles,
+KYB files, a $1 company-intelligence report, sanctions screening, financials,
+capital structure, sector benchmarks, failure-risk score, Belgian annual
+accounts…). Each tool accepts
 an optional `x_payment` parameter: without it you get the 402 quote; sign it
 with an x402 client and call again.
 
@@ -101,11 +102,12 @@ with an x402 client and call again.
 | `GET /v1/dirigeant/recherche?nom=` | $0.02 | Reverse director search |
 | `GET /v1/prospection?...` | $0.02/page | Multi-criteria prospecting |
 | `GET /v1/rapport/{siren}` | $0.50 | PDF report |
+| `GET /v1/intelligence/{siren}` | $1.00 | Intelligence report: every block cross-referenced, closed-list signals, rule-based verdict |
 | `GET /v1/entreprise/{siren}/documents` | $0.02 | List filed documents (INPI) |
 | `GET /v1/documents/{type}/{id}` | $0.10 | Download a filed document (PDF) |
 | `GET /v1/tva/verifier/{numero}` | $0.003 | EU VAT validation (VIES) |
-| `GET /v1/eu/recherche?q=` | $0.003 | Search European registers + GLEIF |
-| `GET /v1/eu/entreprise/{pays}/{id}` | $0.01 | Unified European profile (BE: + NACEBEL activities & establishment units) |
+| `GET /v1/eu/recherche?q=` | $0.003 | Search European registers (BE, NO, EE, LV local; CZ, SK, FI live) + GLEIF |
+| `GET /v1/eu/entreprise/{pays}/{id}` | $0.01 | Unified European profile — 11 countries (BE incl. NACEBEL activities & establishments; CZ, SK, FI, PL live) |
 | `GET /v1/eu/entreprise/BE/{id}/comptes` | $0.01 | Belgian filings list (official NBB Central Balance Sheet Office) |
 | `GET /v1/eu/entreprise/BE/{id}/comptes/{ref}` | $0.15 | One Belgian annual-account deposit (JSON since 2022, PDF before) |
 
