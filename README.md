@@ -1,6 +1,6 @@
 # Sirenic Examples
 
-> 🚀 Sirenic launches on Product Hunt this Wednesday (July 22). Take a look and say hi: https://www.producthunt.com/products/sirenic?launch=sirenic
+> 🚀 Sirenic is live on Product Hunt today. Take a look and say hi: https://www.producthunt.com/products/sirenic?launch=sirenic
 
 [![smithery badge](https://smithery.ai/badge/contact-erkc/sirenic)](https://smithery.ai/servers/contact-erkc/sirenic)
 [![Listed on x402-list](https://x402-list.com/badge/sirenic.svg)](https://x402-list.com/services/sirenic?utm_source=badge&utm_medium=referral&utm_campaign=embed)
