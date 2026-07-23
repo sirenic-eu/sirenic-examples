@@ -74,8 +74,10 @@ Cursor / any MCP client (`mcpServers` config):
 { "mcpServers": { "sirenic": { "url": "https://api.sirenic.eu/mcp" } } }
 ```
 
-29 tools are exposed (search with 0-1 confidence scores, company profiles,
-KYB files, a $1 company-intelligence report, sanctions screening, financials,
+34 tools are exposed (search with 0-1 confidence scores, company profiles,
+KYB files, a $1 company-intelligence report, sanctions screening, AMF
+regulator alerts, EU financial authorisations (ESMA), industrial risk
+(Seveso/ICPE), lobbying register, EU procurement awards (TED), financials,
 capital structure, sector benchmarks, failure-risk score, Belgian annual
 accounts…). Each tool accepts
 an optional `x_payment` parameter: without it you get the 402 quote; sign it
@@ -101,7 +103,10 @@ npx tsx examples/a2a.ts   # quote for free; add TEST_WALLET_KEY to pay
 | `GET /v1/entreprise/{siren}/etablissements` | $0.003 | All establishments (SIRET) |
 | `GET /v1/entreprise/{siren}/alertes` | $0.01 | BODACC legal alerts (insolvency…) |
 | `GET /v1/entreprise/{siren}/finances` | $0.01 | Filed financials + ratios |
-| `GET /v1/entreprise/{siren}/marches-publics` | $0.01 | Public procurement won |
+| `GET /v1/entreprise/{siren}/marches-publics` | $0.01 | Public procurement won (French DECP) |
+| `GET /v1/entreprise/{siren}/marches-publics-ue` | $0.02 | EU procurement awards (TED, identifier-matched) |
+| `GET /v1/entreprise/{siren}/risques-industriels` | $0.01 | Industrial risk: Seveso/ICPE facilities + synthesis |
+| `GET /v1/entreprise/{siren}/lobbying` | $0.01 | HATVP lobbying register (org-level: budgets, subjects, clients) |
 | `GET /v1/entreprise/{siren}/changements?depuis=` | $0.01 | New BODACC events since a date |
 | `GET /v1/entreprise/{siren}/pi` | $0.03 | Industrial property (trademarks, patents, designs) |
 | `GET /v1/entreprise/{siren}/comptes-pdf` | $0.15 | Accounts annexe notes, AI-extracted (structured) |
@@ -113,6 +118,8 @@ npx tsx examples/a2a.ts   # quote for free; add TEST_WALLET_KEY to pay
 | `GET /v1/kyb/{siren}` | $0.15 | Full KYB file + sanctions screening |
 | `GET /v1/kyb/batch?sirens=` | $0.105/co | Batch KYB (2–100 companies) |
 | `GET /v1/sanctions/check?name=` | $0.02 | 6 official sanctions lists (UN, EU, OFAC, UK, FR, Swiss SECO), scored |
+| `GET /v1/regulateurs/fr/alertes?nom=\|siren=` | $0.01 | AMF blacklists + PSAN/SGP registers (scam check, crypto providers) |
+| `GET /v1/eu/agrements?q=` | $0.01 | EU financial authorisations (ESMA, all EU/EEA, by name or LEI) |
 | `GET /v1/dirigeant/recherche?nom=` | $0.02 | Reverse director search |
 | `GET /v1/prospection?...` | $0.02/page | Multi-criteria prospecting |
 | `GET /v1/rapport/{siren}` | $0.50 | PDF report |
