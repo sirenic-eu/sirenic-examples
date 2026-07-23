@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sirenic-agents"
+version = "0.1.0"
+description = "LangChain and CrewAI tools for Sirenic - official French & European company data, paid per call via x402 (USDC/EURC on Base). No account, no API key."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+# Payment support (quote-only mode works without it).
+pay = ["x402[requests,evm]>=2.16,<3"]
+langchain = ["langchain-core>=1,<2"]
+crewai = ["crewai>=1.15"]
+
+[project.urls]
+Homepage = "https://api.sirenic.eu"
+Repository = "https://github.com/sirenic-eu/sirenic-examples"
+
+[tool.setuptools]
+packages = ["sirenic_agents"]
