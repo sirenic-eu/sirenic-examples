@@ -74,7 +74,7 @@ Cursor / any MCP client (`mcpServers` config):
 { "mcpServers": { "sirenic": { "url": "https://api.sirenic.eu/mcp" } } }
 ```
 
-38 tools are exposed (search with 0-1 confidence scores, company profiles,
+39 tools are exposed (including the FREE detect_company_identifiers — paste any text, get SIREN/SIRET/VAT/LEI with the right call to make) (search with 0-1 confidence scores, company profiles,
 KYB files, a $1 company-intelligence report, sanctions screening, AMF
 regulator alerts, EU financial authorisations (ESMA), industrial risk
 (Seveso/ICPE), lobbying register, EU procurement awards (TED), **watchlists
@@ -154,7 +154,9 @@ CrewAI can also use Sirenic's MCP server directly, no SDK:
 | `GET /v1/eu/entreprise/BE/{id}/comptes/{ref}` | $0.15 | One Belgian annual-account deposit (JSON since 2022, PDF before) |
 
 Free: `GET /` (landing), `GET /preview/entreprise/55203253400646` (sample
-response), `GET /openapi.json`, `GET /llms.txt`, `GET /healthz`; watchlist
+response), `GET /v1/reperer?texte=` (**detect SIREN/SIRET/VAT/LEI in any text**,
+with the suggested paid call and its price), `GET /openapi.json`,
+`GET /llms.txt`, `GET /healthz`; watchlist
 status `GET /v1/surveillance/{token}` and stop `…/{token}/arreter` (the token
 returned at creation is the capability — no account).
 
