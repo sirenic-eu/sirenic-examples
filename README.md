@@ -16,6 +16,8 @@ API key** — your agent pays each request on Base. Every paid response is
 - OpenAPI: https://api.sirenic.eu/openapi.json
 - For LLMs: https://api.sirenic.eu/llms.txt
 - MCP server: `https://api.sirenic.eu/mcp` (streamable HTTP)
+- A2A agent: `POST https://api.sirenic.eu/a2a` (JSON-RPC, a2a-x402 payment
+  extension) — card at `https://api.sirenic.eu/.well-known/agent-card.json`
 
 Data sources: INSEE Sirene / INPI RNE and other official registers, open
 licenses (Etalab 2.0, NLOD, CC-BY 4.0, OGL, CC0). Data is redistributed
@@ -79,6 +81,17 @@ accounts…). Each tool accepts
 an optional `x_payment` parameter: without it you get the 402 quote; sign it
 with an x402 client and call again.
 
+## Quickstart 4 — A2A (Agent2Agent)
+
+Sirenic is also an A2A 1.0 agent with the official crypto payment extension
+(a2a-x402). Discover it from the card, send a JSON data part, get the quote
+as task metadata, pay on the same task:
+
+```bash
+curl -s https://api.sirenic.eu/.well-known/agent-card.json -H "A2A-Version: 1.0"
+npx tsx examples/a2a.ts   # quote for free; add TEST_WALLET_KEY to pay
+```
+
 ## Endpoints and prices (USDC or EURC per call, same amount)
 
 | Endpoint | Price | What you get |
@@ -123,6 +136,7 @@ response), `GET /openapi.json`, `GET /llms.txt`, `GET /healthz`.
 - [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call every endpoint once (~$1.80 total).
 - [`examples/agent-demo.ts`](examples/agent-demo.ts) — a small autonomous agent that searches, pays and reads profiles.
 - [`examples/mcp-setup.md`](examples/mcp-setup.md) — MCP configuration for Claude, Cursor and generic clients.
+- [`examples/a2a.ts`](examples/a2a.ts) — call Sirenic as an **A2A agent** (quote for free, then pay on the same task via the a2a-x402 extension).
 - [`tutorial-kyb-agent/`](tutorial-kyb-agent/) — **Build a KYB agent in 20 lines**.
 
 ## Test wallet setup
