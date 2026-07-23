@@ -74,11 +74,12 @@ Cursor / any MCP client (`mcpServers` config):
 { "mcpServers": { "sirenic": { "url": "https://api.sirenic.eu/mcp" } } }
 ```
 
-34 tools are exposed (search with 0-1 confidence scores, company profiles,
+38 tools are exposed (search with 0-1 confidence scores, company profiles,
 KYB files, a $1 company-intelligence report, sanctions screening, AMF
 regulator alerts, EU financial authorisations (ESMA), industrial risk
-(Seveso/ICPE), lobbying register, EU procurement awards (TED), financials,
-capital structure, sector benchmarks, failure-risk score, Belgian annual
+(Seveso/ICPE), lobbying register, EU procurement awards (TED), **watchlists
+with daily checks and Ed25519-signed webhooks**, financials, capital
+structure, sector benchmarks, failure-risk score, Belgian annual
 accounts…). Each tool accepts
 an optional `x_payment` parameter: without it you get the 402 quote; sign it
 with an x402 client and call again.
@@ -127,13 +128,17 @@ npx tsx examples/a2a.ts   # quote for free; add TEST_WALLET_KEY to pay
 | `GET /v1/entreprise/{siren}/documents` | $0.02 | List filed documents (INPI) |
 | `GET /v1/documents/{type}/{id}` | $0.10 | Download a filed document (PDF) |
 | `GET /v1/tva/verifier/{numero}` | $0.003 | EU VAT validation (VIES) |
+| `GET /v1/surveillance/creer?cibles=` | $0.05/target/30d | **Watchlist**: daily checks on companies & directors, signed webhooks + e-mail digests |
+| `GET /v1/surveillance/{token}/renouveler` | $0.05/target/30d | Renew a watchlist (grace: 7 days after expiry) |
 | `GET /v1/eu/recherche?q=` | $0.003 | Search European registers (BE, NO, EE, LV local; CZ, SK, FI live) + GLEIF |
 | `GET /v1/eu/entreprise/{pays}/{id}` | $0.01 | Unified European profile — 11 countries (BE incl. NACEBEL activities & establishments; CZ, SK, FI, PL live) |
 | `GET /v1/eu/entreprise/BE/{id}/comptes` | $0.01 | Belgian filings list (official NBB Central Balance Sheet Office) |
 | `GET /v1/eu/entreprise/BE/{id}/comptes/{ref}` | $0.15 | One Belgian annual-account deposit (JSON since 2022, PDF before) |
 
 Free: `GET /` (landing), `GET /preview/entreprise/55203253400646` (sample
-response), `GET /openapi.json`, `GET /llms.txt`, `GET /healthz`.
+response), `GET /openapi.json`, `GET /llms.txt`, `GET /healthz`; watchlist
+status `GET /v1/surveillance/{token}` and stop `…/{token}/arreter` (the token
+returned at creation is the capability — no account).
 
 ## In this repo
 
