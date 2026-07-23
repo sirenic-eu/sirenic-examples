@@ -6,8 +6,7 @@ bring a wallet key and a price cap. Without a wallet, every tool still works
 and returns the payment quote (great for dry runs).
 
 ```bash
-npm install github:sirenic-eu/sirenic-examples#path:/sdk/typescript @langchain/core
-# (npm registry publication coming — same package name)
+npm install sirenic-agents @langchain/core
 ```
 
 ```ts
