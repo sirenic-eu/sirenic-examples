@@ -1,3 +1,20 @@
+Metadata-Version: 2.4
+Name: sirenic-agents
+Version: 0.1.0
+Summary: LangChain and CrewAI tools for Sirenic - official French & European company data, paid per call via x402 (USDC/EURC on Base). No account, no API key.
+License: MIT
+Project-URL: Homepage, https://api.sirenic.eu
+Project-URL: Repository, https://github.com/sirenic-eu/sirenic-examples
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: requests>=2.31
+Provides-Extra: pay
+Requires-Dist: x402[evm,requests]<3,>=2.16; extra == "pay"
+Provides-Extra: langchain
+Requires-Dist: langchain-core<2,>=1; extra == "langchain"
+Provides-Extra: crewai
+Requires-Dist: crewai>=1.15; extra == "crewai"
+
 # sirenic-agents (Python) — LangChain & CrewAI tools for Sirenic
 
 Official French & European company data in your agent, paid per call via
@@ -6,7 +23,8 @@ bring a wallet key and a price cap. Without a wallet, every tool still works
 and returns the payment quote.
 
 ```bash
-pip install "sirenic-agents[pay,langchain]"   # or [pay,crewai]
+pip install "sirenic-agents[pay,langchain] @ git+https://github.com/sirenic-eu/sirenic-examples#subdirectory=sdk/python"
+# (PyPI publication coming — same package name)
 ```
 
 ## LangChain

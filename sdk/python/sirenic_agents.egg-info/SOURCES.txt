@@ -1,0 +1,8 @@
+README.md
+pyproject.toml
+sirenic_agents/__init__.py
+sirenic_agents.egg-info/PKG-INFO
+sirenic_agents.egg-info/SOURCES.txt
+sirenic_agents.egg-info/dependency_links.txt
+sirenic_agents.egg-info/requires.txt
+sirenic_agents.egg-info/top_level.txt
