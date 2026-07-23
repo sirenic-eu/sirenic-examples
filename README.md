@@ -95,6 +95,24 @@ curl -s https://api.sirenic.eu/.well-known/agent-card.json -H "A2A-Version: 1.0"
 npx tsx examples/a2a.ts   # quote for free; add TEST_WALLET_KEY to pay
 ```
 
+## Quickstart 5 — LangChain & CrewAI SDKs
+
+Ready-made paying tools with a hard price cap ([sdk/typescript](sdk/typescript),
+[sdk/python](sdk/python)):
+
+```ts
+import { sirenicTools } from "sirenic-agents";           // LangChain.js
+const tools = sirenicTools({ walletKey, maxPriceUsd: 0.25 });
+```
+
+```python
+from sirenic_agents import SirenicClient, build_crewai_tools   # CrewAI / LangChain
+tools = build_crewai_tools(SirenicClient(wallet_key=key, max_price_usd=0.25))
+```
+
+CrewAI can also use Sirenic's MCP server directly, no SDK:
+`Agent(..., mcps=["https://api.sirenic.eu/mcp"])`.
+
 ## Endpoints and prices (USDC or EURC per call, same amount)
 
 | Endpoint | Price | What you get |
