@@ -177,7 +177,8 @@ for (const [rail, paidFetch] of RAILS) {
 
   // -- Belgian filings: list, then fetch one deposit by its reference --------
   const comptes = await call(rail, paidFetch, `/v1/eu/entreprise/BE/${BE_ENTREPRISE}/comptes`, "nombre_depots", "$0.01");
-  const depot = (comptes?.depots as Array<{ reference?: string }> | undefined)?.find((d) => d.reference);
+  // Dernier dépôt (les plus anciens, années 90, ne sont plus servis par la NBB).
+  const depot = (comptes?.depots as Array<{ reference?: string }> | undefined)?.filter((d) => d.reference).at(-1);
   if (depot?.reference) {
     await call(rail, paidFetch, `/v1/eu/entreprise/BE/${BE_ENTREPRISE}/comptes/${depot.reference}`, "reference", "$0.15");
   } else {
