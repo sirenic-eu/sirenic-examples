@@ -5,7 +5,8 @@
  *   # Every endpoint once in USDC (data check, a few $):
  *   TEST_WALLET_KEY=0x... npx tsx examples/smoke-test.ts
  *
- *   # Validate the EURC rail cheaply (only endpoints ≤ $0.005, in EURC):
+ *   # Validate the EURC rail cheaply (only endpoints ≤ $0.005 — search, profile,
+ *   # VAT, IBAN — in EURC):
  *   ASSET=eurc MAX_PRICE=0.005 TEST_WALLET_KEY=0x... npx tsx examples/smoke-test.ts
  *
  *   # Exhaustive: every endpoint in BOTH assets (≈ 2× the cost):
@@ -24,6 +25,12 @@
  *
  * Note: USDC vs EURC only differs in the settlement layer — it is identical for
  * every route. One EURC settlement proves the EURC path works for all of them.
+ *
+ * Two routes are STATEFUL and are therefore exercised once, on the first rail
+ * only, then cleaned up:
+ *   - the watchlist is created, renewed, then STOPPED (stopping is free, so no
+ *     30-day watch is left running and no daily e-mail is triggered);
+ *   - Belgian filings are listed, then one deposit is fetched by its reference.
  */
 import { privateKeyToAccount } from "viem/accounts";
 import { wrapFetchWithPayment } from "@x402/fetch";
@@ -77,7 +84,16 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/entreprise/552032534/marches-publics", expect: "siren", price: "$0.01" },
   { path: "/v1/entreprise/552032534/changements?depuis=2020-01-01", expect: "siren", price: "$0.01" },
   { path: "/v1/entreprise/552032534/pi", expect: "marques", price: "$0.03" },
+  { path: "/v1/entreprise/552032534/marches-publics-ue", expect: "nombre_avis", price: "$0.02" },
+  { path: "/v1/entreprise/552032534/risques-industriels", expect: "synthese", price: "$0.01" },
+  { path: "/v1/entreprise/552032534/lobbying", expect: "inscrit", price: "$0.01" },
+  { path: "/v1/entreprise/552032534/facturation-prep", expect: "destinataire", price: "$0.02" },
   { path: "/v1/tva/verifier/FR27552032534", expect: "statut", price: "$0.003" },
+  { path: "/v1/iban/verifier/FR1420041010050500013M02606", expect: "iban_normalise", price: "$0.005" },
+  { path: "/v1/regulateurs/fr/alertes?siren=552032534", expect: "source", price: "$0.01" },
+  { path: "/v1/eu/agrements?q=BNP%20Paribas", expect: "requete", price: "$0.01" },
+  // Facturé PAR SOCIÉTÉ : 2 SIREN = 2 × $0.105.
+  { path: "/v1/kyb/batch?sirens=552032534,542065479", expect: "nombre_demande", price: "$0.21" },
   { path: "/v1/sanctions/check?name=Danone", expect: "correspondances", price: "$0.02" },
   { path: "/v1/dirigeant/recherche?nom=Faber", expect: "resultats", price: "$0.02" },
   { path: "/v1/eu/recherche?q=equinor&pays=NO", expect: "resultats", price: "$0.003" },
@@ -139,7 +155,10 @@ async function call(
 }
 
 console.log(`Wallet: ${account.address}\nAPI: ${apiUrl}\nAssets: ${RAILS.map((r) => r[0]).join(" + ")}\n`);
+// Colruyt : société belge dont les comptes déposés sont nombreux et stables.
+const BE_ENTREPRISE = "0400378485";
 let documentId: { type: string; id: string } | null = null;
+let surveillanceFaite = false;
 for (const [rail, paidFetch] of RAILS) {
   for (const c of CALLS) {
     const body = await call(rail, paidFetch, c.path, c.expect, c.price);
@@ -154,6 +173,31 @@ for (const [rail, paidFetch] of RAILS) {
     await call(rail, paidFetch, `/v1/documents/${documentId.type}/${documentId.id}`, "(PDF)", "$0.10");
   } else {
     console.log(`– [${rail}] PDF document skipped (no document id in the list response)`);
+  }
+
+  // -- Belgian filings: list, then fetch one deposit by its reference --------
+  const comptes = await call(rail, paidFetch, `/v1/eu/entreprise/BE/${BE_ENTREPRISE}/comptes`, "nombre_depots", "$0.01");
+  const depot = (comptes?.depots as Array<{ reference?: string }> | undefined)?.find((d) => d.reference);
+  if (depot?.reference) {
+    await call(rail, paidFetch, `/v1/eu/entreprise/BE/${BE_ENTREPRISE}/comptes/${depot.reference}`, "reference", "$0.15");
+  } else {
+    console.log(`– [${rail}] Belgian deposit skipped (no reference in the list response)`);
+  }
+
+  // -- Watchlist: create → renew → stop (only once; stopping is free) --------
+  if (!surveillanceFaite) {
+    surveillanceFaite = true;
+    const cibles = "552032534,542065479";
+    const creee = await call(rail, paidFetch, `/v1/surveillance/creer?cibles=${cibles}`, "surveillance_id", "$0.10");
+    const jeton = creee?.surveillance_id as string | undefined;
+    if (jeton) {
+      await call(rail, paidFetch, `/v1/surveillance/${jeton}/renouveler?cibles=${cibles}`, "expire_le", "$0.10");
+      // Arrêt GRATUIT : ne laisse pas tourner une surveillance de 30 jours.
+      const arret = await fetch(`${apiUrl}/v1/surveillance/${jeton}/arreter`, { signal: AbortSignal.timeout(30_000) });
+      console.log(`${arret.ok ? "✓" : "✗"} [${rail}] watchlist stopped (free) → HTTP ${arret.status}`);
+    } else {
+      console.log(`– [${rail}] watchlist renewal skipped (no token returned)`);
+    }
   }
 }
 console.log(`\nTotal paid: ~$${paid.toFixed(3)} — failures: ${failed}`);
