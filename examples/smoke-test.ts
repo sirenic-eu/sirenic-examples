@@ -104,6 +104,7 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/entreprise/552032534/facturation-prep", expect: "destinataire", price: "$0.02" },
   { path: "/v1/tva/verifier/FR27552032534", expect: "statut", price: "$0.003" },
   { path: "/v1/iban/verifier/FR1420041010050500013M02606", expect: "iban_normalise", price: "$0.005" },
+  { path: "/v1/facturation/dossier?siren=552032534&iban=FR1420041010050500013M02606", expect: "verdict", price: "$0.03" },
   { path: "/v1/regulateurs/fr/alertes?siren=552032534", expect: "source", price: "$0.01" },
   { path: "/v1/eu/agrements?q=BNP%20Paribas", expect: "requete", price: "$0.01" },
   // Facturé PAR SOCIÉTÉ : 2 SIREN = 2 × $0.105.
