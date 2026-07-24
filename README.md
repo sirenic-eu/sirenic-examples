@@ -84,7 +84,10 @@ accounts…). Each tool accepts
 an optional `x_payment` parameter: without it you get the 402 quote; sign it
 with an x402 client and call again. Every tool declares an **output schema**
 and returns `structuredContent`, plus MCP annotations (read-only vs. state-
-changing), so a client can type-check responses instead of parsing prose.
+changing), so a client can type-check responses instead of parsing prose. The
+quote you get back is the **signable x402 payment requirements**
+(`{x402Version, accepts[]}`) — an agent can pay entirely from MCP, without
+touching the REST API.
 
 ## Quickstart 4 — A2A (Agent2Agent)
 
