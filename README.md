@@ -74,7 +74,7 @@ Cursor / any MCP client (`mcpServers` config):
 { "mcpServers": { "sirenic": { "url": "https://api.sirenic.eu/mcp" } } }
 ```
 
-39 tools are exposed (including the FREE detect_company_identifiers — paste any text, get SIREN/SIRET/VAT/LEI with the right call to make) (search with 0-1 confidence scores, company profiles,
+40 tools are exposed (including the FREE detect_company_identifiers — paste any text, get SIREN/SIRET/VAT/LEI with the right call to make) (search with 0-1 confidence scores, company profiles,
 KYB files, a $1 company-intelligence report, sanctions screening, AMF
 regulator alerts, EU financial authorisations (ESMA), industrial risk
 (Seveso/ICPE), lobbying register, EU procurement awards (TED), **watchlists
@@ -146,6 +146,7 @@ CrewAI can also use Sirenic's MCP server directly, no SDK:
 | `GET /v1/entreprise/{siren}/documents` | $0.02 | List filed documents (INPI) |
 | `GET /v1/documents/{type}/{id}` | $0.10 | Download a filed document (PDF) |
 | `GET /v1/tva/verifier/{numero}` | $0.003 | EU VAT validation (VIES) |
+| `GET /v1/iban/verifier/{iban}` | $0.005 | IBAN check + bank identification (FR/BE/AT/NL, incl. LEI) — not a Verification of Payee |
 | `GET /v1/surveillance/creer?cibles=` | $0.05/target/30d | **Watchlist**: daily checks on companies & directors, signed webhooks + e-mail digests |
 | `GET /v1/surveillance/{token}/renouveler` | $0.05/target/30d | Renew a watchlist (grace: 7 days after expiry) |
 | `GET /v1/eu/recherche?q=` | $0.003 | Search European registers (BE, NO, EE, LV local; CZ, SK, FI live) + GLEIF |
