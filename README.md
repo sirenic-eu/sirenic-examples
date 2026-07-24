@@ -147,7 +147,7 @@ CrewAI can also use Sirenic's MCP server directly, no SDK:
 | `GET /v1/dirigeant/recherche?nom=` | $0.02 | Reverse director search |
 | `GET /v1/prospection?...` | $0.02/page | Multi-criteria prospecting |
 | `GET /v1/rapport/{siren}` | $0.50 | PDF report |
-| `GET /v1/intelligence/{siren}` | $1.00 | Intelligence report: every block cross-referenced, closed-list signals, rule-based verdict |
+| `GET /v1/intelligence/{siren}` | $1.00 | Intelligence report: every block cross-referenced — executive summary, officers´ network, filings, trends, closed-list signals, rule-based verdict |
 | `GET /v1/entreprise/{siren}/documents` | $0.02 | List filed documents (INPI) |
 | `GET /v1/documents/{type}/{id}` | $0.10 | Download a filed document (PDF) |
 | `GET /v1/tva/verifier/{numero}` | $0.003 | EU VAT validation (VIES) |
