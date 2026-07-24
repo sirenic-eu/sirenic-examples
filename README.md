@@ -118,6 +118,17 @@ tools = build_crewai_tools(SirenicClient(wallet_key=key, max_price_usd=0.25))
 CrewAI can also use Sirenic's MCP server directly, no SDK:
 `Agent(..., mcps=["https://api.sirenic.eu/mcp"])`.
 
+## E-invoicing France 2026 — agent-side toolkit
+
+From **September 1, 2026**, every French company must be able to RECEIVE
+electronic invoices (with issuance phasing in through 2027). Sirenic ships the
+agent-side checks, no account needed: `facturation-prep` ($0.02 — legal name &
+form, computed intra-EU VAT number, SIRET establishments, obligation dates),
+`tva/verifier` ($0.003 — live VIES) and `iban/verifier` ($0.005 — the payee's
+bank identified from official registers, incl. BIC via the GLEIF/SWIFT
+mapping). One free call to `/v1/reperer` tells your agent which of these to
+use on any raw text.
+
 ## Endpoints and prices (USDC or EURC per call, same amount)
 
 | Endpoint | Price | What you get |
