@@ -82,7 +82,9 @@ with daily checks and Ed25519-signed webhooks**, financials, capital
 structure, sector benchmarks, failure-risk score, Belgian annual
 accounts…). Each tool accepts
 an optional `x_payment` parameter: without it you get the 402 quote; sign it
-with an x402 client and call again.
+with an x402 client and call again. Every tool declares an **output schema**
+and returns `structuredContent`, plus MCP annotations (read-only vs. state-
+changing), so a client can type-check responses instead of parsing prose.
 
 ## Quickstart 4 — A2A (Agent2Agent)
 
