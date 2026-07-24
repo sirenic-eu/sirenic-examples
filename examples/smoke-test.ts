@@ -32,6 +32,8 @@
  *     30-day watch is left running and no daily e-mail is triggered);
  *   - Belgian filings are listed, then one deposit is fetched by its reference.
  */
+import { mkdirSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 import { privateKeyToAccount } from "viem/accounts";
 import { wrapFetchWithPayment } from "@x402/fetch";
 import { x402Client } from "@x402/core/client";
@@ -51,6 +53,18 @@ if (!["usdc", "eurc", "both"].includes(asset)) {
 const maxPrice = process.env.MAX_PRICE ? Number(process.env.MAX_PRICE) : Infinity;
 
 const account = privateKeyToAccount(key as `0x${string}`);
+
+// Chaque passage CONSERVE tout ce qu'il a payé : corps JSON et PDF, un fichier
+// par appel, sous resultats/<horodatage>/ (gitignoré). On a perdu une réponse
+// à 1 $ faute de ça le 24/07 — plus jamais.
+const dossierResultats = join("resultats", new Date().toISOString().replace(/[:.]/g, "-"));
+mkdirSync(dossierResultats, { recursive: true });
+let ordre = 0;
+function conserver(rail: string, path: string, extension: string, contenu: string | Buffer): void {
+  ordre += 1;
+  const nom = `${String(ordre).padStart(2, "0")}-${rail.toLowerCase()}-${path.replace(/^\/v1\//, "").replace(/[^a-z0-9]+/gi, "_").slice(0, 80)}.${extension}`;
+  writeFileSync(join(dossierResultats, nom), contenu);
+}
 
 // EURC contracts (Circle) on Base — used by the selector to force the EURC
 // option of the 402 quote. USDC is the default option, so no selector needed.
@@ -138,12 +152,14 @@ async function call(
       return null;
     }
     if (type.includes("pdf")) {
-      const bytes = (await r.arrayBuffer()).byteLength;
+      const octets = Buffer.from(await r.arrayBuffer());
+      conserver(rail, path, "pdf", octets);
       paid += Number(price.slice(1));
-      console.log(`✓ [${rail}] ${path} → PDF ${(bytes / 1024).toFixed(0)} KB, ${price} (${ms} ms)`);
+      console.log(`✓ [${rail}] ${path} → PDF ${(octets.byteLength / 1024).toFixed(0)} KB, ${price} (${ms} ms)`);
       return null;
     }
     const body = (await r.json()) as Record<string, unknown>;
+    conserver(rail, path, "json", JSON.stringify(body, null, 1));
     paid += Number(price.slice(1));
     console.log(`${expect in body ? "✓" : "?"} [${rail}] ${path} → ${price} (${ms} ms)`);
     return body;
@@ -202,4 +218,5 @@ for (const [rail, paidFetch] of RAILS) {
   }
 }
 console.log(`\nTotal paid: ~$${paid.toFixed(3)} — failures: ${failed}`);
+console.log(`Every paid response was saved under ${dossierResultats}/`);
 console.log("Every 200 response above was settled on-chain via x402 before being released.");
