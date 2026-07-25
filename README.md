@@ -74,9 +74,10 @@ Cursor / any MCP client (`mcpServers` config):
 { "mcpServers": { "sirenic": { "url": "https://api.sirenic.eu/mcp" } } }
 ```
 
-41 tools are exposed — including the FREE detect_company_identifiers (paste any text, get SIREN/SIRET/VAT/LEI with the right call to make) and verify_iban_bank. Search with 0-1 confidence scores, company profiles,
+42 tools are exposed — including the FREE detect_company_identifiers (paste any text, get SIREN/SIRET/VAT/LEI with the right call to make) and verify_iban_bank. Search with 0-1 confidence scores, company profiles,
 KYB files, a $1 company-intelligence report, sanctions screening, AMF
-regulator alerts, EU financial authorisations (ESMA), industrial risk
+regulator alerts, **regulatory authorisations by SIREN (EBA PSD2 register,
+EIOPA, ARCEP)**, EU financial authorisations (ESMA), industrial risk
 (Seveso/ICPE), lobbying register, EU procurement awards (TED), **watchlists
 with daily checks and Ed25519-signed webhooks**, financials, capital
 structure, sector benchmarks, failure-risk score, Belgian annual
@@ -157,6 +158,7 @@ with closed-list reasons.
 | `GET /v1/sanctions/check?name=` | $0.02 | 6 official sanctions lists (UN, EU, OFAC, UK, FR, Swiss SECO), scored |
 | `GET /v1/regulateurs/fr/alertes?nom=\|siren=` | $0.01 | AMF blacklists + PSAN/SGP registers (scam check, crypto providers) |
 | `GET /v1/eu/agrements?q=` | $0.01 | EU financial authorisations (ESMA, all EU/EEA, by name or LEI) |
+| `GET /v1/entreprise/{siren}/agrements` | $0.02 | Regulatory licences by SIREN: payment institution, e-money, account information, payment agent or exempt entity (EBA PSD2 register, daily), insurer (EIOPA), telecom operator (ARCEP) — with licensed services, EEA passporting and withdrawals |
 | `GET /v1/dirigeant/recherche?nom=` | $0.02 | Reverse director search |
 | `GET /v1/prospection?...` | $0.02/page | Multi-criteria prospecting |
 | `GET /v1/rapport/{siren}` | $0.50 | PDF report |
@@ -185,7 +187,7 @@ returned at creation is the capability — no account).
 - [`examples/quote.sh`](examples/quote.sh) — inspect a 402 quote with curl.
 - [`examples/pay-and-call.ts`](examples/pay-and-call.ts) — pay one request end to end.
 - [`examples/verify-signature.ts`](examples/verify-signature.ts) — **verify the Ed25519 signature** of a paid response offline (~$0.001).
-- [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call **every one of the 37 paid endpoints** once (~$3.75 total, USDC and/or EURC; the watchlist it creates is stopped again for free).
+- [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call **every one of the 39 paid endpoints** once (~$3.80 total, USDC and/or EURC; the watchlist it creates is stopped again for free).
 - [`examples/agent-demo.ts`](examples/agent-demo.ts) — a small autonomous agent that searches, pays and reads profiles.
 - [`examples/mcp-setup.md`](examples/mcp-setup.md) — MCP configuration for Claude, Cursor and generic clients.
 - [`examples/a2a.ts`](examples/a2a.ts) — call Sirenic as an **A2A agent** (quote for free, then pay on the same task via the a2a-x402 extension).

@@ -101,6 +101,9 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/entreprise/552032534/marches-publics-ue", expect: "nombre_avis", price: "$0.02" },
   { path: "/v1/entreprise/552032534/risques-industriels", expect: "synthese", price: "$0.01" },
   { path: "/v1/entreprise/552032534/lobbying", expect: "inscrit", price: "$0.01" },
+  // Circle Internet Financial Europe : établissement de monnaie électronique
+  // agréé par l'ACPR — l'émetteur de l'USDC avec lequel on nous paie.
+  { path: "/v1/entreprise/953990934/agrements", expect: "resume", price: "$0.02" },
   { path: "/v1/entreprise/552032534/facturation-prep", expect: "destinataire", price: "$0.02" },
   { path: "/v1/tva/verifier/FR27552032534", expect: "statut", price: "$0.003" },
   { path: "/v1/iban/verifier/FR1420041010050500013M02606", expect: "iban_normalise", price: "$0.005" },
