@@ -74,7 +74,7 @@ Cursor / any MCP client (`mcpServers` config):
 { "mcpServers": { "sirenic": { "url": "https://api.sirenic.eu/mcp" } } }
 ```
 
-42 tools are exposed — including the FREE detect_company_identifiers (paste any text, get SIREN/SIRET/VAT/LEI with the right call to make) and verify_iban_bank. Search with 0-1 confidence scores, company profiles,
+43 tools are exposed — including the FREE detect_company_identifiers (paste any text, get SIREN/SIRET/VAT/LEI with the right call to make) and verify_iban_bank. Search with 0-1 confidence scores, company profiles,
 KYB files, a $1 company-intelligence report, sanctions screening, AMF
 regulator alerts, **regulatory authorisations by SIREN (EBA PSD2 register,
 EIOPA, ARCEP)**, EU financial authorisations (ESMA), industrial risk
@@ -174,6 +174,7 @@ with closed-list reasons.
 | `GET /v1/eu/entreprise/{pays}/{id}` | $0.01 | Unified European profile — 11 countries (BE incl. NACEBEL activities & establishments; CZ, SK, FI, PL live) |
 | `GET /v1/eu/entreprise/BE/{id}/comptes` | $0.01 | Belgian filings list (official NBB Central Balance Sheet Office) |
 | `GET /v1/eu/entreprise/BE/{id}/comptes/{ref}` | $0.15 | One Belgian annual-account deposit (JSON since 2022, PDF before) |
+| `GET /v1/eu/entreprise/BE/{id}/transactions-dirigeants` | $0.02 | Insider dealing at a Belgian listed company (FSMA, Art. 19 MAR): are its managers buying or selling? Issuer-level aggregate — **no individual is ever named** |
 
 Free: `GET /` (landing), `GET /preview/entreprise/55203253400646` (sample
 response), `GET /v1/reperer?texte=` (**detect SIREN/SIRET/VAT/LEI in any text**,
@@ -187,7 +188,7 @@ returned at creation is the capability — no account).
 - [`examples/quote.sh`](examples/quote.sh) — inspect a 402 quote with curl.
 - [`examples/pay-and-call.ts`](examples/pay-and-call.ts) — pay one request end to end.
 - [`examples/verify-signature.ts`](examples/verify-signature.ts) — **verify the Ed25519 signature** of a paid response offline (~$0.001).
-- [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call **every one of the 39 paid endpoints** once (~$3.80 total, USDC and/or EURC; the watchlist it creates is stopped again for free).
+- [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call **every one of the 40 paid endpoints** once (~$3.82 total, USDC and/or EURC; the watchlist it creates is stopped again for free).
 - [`examples/agent-demo.ts`](examples/agent-demo.ts) — a small autonomous agent that searches, pays and reads profiles.
 - [`examples/mcp-setup.md`](examples/mcp-setup.md) — MCP configuration for Claude, Cursor and generic clients.
 - [`examples/a2a.ts`](examples/a2a.ts) — call Sirenic as an **A2A agent** (quote for free, then pay on the same task via the a2a-x402 extension).
