@@ -21,10 +21,14 @@ const tools = sirenicTools({
 const agent = createReactAgent({ llm, tools });
 ```
 
-9 tools: search ($0.001), full profile ($0.005), KYB file ($0.15), sanctions
+13 tools: search ($0.001), full profile ($0.005), KYB file ($0.15), sanctions
 screening ($0.02), AMF regulator alerts ($0.01), EU financial authorisations
-via ESMA ($0.01), the $1 intelligence report, 30-day watchlists ($0.05/target)
-and a generic `sirenic_get` covering the whole catalog
+via ESMA ($0.01), **regulatory licences by SIREN** ($0.02 — EBA PSD2, EIOPA,
+ARCEP), **invoicing files for France and for Belgium/Poland** ($0.03 each —
+the Polish one tells you whether the IBAN is officially declared by that
+taxpayer, which carries legal weight there), **Belgian insider transactions**
+($0.02, FSMA Art. 19 MAR), the $1 intelligence report, 30-day watchlists
+($0.05/target) and a generic `sirenic_get` covering the whole catalog
 ([prices](https://api.sirenic.eu/llms.txt)).
 
 Safety model: payments are EIP-3009 authorizations signed locally by the
