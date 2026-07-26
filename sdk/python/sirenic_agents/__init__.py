@@ -108,6 +108,15 @@ def build_langchain_tools(client: SirenicClient) -> list:
     class Chemin(BaseModel):
         path: str = Field(description="Sirenic path with query string, e.g. /v1/entreprise/552032534/lobbying")
 
+    class Facturation(BaseModel):
+        siren: str = Field(description="9-digit SIREN of the company you want to invoice")
+        iban: Optional[str] = Field(default=None, description="Payee IBAN — optional, adds the bank check")
+
+    class FacturationEu(BaseModel):
+        pays: str = Field(description="BE (Belgium) or PL (Poland)")
+        id: str = Field(description="Belgian enterprise number or Polish NIP (10 digits)")
+        iban: Optional[str] = Field(default=None, description="Payee IBAN — unlocks the Polish account check")
+
     class Watch(BaseModel):
         cibles: str = Field(description="Comma-separated targets: SIRENs and/or dirigeant:Name (1-100)")
         webhook: Optional[str] = Field(default=None, description="Public https URL for signed event batches")
@@ -120,6 +129,14 @@ def build_langchain_tools(client: SirenicClient) -> list:
         if email:
             params.append(("email", email))
         return client.get("/v1/surveillance/creer?" + urlencode(params))
+
+    def _facturation(siren: str, iban: Optional[str] = None) -> str:
+        params = [("siren", siren)] + ([("iban", iban)] if iban else [])
+        return client.get("/v1/facturation/dossier?" + urlencode(params))
+
+    def _facturation_eu(pays: str, id: str, iban: Optional[str] = None) -> str:
+        params = [("pays", pays), ("id", id)] + ([("iban", iban)] if iban else [])
+        return client.get("/v1/eu/facturation/dossier?" + urlencode(params))
 
     def _criblage(name: str, birth_year: Optional[str] = None) -> str:
         params = [("name", name)] + ([("birth_year", birth_year)] if birth_year else [])
@@ -161,6 +178,24 @@ def build_langchain_tools(client: SirenicClient) -> list:
             name="sirenic_create_watch",
             description="Create a 30-day watchlist (daily checks, signed webhooks/e-mail). Targets: SIRENs and/or dirigeant:Name. Price: $0.05 per target per 30 days.",
             args_schema=Watch,
+        ),
+        StructuredTool.from_function(
+            func=_facturation,
+            name="sirenic_invoice_file_france",
+            description="Can you invoice this French company? Legal identity, computed VAT number checked live against VIES, payee bank identified from the IBAN, and the date it falls under the French e-invoicing mandate (every French company must RECEIVE e-invoices from 1 Sept 2026). Deterministic pret_a_facturer verdict. Price: $0.03.",
+            args_schema=Facturation,
+        ),
+        StructuredTool.from_function(
+            func=_facturation_eu,
+            name="sirenic_invoice_file_europe",
+            description="Same check for BELGIUM (mandate live since 1 Jan 2026, adds Peppol reachability) or POLAND — where it also answers a question with legal weight: is this IBAN actually DECLARED by that taxpayer in the official White List? Paying above 15,000 PLN into an undeclared account costs the buyer the VAT deduction. Price: $0.03.",
+            args_schema=FacturationEu,
+        ),
+        StructuredTool.from_function(
+            func=lambda siren: client.get(f"/v1/entreprise/{siren}/agrements"),
+            name="sirenic_company_licences",
+            description="Is this French company actually authorised, and for what? Payment institution, e-money, account information, payment agent or exempt entity (EBA PSD2 register, daily), insurer (EIOPA), telecom operator (ARCEP) — dates, licensed services, EEA passporting, withdrawals. Price: $0.02.",
+            args_schema=Siren,
         ),
         StructuredTool.from_function(
             func=lambda path: client.get(path),

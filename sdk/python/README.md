@@ -15,7 +15,7 @@ pip install "sirenic-agents[pay,langchain]"   # or [pay,crewai]
 from sirenic_agents import SirenicClient, build_langchain_tools
 
 client = SirenicClient(wallet_key=os.environ["WALLET_KEY"], max_price_usd=0.25)
-tools = build_langchain_tools(client)   # search, profile, KYB, sanctions, intelligence, watchlists…
+tools = build_langchain_tools(client)   # search, profile, KYB, sanctions, licences, invoicing (FR/BE/PL), intelligence, watchlists…
 ```
 
 ## CrewAI
