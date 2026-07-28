@@ -25,6 +25,35 @@ export class Sirenic implements INodeType {
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Official French and European company data, paid per call — no API key',
 		defaults: { name: 'Sirenic' },
+		// Métadonnées de découverte. `CodexData` est le type officiel de
+		// n8n-workflow (categories, subcategories, resources, alias) ; les
+		// catégories doivent correspondre EXACTEMENT à la liste fermée de n8n
+		// (« Data & Storage », pas « data and storage »).
+		//
+		// Les `alias` sont le levier le plus direct : ils alimentent la
+		// recherche du panneau de nœuds, c'est-à-dire l'endroit où un
+		// utilisateur cherche vraiment — bien avant npm. Quelqu'un qui tape
+		// « KYB », « SIREN », « due diligence » ou « supplier » doit nous
+		// trouver, alors que le nom « Sirenic » ne lui dit rien.
+		//
+		// Mesuré le 28/07 : sur 25 nodes communautaires du catalogue, 6 ont un
+		// codex et AUCUN n'utilise `alias`. Le créneau est libre.
+		codex: {
+			categories: ['Data & Storage', 'Finance & Accounting', 'Sales'],
+			resources: {
+				primaryDocumentation: [{ url: 'https://api.sirenic.eu' }],
+				credentialDocumentation: [{ url: 'https://api.sirenic.eu/llms.txt' }],
+			},
+			alias: [
+				'KYB', 'KYC', 'AML', 'compliance', 'due diligence', 'sanctions', 'screening',
+				'company', 'business', 'registry', 'company data', 'company lookup',
+				'SIREN', 'SIRET', 'VAT', 'TVA', 'LEI', 'enterprise number',
+				'supplier', 'vendor', 'onboarding', 'enrichment', 'B2B',
+				'France', 'French', 'Europe', 'European', 'INSEE', 'INPI', 'BODACC',
+				'insolvency', 'bankruptcy', 'credit risk', 'financials',
+				'x402', 'pay per call', 'USDC',
+			],
+		},
 		// An AI agent asked to vet a supplier should be able to reach this
 		// directly; the spending caps in the credential are what make that safe.
 		usableAsTool: true,
