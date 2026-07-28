@@ -42,8 +42,11 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
-      - name: Lint (n8n community-node ruleset)
-        run: npx eslint .
+      - name: Lint (official n8n-node tool, strict mode)
+        # `n8n-node lint` en mode strict vérifie AUSSI que eslint.config.mjs n'a
+        # pas été modifié par rapport à la config officielle — c'est la condition
+        # d'éligibilité au publishing n8n Cloud.
+        run: npm run lint
 
       - name: Test
         run: npm test
