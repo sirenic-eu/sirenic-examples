@@ -57,23 +57,21 @@ export class Sirenic implements INodeType {
 					{
 						name: 'Search',
 						value: 'search',
-						action: 'Search French companies by name',
+						action: 'Search companies by name',
 						description:
 							'Find a French company by name when you do not have its SIREN. Returns the top matches with a confidence score. ($0.001)',
 					},
 					{
 						name: 'Get Profile',
 						value: 'getProfile',
-						action: 'Get a French company profile',
-						description:
-							'Official profile by SIREN: legal name, form, head office, activity code, workforce, officers, VAT number. ($0.005)',
+						action: 'Get a company profile',
+						description: 'Official profile by SIREN: legal name, form, head office, activity code, workforce, officers, VAT number. ($0.005).',
 					},
 					{
 						name: 'Get KYB File',
 						value: 'getKyb',
 						action: 'Get a full KYB file',
-						description:
-							'Everything needed to onboard a supplier in one call: identity, officers, insolvency alerts, filed financials, sanctions screening. ($0.15)',
+						description: 'Everything needed to onboard a supplier in one call: identity, officers, insolvency alerts, filed financials, sanctions screening. ($0.15).',
 					},
 				],
 			},
@@ -88,9 +86,8 @@ export class Sirenic implements INodeType {
 					{
 						name: 'Get',
 						value: 'get',
-						action: 'Get a European company',
-						description:
-							'Company data from an official register in 11 European countries, under one schema. ($0.01)',
+						action: 'Get a company from a national register',
+						description: 'Company data from an official register in 11 European countries, under one schema. ($0.01).',
 					},
 				],
 			},
@@ -113,7 +110,7 @@ export class Sirenic implements INodeType {
 						name: 'Verify VAT Number',
 						value: 'verifyVat',
 						action: 'Verify an EU VAT number',
-						description: 'Check an intra-EU VAT number against VIES. ($0.003)',
+						description: 'Check an intra-EU VAT number against VIES. ($0.003).',
 					},
 				],
 			},
@@ -227,6 +224,7 @@ export class Sirenic implements INodeType {
 				displayName: 'Email',
 				name: 'email',
 				type: 'string',
+				placeholder: 'name@email.com',
 				default: '',
 				displayOptions: { show: { resource: ['monitoring'] } },
 				description: 'Optional address for digest emails',
