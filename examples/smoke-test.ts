@@ -126,8 +126,8 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/kyb/552032534", expect: "score_completude", price: "$0.15" },
   { path: "/v1/entreprise/552032534/sante", expect: "synthese", price: "$0.15" },
   { path: "/v1/entreprise/552032534/capital", expect: "capital", price: "$0.35" },
-  { path: "/v1/entreprise/552032534/comptes-pdf", expect: "annexe", price: "$0.35" },
-  { path: "/v1/entreprise/552032534/liens-capitalistiques", expect: "detenteurs_pm", price: "$0.15" },
+  { path: "/v1/entreprise/552032534/comptes-pdf", expect: "annexe", price: "$2.00" },
+  { path: "/v1/entreprise/552032534/liens-capitalistiques", expect: "detenteurs_pm", price: "$2.00" },
   { path: "/v1/intelligence/552032534", expect: "synthese", price: "$1.00" },
   { path: "/v1/rapport/552032534", expect: "(PDF)", price: "$0.50" },
 ];

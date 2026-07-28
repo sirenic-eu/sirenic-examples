@@ -1,0 +1,67 @@
+{
+  "name": "n8n-nodes-sirenic",
+  "version": "0.1.0",
+  "description": "Official French and European company data in n8n — pay per call over x402, no API key and no account.",
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n-nodes",
+    "sirenic",
+    "kyb",
+    "company-data",
+    "france",
+    "x402"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/sirenic-eu/sirenic-examples/tree/main/n8n-nodes-sirenic",
+  "author": {
+    "name": "Sirenic",
+    "email": "contact@sirenic.eu"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sirenic-eu/sirenic-examples.git",
+    "directory": "n8n-nodes-sirenic"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "build": "npm run typecheck && node build.mjs",
+    "typecheck": "tsc --noEmit",
+    "scan": "npx @n8n/scan-community-package n8n-nodes-sirenic",
+    "test": "vitest run"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "strict": true,
+    "credentials": [
+      "dist/credentials/SirenicApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Sirenic/Sirenic.node.js"
+    ]
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "devDependencies": {
+    "@n8n/eslint-plugin-community-nodes": "^0.27.0",
+    "@types/node": "^22.0.0",
+    "@x402/core": "2.18.0",
+    "@x402/evm": "2.18.0",
+    "@x402/fetch": "2.18.0",
+    "esbuild": "^0.25.0",
+    "eslint": "^9.29.0",
+    "n8n-workflow": "*",
+    "typescript": "^5.6.0",
+    "typescript-eslint": "^8.65.0",
+    "viem": "2.55.2",
+    "vitest": "^3.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/sirenic-eu/sirenic-examples/issues"
+  }
+}
