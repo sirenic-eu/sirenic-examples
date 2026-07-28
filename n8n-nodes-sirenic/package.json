@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-sirenic",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Official French and European company data in n8n — pay per call over x402, no API key and no account.",
   "keywords": [
     "n8n-community-node-package",
@@ -55,6 +55,7 @@
     "@x402/fetch": "2.18.0",
     "esbuild": "^0.25.0",
     "eslint": "^9.29.0",
+    "eslint-plugin-n8n-nodes-base": "^1.16.7",
     "n8n-workflow": "*",
     "typescript": "^5.6.0",
     "typescript-eslint": "^8.65.0",
