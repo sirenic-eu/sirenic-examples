@@ -75,6 +75,14 @@ and worldwide LEI data through GLEIF.
 law excludes them from public dissemination. Sirenic does not reconstruct control chains —
 which is precisely what keeps the data defensible under GDPR.
 
+## Finding this node
+
+In the n8n nodes panel, this node answers to what you would actually type —
+**KYB**, **SIREN**, **SIRET**, **VAT**, **sanctions**, **due diligence**,
+**supplier onboarding**, **company lookup** — not just to the name "Sirenic",
+which tells you nothing until you already know us. It sits under **Data &
+Storage**, **Finance & Accounting** and **Sales**.
+
 ## Compatibility
 
 Requires n8n with Node.js ≥ 22.22. No runtime dependencies: everything is bundled.
