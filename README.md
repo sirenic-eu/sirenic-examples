@@ -74,7 +74,7 @@ Cursor / any MCP client (`mcpServers` config):
 { "mcpServers": { "sirenic": { "url": "https://api.sirenic.eu/mcp" } } }
 ```
 
-43 tools are exposed — including the FREE detect_company_identifiers (paste any text, get SIREN/SIRET/VAT/LEI with the right call to make) and verify_iban_bank. Search with 0-1 confidence scores, company profiles,
+44 tools are exposed — including the FREE detect_company_identifiers (paste any text, get SIREN/SIRET/VAT/LEI with the right call to make) and verify_iban_bank. Search with 0-1 confidence scores, company profiles,
 KYB files, a $1 company-intelligence report, sanctions screening, AMF
 regulator alerts, **regulatory authorisations by SIREN (EBA PSD2 register,
 EIOPA, ARCEP)**, EU financial authorisations (ESMA), industrial risk
@@ -147,9 +147,9 @@ with closed-list reasons.
 | `GET /v1/entreprise/{siren}/lobbying` | $0.01 | HATVP lobbying register (org-level: budgets, subjects, clients) |
 | `GET /v1/entreprise/{siren}/changements?depuis=` | $0.01 | New BODACC events since a date |
 | `GET /v1/entreprise/{siren}/pi` | $0.03 | Industrial property (trademarks, patents, designs) |
-| `GET /v1/entreprise/{siren}/comptes-pdf` | $0.35 | Accounts annexe notes, AI-extracted (structured) |
+| `GET /v1/entreprise/{siren}/comptes-pdf` | $2.00 | Accounts annexe notes, AI-extracted (structured) |
 | `GET /v1/entreprise/{siren}/capital` | $0.35 | Ownership from public articles, AI-extracted |
-| `GET /v1/entreprise/{siren}/liens-capitalistiques` | $0.15 | Single-level capital links between legal entities |
+| `GET /v1/entreprise/{siren}/liens-capitalistiques` | $2.00 | Single-level capital links between legal entities |
 | `GET /v1/entreprise/{siren}/sante` | $0.15 | AI health summary (7-day cache) |
 | `GET /v1/score/defaillance/{siren}` | $0.10 | Failure-risk score (deterministic) |
 | `GET /v1/secteur/{code_naf}/benchmarks` | $0.05 | Sector aggregates (k-anonymised) |
@@ -188,11 +188,17 @@ returned at creation is the capability — no account).
 - [`examples/quote.sh`](examples/quote.sh) — inspect a 402 quote with curl.
 - [`examples/pay-and-call.ts`](examples/pay-and-call.ts) — pay one request end to end.
 - [`examples/verify-signature.ts`](examples/verify-signature.ts) — **verify the Ed25519 signature** of a paid response offline (~$0.001).
-- [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call **every one of the 40 paid endpoints** once (~$3.82 total, USDC and/or EURC; the watchlist it creates is stopped again for free).
+- [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call **every one of the 42 paid endpoints** once (~$6.85 total, USDC and/or EURC; the watchlist it creates is stopped again for free).
 - [`examples/agent-demo.ts`](examples/agent-demo.ts) — a small autonomous agent that searches, pays and reads profiles.
 - [`examples/mcp-setup.md`](examples/mcp-setup.md) — MCP configuration for Claude, Cursor and generic clients.
 - [`examples/a2a.ts`](examples/a2a.ts) — call Sirenic as an **A2A agent** (quote for free, then pay on the same task via the a2a-x402 extension).
 - [`tutorial-kyb-agent/`](tutorial-kyb-agent/) — **Build a KYB agent in 20 lines**.
+- [`n8n-nodes-sirenic/`](n8n-nodes-sirenic/) — **n8n community node**: seven operations
+  (search, profile, KYB, sanctions, VAT, European company, watchlist) paid per call from
+  inside a workflow. The credential holds a Base wallet, so spending caps are mandatory —
+  per call *and* per workflow execution — the payment address is pinned, and a Dry Run
+  mode shows the price without paying. Point the watchlist webhook at an n8n **Webhook**
+  node and you have supplier monitoring in three nodes.
 
 ## Test wallet setup
 
