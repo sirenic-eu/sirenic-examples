@@ -207,8 +207,13 @@ for (const [rail, paidFetch] of RAILS) {
 
   // -- Belgian filings: list, then fetch one deposit by its reference --------
   const comptes = await call(rail, paidFetch, `/v1/eu/entreprise/BE/${BE_ENTREPRISE}/comptes`, "nombre_depots", "$0.01");
-  // Dernier dépôt (les plus anciens, années 90, ne sont plus servis par la NBB).
-  const depot = (comptes?.depots as Array<{ reference?: string }> | undefined)?.filter((d) => d.reference).at(-1);
+  // Dépôt le plus RÉCENT — tri explicite sur la référence (AAAA-NNNNNNNN) :
+  // l'API liste du plus récent au plus ancien, et les dépôts très anciens
+  // (ex. 1981) ne sont plus servis par la NBB → .at(-1) piochait un 404
+  // (constaté au smoke du 29/07, appel non facturé).
+  const depot = (comptes?.depots as Array<{ reference?: string }> | undefined)
+    ?.filter((d): d is { reference: string } => !!d.reference)
+    .sort((a, b) => b.reference.localeCompare(a.reference))[0];
   if (depot?.reference) {
     await call(rail, paidFetch, `/v1/eu/entreprise/BE/${BE_ENTREPRISE}/comptes/${depot.reference}`, "reference", "$0.15");
   } else {
