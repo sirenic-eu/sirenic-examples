@@ -170,8 +170,8 @@ with closed-list reasons.
 | `GET /v1/iban/verifier/{iban}` | $0.005 | IBAN check + bank identification (FR/BE/AT/NL, incl. LEI) — not a Verification of Payee |
 | `GET /v1/surveillance/creer?cibles=` | $0.05/target/30d | **Watchlist**: daily checks on companies & directors, signed webhooks + e-mail digests |
 | `GET /v1/surveillance/{token}/renouveler` | $0.05/target/30d | Renew a watchlist (grace: 7 days after expiry) |
-| `GET /v1/eu/recherche?q=` | $0.003 | Search European registers (BE, NO, EE, LV local; CZ, SK, FI live) + GLEIF |
-| `GET /v1/eu/entreprise/{pays}/{id}` | $0.01 | Unified European profile — 11 countries (BE incl. NACEBEL activities & establishments; CZ, SK, FI, PL live) |
+| `GET /v1/eu/recherche?q=` | $0.003 | Search European registers (BE, NO, EE, LV local; CZ, SK, FI, PL, CH live) + GLEIF |
+| `GET /v1/eu/entreprise/{pays}/{id}` | $0.01 | Unified European profile — 12 countries: BE (KBO, NACEBEL + establishments), CH (Zefix), NO (Brønnøysund), CZ (ARES), SK (RPO), FI (PRH), PL (KRS), EE, LV… Each live country also has its own dedicated path (e.g. `/v1/eu/entreprise/CH/CHE-107.480.920`) |
 | `GET /v1/eu/entreprise/BE/{id}/comptes` | $0.01 | Belgian filings list (official NBB Central Balance Sheet Office) |
 | `GET /v1/eu/entreprise/BE/{id}/comptes/{ref}` | $0.15 | One Belgian annual-account deposit (JSON since 2022, PDF before) |
 | `GET /v1/eu/entreprise/BE/{id}/transactions-dirigeants` | $0.02 | Insider dealing at a Belgian listed company (FSMA, Art. 19 MAR): are its managers buying or selling? Issuer-level aggregate — **no individual is ever named** |
