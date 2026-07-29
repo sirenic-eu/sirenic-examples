@@ -117,8 +117,16 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/sanctions/check?name=Danone", expect: "correspondances", price: "$0.02" },
   { path: "/v1/dirigeant/recherche?nom=Faber", expect: "resultats", price: "$0.02" },
   { path: "/v1/eu/recherche?q=equinor&pays=NO", expect: "resultats", price: "$0.003" },
-  { path: "/v1/eu/entreprise/NO/923609016", expect: "denomination", price: "$0.01" },
-  { path: "/v1/eu/entreprise/CZ/45274649", expect: "denomination", price: "$0.01" },
+  // Un appel par pays : chaque pays a sa carte Bazaar dédiée depuis le 29/07,
+  // et une carte n'est indexée/rafraîchie qu'au premier paiement réglé dessus.
+  { path: "/v1/eu/entreprise/NO/923609016", expect: "denomination", price: "$0.01" }, // Equinor
+  { path: "/v1/eu/entreprise/CZ/45274649", expect: "denomination", price: "$0.01" }, // ČEZ
+  { path: "/v1/eu/entreprise/CH/CHE-107.480.920", expect: "denomination", price: "$0.01" }, // Logitech (Zefix)
+  { path: "/v1/eu/entreprise/SK/35763469", expect: "denomination", price: "$0.01" }, // Slovak Telekom
+  { path: "/v1/eu/entreprise/FI/0112038-9", expect: "denomination", price: "$0.01" }, // Nokia (PRH)
+  { path: "/v1/eu/entreprise/PL/0000006865", expect: "denomination", price: "$0.01" }, // CD Projekt (KRS)
+  { path: "/v1/eu/entreprise/EE/12417834", expect: "denomination", price: "$0.01" }, // Bolt Technology
+  { path: "/v1/eu/entreprise/LV/40003245752", expect: "denomination", price: "$0.01" }, // airBaltic
   { path: "/v1/prospection?naf=62.01Z&departement=75", expect: "resultats", price: "$0.02" },
   { path: "/v1/secteur/62.01Z/benchmarks", expect: "code_naf", price: "$0.05" },
   { path: "/v1/score/defaillance/552032534", expect: "score_risque", price: "$0.10" },
