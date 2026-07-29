@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-sirenic",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "KYB and company data for France and Europe in n8n: search companies, profiles, KYB files, sanctions screening, VAT checks and change monitoring — from official registers, paid per call over x402, no API key and no account.",
   "keywords": [
     "n8n-community-node-package",
@@ -79,9 +79,6 @@
     "@n8n/eslint-plugin-community-nodes": "^0.27.0",
     "@n8n/node-cli": "^0.41.2",
     "@types/node": "^22.0.0",
-    "@x402/core": "2.18.0",
-    "@x402/evm": "2.18.0",
-    "@x402/fetch": "2.18.0",
     "esbuild": "^0.25.0",
     "eslint": "^9.29.0",
     "eslint-plugin-n8n-nodes-base": "^1.16.7",
