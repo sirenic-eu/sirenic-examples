@@ -77,7 +77,10 @@ console.log('\nChecking the refusals fire for real:');
 try {
 	const node = new Sirenic();
 	const ctx = context({
-		resource: 'frenchCompany',
+		// getKyb vit dans la ressource dueDiligence depuis la refacto catalogue —
+		// avec l'ancienne valeur, le refus venait du lookup (« Unknown operation »),
+		// pas du plafond : le contrôle passait pour la MAUVAISE raison.
+		resource: 'dueDiligence',
 		operation: 'getKyb',
 		siren: '552032534',
 		options: {},
