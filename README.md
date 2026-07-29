@@ -193,12 +193,7 @@ returned at creation is the capability — no account).
 - [`examples/mcp-setup.md`](examples/mcp-setup.md) — MCP configuration for Claude, Cursor and generic clients.
 - [`examples/a2a.ts`](examples/a2a.ts) — call Sirenic as an **A2A agent** (quote for free, then pay on the same task via the a2a-x402 extension).
 - [`tutorial-kyb-agent/`](tutorial-kyb-agent/) — **Build a KYB agent in 20 lines**.
-- [`n8n-nodes-sirenic/`](n8n-nodes-sirenic/) — **n8n community node**: seven operations
-  (search, profile, KYB, sanctions, VAT, European company, watchlist) paid per call from
-  inside a workflow. The credential holds a Base wallet, so spending caps are mandatory —
-  per call *and* per workflow execution — the payment address is pinned, and a Dry Run
-  mode shows the price without paying. Point the watchlist webhook at an n8n **Webhook**
-  node and you have supplier monitoring in three nodes.
+- **n8n community node** — moved to its own repository (n8n verification requires credentials/ at the repo root): https://github.com/sirenic-eu/n8n-nodes-sirenic — `npm i n8n-nodes-sirenic`
 
 ## Test wallet setup
 
