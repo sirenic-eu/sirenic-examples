@@ -1,20 +1,198 @@
 import type {
 	IExecuteFunctions,
 	INodeExecutionData,
+	INodeProperties,
 	INodeType,
 	INodeTypeDescription,
 } from 'n8n-workflow';
 import { NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
 
 import { SirenicPayer, type PaymentSettings } from './x402';
+import { RESSOURCES, trouverOperation, type Champ } from './operations';
 
 /**
  * Sirenic — official French and European company data, paid per call.
  *
- * Deliberately NOT a wrapper around all 41 routes: seven operations that make
- * sense inside a no-code workflow. Anything more specialised is better reached
- * through the MCP server or the REST API directly.
+ * Les 41 routes payantes de BASE sont exposées, organisées en ressources (les
+ * fiches dédiées par pays — BE, CH, NO… — passent par le profil européen
+ * générique : même handler côté API). Elles ne sont PAS décrites ici : tout
+ * vient du catalogue `operations.ts`, seule source de vérité. L'interface et
+ * le routage ne peuvent donc pas diverger — un tel écart ne se verrait qu'en
+ * production, une fois le client débité.
  */
+
+/** Un champ apparaît UNE fois, visible pour toutes les opérations qui l'utilisent. */
+function champsDeRessource(ressource: (typeof RESSOURCES)[number]): INodeProperties[] {
+	const parNom = new Map<string, { champ: Champ; operations: string[] }>();
+	for (const op of ressource.operations) {
+		for (const champ of op.champs ?? []) {
+			const entree = parNom.get(champ.nom);
+			if (entree) entree.operations.push(op.valeur);
+			else parNom.set(champ.nom, { champ, operations: [op.valeur] });
+		}
+	}
+
+	return [...parNom.values()].map(({ champ, operations }) => ({
+		displayName: champ.libelle,
+		name: champ.nom,
+		type: champ.type,
+		default: champ.defaut ?? (champ.type === 'number' ? 0 : ''),
+		...(champ.requis ? { required: true } : {}),
+		...(champ.placeholder ? { placeholder: champ.placeholder } : {}),
+		...(champ.options ? { options: champ.options } : {}),
+		displayOptions: { show: { resource: [ressource.valeur], operation: operations } },
+		description: champ.description,
+	})) as INodeProperties[];
+}
+
+/**
+ * Opération par défaut de chaque ressource, en LITTÉRAL.
+ *
+ * Le linter n8n exige que `default` soit une valeur littérale : il analyse
+ * l'AST et ne suit pas `RESSOURCES[0].operations[0].valeur`. On l'écrit donc à
+ * la main — et un test vérifie que chaque valeur correspond bien à la première
+ * opération de sa ressource, pour que ce doublon ne puisse pas diverger.
+ */
+export const OPERATION_PAR_DEFAUT: Record<string, string> = {
+	frenchCompany: 'search',
+	dueDiligence: 'getKyb',
+	financials: 'getFinancials',
+	compliance: 'screenSanctions',
+	procurement: 'getFrench',
+	europeanCompany: 'search',
+	invoicing: 'getFrenchPack',
+	people: 'searchDirectors',
+	monitoring: 'watch',
+};
+
+/** Options d'opération d'une ressource, dérivées du catalogue. */
+function optionsDe(ressource: string) {
+	const r = RESSOURCES.find((x) => x.valeur === ressource);
+	return (r?.operations ?? []).map((o) => ({
+		name: o.nom,
+		value: o.valeur,
+		action: o.action,
+		description: o.description,
+	}));
+}
+
+const PROPRIETES: INodeProperties[] = [
+	{
+		displayName: 'Resource',
+		name: 'resource',
+		type: 'options',
+		noDataExpression: true,
+		default: 'frenchCompany',
+		options: RESSOURCES.map((r) => ({ name: r.nom, value: r.valeur })),
+	},
+	{
+		displayName: 'Operation',
+		name: 'operation',
+		type: 'options',
+		noDataExpression: true,
+		default: 'search',
+		displayOptions: { show: { resource: ['frenchCompany'] } },
+		options: optionsDe('frenchCompany'),
+	},
+	{
+		displayName: 'Operation',
+		name: 'operation',
+		type: 'options',
+		noDataExpression: true,
+		default: 'getKyb',
+		displayOptions: { show: { resource: ['dueDiligence'] } },
+		options: optionsDe('dueDiligence'),
+	},
+	{
+		displayName: 'Operation',
+		name: 'operation',
+		type: 'options',
+		noDataExpression: true,
+		default: 'getFinancials',
+		displayOptions: { show: { resource: ['financials'] } },
+		options: optionsDe('financials'),
+	},
+	{
+		displayName: 'Operation',
+		name: 'operation',
+		type: 'options',
+		noDataExpression: true,
+		default: 'screenSanctions',
+		displayOptions: { show: { resource: ['compliance'] } },
+		options: optionsDe('compliance'),
+	},
+	{
+		displayName: 'Operation',
+		name: 'operation',
+		type: 'options',
+		noDataExpression: true,
+		default: 'getFrench',
+		displayOptions: { show: { resource: ['procurement'] } },
+		options: optionsDe('procurement'),
+	},
+	{
+		displayName: 'Operation',
+		name: 'operation',
+		type: 'options',
+		noDataExpression: true,
+		default: 'search',
+		displayOptions: { show: { resource: ['europeanCompany'] } },
+		options: optionsDe('europeanCompany'),
+	},
+	{
+		displayName: 'Operation',
+		name: 'operation',
+		type: 'options',
+		noDataExpression: true,
+		default: 'getFrenchPack',
+		displayOptions: { show: { resource: ['invoicing'] } },
+		options: optionsDe('invoicing'),
+	},
+	{
+		displayName: 'Operation',
+		name: 'operation',
+		type: 'options',
+		noDataExpression: true,
+		default: 'searchDirectors',
+		displayOptions: { show: { resource: ['people'] } },
+		options: optionsDe('people'),
+	},
+	{
+		displayName: 'Operation',
+		name: 'operation',
+		type: 'options',
+		noDataExpression: true,
+		default: 'watch',
+		displayOptions: { show: { resource: ['monitoring'] } },
+		options: optionsDe('monitoring'),
+	},
+	...RESSOURCES.flatMap(champsDeRessource),
+	{
+		displayName: 'Options',
+		name: 'options',
+		type: 'collection',
+		placeholder: 'Add option',
+		default: {},
+		options: [
+			{
+				displayName: 'Dry Run',
+				name: 'dryRun',
+				type: 'boolean',
+				default: false,
+				description:
+					'Whether to check the price and stop without paying. Returns what the call would cost.',
+			},
+			{
+				displayName: 'Timeout (Ms)',
+				name: 'timeout',
+				type: 'number',
+				default: 120000,
+				description: 'How long to wait for a paid response',
+			},
+		],
+	},
+];
+
 export class Sirenic implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Sirenic',
@@ -25,19 +203,16 @@ export class Sirenic implements INodeType {
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Official French and European company data, paid per call — no API key',
 		defaults: { name: 'Sirenic' },
-		// Métadonnées de découverte. `CodexData` est le type officiel de
-		// n8n-workflow (categories, subcategories, resources, alias) ; les
-		// catégories doivent correspondre EXACTEMENT à la liste fermée de n8n
-		// (« Data & Storage », pas « data and storage »).
-		//
-		// Les `alias` sont le levier le plus direct : ils alimentent la
-		// recherche du panneau de nœuds, c'est-à-dire l'endroit où un
-		// utilisateur cherche vraiment — bien avant npm. Quelqu'un qui tape
-		// « KYB », « SIREN », « due diligence » ou « supplier » doit nous
-		// trouver, alors que le nom « Sirenic » ne lui dit rien.
-		//
-		// Mesuré le 28/07 : sur 25 nodes communautaires du catalogue, 6 ont un
-		// codex et AUCUN n'utilise `alias`. Le créneau est libre.
+		// An AI agent asked to vet a supplier should be able to reach this
+		// directly; the spending caps in the credential are what make that safe.
+		usableAsTool: true,
+		inputs: [NodeConnectionTypes.Main],
+		outputs: [NodeConnectionTypes.Main],
+		credentials: [{ name: 'sirenicApi', required: true }],
+		// Métadonnées de découverte. Les `alias` alimentent la recherche du
+		// panneau de nœuds — l'endroit où un utilisateur cherche vraiment, bien
+		// avant npm. Quelqu'un qui tape « KYB », « SIREN » ou « due diligence »
+		// doit nous trouver, alors que le nom « Sirenic » ne lui dit rien.
 		codex: {
 			categories: ['Data & Storage', 'Finance & Accounting', 'Sales'],
 			resources: {
@@ -47,243 +222,15 @@ export class Sirenic implements INodeType {
 			alias: [
 				'KYB', 'KYC', 'AML', 'compliance', 'due diligence', 'sanctions', 'screening',
 				'company', 'business', 'registry', 'company data', 'company lookup',
-				'SIREN', 'SIRET', 'VAT', 'TVA', 'LEI', 'enterprise number',
-				'supplier', 'vendor', 'onboarding', 'enrichment', 'B2B',
+				'SIREN', 'SIRET', 'VAT', 'TVA', 'LEI', 'IBAN', 'enterprise number',
+				'supplier', 'vendor', 'onboarding', 'enrichment', 'B2B', 'prospecting',
 				'France', 'French', 'Europe', 'European', 'INSEE', 'INPI', 'BODACC',
-				'insolvency', 'bankruptcy', 'credit risk', 'financials',
+				'insolvency', 'bankruptcy', 'credit risk', 'financials', 'annual accounts',
+				'patents', 'trademarks', 'public procurement', 'lobbying', 'e-invoicing',
 				'x402', 'pay per call', 'USDC',
 			],
 		},
-		// An AI agent asked to vet a supplier should be able to reach this
-		// directly; the spending caps in the credential are what make that safe.
-		usableAsTool: true,
-		inputs: [NodeConnectionTypes.Main],
-		outputs: [NodeConnectionTypes.Main],
-		credentials: [{ name: 'sirenicApi', required: true }],
-		properties: [
-			{
-				displayName: 'Resource',
-				name: 'resource',
-				type: 'options',
-				noDataExpression: true,
-				default: 'frenchCompany',
-				options: [
-					{ name: 'French Company', value: 'frenchCompany' },
-					{ name: 'European Company', value: 'europeanCompany' },
-					{ name: 'Verification', value: 'verification' },
-					{ name: 'Monitoring', value: 'monitoring' },
-				],
-			},
-
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				default: 'search',
-				displayOptions: { show: { resource: ['frenchCompany'] } },
-				options: [
-					{
-						name: 'Search',
-						value: 'search',
-						action: 'Search companies by name',
-						description:
-							'Find a French company by name when you do not have its SIREN. Returns the top matches with a confidence score. ($0.001)',
-					},
-					{
-						name: 'Get Profile',
-						value: 'getProfile',
-						action: 'Get a company profile',
-						description: 'Official profile by SIREN: legal name, form, head office, activity code, workforce, officers, VAT number. ($0.005).',
-					},
-					{
-						name: 'Get KYB File',
-						value: 'getKyb',
-						action: 'Get a full KYB file',
-						description: 'Everything needed to onboard a supplier in one call: identity, officers, insolvency alerts, filed financials, sanctions screening. ($0.15).',
-					},
-				],
-			},
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				default: 'get',
-				displayOptions: { show: { resource: ['europeanCompany'] } },
-				options: [
-					{
-						name: 'Get',
-						value: 'get',
-						action: 'Get a company from a national register',
-						description: 'Company data from an official register in 11 European countries, under one schema. ($0.01).',
-					},
-				],
-			},
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				default: 'screenSanctions',
-				displayOptions: { show: { resource: ['verification'] } },
-				options: [
-					{
-						name: 'Screen Sanctions',
-						value: 'screenSanctions',
-						action: 'Screen a name against sanctions lists',
-						description:
-							'Screen a person or company name against 6 official lists (UN, EU, OFAC, UK, French freezes, Swiss SECO). Returns scored matches, never a bare yes or no. ($0.02)',
-					},
-					{
-						name: 'Verify VAT Number',
-						value: 'verifyVat',
-						action: 'Verify an EU VAT number',
-						description: 'Check an intra-EU VAT number against VIES. ($0.003).',
-					},
-				],
-			},
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				default: 'watch',
-				displayOptions: { show: { resource: ['monitoring'] } },
-				options: [
-					{
-						name: 'Watch Companies',
-						value: 'watch',
-						action: 'Watch companies for changes',
-						description:
-							'Monitor 1 to 100 companies and get notified when something changes: officers, insolvency, deregistration. Point the webhook at an n8n Webhook node to trigger a workflow. ($0.05)',
-					},
-				],
-			},
-
-			{
-				displayName: 'Company Name',
-				name: 'query',
-				type: 'string',
-				default: '',
-				required: true,
-				displayOptions: { show: { resource: ['frenchCompany'], operation: ['search'] } },
-				description: 'Company name, or a 9-digit SIREN',
-			},
-			{
-				displayName: 'SIREN',
-				name: 'siren',
-				type: 'string',
-				default: '',
-				required: true,
-				placeholder: '552032534',
-				displayOptions: { show: { resource: ['frenchCompany'], operation: ['getProfile', 'getKyb'] } },
-				description: '9-digit French company identifier',
-			},
-			{
-				displayName: 'Country',
-				name: 'country',
-				type: 'options',
-				default: 'BE',
-				displayOptions: { show: { resource: ['europeanCompany'] } },
-				options: [
-					{ name: 'Belgium', value: 'BE' },
-					{ name: 'Czechia', value: 'CZ' },
-					{ name: 'Denmark', value: 'DK' },
-					{ name: 'Estonia', value: 'EE' },
-					{ name: 'Finland', value: 'FI' },
-					{ name: 'Latvia', value: 'LV' },
-					{ name: 'Norway', value: 'NO' },
-					{ name: 'Poland', value: 'PL' },
-					{ name: 'Slovakia', value: 'SK' },
-					{ name: 'Switzerland', value: 'CH' },
-					{ name: 'United Kingdom', value: 'GB' },
-				],
-				description: 'Register to query',
-			},
-			{
-				displayName: 'Company Identifier',
-				name: 'companyId',
-				type: 'string',
-				default: '',
-				required: true,
-				displayOptions: { show: { resource: ['europeanCompany'] } },
-				description: 'National registration number, as used by that country register',
-			},
-			{
-				displayName: 'Name to Screen',
-				name: 'name',
-				type: 'string',
-				default: '',
-				required: true,
-				displayOptions: { show: { resource: ['verification'], operation: ['screenSanctions'] } },
-				description: 'Person or company name to screen',
-			},
-			{
-				displayName: 'VAT Number',
-				name: 'vatNumber',
-				type: 'string',
-				default: '',
-				required: true,
-				placeholder: 'FR12345678901',
-				displayOptions: { show: { resource: ['verification'], operation: ['verifyVat'] } },
-				description: 'Intra-EU VAT number, country prefix included',
-			},
-			{
-				displayName: 'Targets',
-				name: 'targets',
-				type: 'string',
-				default: '',
-				required: true,
-				placeholder: '552032534,542065479',
-				displayOptions: { show: { resource: ['monitoring'] } },
-				description:
-					'1 to 100 comma-separated entries: 9-digit SIRENs, or "dirigeant:Name" to follow a person mandates',
-			},
-			{
-				displayName: 'Webhook URL',
-				name: 'webhook',
-				type: 'string',
-				default: '',
-				displayOptions: { show: { resource: ['monitoring'] } },
-				description:
-					'Public HTTPS URL notified when something changes. Paste the Production URL of an n8n Webhook node to trigger a workflow on every change.',
-			},
-			{
-				displayName: 'Email',
-				name: 'email',
-				type: 'string',
-				placeholder: 'name@email.com',
-				default: '',
-				displayOptions: { show: { resource: ['monitoring'] } },
-				description: 'Optional address for digest emails',
-			},
-
-			{
-				displayName: 'Options',
-				name: 'options',
-				type: 'collection',
-				placeholder: 'Add option',
-				default: {},
-				options: [
-					{
-						displayName: 'Dry Run',
-						name: 'dryRun',
-						type: 'boolean',
-						default: false,
-						description:
-							'Whether to check the price and stop without paying. Returns what the call would cost.',
-					},
-					{
-						displayName: 'Timeout (Ms)',
-						name: 'timeout',
-						type: 'number',
-						default: 120000,
-						description: 'How long to wait for a paid response',
-					},
-				],
-			},
-		],
+		properties: PROPRIETES,
 	};
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
@@ -322,7 +269,19 @@ export class Sirenic implements INodeType {
 					dryRun?: boolean;
 					timeout?: number;
 				};
-				const path = buildPath(this, resource, operation, i);
+
+				const definition = trouverOperation(resource, operation);
+				if (!definition) {
+					throw new NodeOperationError(
+						this.getNode(),
+						`Unknown operation: ${resource}.${operation}`,
+						{ itemIndex: i },
+					);
+				}
+				// Un paramètre absent vaut chaîne vide : les champs facultatifs du
+				// catalogue s'en servent pour décider s'ils entrent dans l'URL.
+				const lire = (nom: string) => String(this.getNodeParameter(nom, i, '') ?? '').trim();
+				const path = definition.chemin(lire);
 
 				const result = await payer.call(path, options.timeout ?? 120_000, options.dryRun === true);
 
@@ -363,37 +322,4 @@ export class Sirenic implements INodeType {
 
 		return [output];
 	}
-}
-
-/** Builds the API path for one item. Kept separate so it stays easy to test. */
-function buildPath(
-	ctx: IExecuteFunctions,
-	resource: string,
-	operation: string,
-	i: number,
-): string {
-	const p = (name: string) => String(ctx.getNodeParameter(name, i) ?? '').trim();
-	const enc = encodeURIComponent;
-
-	if (resource === 'frenchCompany') {
-		if (operation === 'search') return `/v1/recherche?q=${enc(p('query'))}`;
-		if (operation === 'getProfile') return `/v1/entreprise/${enc(p('siren'))}`;
-		if (operation === 'getKyb') return `/v1/kyb/${enc(p('siren'))}`;
-	}
-	if (resource === 'europeanCompany' && operation === 'get') {
-		return `/v1/eu/entreprise/${enc(p('country'))}/${enc(p('companyId'))}`;
-	}
-	if (resource === 'verification') {
-		if (operation === 'screenSanctions') return `/v1/sanctions/check?name=${enc(p('name'))}`;
-		if (operation === 'verifyVat') return `/v1/tva/verifier/${enc(p('vatNumber'))}`;
-	}
-	if (resource === 'monitoring' && operation === 'watch') {
-		const query = new URLSearchParams({ cibles: p('targets') });
-		const webhook = p('webhook');
-		const email = p('email');
-		if (webhook) query.set('webhook', webhook);
-		if (email) query.set('email', email);
-		return `/v1/surveillance/creer?${query.toString()}`;
-	}
-	throw new NodeOperationError(ctx.getNode(), `Unknown operation: ${resource}.${operation}`);
 }
