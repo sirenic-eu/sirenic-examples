@@ -1,0 +1,34 @@
+{
+  "_endpoint": "/v1/eu/entreprise/SK/{id}",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/SK/35763469",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "SK",
+    "registre": "Register právnických osôb (Štatistický úrad SR, CC-BY 4.0)",
+    "id_national": "35763469",
+    "denomination": "Slovak Telekom, a.s.",
+    "forme_juridique": {
+      "code": "121",
+      "libelle": "Akciová spoločnosť"
+    },
+    "statut": "actif",
+    "statut_detail": null,
+    "date_creation": "1999-04-01",
+    "adresse_siege": {
+      "adresse": "Bajkalská 28",
+      "code_postal": "81762",
+      "ville": "Bratislava",
+      "pays": "SK"
+    },
+    "identifiants": {
+      "tva": null,
+      "lei": null
+    },
+    "lien_registre": "https://rpo.statistics.sk",
+    "data_freshness": "RPO temps réel (cache 24 h)",
+    "source": "Registres officiels : Brønnøysundregistrene (NO, NLOD), e-Business Register (EE, CC-BY 4.0), Uzņēmumu reģistrs (LV), KBO/BCE (BE), CVR (DK), Companies House (GB, OGL), ARES (CZ), Register právnických osôb (SK, CC-BY 4.0), PRH/YTJ (FI, CC-BY 4.0), Krajowy Rejestr Sądowy (PL), Zefix (CH, OGD), Bolagsverket (SE), GLEIF (CC0)",
+    "disclaimer": "Données rediffusées telles que publiées par les registres officiels, dans un schéma unifié ; `statut` est une normalisation en 3 valeurs, le libellé source est conservé dans `statut_detail`. / Official register data as published, unified schema; `statut` is a 3-value normalization."
+  }
+}

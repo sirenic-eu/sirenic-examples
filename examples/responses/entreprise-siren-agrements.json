@@ -1,0 +1,41 @@
+{
+  "_endpoint": "/v1/entreprise/{siren}/agrements",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/953990934/agrements",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "siren": "953990934",
+    "denomination": "CIRCLE INTERNET FINANCIAL EUROPE SAS",
+    "resume": {
+      "est_agree": true,
+      "regime": "agrement",
+      "domaines": [
+        "monnaie_electronique"
+      ],
+      "nombre_agrements": 1
+    },
+    "agrements": [
+      {
+        "domaine": "monnaie_electronique",
+        "statut": "actif",
+        "type_entite": "établissement de monnaie électronique",
+        "autorite": "ACPR",
+        "date_agrement": "2024-07-01",
+        "date_retrait": null,
+        "services": [
+          {
+            "code": "ES_010",
+            "libelle": "Émission, distribution et remboursement de monnaie électronique"
+          }
+        ],
+        "passeportage": [
+          "AT"
+        ]
+      }
+    ],
+    "source": "EBA (Payment Institutions Register), EIOPA (Register of Insurance Undertakings), ARCEP (opérateurs déclarés) — reproduction autorisée avec mention de la source.",
+    "disclaimer": "Registres publics reproduits tels que publiés. Le registre EBA n'a pas de valeur juridique : l'absence d'inscription ne prouve pas l'absence d'agrément, et l'inscription ne confère aucun droit — vérifiez auprès de l'autorité compétente. Ces données sont disponibles gratuitement auprès de l'EBA, de l'EIOPA et de l'ARCEP.",
+    "data_freshness": "eiopa-assureurs 2026-07-28, eba-pir 2026-07-28, arcep-operateurs 2026-07-28"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "_endpoint": "/v1/entreprise/{siren}/facturation-prep",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/facturation-prep",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "siren": "552032534",
+    "statut_diffusion": "totale",
+    "destinataire": {
+      "denomination": "DANONE",
+      "nature_juridique": "5599",
+      "etat_administratif": "actif",
+      "activite_principale": "70.10Z",
+      "categorie_entreprise": "GE"
+    },
+    "tva": {
+      "numero_intracommunautaire_calcule": "FR27552032534"
+    },
+    "adressage": {
+      "siege": {
+        "siret": "55203253400703",
+        "adresse": "59 RUE LA FAYETTE 75009 PARIS",
+        "code_postal": "75009",
+        "commune": "PARIS"
+      },
+      "nombre_etablissements": 19,
+      "etablissements": [
+        {
+          "siret": "55203253400703",
+          "est_siege": true,
+          "adresse": "59 RUE LA FAYETTE 75009 PARIS",
+          "etat_administratif": "actif"
+        }
+      ]
+    },
+    "calendrier_reforme": {
+      "reception_obligatoire_depuis": "2026-09-01",
+      "emission_obligatoire_depuis": "2026-09-01",
+      "base_calcul": "catégorie d'entreprise INSEE : GE"
+    },
+    "avertissements": [],
+    "data_freshness": "identité : stock Sirene mensuel (2026-07-01)",
+    "disclaimer": "Données de préparation fournies à titre indicatif ; Sirenic n'émet, ne transmet ni ne route aucune facture, et ne confirme pas l'enregistrement du destinataire sur le PPF ou une PDP."
+  }
+}

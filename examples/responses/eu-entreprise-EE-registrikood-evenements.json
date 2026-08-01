@@ -1,0 +1,34 @@
+{
+  "_endpoint": "/v1/eu/entreprise/EE/{registrikood}/evenements",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/EE/10119794/evenements",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "EE",
+    "id_national": "10119794",
+    "aucune_ordonnance": false,
+    "nombre_alertes": 2,
+    "types_non_qualifies": [
+      {
+        "code": "K1",
+        "libelle": "Kanne"
+      }
+    ],
+    "evenements": [
+      {
+        "numero": "Ä 30001556 / M1",
+        "date_ordonnance": "2021-02-03",
+        "date_inscription": null,
+        "delai_supplementaire": "2021-08-03",
+        "type_code": "X2",
+        "type_libelle": "Hoiatusmäärus registrist kustutamiseks: majandusaasta aruanne esitamata",
+        "etat_code": "J",
+        "etat_libelle": "Jõustunud",
+        "alerte": true
+      }
+    ],
+    "photo_le": "2026-07-29",
+    "source": "e-äriregister (Registre du commerce estonien) — open data avaandmed.ariregister.rik.ee (aruannete elemendid, määrused), RIK, licence CC BY 4.0"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "_endpoint": "/v1/eu/entreprise/GB/{company_number}/comptes",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/GB/00095407/comptes",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "GB",
+    "id_national": "00095407",
+    "nombre_depots": 1,
+    "depots": [
+      {
+        "date_cloture": "2025-12-31",
+        "debut_exercice": "2025-01-01",
+        "denomination": "COSSART,GORDON AND CO.LIMITED",
+        "devise": "GBP",
+        "referentiel": "Micro-entities",
+        "type_comptes": "FullAccounts",
+        "nb_postes_decodes": 14,
+        "nb_postes_courant": 7
+      }
+    ],
+    "telechargement": "GET /v1/eu/entreprise/GB/{company_number}/comptes/{date_cloture}",
+    "source": "Companies House — Free Accounts Data Product (download.companieshouse.gov.uk)",
+    "licence": "Contains public sector information licensed under the Open Government Licence v3.0 (Companies House)",
+    "disclaimer": "Postes décodés des comptes annuels déposés en iXBRL à Companies House"
+  }
+}

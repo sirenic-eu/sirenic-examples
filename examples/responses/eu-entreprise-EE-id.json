@@ -1,0 +1,34 @@
+{
+  "_endpoint": "/v1/eu/entreprise/EE/{id}",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/EE/12417834",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "EE",
+    "registre": "e-Business Register (RIK)",
+    "id_national": "12417834",
+    "denomination": "Bolt Technology OÜ",
+    "forme_juridique": {
+      "code": null,
+      "libelle": "Osaühing"
+    },
+    "statut": "actif",
+    "statut_detail": "Registrisse kantud",
+    "date_creation": "2013-02-07",
+    "adresse_siege": {
+      "adresse": "Vana-Lõuna tn 15",
+      "code_postal": "10134",
+      "ville": "Kesklinna linnaosa, Tallinn, Harju maakond",
+      "pays": "EE"
+    },
+    "identifiants": {
+      "tva": "EE102090374",
+      "lei": null
+    },
+    "lien_registre": "https://ariregister.rik.ee/est/company/12417834",
+    "data_freshness": "stock e-Business Register (RIK) (2026-07)",
+    "source": "Registres officiels : Brønnøysundregistrene (NO, NLOD), e-Business Register (EE, CC-BY 4.0), Uzņēmumu reģistrs (LV), KBO/BCE (BE), CVR (DK), Companies House (GB, OGL), ARES (CZ), Register právnických osôb (SK, CC-BY 4.0), PRH/YTJ (FI, CC-BY 4.0), Krajowy Rejestr Sądowy (PL), Zefix (CH, OGD), Bolagsverket (SE), GLEIF (CC0)",
+    "disclaimer": "Données rediffusées telles que publiées par les registres officiels, dans un schéma unifié ; `statut` est une normalisation en 3 valeurs, le libellé source est conservé dans `statut_detail`. / Official register data as published, unified schema; `statut` is a 3-value normalization."
+  }
+}

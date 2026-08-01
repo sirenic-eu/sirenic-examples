@@ -1,0 +1,27 @@
+{
+  "_endpoint": "/v1/eu/entreprise/PL/{krs}/evenements",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/PL/0000006865/evenements",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "PL",
+    "krs": "0000006865",
+    "observation": {
+      "depuis": "2026-07-01",
+      "jusqu_au": "2026-07-28"
+    },
+    "aucun_evenement": true,
+    "nombre_evenements": 0,
+    "evenements": [],
+    "derniere_observation": null,
+    "existence": {
+      "verifiee": false,
+      "explication": "Existence NON vérifiée : cette route ne lit que les journées du Biuletyn, et ce numéro n'y a jamais figuré pendant la fenêtre. `aucun_evenement: true` signifie « aucun changement publié pendant la fenêtre » — PAS « société existante restée calme » : un numéro inexistant donne exactement la même réponse. Pour trancher l'existence, appeler la fiche d'identité LIVE (elle rend 404 si le KRS n'existe pas). / Existence NOT verified: this route only reads the daily bulletin and this number never appeared in it during the window; an unknown number yields the very same answer. Use the live identity endpoint to settle existence (it returns 404 when the KRS does not exist).",
+      "route_identite": "/v1/eu/entreprise/PL/0000006865"
+    },
+    "retard_jours": 1,
+    "source": "Krajowy Rejestr Sądowy (KRS) — Ministerstwo Sprawiedliwości, API ouverte api-krs.ms.gov.pl (Biuletyn quotidien + OdpisAktualny)",
+    "licence": "Données publiques du Krajowy Rejestr Sądowy (Ministerstwo Sprawiedliwości, api-krs.ms.gov.pl), réutilisation libre"
+  }
+}

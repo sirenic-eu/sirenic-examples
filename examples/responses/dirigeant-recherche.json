@@ -1,0 +1,25 @@
+{
+  "_endpoint": "/v1/dirigeant/recherche",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/dirigeant/recherche?nom=Arnault",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "nombre_resultats": 1,
+    "tronque": false,
+    "resultats": [
+      {
+        "siren": "552032534",
+        "denomination": "GROUPE ARNAULT",
+        "correspondance_locale": true,
+        "mandats": [
+          {
+            "type": "personne_physique",
+            "nom": "ARNAULT",
+            "fonction": "Président"
+          }
+        ]
+      }
+    ]
+  }
+}

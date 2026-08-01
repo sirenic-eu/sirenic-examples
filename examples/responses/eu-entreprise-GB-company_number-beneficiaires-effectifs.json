@@ -1,0 +1,32 @@
+{
+  "_endpoint": "/v1/eu/entreprise/GB/{company_number}/beneficiaires-effectifs",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/GB/00446915/beneficiaires-effectifs?inclure_cesses=true",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "GB",
+    "company_number": "00446915",
+    "nombre_actifs": 1,
+    "nombre_cesses": 0,
+    "exemption_possible": false,
+    "beneficiaires": [
+      {
+        "type": "entite",
+        "nom": "Bp International Limited",
+        "notifie_le": "2016-04-06",
+        "natures_de_controle": [
+          "ownership-of-shares-75-to-100-percent"
+        ],
+        "identification": {
+          "forme_juridique": "Limited By Shares",
+          "registre": "Companies House",
+          "numero_registre": "00542515"
+        }
+      }
+    ],
+    "declarations": [],
+    "source": "Companies House (api.company-information.service.gov.uk). Contains public sector information licensed under the Open Government Licence v3.0 (Companies House).",
+    "data_freshness": "Companies House temps réel (cache 24 h)"
+  }
+}

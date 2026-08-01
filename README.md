@@ -203,6 +203,10 @@ Two things this is **not**:
 
 ## Endpoints and prices (USDC or EURC per call, same amount)
 
+> A **real sample response** for every endpoint below is in
+> [`examples/responses/`](examples/responses/) — dated, truncated to one item per
+> array, and identical to what the OpenAPI spec and the x402 quote declare.
+
 | Endpoint | Price | What you get |
 |---|---|---|
 | **`GET /v1/facturation/dossier?siren=&iban=`** | **$0.03** | **Verify a French supplier before payment**: e-invoicing prep + live VIES + IBAN/bank check + a deterministic `pret_a_facturer` verdict |
@@ -218,7 +222,6 @@ Two things this is **not**:
 | `GET /v1/entreprise/{siren}/lobbying` | $0.01 | HATVP lobbying register (org-level: budgets, subjects, clients) |
 | `GET /v1/entreprise/{siren}/changements?depuis=` | $0.01 | New BODACC events since a date |
 | `GET /v1/entreprise/{siren}/pi` | $0.03 | Industrial property (trademarks, patents, designs) |
-| `GET /v1/entreprise/{siren}/comptes-pdf` | $2.00 | Accounts annexe notes, AI-extracted (structured) |
 | `GET /v1/entreprise/{siren}/capital` | $0.35 | Ownership from public articles, AI-extracted |
 | `GET /v1/entreprise/{siren}/liens-capitalistiques` | $2.00 | Single-level capital links between legal entities |
 | `GET /v1/entreprise/{siren}/sante` | $0.15 | AI health summary (7-day cache) |
@@ -259,6 +262,10 @@ returned at creation is the capability — no account).
 - [`examples/pay-and-call.ts`](examples/pay-and-call.ts) — pay one request end to end.
 - [`examples/verify-invoice-file.ts`](examples/verify-invoice-file.ts) — **verify a supplier before you pay, and keep the proof** (~$0.03): buy the invoicing file, verify its signature offline, read the `pret_a_facturer` verdict and its provenance only once authenticated, then write a timestamped audit folder (raw bytes, signature, public key, `LISEZ-MOI.md`) and re-verify it from those files alone.
 - [`examples/verify-signature.ts`](examples/verify-signature.ts) — **the full audit loop**: verify the Ed25519 signature of a paid response offline, then read its **per-block provenance** (official register + `as_of` date) from inside the signed bytes (~$0.02).
+- [`examples/responses/`](examples/responses/) — **what you actually get back**: one
+  real, dated sample per paid endpoint, truncated to one item per array. The same
+  samples are served by the API itself, in the OpenAPI spec, in the x402 payment
+  quote and in `llms.txt` — so the contract you read is the contract you get.
 - [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call **every paid endpoint** once (~$7.40 total, USDC and/or EURC; the watchlist it creates is stopped again for free).
 - [`examples/agent-demo.ts`](examples/agent-demo.ts) — a small autonomous agent that searches, pays and reads profiles.
 - [`examples/mcp-setup.md`](examples/mcp-setup.md) — MCP configuration for Claude, Cursor and generic clients.

@@ -1,0 +1,44 @@
+{
+  "_endpoint": "/v1/eu/entreprise/BE/{id}",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/BE/0403170701",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "BE",
+    "registre": "Banque-Carrefour des Entreprises (KBO/BCE)",
+    "id_national": "0403170701",
+    "denomination": "ELECTRABEL",
+    "forme_juridique": {
+      "code": "014",
+      "libelle": "Société anonyme"
+    },
+    "statut": "actif",
+    "adresse_siege": {
+      "ville": "BRUXELLES",
+      "pays": "BE"
+    },
+    "activite": {
+      "nomenclature": "NACEBEL 2025",
+      "code": "35111",
+      "libelle": "Production d'électricité"
+    },
+    "activites": [
+      {
+        "nomenclature": "NACEBEL 2025",
+        "code": "35111",
+        "libelle": "Production d'électricité",
+        "classification": "MAIN"
+      }
+    ],
+    "nombre_etablissements": 2,
+    "identifiants": {
+      "tva": "BE0403170701",
+      "lei": null
+    },
+    "lien_registre": "https://kbopub.economie.fgov.be/kbopub/zoeknummerform.html?nummer=0403170701",
+    "data_freshness": "stock Banque-Carrefour des Entreprises (KBO/BCE) (2026-07)",
+    "source": "Registres officiels : Brønnøysundregistrene (NO, NLOD), e-Business Register (EE, CC-BY 4.0), Uzņēmumu reģistrs (LV), KBO/BCE (BE), CVR (DK), Companies House (GB, OGL), ARES (CZ), Register právnických osôb (SK, CC-BY 4.0), PRH/YTJ (FI, CC-BY 4.0), Krajowy Rejestr Sądowy (PL), Zefix (CH, OGD), Bolagsverket (SE), GLEIF (CC0)",
+    "disclaimer": "Données rediffusées telles que publiées par les registres officiels, dans un schéma unifié ; `statut` est une normalisation en 3 valeurs, le libellé source est conservé dans `statut_detail`. / Official register data as published, unified schema; `statut` is a 3-value normalization."
+  }
+}

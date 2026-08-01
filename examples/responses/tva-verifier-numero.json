@@ -1,0 +1,19 @@
+{
+  "_endpoint": "/v1/tva/verifier/{numero}",
+  "_price": "$0.003",
+  "_request": "GET https://api.sirenic.eu/v1/tva/verifier/FR27552032534",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "numero": "FR27552032534",
+    "pays": "FR",
+    "statut": "valide",
+    "nom": "SA DANONE",
+    "adresse": "59 RUE LA FAYETTE 75009 PARIS",
+    "request_identifier": null,
+    "verifie_le": "2026-07-29T07:29:08.915Z",
+    "valide": true,
+    "source": "VIES — Commission européenne (service officiel de validation TVA)",
+    "disclaimer": "Statut au moment de la consultation ; en cas d'indisponibilité du service de l'État membre, le statut est `indisponible` (jamais un faux invalide)."
+  }
+}

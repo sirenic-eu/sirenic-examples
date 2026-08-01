@@ -1,0 +1,30 @@
+{
+  "_endpoint": "/v1/eu/entreprise/DK/{id}/comptes/{date_cloture}",
+  "_price": "$0.05",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/DK/41235292/comptes/2025-12-31",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "DK",
+    "id_national": "41235292",
+    "date_cloture": "2025-12-31",
+    "exercice": {
+      "date_cloture": "2025-12-31",
+      "denomination": "Nielsen Media Denmark ApS",
+      "devise": "DKK",
+      "chiffre_affaires": 48566339,
+      "resultat_brut": 16122431,
+      "resultat_net": 1082932,
+      "capitaux_propres": 4879267,
+      "total_actif": 15978409,
+      "dettes": null,
+      "effectif_moyen": 34,
+      "exercice_precedent": {
+        "chiffre_affaires": 49775255,
+        "resultat_net": 164204
+      }
+    },
+    "source": "Erhvervsstyrelsen (Danish Business Authority) — offentliggørelser, distribution.virk.dk",
+    "disclaimer": "Extraits décodés des dépôts XBRL danois en taxonomie « regnskab » (fsa) tels que publiés"
+  }
+}

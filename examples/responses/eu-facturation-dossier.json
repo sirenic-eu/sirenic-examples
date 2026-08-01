@@ -1,0 +1,45 @@
+{
+  "_endpoint": "/v1/eu/facturation/dossier",
+  "_price": "$0.03",
+  "_request": "GET https://api.sirenic.eu/v1/eu/facturation/dossier?pays=BE&id=0403199702",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "BE",
+    "id": "0403199702",
+    "destinataire": {
+      "denomination": "BNP Paribas Fortis",
+      "etat": null
+    },
+    "tva": {
+      "numero": "BE0403199702",
+      "statut": "valide"
+    },
+    "peppol": {
+      "joignable": true,
+      "identifiant": "0208:0403199702",
+      "nom_enregistre": "BNP Paribas Fortis NV",
+      "documents": [
+        "Invoice"
+      ],
+      "accepte_facture_en16931": true
+    },
+    "banque": null,
+    "mandat": {
+      "obligation": "facturation électronique structurée entre assujettis",
+      "en_vigueur_depuis": "2026-01-01",
+      "canal_par_defaut": "Peppol (art. 13ter, présomption réfragable)"
+    },
+    "verdict": {
+      "pret_a_facturer": true,
+      "raisons": [
+        {
+          "code": "iban_non_fourni",
+          "niveau": "information",
+          "source": "Paramètre `iban` absent — contrôle bancaire non effectué."
+        }
+      ]
+    },
+    "source": "Banque-Carrefour des Entreprises (BCE/KBO), VIES (Commission européenne), annuaire Peppol, registres bancaires officiels."
+  }
+}

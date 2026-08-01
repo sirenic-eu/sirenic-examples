@@ -1,0 +1,29 @@
+{
+  "_endpoint": "/v1/entreprise/{siren}/capital",
+  "_price": "$0.35",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/capital",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "siren": "552032534",
+    "modele": "claude-sonnet-5",
+    "capital": {
+      "montant_capital_eur": 170739060,
+      "forme_juridique": "Société anonyme",
+      "associes": [],
+      "clauses_notables": [
+        "droit_de_vote_double"
+      ],
+      "confiance": "faible"
+    },
+    "version_prompt": "capital-v2",
+    "document_source": {
+      "id": "6a33ae8b0397b4bf6e0f5118",
+      "nom": "Statuts_Danone_26_mai_2026_signes_2",
+      "type": "actes",
+      "date_depot": "2026-06-16"
+    },
+    "depuis_cache": true,
+    "source": "INPI — actes/statuts publics déposés au registre national des entreprises (RNE)"
+  }
+}

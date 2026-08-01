@@ -1,0 +1,39 @@
+{
+  "_endpoint": "/v1/eu/entreprise/FI/{id}",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/FI/0112038-9",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "FI",
+    "registre": "YTJ / PRH Business Information System (CC-BY 4.0)",
+    "id_national": "0112038-9",
+    "denomination": "Nokia Oyj",
+    "forme_juridique": {
+      "code": "17",
+      "libelle": "Public limited company"
+    },
+    "statut": "actif",
+    "statut_detail": "ytj status 2",
+    "date_creation": "1896-12-19",
+    "adresse_siege": {
+      "adresse": "Karakaari 7",
+      "code_postal": "02610",
+      "ville": "ESPOO",
+      "pays": "FI"
+    },
+    "activite": {
+      "nomenclature": "TOIMI4",
+      "code": "70100",
+      "libelle": null
+    },
+    "identifiants": {
+      "tva": "FI01120389",
+      "lei": null
+    },
+    "lien_registre": "https://tietopalvelu.ytj.fi/yritys/0112038-9",
+    "data_freshness": "PRH/YTJ open data temps réel (cache 24 h)",
+    "source": "Registres officiels : Brønnøysundregistrene (NO, NLOD), e-Business Register (EE, CC-BY 4.0), Uzņēmumu reģistrs (LV), KBO/BCE (BE), CVR (DK), Companies House (GB, OGL), ARES (CZ), Register právnických osôb (SK, CC-BY 4.0), PRH/YTJ (FI, CC-BY 4.0), Krajowy Rejestr Sądowy (PL), Zefix (CH, OGD), Bolagsverket (SE), GLEIF (CC0)",
+    "disclaimer": "Données rediffusées telles que publiées par les registres officiels, dans un schéma unifié ; `statut` est une normalisation en 3 valeurs, le libellé source est conservé dans `statut_detail`. / Official register data as published, unified schema; `statut` is a 3-value normalization."
+  }
+}

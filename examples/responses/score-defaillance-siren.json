@@ -1,0 +1,31 @@
+{
+  "_endpoint": "/v1/score/defaillance/{siren}",
+  "_price": "$0.10",
+  "_request": "GET https://api.sirenic.eu/v1/score/defaillance/552032534",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "siren": "552032534",
+    "denomination": "DANONE",
+    "score_risque": 30,
+    "classe": "vigilance",
+    "risque_12m": "modéré",
+    "composantes": [
+      {
+        "axe": "liquidite",
+        "indicateur": "ratio_liquidite_%",
+        "valeur": 7.093,
+        "seuil": "<80/<100",
+        "points": 12
+      }
+    ],
+    "exercice_reference": "2024-12-31",
+    "confiance": "forte",
+    "version_modele": "defaillance-v1.1",
+    "signaux_bodacc": {
+      "procedure_collective": false,
+      "liquidation_judiciaire": false
+    },
+    "data_freshness": "identité stock Sirene (2026-07-01) + ratios financiers + BODACC temps réel"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "_endpoint": "/v1/entreprise/{siren}/risques-industriels",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/095580841/risques-industriels",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "siren": "095580841",
+    "synthese": {
+      "niveau_risque_max": "seveso_seuil_haut",
+      "nb_installations": 6,
+      "nb_en_exploitation": 6,
+      "seveso_seuil_haut": 2,
+      "seveso_seuil_bas": 0,
+      "par_regime": {
+        "autorisation": 2,
+        "enregistrement": 4,
+        "autres": 0
+      },
+      "ied": 0,
+      "priorite_nationale": 2
+    },
+    "installations": [
+      {
+        "code_aiot": "0005207266",
+        "raison_sociale": "TEREGA - Centre de stockage",
+        "commune": "Lussagnet",
+        "code_postal": "40270",
+        "statut_seveso": "Seveso seuil haut",
+        "regime": "Autorisation",
+        "etat_activite": "En exploitation avec titre",
+        "ied": false
+      }
+    ],
+    "source": "Géorisques — Ministère de la Transition écologique (DGPR), base des installations classées, Licence Ouverte / etalab-2.0",
+    "data_freshness": "stock Géorisques mensuel (extrait 2026-07-23)"
+  }
+}

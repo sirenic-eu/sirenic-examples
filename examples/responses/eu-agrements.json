@@ -1,0 +1,34 @@
+{
+  "_endpoint": "/v1/eu/agrements",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/agrements?q=BNP%20Paribas",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "requete": {
+      "q": "BNP Paribas",
+      "pays": null
+    },
+    "nombre_total": 64,
+    "nombre_retourne": 10,
+    "tronque": true,
+    "agrements": [
+      {
+        "nom": "BNP PARIBAS ASSET MANAGEMENT EUROPE",
+        "lei": "W51AX6427FJZJFPF8H34",
+        "type_entite": "UCITS management company",
+        "autorite_competente": "Autorité des Marchés Financiers (AMF)",
+        "pays_origine": "FRANCE",
+        "pays_accueil": [
+          "AUSTRIA"
+        ],
+        "statut": "Active",
+        "date_autorisation": "2002-04-01T00:00:00Z",
+        "date_retrait": null
+      }
+    ],
+    "source": "ESMA Registers — European Securities and Markets Authority (registers.esma.europa.eu). This data is freely available at the source.",
+    "disclaimer": "Entités telles que publiées dans le registre unifié ESMA au moment de la consultation (statuts, autorités, passeports) — ni un avis de conformité ni une confirmation d'agrément ; vérifier auprès de l'autorité compétente.",
+    "data_freshness": "interrogation ESMA en direct, cache 1 h"
+  }
+}

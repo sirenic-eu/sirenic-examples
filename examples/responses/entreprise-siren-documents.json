@@ -1,0 +1,35 @@
+{
+  "_endpoint": "/v1/entreprise/{siren}/documents",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/documents",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "siren": "552032534",
+    "denomination": "DANONE",
+    "actes": [
+      {
+        "id": "6a33ae8b0397b4bf6e0f5118",
+        "type": "actes",
+        "libelle": "Copie des statuts mis à jour",
+        "date_depot": "2026-06-16",
+        "nom_document": "Statuts_Danone_26_mai_2026_signes_2"
+      }
+    ],
+    "bilans": [
+      {
+        "id": "6a33a929f9e4b401ad07b51a",
+        "type": "bilans",
+        "libelle": null,
+        "date_depot": "2026-05-27",
+        "date_cloture": "2025-12-31",
+        "nom_document": "CA_552032534_7501_K00245359617_2025_K"
+      }
+    ],
+    "total": 208,
+    "consulte_le": "2026-07-29T07:28:49.560Z",
+    "telechargement": "GET /v1/documents/{type}/{id} — type = actes | bilans, id = champ `id` ci-dessous ($0.10, PDF)",
+    "source": "INPI — Registre national des entreprises (RNE), documents tels que déposés",
+    "data_freshness": "INPI RNE temps réel, liste en cache 24 h"
+  }
+}

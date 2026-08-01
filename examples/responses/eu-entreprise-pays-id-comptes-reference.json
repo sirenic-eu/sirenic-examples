@@ -1,0 +1,29 @@
+{
+  "_endpoint": "/v1/eu/entreprise/{pays}/{id}/comptes/{reference}",
+  "_price": "$0.15",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/FI/0103396-3/comptes/2024-12-31?format=pdf",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "FI",
+    "id_national": "0103396-3",
+    "date_cloture": "2024-12-31",
+    "exercice": {
+      "date_cloture": "2024-12-31",
+      "debut_exercice": "2024-01-01",
+      "denomination": "Arkkitehtitoimisto HKP Oy",
+      "chiffre_affaires": 582458.35,
+      "resultat_exploitation": -54382.16,
+      "resultat_net": -48510.86,
+      "capitaux_propres": 482422.26,
+      "total_actif": 594206.51,
+      "dettes": 111784.25,
+      "exercice_precedent": {
+        "chiffre_affaires": 1128645.82,
+        "resultat_net": 26876.86
+      }
+    },
+    "source": "PRH / avoindata.prh.fi — Patentti- ja rekisterihallitus (Finnish Patent and Registration Office), licence CC BY 4.0",
+    "disclaimer": "Comptes annuels finlandais LORSQU'ILS SONT DÉPOSÉS EN XBRL au PRH (~5 % des sociétés à responsabilité limitée)"
+  }
+}

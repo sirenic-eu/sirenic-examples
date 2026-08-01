@@ -1,0 +1,40 @@
+{
+  "_endpoint": "/v1/entreprise/{siren}/lobbying",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/lobbying",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "siren": "552032534",
+    "inscrit": true,
+    "denomination": "DANONE",
+    "categorie": {
+      "code": "SCOMCIV",
+      "famille": "ENTREPRISE"
+    },
+    "date_premiere_publication": "2017-12-05",
+    "desinscription": null,
+    "exercices": [
+      {
+        "fin": "2025-12-31",
+        "nb_salaries": 1,
+        "nb_activites": 8,
+        "depenses_tranche": "> = 200 000 euros et < 300 000 euros",
+        "defaut_declaration": false
+      }
+    ],
+    "sujets_recents": [
+      {
+        "date": "2026-04-08",
+        "objet": "Soutenir le développement des innovations en faveur de la transition agroécologique, de la collecte et du recyclage du plastique notamment via la consigne",
+        "domaines": [
+          "Agriculture, agroalimentaire"
+        ]
+      }
+    ],
+    "clients": [],
+    "source": "HATVP — Répertoire des représentants d'intérêts (AGORA), Licence Ouverte 2.0",
+    "disclaimer": "Données DÉCLARATIVES publiées par la HATVP, restituées au niveau de l'organisation (aucune personne physique) et resynchronisées régulièrement — le champ `objet` des sujets est le texte déclaré par l'organisation. Ni un avis ni une appréciation sur la licéité des activités.",
+    "data_freshness": "répertoire HATVP (extrait 2026-07-27)"
+  }
+}

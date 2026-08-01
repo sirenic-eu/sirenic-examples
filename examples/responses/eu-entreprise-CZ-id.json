@@ -1,0 +1,34 @@
+{
+  "_endpoint": "/v1/eu/entreprise/CZ/{id}",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/CZ/45274649",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "CZ",
+    "registre": "ARES — Registr ekonomických subjektů (MF ČR)",
+    "id_national": "45274649",
+    "denomination": "ČEZ, a. s.",
+    "forme_juridique": {
+      "code": "121",
+      "libelle": null
+    },
+    "statut": "actif",
+    "statut_detail": null,
+    "date_creation": "1992-05-06",
+    "adresse_siege": {
+      "adresse": "Duhová 1444/2, Michle, 14000 Praha 4",
+      "code_postal": "14000",
+      "ville": "Praha",
+      "pays": "CZ"
+    },
+    "identifiants": {
+      "tva": "CZ45274649",
+      "lei": null
+    },
+    "lien_registre": "https://ares.gov.cz/ekonomicke-subjekty?ico=45274649",
+    "data_freshness": "ARES temps réel (cache 24 h)",
+    "source": "Registres officiels : Brønnøysundregistrene (NO, NLOD), e-Business Register (EE, CC-BY 4.0), Uzņēmumu reģistrs (LV), KBO/BCE (BE), CVR (DK), Companies House (GB, OGL), ARES (CZ), Register právnických osôb (SK, CC-BY 4.0), PRH/YTJ (FI, CC-BY 4.0), Krajowy Rejestr Sądowy (PL), Zefix (CH, OGD), Bolagsverket (SE), GLEIF (CC0)",
+    "disclaimer": "Données rediffusées telles que publiées par les registres officiels, dans un schéma unifié ; `statut` est une normalisation en 3 valeurs, le libellé source est conservé dans `statut_detail`. / Official register data as published, unified schema; `statut` is a 3-value normalization."
+  }
+}

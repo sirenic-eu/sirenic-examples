@@ -1,0 +1,19 @@
+{
+  "_endpoint": "/v1/surveillance/creer",
+  "_price": "$0.05",
+  "_request": "GET https://api.sirenic.eu/v1/surveillance/creer?cibles=552032534%2C542065479",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "surveillance_id": "sw_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.<horodatage_base64url>.<signature_ed25519_base64url>",
+    "cibles": 2,
+    "expire_le": "2026-08-28T07:36:32.134Z",
+    "canaux": {
+      "webhook": false,
+      "email": false,
+      "pull": "/v1/surveillance/sw_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+    },
+    "source": "Surveillance Sirenic — diffs quotidiens sur sources officielles (Sirene, BODACC, sanctions, AMF, Géorisques, DECP, TED)",
+    "disclaimer": "Vérification QUOTIDIENNE : un événement est signalé au plus tard le jour ouvré suivant sa publication par la source. Les correspondances (sanctions, listes AMF) sont des rapprochements de noms à vérifier — jamais une décision. Cible dirigeant : uniquement le suivi des MANDATS publics (nom + année), purgé à l'expiration."
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "_endpoint": "/v1/eu/entreprise/ES/{hoja}/actes",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/ES/VI-14412/actes",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "ES",
+    "hoja": "VI-14412",
+    "denomination": "OSG IBERICA TOOLING, SOCIEDAD LIMITADA",
+    "nif": null,
+    "rattachement_nif": "non disponible — le BORME (sección A) ne publie pas le NIF",
+    "nombre_actes": 1,
+    "actes_tronques": false,
+    "actes": [
+      {
+        "fecha": "2026-07-23",
+        "numero": 344928,
+        "provincia": "ARABA/ÁLAVA",
+        "id_document": "BORME-A-2026-140-01",
+        "types": [
+          "fusion por absorcion"
+        ],
+        "corps": "Fusión por absorción. Sociedades absorbidas: OSG NST IBERICA SOCIEDAD LIMITADA.  Datos registrales. S 8 , H VI 14412, I/A 32 (15.07.26)."
+      }
+    ],
+    "source": "BORME sección A (actos inscritos) — Basado en datos de la Agencia Estatal Boletín Oficial del Estado (https://www.boe.es)"
+  }
+}

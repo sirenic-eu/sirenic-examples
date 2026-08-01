@@ -1,0 +1,46 @@
+{
+  "_endpoint": "/v1/entreprise/{siren}/marches-publics-ue",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/428634356/marches-publics-ue",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "siren": "428634356",
+    "nombre_avis": 1,
+    "nombre_retourne": 1,
+    "tronque": false,
+    "avis": [
+      {
+        "reference_ted": "425760-2026",
+        "date_publication": "2026-06-22",
+        "type_avis": "can-standard",
+        "objet": "Études préliminaires usines d'eau potable",
+        "acheteur": {
+          "nom": "SYNDICAT EAU47",
+          "pays": "FRA"
+        },
+        "montant_avis": {
+          "valeur": 1250000,
+          "devise": "EUR",
+          "portee": "avis entier (tous lots/titulaires)"
+        },
+        "codes_cpv": [
+          "71241000"
+        ],
+        "co_titulaires": [
+          "CABINET MERLIN"
+        ],
+        "identifiants_gagnants": [
+          "42863435600532"
+        ],
+        "lien_ted": "https://ted.europa.eu/fr/notice/425760-2026/pdf",
+        "correspondance": {
+          "methode": "identifiant",
+          "confiance": "haute"
+        }
+      }
+    ],
+    "source": "TED — Tenders Electronic Daily (ted.europa.eu), Office des publications de l'UE ; réutilisation libre, © Union européenne",
+    "data_freshness": "interrogation TED en direct, cache 24 h"
+  }
+}

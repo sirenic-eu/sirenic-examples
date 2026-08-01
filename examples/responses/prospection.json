@@ -1,0 +1,29 @@
+{
+  "_endpoint": "/v1/prospection",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/prospection?naf=62.01Z&departement=75&page=1",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "criteres": {
+      "naf": "62.01Z",
+      "departement": "75",
+      "page": 1
+    },
+    "nombre_resultats": 100,
+    "page": 1,
+    "page_suivante": true,
+    "resultats": [
+      {
+        "siren": "100000348",
+        "denomination": "LES EDITIONS DIGITALES",
+        "activite_principale": "62.01Z",
+        "forme_juridique": "5710",
+        "tranche_effectif_salarie": "NN",
+        "date_creation": "2026-01-15",
+        "code_postal_siege": "75011",
+        "commune_siege": "PARIS"
+      }
+    ]
+  }
+}

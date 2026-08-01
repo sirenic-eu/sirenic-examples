@@ -1,0 +1,27 @@
+{
+  "_endpoint": "/v1/iban/verifier/{iban}",
+  "_price": "$0.005",
+  "_request": "GET https://api.sirenic.eu/v1/iban/verifier/FR1420041010050500013M02606",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "iban_normalise": "FR1420041010050500013M02606",
+    "pays": "FR",
+    "valide": true,
+    "controles": {
+      "pays_connu": "ok",
+      "longueur": "ok",
+      "mod97": "ok"
+    },
+    "code_banque": "20041",
+    "banque": {
+      "identifiee": true,
+      "nom": "La Banque Postale",
+      "bic": "PSSTFRPPXXX",
+      "lei": "96950066U5XAAIRCPA78",
+      "siren": "421100645"
+    },
+    "verification_titulaire": "non_disponible",
+    "disclaimer": "Validation TECHNIQUE et registres publics uniquement — ceci n'est PAS une Verification of Payee au sens du règlement (UE) 2024/886 (le schéma VoP est réservé aux prestataires de services de paiement) : le nom du TITULAIRE du compte n'est jamais vérifié. L'existence du compte n'est pas contrôlée."
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "_endpoint": "/v1/eu/entreprise/DK/{cvr}/dirigeants",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/DK/24256790/dirigeants?inclure_anciens=true",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "DK",
+    "id_national": "24256790",
+    "denomination": "NOVO NORDISK A/S",
+    "statut": "NORMAL",
+    "nombre_mandats_en_cours": 20,
+    "nombre_anciens_mandats": 9,
+    "tronque": false,
+    "dirigeants": [
+      {
+        "nom": "DELOITTE STATSAUTORISERET REVISIONSPARTNERSELSKAB",
+        "type": "entite",
+        "organe": "Revision",
+        "organe_type": "REVISION",
+        "fonction": "REVISION",
+        "depuis": "2021-03-25",
+        "jusqu_au": null,
+        "en_cours": true,
+        "mode_election": null,
+        "cvr": "33963556"
+      }
+    ],
+    "source": "CVR — Erhvervsstyrelsen (Danish Business Authority), accès system-à-système distribution.virk.dk",
+    "data_freshness": "CVR temps réel (cache 24 h)"
+  }
+}

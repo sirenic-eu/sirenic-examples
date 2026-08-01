@@ -1,0 +1,34 @@
+{
+  "_endpoint": "/v1/eu/entreprise/{pays}/{id}",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/NO/923609016",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "NO",
+    "registre": "Enhetsregisteret (Brønnøysundregistrene)",
+    "id_national": "923609016",
+    "denomination": "EQUINOR ASA",
+    "forme_juridique": {
+      "code": "ASA",
+      "libelle": "Allmennaksjeselskap"
+    },
+    "statut": "actif",
+    "statut_detail": null,
+    "date_creation": "1995-03-12",
+    "adresse_siege": {
+      "adresse": "Forusbeen 50",
+      "code_postal": "4035",
+      "ville": "STAVANGER",
+      "pays": "NO"
+    },
+    "identifiants": {
+      "tva": "NO923609016MVA",
+      "lei": "OW6OFBNCKXC4US5C7523"
+    },
+    "lien_registre": "https://virksomhet.brreg.no/nb/oppslag/enheter/923609016",
+    "data_freshness": "stock Enhetsregisteret (Brønnøysundregistrene) (2026-07)",
+    "source": "Registres officiels : Brønnøysundregistrene (NO, NLOD), e-Business Register (EE, CC-BY 4.0), Uzņēmumu reģistrs (LV), KBO/BCE (BE), CVR (DK), Companies House (GB, OGL), ARES (CZ), Register právnických osôb (SK, CC-BY 4.0), PRH/YTJ (FI, CC-BY 4.0), Krajowy Rejestr Sądowy (PL), Zefix (CH, OGD), Bolagsverket (SE), GLEIF (CC0)",
+    "disclaimer": "Données rediffusées telles que publiées par les registres officiels, dans un schéma unifié ; `statut` est une normalisation en 3 valeurs, le libellé source est conservé dans `statut_detail`. / Official register data as published, unified schema; `statut` is a 3-value normalization."
+  }
+}

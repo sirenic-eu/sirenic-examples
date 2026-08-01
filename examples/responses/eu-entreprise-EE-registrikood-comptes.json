@@ -1,0 +1,34 @@
+{
+  "_endpoint": "/v1/eu/entreprise/EE/{registrikood}/comptes",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/EE/10003666/comptes",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "EE",
+    "id_national": "10003666",
+    "devise": "EUR",
+    "nombre_exercices": 2,
+    "exercices": [
+      {
+        "debut_exercice": "2024-08-01",
+        "date_cloture": "2025-07-31",
+        "perimetre": "statutaire",
+        "forme": "OÜ",
+        "depose_le": "2026-01-30",
+        "audite": true,
+        "auditeur_code": "16080550",
+        "bilan": {
+          "total_actif": 5952649
+        },
+        "compte_resultat": {
+          "chiffre_affaires": 10475906,
+          "charges_personnel": -1614840
+        }
+      }
+    ],
+    "source": "e-äriregister (Registre du commerce estonien) — open data avaandmed.ariregister.rik.ee",
+    "licence": "Registrite ja Infosüsteemide Keskus (RIK) — e-äriregistri avaandmed, CC BY 4.0",
+    "disclaimer": "Chiffres clés des rapports annuels tels que publiés par le e-äriregister (RIK, CC BY 4.0), millésimes 2019 et suivants"
+  }
+}
