@@ -11,8 +11,9 @@ truth, four surfaces.
 
 Two endpoints return a **PDF** and therefore have no JSON sample:
 `GET /v1/rapport/{siren}` and `GET /v1/documents/{type}/{id}`. Two more are
-waiting for a real purchase before we publish anything: capital links and
-Swedish accounts — we would rather show nothing than a plausible invention.
+waiting before we publish anything — capital links and Swedish accounts — because
+the only material available is invented test data, and we would rather show
+nothing than a plausible fabrication about a real company.
 
 | Endpoint | Price | Sample |
 |---|---|---|

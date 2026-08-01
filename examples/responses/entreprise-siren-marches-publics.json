@@ -1,18 +1,34 @@
 {
   "_endpoint": "/v1/entreprise/{siren}/marches-publics",
   "_price": "$0.01",
-  "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/marches-publics",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/130031487/marches-publics",
   "_sample_of": "2026-07-29",
   "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
   "response": {
-    "siren": "552032534",
-    "nombre_marches": 0,
-    "montant_total": 0,
-    "premier_marche": null,
-    "dernier_marche": null,
-    "marches": [],
+    "siren": "130031487",
+    "nombre_marches": 25,
+    "montant_total": 4697839.5,
+    "premier_marche": "2023-06-07",
+    "dernier_marche": "2026-06-01",
+    "marches": [
+      {
+        "id": "20262026100",
+        "objet": "ACTIONS DE FORMATION POUR LA SOUS SPECIALITE E1D ESPACES VERTS LOT 7 POUR LE COMPTE DE LA DELEGATION PAYS DE LA LOIRE DU CNFPT",
+        "montant": 100000,
+        "co_traitance": true,
+        "date_notification": "2026-06-01",
+        "duree_mois": 24,
+        "acheteur": {
+          "siret": "18001404502245",
+          "nom": "CENTRE NATIONAL DE LA FONCTION PUBLIQUE TERRITORIALE"
+        },
+        "nature": "Marché",
+        "procedure": "Procédure adaptée",
+        "code_cpv": "80530000-8",
+        "lieu_execution": "49000"
+      }
+    ],
     "liste_tronquee": false,
-    "source": "Données essentielles de la commande publique (DECP consolidées) via data.economie.gouv.fr, licence ouverte 2.0",
-    "disclaimer": "Déclarations des acheteurs publics, qualité hétérogène ; en co-traitance le montant est celui du marché, pas la part du titulaire ; marchés < 40 k€ HT non publiés. / Public buyers' declarations; in joint contracts the amount is the full contract value."
+    "source": "Données essentielles de la commande publique (DECP consolidées) via data.economie.gouv.fr, licence ouverte 2.0"
   }
 }
