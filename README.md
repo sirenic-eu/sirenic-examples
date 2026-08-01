@@ -10,7 +10,13 @@ European company data for AI agents. Pay-per-call in **USDC or EURC** via the
 [x402 protocol](https://github.com/x402-foundation/x402): **no account, no
 API key** — your agent pays each request on Base. Every paid response is
 **Ed25519-signed** and verifiable offline
-([recipe](https://api.sirenic.eu/.well-known/sirenic-signing-key)).
+([recipe](https://api.sirenic.eu/.well-known/sirenic-signing-key)) — and carries
+its **per-block provenance**: which official register each block came from, its
+licence, its version and its `as_of` date, with the exact meaning of that date
+(upstream official publication, Sirenic ingestion, or live consultation).
+Verify the signature, then read the provenance: your agent can prove to an
+auditor what it knew when it paid. Codes are resolved for free at
+[`/v1/provenance/registres`](https://api.sirenic.eu/v1/provenance/registres).
 
 - Landing & pricing: https://api.sirenic.eu
 - OpenAPI: https://api.sirenic.eu/openapi.json
@@ -187,7 +193,7 @@ returned at creation is the capability — no account).
 
 - [`examples/quote.sh`](examples/quote.sh) — inspect a 402 quote with curl.
 - [`examples/pay-and-call.ts`](examples/pay-and-call.ts) — pay one request end to end.
-- [`examples/verify-signature.ts`](examples/verify-signature.ts) — **verify the Ed25519 signature** of a paid response offline (~$0.001).
+- [`examples/verify-signature.ts`](examples/verify-signature.ts) — **the full audit loop**: verify the Ed25519 signature of a paid response offline, then read its **per-block provenance** (official register + `as_of` date) from inside the signed bytes (~$0.02).
 - [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call **every one of the 42 paid endpoints** once (~$6.85 total, USDC and/or EURC; the watchlist it creates is stopped again for free).
 - [`examples/agent-demo.ts`](examples/agent-demo.ts) — a small autonomous agent that searches, pays and reads profiles.
 - [`examples/mcp-setup.md`](examples/mcp-setup.md) — MCP configuration for Claude, Cursor and generic clients.

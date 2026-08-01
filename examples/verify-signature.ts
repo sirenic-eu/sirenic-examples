@@ -9,7 +9,14 @@
  * Signed message: `sirenic-v1:{kid}:{timestamp}:{base64(sha256(body))}`
  * Public key + recipe: https://api.sirenic.eu/.well-known/sirenic-signing-key
  *
- * Run: TEST_WALLET_KEY=0x... npx tsx examples/verify-signature.ts   (~$0.001)
+ * THE FULL AUDIT LOOP: verify the signature, THEN read the provenance. Paid
+ * KYB, batch KYB, sanctions and intelligence responses carry a `provenance`
+ * array — one entry per block served, each naming the official register it
+ * came from and its `as_of` date. Because provenance lives INSIDE the signed
+ * bytes, an agent can prove to an auditor, offline and months later, exactly
+ * which official source it relied on when it decided to pay.
+ *
+ * Run: TEST_WALLET_KEY=0x... npx tsx examples/verify-signature.ts   (~$0.02)
  */
 import { privateKeyToAccount } from "viem/accounts";
 import { wrapFetchWithPayment } from "@x402/fetch";
@@ -19,13 +26,15 @@ import { createHash, createPublicKey, verify } from "node:crypto";
 
 const BASE = "https://api.sirenic.eu";
 
-// 1. Pay one request (any /v1 endpoint — search is the cheapest at $0.001).
+// 1. Pay one request. We use sanctions screening ($0.02): the cheapest
+//    endpoint that carries a `provenance` block, so we can demo both halves
+//    of the audit loop in a single paid call.
 const account = privateKeyToAccount(process.env.TEST_WALLET_KEY as `0x${string}`);
 const client = new x402Client();
 registerExactEvmScheme(client, { signer: account });
 const payingFetch = wrapFetchWithPayment(fetch, client);
 
-const res = await payingFetch(`${BASE}/v1/recherche?q=danone`);
+const res = await payingFetch(`${BASE}/v1/sanctions/check?name=Danone`);
 const body = Buffer.from(await res.arrayBuffer()); // exact bytes — do not re-serialize
 
 // 2. Rebuild the signed message from the response headers + body digest.
@@ -56,4 +65,44 @@ console.log(
     ? "✔ signature valid — this payload provably came from Sirenic, unmodified"
     : "✘ INVALID signature — do not trust this payload",
 );
-console.log(JSON.parse(body.toString()).resultats?.[0]);
+if (!valid) process.exit(1);
+
+// 4. ONLY NOW read the provenance. It is part of the signed bytes, so what
+//    follows is exactly as auditable as the data itself.
+type Provenance = {
+  bloc: string;
+  source_code: string;
+  registre: string;
+  mode: "stock" | "temps_reel" | "calcul";
+  licence?: string;
+  version?: string;
+  as_of?: string;
+  precision_as_of?: "publication_officielle" | "ingestion" | "consultation" | "indisponible";
+};
+const payload = JSON.parse(body.toString()) as {
+  nombre_correspondances: number;
+  listes_consultees?: Array<{
+    liste: string;
+    entrees: number;
+    publication: string;
+    precision_publication: string;
+  }>;
+  provenance?: Provenance[];
+};
+
+console.log(`\n${payload.nombre_correspondances} match(es) — screened against:`);
+for (const l of payload.listes_consultees ?? []) {
+  // `precision_publication` is the honest part: OFAC publishes no upstream
+  // date, so what you get there is Sirenic's ingestion date, said plainly.
+  console.log(
+    `  ${l.liste.padEnd(5)} ${String(l.entrees).padStart(6)} entries  as of ${l.publication}  (${l.precision_publication})`,
+  );
+}
+
+console.log("\nProvenance, block by block:");
+for (const p of payload.provenance ?? []) {
+  const date = p.as_of ? `${p.as_of} (${p.precision_as_of})` : "no date available";
+  console.log(`  ${p.bloc.padEnd(24)} ${p.registre}\n${" ".repeat(28)}${p.mode} · ${date}`);
+}
+// Codes are stable and documented for free — no payment needed to resolve them.
+console.log(`\nWhat each source_code means: ${BASE}/v1/provenance/registres (free)`);
