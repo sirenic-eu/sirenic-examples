@@ -29,7 +29,35 @@ Data sources: INSEE Sirene / INPI RNE and other official registers, open
 licenses (Etalab 2.0, NLOD, CC-BY 4.0, OGL, CC0). Data is redistributed
 as published — every response carries `source` and `disclaimer` fields.
 
-## Quickstart 1 — see a payment quote (no wallet needed)
+## Quickstart 1 — "Can you safely invoice or pay this company?"
+
+One call, three answers: is the supplier still active, is its VAT number valid
+**today**, and is that IBAN a real account at an identified bank. Start with the
+quote — free, no wallet, no account:
+
+```bash
+curl -i "https://api.sirenic.eu/v1/facturation/dossier?siren=552032534&iban=FR1420041010050500013M02606"
+```
+
+Then pay the $0.03 and get the file, with a deterministic verdict:
+
+```ts
+const res = await payingFetch(
+  "https://api.sirenic.eu/v1/facturation/dossier?siren=552032534&iban=FR1420041010050500013M02606",
+);
+const dossier = await res.json();
+dossier.verdict.pret_a_facturer; // true | false
+dossier.verdict.raisons;         // closed list: entreprise_cessee, tva_invalide_vies, iban_invalide…
+```
+
+`payingFetch` is the six-line x402 wrapper of Quickstart 3. Belgium and Poland:
+`GET /v1/eu/facturation/dossier?pays=&id=&iban=` (same price, same verdict).
+The response is Ed25519-signed and carries its provenance inside the signed
+bytes — [`examples/verify-invoice-file.ts`](examples/verify-invoice-file.ts)
+turns one call into an audit file that still re-verifies offline years later.
+Why this matters in 2026: see [the section below](#verify-a-supplier-before-you-pay--the-2026-e-invoicing-window).
+
+## Quickstart 2 — see a payment quote (no wallet needed)
 
 ```bash
 curl -i "https://api.sirenic.eu/v1/entreprise/552032534" -H "Accept: application/json"
@@ -41,7 +69,7 @@ options at the same numeric amount** — USDC (first, the default for existing
 clients) or EURC — with the official Circle contracts, receiving address and
 network.
 
-## Quickstart 2 — pay and call in ~10 lines (TypeScript)
+## Quickstart 3 — pay and call in ~10 lines (TypeScript)
 
 ```bash
 npm install @x402/fetch @x402/core @x402/evm viem
@@ -66,7 +94,7 @@ console.log(await res.json()); // paid, settled, delivered
 payer). The server never holds any key. The `exact` scheme uses signed
 authorizations, so the client pays no gas.
 
-## Quickstart 3 — plug into Claude / Cursor (MCP)
+## Quickstart 4 — plug into Claude / Cursor (MCP)
 
 Claude Code:
 
@@ -96,7 +124,7 @@ quote you get back is the **signable x402 payment requirements**
 (`{x402Version, accepts[]}`) — an agent can pay entirely from MCP, without
 touching the REST API.
 
-## Quickstart 4 — A2A (Agent2Agent)
+## Quickstart 5 — A2A (Agent2Agent)
 
 Sirenic is also an A2A 1.0 agent with the official crypto payment extension
 (a2a-x402). Discover it from the card, send a JSON data part, get the quote
@@ -107,7 +135,7 @@ curl -s https://api.sirenic.eu/.well-known/agent-card.json -H "A2A-Version: 1.0"
 npx tsx examples/a2a.ts   # quote for free; add TEST_WALLET_KEY to pay
 ```
 
-## Quickstart 5 — LangChain & CrewAI SDKs
+## Quickstart 6 — LangChain & CrewAI SDKs
 
 Ready-made paying tools with a hard price cap ([sdk/typescript](sdk/typescript),
 [sdk/python](sdk/python)):
@@ -125,23 +153,60 @@ tools = build_crewai_tools(SirenicClient(wallet_key=key, max_price_usd=0.25))
 CrewAI can also use Sirenic's MCP server directly, no SDK:
 `Agent(..., mcps=["https://api.sirenic.eu/mcp"])`.
 
-## E-invoicing France 2026 — agent-side toolkit
+## Verify a supplier before you pay — the 2026 e-invoicing window
 
-From **September 1, 2026**, every French company must be able to RECEIVE
-electronic invoices (with issuance phasing in through 2027). Sirenic ships the
-agent-side checks, no account needed: `facturation-prep` ($0.02 — legal name &
-form, computed intra-EU VAT number, SIRET establishments, obligation dates),
-`tva/verifier` ($0.003 — live VIES) and `iban/verifier` ($0.005 — the payee's
-bank identified from official registers, incl. BIC via the GLEIF/SWIFT
-mapping). One free call to `/v1/reperer` tells your agent which of these to
-use on any raw text. Or take the bundle: `GET /v1/facturation/dossier?siren=&iban=`
-($0.03) runs all three AND returns a deterministic `pret_a_facturer` verdict
-with closed-list reasons.
+Three dates make this urgent, and only one of them is French:
+
+- **France — September 1, 2026.** Every company subject to VAT must be able to
+  RECEIVE electronic invoices; issuance is phased (large and mid-size companies
+  September 2026, SMEs and micro-businesses September 2027). Art. 91, Loi de
+  finances 2024.
+- **Belgium — in force since January 1, 2026.** Structured e-invoicing is
+  mandatory between Belgian VAT-registered businesses.
+- **Poland — no deadline, a standing tax rule.** Paying more than PLN 15,000
+  into an account the supplier has *not* declared in the official White List
+  (wykaz podatników VAT) costs the buyer the deduction and exposes it to joint
+  liability for the VAT (art. 117ba Ordynacja podatkowa).
+
+Five routes cover it — no account, no API key:
+
+| Route | Price | What it answers |
+|---|---|---|
+| **`GET /v1/facturation/dossier?siren=&iban=`** | **$0.03** | France: identity, VAT and IBAN in a single call, plus a deterministic `pret_a_facturer` verdict |
+| `GET /v1/eu/facturation/dossier?pays=&id=&iban=` | $0.03 | Belgium & Poland: registry identity, VIES, Peppol reachability (BE), White List account check (PL) |
+| `GET /v1/entreprise/{siren}/facturation-prep` | $0.02 | Legal name & form, computed intra-EU VAT number, SIRET establishments, indicative obligation dates |
+| `GET /v1/iban/verifier/{iban}` | $0.005 | IBAN structure (ISO 13616, mod 97-10) + the bank identified from official registers, BIC via the GLEIF/SWIFT mapping |
+| `GET /v1/tva/verifier/{numero}` | $0.003 | An EU VAT number, checked live against VIES |
+
+One free call to `/v1/reperer?texte=` tells your agent which of them to use on
+any raw text. The verdict's reasons are a **closed list** (`entreprise_cessee`,
+`tva_invalide_vies`, `iban_invalide`…), so an agent branches on codes instead of
+parsing prose — and a VIES outage yields an honest `tva_non_verifiable`, never a
+false invalid.
+
+Every one of these responses is Ed25519-signed, and the **provenance travels
+inside the signed bytes**: which official register served each block, and its
+`as_of` date. Verify the signature, then read the provenance — that is an audit
+trail you can hand to an accountant.
+[`examples/verify-invoice-file.ts`](examples/verify-invoice-file.ts) writes one
+to disk and re-verifies it from the files alone.
+
+Two things this is **not**:
+
+- **Not a check of the account holder's name.** Sirenic validates the IBAN and
+  identifies the bank from official registers; it never confirms that the
+  account belongs to the company you are about to pay.
+- **Not an accredited platform (PDP).** Sirenic does not issue, transmit or
+  route any invoice, and does not confirm a recipient's registration on the PPF
+  or any accredited platform. It gives your agent the checks to run *before* the
+  invoice exists.
 
 ## Endpoints and prices (USDC or EURC per call, same amount)
 
 | Endpoint | Price | What you get |
 |---|---|---|
+| **`GET /v1/facturation/dossier?siren=&iban=`** | **$0.03** | **Verify a French supplier before payment**: e-invoicing prep + live VIES + IBAN/bank check + a deterministic `pret_a_facturer` verdict |
+| `GET /v1/eu/facturation/dossier?pays=&id=&iban=` | $0.03 | Verify a Belgian or Polish supplier before payment: registry identity + VIES + Peppol reachability (BE) + White List account check (PL) + the same verdict |
 | `GET /v1/recherche?q=` | $0.001 | Search 30M French companies |
 | `GET /v1/entreprise/{siren}` | $0.005 | Full official French profile |
 | `GET /v1/entreprise/{siren}/etablissements` | $0.003 | All establishments (SIRET) |
@@ -172,7 +237,6 @@ with closed-list reasons.
 | `GET /v1/entreprise/{siren}/documents` | $0.02 | List filed documents (INPI) |
 | `GET /v1/documents/{type}/{id}` | $0.10 | Download a filed document (PDF) |
 | `GET /v1/tva/verifier/{numero}` | $0.003 | EU VAT validation (VIES) |
-| `GET /v1/facturation/dossier?siren=&iban=` | $0.03 | **Invoicing pack**: e-invoicing prep + live VIES + IBAN/bank check + a deterministic `pret_a_facturer` verdict |
 | `GET /v1/iban/verifier/{iban}` | $0.005 | IBAN check + bank identification (FR/BE/AT/NL, incl. LEI) — not a Verification of Payee |
 | `GET /v1/surveillance/creer?cibles=` | $0.05/target/30d | **Watchlist**: daily checks on companies & directors, signed webhooks + e-mail digests |
 | `GET /v1/surveillance/{token}/renouveler` | $0.05/target/30d | Renew a watchlist (grace: 7 days after expiry) |
@@ -193,8 +257,9 @@ returned at creation is the capability — no account).
 
 - [`examples/quote.sh`](examples/quote.sh) — inspect a 402 quote with curl.
 - [`examples/pay-and-call.ts`](examples/pay-and-call.ts) — pay one request end to end.
+- [`examples/verify-invoice-file.ts`](examples/verify-invoice-file.ts) — **verify a supplier before you pay, and keep the proof** (~$0.03): buy the invoicing file, verify its signature offline, read the `pret_a_facturer` verdict and its provenance only once authenticated, then write a timestamped audit folder (raw bytes, signature, public key, `LISEZ-MOI.md`) and re-verify it from those files alone.
 - [`examples/verify-signature.ts`](examples/verify-signature.ts) — **the full audit loop**: verify the Ed25519 signature of a paid response offline, then read its **per-block provenance** (official register + `as_of` date) from inside the signed bytes (~$0.02).
-- [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call **every one of the 42 paid endpoints** once (~$6.85 total, USDC and/or EURC; the watchlist it creates is stopped again for free).
+- [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call **every paid endpoint** once (~$7.40 total, USDC and/or EURC; the watchlist it creates is stopped again for free).
 - [`examples/agent-demo.ts`](examples/agent-demo.ts) — a small autonomous agent that searches, pays and reads profiles.
 - [`examples/mcp-setup.md`](examples/mcp-setup.md) — MCP configuration for Claude, Cursor and generic clients.
 - [`examples/a2a.ts`](examples/a2a.ts) — call Sirenic as an **A2A agent** (quote for free, then pay on the same task via the a2a-x402 extension).
