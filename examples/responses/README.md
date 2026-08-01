@@ -4,6 +4,10 @@ One file per paid endpoint: the **real** response you get, truncated to one item
 per array. These are **dated snapshots**, not live data — regenerating them
 costs money, so they are refreshed at each paid smoke run.
 
+Each sample is also served **live by the API**, free, at
+`https://api.sirenic.eu/exemples/<file>` — the landing page links to it from every
+row of the pricing table, so you can see what a route returns before paying for it.
+
 The same samples are served by the API itself: in the OpenAPI spec
 (`responses.200.content."application/json".example`), in the x402 payment quote
 (`extensions.bazaar.info.output.example`) and in `llms.txt`. One source of
