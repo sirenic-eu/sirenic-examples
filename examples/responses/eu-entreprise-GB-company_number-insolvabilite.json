@@ -1,0 +1,38 @@
+{
+  "_endpoint": "/v1/eu/entreprise/GB/{company_number}/insolvabilite",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/GB/NI017460/insolvabilite",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "GB",
+    "company_number": "NI017460",
+    "aucune_procedure": false,
+    "statuts": [
+      "liquidation"
+    ],
+    "cas": [
+      {
+        "type": "compulsory-liquidation",
+        "numero": "1",
+        "dates": [
+          {
+            "type": "wound-up-on",
+            "date": "2008-11-20"
+          }
+        ],
+        "praticiens": [
+          {
+            "nom": "<nom du praticien de l'insolvabilité>",
+            "role": "practitioner",
+            "nomme_le": null,
+            "fin_de_mission_le": null
+          }
+        ],
+        "notes": []
+      }
+    ],
+    "source": "Companies House (api.company-information.service.gov.uk). Contains public sector information licensed under the Open Government Licence v3.0 (Companies House).",
+    "data_freshness": "Companies House temps réel (cache 24 h)"
+  }
+}

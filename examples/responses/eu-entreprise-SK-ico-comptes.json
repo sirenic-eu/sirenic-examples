@@ -1,0 +1,28 @@
+{
+  "_endpoint": "/v1/eu/entreprise/SK/{ico}/comptes",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/SK/36417475/comptes",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "SK",
+    "id_national": "36417475",
+    "nombre_depots": 2,
+    "depots": [
+      {
+        "date_cloture": "2025-12-31",
+        "debut_exercice": "2025-01-01",
+        "denomination": "PODLAHY RK, s. r. o.",
+        "perimetre": "statutaire",
+        "type_depot": "Riadna",
+        "modele": "Úč POD",
+        "nb_postes": 16,
+        "source_url": "https://www.registeruz.sk/cruz-public/domain/financialreport/show/7073209"
+      }
+    ],
+    "telechargement": "GET /v1/eu/entreprise/SK/{ico}/comptes/{date_cloture} ($0.03)",
+    "source": "Register účtovných závierok (RÚZ) — Ministerstvo financií SR, registeruz.sk, open API publique",
+    "licence": "CC0 (RÚZ Open API, Ministerstvo financií SR)",
+    "disclaimer": "Postes clés normalisés extraits des états financiers STRUCTURÉS déposés au RÚZ"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "_endpoint": "/v1/eu/entreprise/LV/{regnr}/insolvabilite",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/LV/40103144555/insolvabilite",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "LV",
+    "id_national": "40103144555",
+    "aucune_procedure": false,
+    "procedures": [
+      {
+        "proceeding_id": 90134947,
+        "debiteur": "SIA \"NaviFleet\"",
+        "debut": "2025-10-14",
+        "fin": null,
+        "forme": "LEGAL_PROTECTION",
+        "type": "NATIONAL",
+        "resolution": null,
+        "numero_affaire": "C771723525",
+        "tribunal": "Rīgas pilsētas tiesa"
+      }
+    ],
+    "source": "Uzņēmumu reģistrs / VID — open data data.gov.lv (Gada pārskatu finanšu dati, Maksātnespējas procesi, Amatpersonas, Patiesie labuma guvēji), licence CC0 1.0",
+    "data_freshness": "photo quotidienne data.gov.lv pré-ingérée (MAJ amont ~20:25 UTC)"
+  }
+}

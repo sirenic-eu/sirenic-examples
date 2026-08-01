@@ -1,0 +1,27 @@
+{
+  "_endpoint": "/v1/eu/entreprise/LV/{regnr}/dirigeants",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/LV/40203109838/dirigeants",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "LV",
+    "id_national": "40203109838",
+    "nombre_dirigeants": 1,
+    "dirigeants": [
+      {
+        "type": "entite",
+        "nom": "SIA \"ENESAN\"",
+        "fonction": "MEMBER",
+        "organe": null,
+        "naissance": null,
+        "regnr_entite": "40103761688",
+        "representation": "INDIVIDUALLY",
+        "representation_minimum": 0,
+        "inscrit_le": "2019-04-29"
+      }
+    ],
+    "source": "Uzņēmumu reģistrs / VID — open data data.gov.lv (Gada pārskatu finanšu dati, Maksātnespējas procesi, Amatpersonas, Patiesie labuma guvēji), licence CC0 1.0",
+    "licence": "Uzņēmumu reģistrs / VID, data.gov.lv, CC0 1.0"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "_endpoint": "/v1/entreprise/{siren}/changements",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/changements?depuis=2020-01-01",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "siren": "552032534",
+    "denomination": "DANONE",
+    "depuis": "2020-01-01",
+    "nouveaux_evenements_bodacc": {
+      "nombre": 41,
+      "nombre_total": 41,
+      "tronque": false,
+      "annonces": [
+        {
+          "id": "B202601212014",
+          "date_parution": "2026-06-28",
+          "type_avis": "Avis initial",
+          "tribunal": "Greffe du Tribunal des Activités Economiques de Paris",
+          "jugement": null,
+          "publication": "B",
+          "famille": "Modifications diverses"
+        }
+      ]
+    },
+    "changements_fiche": {
+      "disponible": false,
+      "version_stock_courant": "2026-07-01"
+    },
+    "source": "BODACC (DILA) via bodacc-datadila.opendatasoft.com, licence ouverte Etalab 2.0",
+    "data_freshness": "BODACC (bulletin quotidien DILA), cache court ≤ 1 h par (siren, depuis)"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "_endpoint": "/v1/eu/entreprise/SE/{orgnr}/evenements",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/SE/5560012402/evenements",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "SE",
+    "id_national": "5560012402",
+    "nombre_evenements": 1,
+    "evenements": [
+      {
+        "type": "immatriculation",
+        "code": "REG",
+        "libelle": "immatriculation au registre",
+        "date": "1897-09-20",
+        "en_cours": false
+      }
+    ],
+    "procedure_en_cours": false,
+    "radiee": false,
+    "source": "Bolagsverket — värdefulla datamängder (bulkfil des organisations et rapports annuels iXBRL), vardefulla-datamangder.bolagsverket.se",
+    "data_freshness": "photo nationale HEBDOMADAIRE de Bolagsverket pré-ingérée (republiée le lundi)"
+  }
+}

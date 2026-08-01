@@ -1,0 +1,32 @@
+{
+  "_endpoint": "/v1/entreprise/{siren}/sante",
+  "_price": "$0.15",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/sante",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "siren": "552032534",
+    "synthese": {
+      "resume": "[texte libre en français, 800 à 1 500 caractères — abrégé dans cet exemple]",
+      "points_forts": [
+        "Aucune vente ou cession d'actifs recensée au BODACC"
+      ],
+      "points_vigilance": [
+        "Résultat net déclaré à 0 pour les exercices 2022 et 2023 malgré des EBE substantiels, incohérence à clarifier"
+      ],
+      "tendance_activite": "indeterminee",
+      "niveau_confiance": "faible",
+      "donnees_manquantes": [
+        "Effectif salarié précis (seule une tranche est fournie)"
+      ]
+    },
+    "modele": "claude-sonnet-5",
+    "version_prompt": "sante-v1",
+    "genere_le": "2026-07-24T16:53:14.027Z",
+    "donnees": {
+      "score_completude": 100,
+      "data_freshness": "identité : stock Sirene mensuel (2026-07-01)"
+    },
+    "depuis_cache": true
+  }
+}

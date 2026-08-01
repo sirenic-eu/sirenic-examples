@@ -1,0 +1,28 @@
+{
+  "_endpoint": "/v1/kyb/batch",
+  "_price": "$0.105",
+  "_request": "GET https://api.sirenic.eu/v1/kyb/batch?sirens=552032534%2C542065479",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "nombre_demande": 2,
+    "nombre_trouve": 2,
+    "entreprises": [
+      {
+        "trouve": true,
+        "siren": "552032534",
+        "identite": {
+          "denomination": "DANONE",
+          "etat_administratif": "actif"
+        },
+        "tva_intracommunautaire": "FR27552032534",
+        "criblage_sanctions": {
+          "statut": "correspondances_a_verifier"
+        },
+        "score_completude": 100,
+        "blocs_manquants": []
+      }
+    ],
+    "tarification": "Facturé par SIREN demandé (prix unitaire de lot). Un SIREN sans entreprise diffusible est restitué `trouve: false` et compté comme une consultation. / Billed per requested SIREN; a not-found SIREN counts as one lookup."
+  }
+}

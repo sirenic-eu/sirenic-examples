@@ -1,0 +1,52 @@
+{
+  "_endpoint": "/v1/kyb/{siren}",
+  "_price": "$0.15",
+  "_request": "GET https://api.sirenic.eu/v1/kyb/552032534",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "siren": "552032534",
+    "identite": {
+      "denomination": "DANONE",
+      "nature_juridique": "5599",
+      "activite_principale": "70.10Z",
+      "etat_administratif": "actif",
+      "date_creation": "1955-01-01",
+      "siege": {
+        "siret": "55203253400703",
+        "code_postal": "75009",
+        "commune": "PARIS"
+      },
+      "nombre_etablissements": 19
+    },
+    "tva_intracommunautaire": "FR27552032534",
+    "alertes_bodacc": {
+      "procedures_collectives": [],
+      "radiations": [],
+      "total_annonces": 106
+    },
+    "finances": {
+      "nombre_exercices": 8,
+      "exercices": [
+        {
+          "date_cloture": "2024-12-31",
+          "chiffre_affaires": 1030000000,
+          "resultat_net": 592000000
+        }
+      ]
+    },
+    "criblage_sanctions": {
+      "statut": "correspondances_a_verifier",
+      "cibles": [
+        {
+          "cible": "DANONE",
+          "role": "entreprise",
+          "correspondances": []
+        }
+      ]
+    },
+    "score_completude": 100,
+    "blocs_manquants": [],
+    "data_freshness": "identité : stock Sirene mensuel (2026-07-01)"
+  }
+}

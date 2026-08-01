@@ -1,0 +1,54 @@
+{
+  "_endpoint": "/v1/facturation/dossier",
+  "_price": "$0.03",
+  "_request": "GET https://api.sirenic.eu/v1/facturation/dossier?siren=552032534&iban=FR1420041010050500013M02606",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "siren": "552032534",
+    "destinataire": {
+      "destinataire": {
+        "denomination": "DANONE",
+        "etat_administratif": "actif",
+        "categorie_entreprise": "GE"
+      },
+      "tva": {
+        "numero_intracommunautaire_calcule": "FR27552032534"
+      },
+      "adressage": {
+        "siege": {
+          "siret": "55203253400703",
+          "adresse": "59 RUE LA FAYETTE 75009 PARIS",
+          "code_postal": "75009",
+          "commune": "PARIS"
+        },
+        "nombre_etablissements": 19
+      },
+      "calendrier_reforme": {
+        "reception_obligatoire_depuis": "2026-09-01",
+        "emission_obligatoire_depuis": "2026-09-01",
+        "base_calcul": "catégorie d'entreprise INSEE : GE"
+      }
+    },
+    "tva_vies": {
+      "numero": "FR27552032534",
+      "statut": "valide"
+    },
+    "banque": {
+      "iban_normalise": "FR1420041010050500013M02606",
+      "valide": true,
+      "banque": {
+        "nom": "La Banque Postale",
+        "bic": "PSSTFRPPXXX",
+        "siren": "421100645"
+      },
+      "verification_titulaire": "non_disponible"
+    },
+    "verdict": {
+      "pret_a_facturer": true,
+      "raisons": []
+    },
+    "source": "Composition Sirenic : préparation e-facturation (INSEE Sirene), VIES (Commission européenne, live), validation IBAN + registres bancaires officiels",
+    "disclaimer": "Aide à la décision déterministe (raisons en liste fermée, tracées à leur source) — ni un avis de conformité fiscale, ni une Verification of Payee : le nom du titulaire du compte n'est jamais vérifié."
+  }
+}

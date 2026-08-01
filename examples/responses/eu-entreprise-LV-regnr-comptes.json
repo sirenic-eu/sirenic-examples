@@ -1,0 +1,34 @@
+{
+  "_endpoint": "/v1/eu/entreprise/LV/{regnr}/comptes",
+  "_price": "$0.03",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/LV/40003032949/comptes",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "LV",
+    "id_national": "40003032949",
+    "nombre_exercices": 2,
+    "exercices": [
+      {
+        "date_cloture": "2025-12-31",
+        "exercice": 2025,
+        "perimetre": "statutaire",
+        "devise": "EUR",
+        "arrondi": "THOUSANDS",
+        "employes": 1389,
+        "bilan": {
+          "total_actif": 4189397
+        },
+        "compte_resultat": {
+          "chiffre_affaires": 949824
+        },
+        "flux_tresorerie": {
+          "flux_exploitation": 376739
+        }
+      }
+    ],
+    "source": "Uzņēmumu reģistrs / VID — open data data.gov.lv",
+    "licence": "Uzņēmumu reģistrs / VID, data.gov.lv, CC0 1.0",
+    "disclaimer": "Postes clés des rapports annuels déposés au VID, tels que publiés par l'Uzņēmumu reģistrs (CC0)"
+  }
+}

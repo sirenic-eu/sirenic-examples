@@ -1,0 +1,27 @@
+{
+  "_endpoint": "/v1/eu/entreprise/GB/{company_number}/dirigeants",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/GB/00000006/dirigeants",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "GB",
+    "company_number": "00000006",
+    "nombre_actifs": 0,
+    "nombre_demissionnes": 49,
+    "tronque": false,
+    "dirigeants": [
+      {
+        "nom": "<nom du dirigeant>",
+        "fonction": "director",
+        "nomme_le": null,
+        "nationalite": null,
+        "profession": null,
+        "pays_de_residence": null,
+        "naissance": null
+      }
+    ],
+    "source": "Companies House (api.company-information.service.gov.uk). Contains public sector information licensed under the Open Government Licence v3.0 (Companies House).",
+    "data_freshness": "Companies House temps réel (cache 24 h)"
+  }
+}

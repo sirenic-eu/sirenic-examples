@@ -1,0 +1,53 @@
+{
+  "_endpoint": "/v1/entreprise/{siren}/finances",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/finances",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "siren": "552032534",
+    "nombre_exercices": 8,
+    "exercices": [
+      {
+        "date_cloture": "2024-12-31",
+        "chiffre_affaires": 1030000000,
+        "marge_brute": 1030000000,
+        "ebe": 697000000,
+        "ebit": -119000000,
+        "resultat_net": 592000000,
+        "ratios": {
+          "taux_endettement": 73.492,
+          "autonomie_financiere": 34.908,
+          "marge_ebe": 67.67
+        }
+      }
+    ],
+    "perimetre_comptable": {
+      "perimetre": "social",
+      "double_depot_confirme": true
+    },
+    "bilans_saisis_inpi": [
+      {
+        "date_cloture": "2025-12-31",
+        "type_bilan": "consolide",
+        "devise": "EUR",
+        "postes_cles": {
+          "chiffre_affaires": 27376000000,
+          "resultat_net": null,
+          "capitaux_propres": 16970000000
+        },
+        "liasses": [
+          {
+            "code": "AJ",
+            "m1": null,
+            "m2": null,
+            "m3": 5861000000,
+            "m4": 5946000000
+          }
+        ]
+      }
+    ],
+    "source": "Ratios financiers INPI / Banque de France (comptes annuels déposés) via data.economie.gouv.fr, licence ouverte 2.0",
+    "data_freshness": "jeu ratios_inpi_bce du 2026-06-01"
+  }
+}

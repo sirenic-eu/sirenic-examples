@@ -1,0 +1,42 @@
+{
+  "_endpoint": "/v1/eu/entreprise/{pays}/{id}/transactions-dirigeants",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/BE/0428750985/transactions-dirigeants?depuis=2025-08-01",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "BE",
+    "id": "0428750985",
+    "denomination": "IBA",
+    "identifiants": {
+      "lei": "5493002RVRZ1S3CPUI26",
+      "isin": [
+        "BE0003766806"
+      ]
+    },
+    "periode": {
+      "depuis": "2025-08-03",
+      "jusqu_a": "2026-07-29"
+    },
+    "synthese": {
+      "nb_notifications": 7,
+      "nb_achats": 5,
+      "nb_ventes": 2,
+      "montant_net_eur": -245116.5,
+      "nb_declarants_distincts": 5
+    },
+    "notifications": [
+      {
+        "date_publication": "2026-07-15",
+        "date_transaction": "2026-06-23",
+        "type_transaction": "acquisition",
+        "instrument": "Options /warrants for employees or managers",
+        "prix": 7.54,
+        "montant": 18850,
+        "devise": "EUR",
+        "categorie_declarant": "cadre_superieur"
+      }
+    ],
+    "source": "FSMA — Transactions de dirigeants (art. 19 MAR), licence CC BY 4.0 ; identifiants d'entreprise résolus via GLEIF."
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "_endpoint": "/v1/entreprise/{siren}/pi",
+  "_price": "$0.03",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/pi",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "siren": "552032534",
+    "marques": {
+      "nombre": 88,
+      "liste": [
+        {
+          "numero": "4789796",
+          "libelle": "THE ONE HOME",
+          "statut": "Marque enregistrée"
+        }
+      ]
+    },
+    "brevets": {
+      "nombre": 12,
+      "liste": [
+        {
+          "numero": "<country>FR</country><doc-number>2728873</doc-number><kind>A1</kind>",
+          "libelle": "EMBALLAGE EN FILM DE MATERIAU SOUPLE ET SON PROCEDE DE FABRICATION",
+          "date": "19960705",
+          "classification": null
+        }
+      ]
+    },
+    "dessins_modeles": {
+      "nombre": 12,
+      "liste": [
+        {
+          "numero": "054041",
+          "libelle": "Ornementation de supports de communication",
+          "date": "20050819",
+          "classification": "2003"
+        }
+      ]
+    },
+    "source": "INPI — bases ouvertes de propriété industrielle (marques, brevets, dessins & modèles)",
+    "data_freshness": "INPI PI open data (marques/brevets hebdo, D&M bimensuel), cache 24 h"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "_endpoint": "/v1/entreprise/{siren}/alertes",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/alertes",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "siren": "552032534",
+    "denomination": "DANONE",
+    "procedures_collectives": [],
+    "radiations": [],
+    "ventes_cessions": [],
+    "autres_annonces": {
+      "Modifications diverses": 63,
+      "Dépôts des comptes": 37
+    },
+    "total_annonces": 106,
+    "consulte_le": "2026-07-29T07:28:49.560Z",
+    "source": "BODACC (DILA) via bodacc-datadila.opendatasoft.com, licence ouverte Etalab 2.0",
+    "disclaimer": "Annonces officielles telles que publiées ; les avis rectificatifs et annulations sont restitués avec leur type, sans fusion. / Official announcements as published; rectifications and cancellations carry their type.",
+    "data_freshness": "BODACC temps réel (API DILA), cache 24 h"
+  }
+}

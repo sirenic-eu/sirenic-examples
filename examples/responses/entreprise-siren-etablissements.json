@@ -1,0 +1,30 @@
+{
+  "_endpoint": "/v1/entreprise/{siren}/etablissements",
+  "_price": "$0.003",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/etablissements?geo=true",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "siren": "552032534",
+    "denomination": "DANONE",
+    "nombre_etablissements": 19,
+    "etablissements": [
+      {
+        "siret": "55203253400703",
+        "est_siege": true,
+        "adresse": "59 RUE LA FAYETTE 75009 PARIS",
+        "code_postal": "75009",
+        "commune": "PARIS",
+        "etat_administratif": "actif",
+        "activite_principale": "70.10Z",
+        "date_creation": "2025-08-19",
+        "date_fermeture": null,
+        "enseignes": [],
+        "tranche_effectif_salarie": "NN"
+      }
+    ],
+    "source": "INSEE Sirene / INPI RNE via recherche-entreprises.api.gouv.fr, licence ouverte Etalab 2.0",
+    "disclaimer": "Données issues de l'open data, fournies en l'état sans garantie. / Open data, provided as is without warranty.",
+    "data_freshness": "stock Sirene mensuel (2026-07-01), dirigeants temps réel"
+  }
+}

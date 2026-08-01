@@ -1,0 +1,31 @@
+{
+  "_endpoint": "/v1/eu/entreprise/{pays}/{id}/comptes",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/BE/0400378485/comptes",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "pays": "BE",
+    "id_national": "0400378485",
+    "nombre_depots": 93,
+    "depots": [
+      {
+        "reference": "2025-00539072",
+        "detail": {
+          "DepositDate": "2025-10-07",
+          "ExerciseDates": {
+            "startDate": "2024-04-01",
+            "endDate": "2025-03-31"
+          },
+          "Currency": "EUR",
+          "EnterpriseName": "Colruyt Group",
+          "AccountingDataURL": "https://ws.cbso.nbb.be/authentic/deposit/2025-00539072/accountingData"
+        }
+      }
+    ],
+    "telechargement": "GET /v1/eu/entreprise/BE/{id}/comptes/{reference}",
+    "source": "Banque nationale de Belgique — Centrale des bilans (CBSO), webservice Authentic Data",
+    "disclaimer": "Comptes annuels tels que déposés et publiés par la Centrale des bilans de la BNB (dépôts immuables)",
+    "data_freshness": "BNB CBSO temps réel, liste en cache 24 h"
+  }
+}

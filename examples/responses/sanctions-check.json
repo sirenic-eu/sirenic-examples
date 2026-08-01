@@ -1,0 +1,32 @@
+{
+  "_endpoint": "/v1/sanctions/check",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/sanctions/check?name=Vladimir%20Putin&birth_year=1952",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "requete": {
+      "nom": "Vladimir Putin",
+      "annee_naissance": 1952
+    },
+    "nombre_correspondances": 1,
+    "correspondances": [
+      {
+        "liste": "ue",
+        "nom_principal": "Vladimir Vladimirovich PUTIN",
+        "score": 93,
+        "niveau": "forte",
+        "regime": "(EU) 2022/330"
+      }
+    ],
+    "listes_consultees": [
+      {
+        "liste": "ue",
+        "libelle": "Liste consolidée des sanctions financières de l'UE (FSF)",
+        "entrees": 6017,
+        "publication": "2026-07-28"
+      }
+    ],
+    "listes_absentes": []
+  }
+}

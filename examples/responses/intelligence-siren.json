@@ -1,0 +1,44 @@
+{
+  "_endpoint": "/v1/intelligence/{siren}",
+  "_price": "$1.00",
+  "_request": "GET https://api.sirenic.eu/v1/intelligence/552032534",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "siren": "552032534",
+    "type_rapport": "intelligence",
+    "version_rapport": "1.4",
+    "identite": {
+      "denomination": "DANONE",
+      "categorie_entreprise": "GE",
+      "activite_principale": "70.10Z",
+      "etat_administratif": "actif"
+    },
+    "tva_vies": {
+      "statut": "valide"
+    },
+    "risques": {
+      "score_defaillance": {
+        "score_risque": 30,
+        "classe": "vigilance",
+        "risque_12m": "modéré"
+      }
+    },
+    "signaux": [
+      {
+        "signal": "propriete_industrielle_presente",
+        "source": "bases PI INPI",
+        "detail": "112 titre(s)"
+      }
+    ],
+    "synthese": {
+      "verdict_global": "solide",
+      "points_forts": [
+        "anciennete_etablie"
+      ],
+      "points_vigilance": []
+    },
+    "score_completude": 100,
+    "blocs_manquants": []
+  }
+}

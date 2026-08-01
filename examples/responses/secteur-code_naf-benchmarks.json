@@ -1,0 +1,40 @@
+{
+  "_endpoint": "/v1/secteur/{code_naf}/benchmarks",
+  "_price": "$0.05",
+  "_request": "GET https://api.sirenic.eu/v1/secteur/62.01Z/benchmarks",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "code_naf": "62.01Z",
+    "niveau": "sous-classe",
+    "effectif_entreprises": {
+      "actives_diffusibles": 98868
+    },
+    "age_annees": {
+      "mediane": 4,
+      "q1": 1,
+      "q3": 11
+    },
+    "effectifs_salaries": {
+      "repartition": {
+        "NN": 88097
+      },
+      "repartition_libelles": {
+        "NN": "non renseigné"
+      }
+    },
+    "finances": {
+      "entreprises_avec_comptes": 8950,
+      "marge_ebe_pct": {
+        "mediane": 7.197
+      },
+      "rcai_sur_ca_pct": {
+        "mediane": 3.989
+      },
+      "taux_endettement": {
+        "mediane": 3.348
+      }
+    },
+    "source": "INSEE Sirene (Licence Ouverte Etalab 2.0) et ratios financiers INPI / Banque de France (Licence Ouverte 2.0)"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "_endpoint": "/v1/regulateurs/fr/alertes",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/regulateurs/fr/alertes?siren=552032534",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "requete": {
+      "nom": null,
+      "siren": "552032534"
+    },
+    "correspondances_liste_noire": [],
+    "psan": [],
+    "sgp": [],
+    "listes": {
+      "liste_noire": {
+        "disponible": true,
+        "entrees": 3382,
+        "rafraichie_le": "2026-07-29T07:29:17.796Z"
+      }
+    },
+    "source": "AMF — Autorité des marchés financiers, jeux open data officiels sur data.gouv.fr (listes noires, liste blanche PSAN, SGP agréées), Licence Ouverte 2.0, export quotidien",
+    "disclaimer": "Aide au criblage par rapprochement de noms sur les listes telles que publiées par l'AMF — ni un avis de conformité ni une décision ; vérifier toute correspondance sur amf-france.org. Une liste `disponible: false` signifie que sa source est momentanément injoignable (jamais un faux « aucune correspondance »).",
+    "data_freshness": "listes AMF quotidiennes (data.gouv), cache 24 h"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "_endpoint": "/v1/entreprise/{siren}",
+  "_price": "$0.005",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534?geo=true",
+  "_sample_of": "2026-07-29",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "siren": "552032534",
+    "denomination": "DANONE",
+    "nature_juridique": "5599",
+    "activite_principale": "70.10Z",
+    "categorie_entreprise": "GE",
+    "tranche_effectif_salarie": "42",
+    "date_creation": "1955-01-01",
+    "etat_administratif": "actif",
+    "siege": {
+      "siret": "55203253400703",
+      "adresse": "59 RUE LA FAYETTE 75009 PARIS",
+      "code_postal": "75009",
+      "commune": "PARIS"
+    },
+    "dirigeants": [
+      {
+        "type": "personne_morale",
+        "siren": "344366315",
+        "denomination": "ERNST & YOUNG AUDIT",
+        "fonction": "Commissaire aux comptes titulaire"
+      }
+    ],
+    "tva_intracommunautaire": "FR27552032534",
+    "nombre_etablissements": 19,
+    "index_egapro": [
+      {
+        "annee": 2025,
+        "note": 86
+      }
+    ],
+    "source": "INSEE Sirene / INPI RNE via recherche-entreprises.api.gouv.fr, licence ouverte Etalab 2.0 ; index Egapro (ministère du Travail) et annuaire RGE (ADEME), licence ouverte Etalab 2.0",
+    "data_freshness": "stock Sirene mensuel (2026-07-01), dirigeants temps réel"
+  }
+}
