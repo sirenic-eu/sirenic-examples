@@ -110,6 +110,10 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/tva/verifier/FR27552032534", expect: "statut", price: "$0.003" },
   { path: "/v1/iban/verifier/FR1420041010050500013M02606", expect: "iban_normalise", price: "$0.005" },
   { path: "/v1/facturation/dossier?siren=552032534&iban=FR1420041010050500013M02606", expect: "verdict", price: "$0.03" },
+  // Colruyt : mandat B2B belge en vigueur depuis le 01/01/2026. L'IBAN d'exemple
+  // public suffit — le pack valide sa structure et identifie la banque, il ne
+  // vérifie jamais qu'il appartient bien à cette société.
+  { path: "/v1/eu/facturation/dossier?pays=BE&id=0400378485&iban=BE68539007547034", expect: "verdict", price: "$0.03" },
   { path: "/v1/regulateurs/fr/alertes?siren=552032534", expect: "source", price: "$0.01" },
   { path: "/v1/eu/agrements?q=BNP%20Paribas", expect: "requete", price: "$0.01" },
   // Facturé PAR SOCIÉTÉ : 2 SIREN = 2 × $0.105.

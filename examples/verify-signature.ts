@@ -99,8 +99,14 @@ for (const l of payload.listes_consultees ?? []) {
   );
 }
 
+// A missing/empty block is a bug worth shouting about, not a blank section:
+// this exact case shipped once (fixed 2026-08-01) and printed a silent void.
+if (!payload.provenance?.length) {
+  console.log("\n⚠ no provenance block in this response — expected one; please report it.");
+  process.exit(1);
+}
 console.log("\nProvenance, block by block:");
-for (const p of payload.provenance ?? []) {
+for (const p of payload.provenance) {
   const date = p.as_of ? `${p.as_of} (${p.precision_as_of})` : "no date available";
   console.log(`  ${p.bloc.padEnd(24)} ${p.registre}\n${" ".repeat(28)}${p.mode} · ${date}`);
 }
