@@ -1,14 +1,18 @@
 # Sirenic Examples
 
-> 🚀 Sirenic is live on Product Hunt today. Take a look and say hi: https://www.producthunt.com/products/sirenic?launch=sirenic
+> 🚀 Sirenic launched on Product Hunt in July 2026: https://www.producthunt.com/products/sirenic
 
 [![smithery badge](https://smithery.ai/badge/contact-erkc/sirenic)](https://smithery.ai/servers/contact-erkc/sirenic)
 [![Listed on x402-list](https://x402-list.com/badge/sirenic.svg)](https://x402-list.com/services/sirenic?utm_source=badge&utm_medium=referral&utm_campaign=embed)
 
 Working examples for [Sirenic](https://api.sirenic.eu) — official French and
-European company data for AI agents. Pay-per-call in **USDC or EURC** via the
-[x402 protocol](https://github.com/x402-foundation/x402): **no account, no
-API key** — your agent pays each request on Base. Every paid response is
+European company data for AI agents: company lookup by name or SIREN, full
+company profiles, KYB verification and due-diligence files, AML sanctions
+screening, annual accounts and financial statements, default-risk scoring and
+company monitoring, from the French company registry (INSEE Sirene, INPI RNE)
+and official registers across 12 European countries. Pay-per-call in **USDC or
+EURC** via the [x402 protocol](https://github.com/x402-foundation/x402):
+**no account, no API key** — your agent pays each request on Base. Every paid response is
 **Ed25519-signed** and verifiable offline
 ([recipe](https://api.sirenic.eu/.well-known/sirenic-signing-key)) — and carries
 its **per-block provenance**: which official register each block came from, its
@@ -211,8 +215,8 @@ Two things this is **not**:
 |---|---|---|
 | **`GET /v1/facturation/dossier?siren=&iban=`** | **$0.03** | **Verify a French supplier before payment**: e-invoicing prep + live VIES + IBAN/bank check + a deterministic `pret_a_facturer` verdict |
 | `GET /v1/eu/facturation/dossier?pays=&id=&iban=` | $0.03 | Verify a Belgian or Polish supplier before payment: registry identity + VIES + Peppol reachability (BE) + White List account check (PL) + the same verdict |
-| `GET /v1/recherche?q=` | $0.001 | Search 30M French companies |
-| `GET /v1/entreprise/{siren}` | $0.005 | Full official French profile |
+| `GET /v1/recherche?q=` | $0.001 | French company search by name or SIREN — company lookup over 30M companies (INSEE Sirene) |
+| `GET /v1/entreprise/{siren}` | $0.005 | Full French company profile: identity, officers, NAF code, VAT number |
 | `GET /v1/entreprise/{siren}/etablissements` | $0.003 | All establishments (SIRET) |
 | `GET /v1/entreprise/{siren}/alertes` | $0.01 | BODACC legal alerts (insolvency…) |
 | `GET /v1/entreprise/{siren}/finances` | $0.01 | Filed financials + ratios |
