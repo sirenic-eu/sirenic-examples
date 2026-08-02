@@ -146,25 +146,25 @@ def build_langchain_tools(client: SirenicClient) -> list:
         StructuredTool.from_function(
             func=lambda q: client.get("/v1/recherche?" + urlencode([("q", q)])),
             name="sirenic_search_companies",
-            description="Search 30M French companies by name or SIREN (official INSEE/INPI data), top 10 with confidence scores. Price: $0.001.",
+            description="French company search and company lookup by name or SIREN in the official French company registry (INSEE/INPI, 30M companies), top 10 with confidence scores. Price: $0.001.",
             args_schema=Recherche,
         ),
         StructuredTool.from_function(
             func=lambda siren: client.get(f"/v1/entreprise/{siren}"),
             name="sirenic_company_profile",
-            description="Full official profile of a French company (legal form, head office, officers, VAT...). Price: $0.005.",
+            description="Full French company profile from the official company registry (legal form, head office, officers, VAT...). Price: $0.005.",
             args_schema=Siren,
         ),
         StructuredTool.from_function(
             func=lambda siren: client.get(f"/v1/kyb/{siren}"),
             name="sirenic_kyb_file",
-            description="Complete KYB file: identity, officers, legal alerts, financials, sanctions screening (6 lists). Price: $0.15.",
+            description="Complete KYB (Know Your Business) due-diligence file: identity, officers, legal alerts, financials, sanctions screening (6 lists). Price: $0.15.",
             args_schema=Siren,
         ),
         StructuredTool.from_function(
             func=_criblage,
             name="sirenic_screen_sanctions",
-            description="Screen a name against 6 official sanctions lists (UN, EU, OFAC, UK, FR, SECO), scored matches. Price: $0.02.",
+            description="AML sanctions screening: screen a name against 6 official sanctions lists (UN, EU, OFAC, UK, FR, SECO), scored matches. Price: $0.02.",
             args_schema=Criblage,
         ),
         StructuredTool.from_function(
