@@ -1,0 +1,70 @@
+{
+  "nombre_demande": 2,
+  "nombre_trouve": 2,
+  "entreprises": [
+    {
+      "trouve": true,
+      "siren": "552032534",
+      "denomination": "DANONE",
+      "identite": {
+        "activite_principale": "70.10Z",
+        "categorie_entreprise": "GE",
+        "creee_en": 1955,
+        "etat_administratif": "actif"
+      },
+      "solidite": {
+        "score_risque": 30,
+        "classe": "vigilance",
+        "confiance": "forte",
+        "exercice_reference": "2024-12-31"
+      },
+      "finances": {
+        "exercice": "2024-12-31",
+        "perimetre": "social",
+        "chiffre_affaires": 1030000000,
+        "resultat_net": 592000000
+      },
+      "alertes": {
+        "procedure_collective_active": false,
+        "liquidation_judiciaire": false,
+        "radiations": 0
+      },
+      "sanctions": {
+        "statut": "aucune_correspondance",
+        "nombre_correspondances": 0,
+        "cible": "denomination"
+      }
+    }
+  ],
+  "classements": {
+    "risque_le_plus_faible": [
+      "552032534",
+      "542065479"
+    ],
+    "chiffre_affaires": [
+      "542065479",
+      "552032534"
+    ],
+    "anciennete": [
+      "542065479",
+      "552032534"
+    ]
+  },
+  "ecarts": [
+    {
+      "code": "ecart_taille_ca",
+      "min": 1030000000,
+      "max": 62589489000
+    }
+  ],
+  "comparabilite": {
+    "fiable": false,
+    "avertissements": [
+      {
+        "code": "secteurs_differents",
+        "portee": "bloquante",
+        "lecture": "Les entreprises comparées n'ont pas le même code NAF : les scores et les ratios ne se comparent pas d'un secteur à l'autre. / The companies have different NAF activity codes: scores and ratios are not comparable across sectors."
+      }
+    ]
+  }
+}

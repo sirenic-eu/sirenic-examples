@@ -118,6 +118,7 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/eu/agrements?q=BNP%20Paribas", expect: "requete", price: "$0.01" },
   // Facturé PAR SOCIÉTÉ : 2 SIREN = 2 × $0.105.
   { path: "/v1/kyb/batch?sirens=552032534,542065479", expect: "nombre_demande", price: "$0.21" },
+  { path: "/v1/comparer?sirens=552032534,542065479", expect: "comparabilite", price: "$0.24" },
   { path: "/v1/sanctions/check?name=Danone", expect: "correspondances", price: "$0.02" },
   { path: "/v1/dirigeant/recherche?nom=Faber", expect: "resultats", price: "$0.02" },
   { path: "/v1/eu/recherche?q=equinor&pays=NO", expect: "resultats", price: "$0.003" },
