@@ -33,6 +33,7 @@ nothing than a plausible fabrication about a real company.
 | `GET /v1/entreprise/:siren/marches-publics` | $0.01 | [`entreprise-siren-marches-publics.json`](entreprise-siren-marches-publics.json) |
 | `GET /v1/entreprise/:siren/sante` | $0.15 | [`entreprise-siren-sante.json`](entreprise-siren-sante.json) |
 | `GET /v1/kyb/batch` | $0.105 | [`kyb-batch.json`](kyb-batch.json) |
+| `GET /v1/comparer` | $0.12 | [`comparer.json`](comparer.json) |
 | `GET /v1/kyb/:siren` | $0.15 | [`kyb-siren.json`](kyb-siren.json) |
 | `GET /v1/sanctions/check` | $0.02 | [`sanctions-check.json`](sanctions-check.json) |
 | `GET /v1/regulateurs/fr/alertes` | $0.01 | [`regulateurs-fr-alertes.json`](regulateurs-fr-alertes.json) |
