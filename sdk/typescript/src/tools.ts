@@ -21,7 +21,7 @@ export function sirenicTools(options: SirenicOptions = {}) {
       {
         name: "sirenic_search_companies",
         description:
-          "Search 30M French companies by name or SIREN (official INSEE/INPI data). Top 10 matches with a 0-1 confidence score. Price: $0.001.",
+          "French company search and company lookup by name or SIREN in the official French company registry (INSEE Sirene / INPI data), 30M companies. Top 10 matches with a 0-1 confidence score. Price: $0.001.",
         schema: z.object({ q: z.string().min(1).max(100).describe("Company name or SIREN") }),
       },
     ),
@@ -31,7 +31,7 @@ export function sirenicTools(options: SirenicOptions = {}) {
       {
         name: "sirenic_company_profile",
         description:
-          "Full official profile of a French company: legal form, head office, NAF, workforce, officers, VAT number, Egapro index, RGE certifications. Price: $0.005.",
+          "Full French company profile from the official company registry: legal form, head office, NAF, workforce, officers, VAT number, Egapro index, RGE certifications. Price: $0.005.",
         schema: z.object({ siren: SIREN, geo: z.boolean().optional().describe("Include GPS coordinates") }),
       },
     ),
@@ -40,7 +40,7 @@ export function sirenicTools(options: SirenicOptions = {}) {
       {
         name: "sirenic_kyb_file",
         description:
-          "Complete KYB file in one call: identity, officers, BODACC legal alerts, filed financials, sanctions screening of the company and each officer (6 official lists), completeness score. Price: $0.15.",
+          "Complete KYB (Know Your Business) due-diligence file in one call: identity, officers, BODACC legal alerts, filed financials, sanctions screening of the company and each officer (6 official lists), completeness score. Price: $0.15.",
         schema: z.object({ siren: SIREN }),
       },
     ),
@@ -53,7 +53,7 @@ export function sirenicTools(options: SirenicOptions = {}) {
       {
         name: "sirenic_screen_sanctions",
         description:
-          "Screen a person or company name against 6 official sanctions lists (UN, EU, OFAC, UK, FR, Swiss SECO). Scored fuzzy matches, never a bare yes/no. Price: $0.02.",
+          "AML sanctions screening: screen a person or company name against 6 official sanctions lists (UN, EU, OFAC, UK, FR, Swiss SECO). Scored fuzzy matches, never a bare yes/no. Price: $0.02.",
         schema: z.object({
           name: z.string().min(2).max(100).describe("Person or company name"),
           birth_year: z.string().regex(/^\d{4}$/).optional().describe("Optional birth year (YYYY)"),
