@@ -112,14 +112,12 @@ Cursor / any MCP client (`mcpServers` config):
 { "mcpServers": { "sirenic": { "url": "https://api.sirenic.eu/mcp" } } }
 ```
 
-44 tools are exposed — including the FREE detect_company_identifiers (paste any text, get SIREN/SIRET/VAT/LEI with the right call to make) and verify_iban_bank. Search with 0-1 confidence scores, company profiles,
+68 tools are exposed — including the FREE detect_company_identifiers (paste any text, get SIREN/SIRET/VAT/LEI with the right call to make) and verify_iban_bank. Search with 0-1 confidence scores, company profiles,
 KYB files, a $1 company-intelligence report, sanctions screening, AMF
 regulator alerts, **regulatory authorisations by SIREN (EBA PSD2 register,
 EIOPA, ARCEP)**, EU financial authorisations (ESMA), industrial risk
 (Seveso/ICPE), lobbying register, EU procurement awards (TED), **watchlists
-with daily checks and Ed25519-signed webhooks**, financials, capital
-structure, sector benchmarks, failure-risk score, Belgian annual
-accounts…). Each tool accepts
+with daily checks and Ed25519-signed webhooks**, financials, capital structure, sector benchmarks, failure-risk score, Belgian annual accounts…). Each tool accepts
 an optional `x_payment` parameter: without it you get the 402 quote; sign it
 with an x402 client and call again. Every tool declares an **output schema**
 and returns `structuredContent`, plus MCP annotations (read-only vs. state-
@@ -227,8 +225,6 @@ Two things this is **not**:
 | `GET /v1/entreprise/{siren}/changements?depuis=` | $0.01 | New BODACC events since a date |
 | `GET /v1/entreprise/{siren}/pi` | $0.03 | Industrial property (trademarks, patents, designs) |
 | `GET /v1/entreprise/{siren}/capital` | $0.35 | Ownership from public articles, AI-extracted |
-| `GET /v1/entreprise/{siren}/comptes-pdf` | $2.00 | Filed-accounts annexe, AI-extracted (served from stock) |
-| `GET /v1/entreprise/{siren}/liens-capitalistiques` | $2.00 | Single-level capital links between legal entities |
 | `GET /v1/entreprise/{siren}/sante` | $0.15 | AI health summary (7-day cache) |
 | `GET /v1/score/defaillance/{siren}` | $0.10 | Failure-risk score (deterministic) |
 | `GET /v1/secteur/{code_naf}/benchmarks` | $0.05 | Sector aggregates (k-anonymised) |
