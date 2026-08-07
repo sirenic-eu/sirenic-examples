@@ -227,6 +227,7 @@ Two things this is **not**:
 | `GET /v1/entreprise/{siren}/changements?depuis=` | $0.01 | New BODACC events since a date |
 | `GET /v1/entreprise/{siren}/pi` | $0.03 | Industrial property (trademarks, patents, designs) |
 | `GET /v1/entreprise/{siren}/capital` | $0.35 | Ownership from public articles, AI-extracted |
+| `GET /v1/entreprise/{siren}/comptes-pdf` | $2.00 | Filed-accounts annexe, AI-extracted (served from stock) |
 | `GET /v1/entreprise/{siren}/liens-capitalistiques` | $2.00 | Single-level capital links between legal entities |
 | `GET /v1/entreprise/{siren}/sante` | $0.15 | AI health summary (7-day cache) |
 | `GET /v1/score/defaillance/{siren}` | $0.10 | Failure-risk score (deterministic) |
