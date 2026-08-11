@@ -33,6 +33,23 @@ Data sources: INSEE Sirene / INPI RNE and other official registers, open
 licenses (Etalab 2.0, NLOD, CC-BY 4.0, OGL, CC0). Data is redistributed
 as published — every response carries `source` and `disclaimer` fields.
 
+## Quickstart 0 — name → SIREN, for free (no wallet, no account, no key)
+
+Every other call takes a SIREN. Getting one from a name costs nothing:
+
+```bash
+curl -s "https://api.sirenic.eu/v1/suggestions?q=carrefour"
+```
+
+Up to 5 matches, each with `siren`, `denomination`, `code_postal`, `commune`,
+`code_naf` and `actif`. Source: the official INSEE Sirene register (open data).
+Drop it straight into a form's autocomplete, or let your agent resolve the name
+before it decides what to buy. Quota: 2,000 calls per day per IP.
+
+It matches the **start** of the registered name, then whole words (`agricole`
+finds CRÉDIT AGRICOLE) — no typo tolerance and no match-confidence score. For
+those, `GET /v1/recherche` costs $0.001. Then pick your paid call below.
+
 ## Quickstart 1 — "Can you safely invoice or pay this company?"
 
 One call, three answers: is the supplier still active, is its VAT number valid
@@ -112,7 +129,7 @@ Cursor / any MCP client (`mcpServers` config):
 { "mcpServers": { "sirenic": { "url": "https://api.sirenic.eu/mcp" } } }
 ```
 
-68 tools are exposed — including the FREE detect_company_identifiers (paste any text, get SIREN/SIRET/VAT/LEI with the right call to make) and verify_iban_bank. Search with 0-1 confidence scores, company profiles,
+69 tools are exposed — including TWO FREE ones: suggest_company_names (type a company name, get its SIREN — start here) and detect_company_identifiers (paste any text, get SIREN/SIRET/VAT/LEI with the right call to make). Plus verify_iban_bank. Search with 0-1 confidence scores, company profiles,
 KYB files, a $1 company-intelligence report, sanctions screening, AMF
 regulator alerts, **regulatory authorisations by SIREN (EBA PSD2 register,
 EIOPA, ARCEP)**, EU financial authorisations (ESMA), industrial risk
@@ -250,7 +267,9 @@ Two things this is **not**:
 | `GET /v1/eu/entreprise/BE/{id}/comptes/{ref}` | $0.15 | One Belgian annual-account deposit (JSON since 2022, PDF before) |
 | `GET /v1/eu/entreprise/BE/{id}/transactions-dirigeants` | $0.02 | Insider dealing at a Belgian listed company (FSMA, Art. 19 MAR): are its managers buying or selling? Issuer-level aggregate — **no individual is ever named** |
 
-Free: `GET /` (landing), `GET /preview/entreprise/55203253400646` (sample
+Free: `GET /` (landing), `GET /v1/suggestions?q=` (**company-name autocomplete →
+SIREN**, up to 5 matches, 2,000 calls/day/IP),
+`GET /preview/entreprise/55203253400646` (sample
 response), `GET /v1/reperer?texte=` (**detect SIREN/SIRET/VAT/LEI in any text**,
 with the suggested paid call and its price), `GET /openapi.json`,
 `GET /llms.txt`, `GET /healthz`; watchlist
@@ -259,6 +278,7 @@ returned at creation is the capability — no account).
 
 ## In this repo
 
+- [`examples/suggestions.ts`](examples/suggestions.ts) — the **free** name → SIREN autocomplete, and the checks that prove it stays free (no wallet needed: `npx tsx examples/suggestions.ts`).
 - [`examples/quote.sh`](examples/quote.sh) — inspect a 402 quote with curl.
 - [`examples/pay-and-call.ts`](examples/pay-and-call.ts) — pay one request end to end.
 - [`examples/verify-invoice-file.ts`](examples/verify-invoice-file.ts) — **verify a supplier before you pay, and keep the proof** (~$0.03): buy the invoicing file, verify its signature offline, read the `pret_a_facturer` verdict and its provenance only once authenticated, then write a timestamped audit folder (raw bytes, signature, public key, `LISEZ-MOI.md`) and re-verify it from those files alone.
