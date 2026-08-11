@@ -129,7 +129,7 @@ Cursor / any MCP client (`mcpServers` config):
 { "mcpServers": { "sirenic": { "url": "https://api.sirenic.eu/mcp" } } }
 ```
 
-70 tools are exposed — including TWO FREE ones: suggest_company_names (type a company name, get its SIREN — start here) and detect_company_identifiers (paste any text, get SIREN/SIRET/VAT/LEI with the right call to make). Plus verify_iban_bank. Search with 0-1 confidence scores, company profiles,
+71 tools are exposed — including TWO FREE ones: suggest_company_names (type a company name, get its SIREN — start here) and detect_company_identifiers (paste any text, get SIREN/SIRET/VAT/LEI with the right call to make). Plus verify_iban_bank. Search with 0-1 confidence scores, company profiles,
 KYB files, an à-la-carte company file where you pick the blocks and pay only for those, a $1 company-intelligence report, sanctions screening, AMF
 regulator alerts, **regulatory authorisations by SIREN (EBA PSD2 register,
 EIOPA, ARCEP)**, EU financial authorisations (ESMA), industrial risk
@@ -245,6 +245,7 @@ Two things this is **not**:
 | `GET /v1/entreprise/{siren}/sante` | $0.15 | AI health summary (7-day cache) |
 | `GET /v1/score/defaillance/{siren}` | $0.10 | Failure-risk score (deterministic) |
 | `GET /v1/secteur/{code_naf}/benchmarks` | $0.05 | Sector aggregates (k-anonymised) |
+| `GET /v1/bodacc/recherche?famille=&depuis=` | $0.03 | **Which companies, not which company** — search the BODACC gazette by family (insolvency proceedings, accounts filings, deregistrations, sales…), date window and optionally a French department. Up to 100 announcements, newest first, each with SIREN, court and town. Built for scheduled monitoring. Sole traders are excluded (their name is personal data) and counted; the judgment is served STRUCTURED because its free text names court-appointed administrators with their address |
 | `GET /v1/kyb/{siren}` | $0.15 | Full KYB file + sanctions screening |
 | `GET /v1/entreprise/{siren}/dossier?blocs=` | $0.005 + per block, max $0.35 | **One call, you pick the blocks** — identity base plus any of `etablissements`, `alertes_bodacc`, `finances`, `marches_publics`, `marches_publics_ue`, `lobbying`, `risques_industriels`, `agrements`, `pi`, `documents`, `facturation_prep`, `score`. Each block costs what its own endpoint costs, so grouping never costs more than calling separately. A block that cannot be served is named with a reason (`aucune_donnee`, `non_diffusible`, `panne_amont`); if every requested block is down you get a 503 and pay nothing |
 | `GET /v1/kyb/batch?sirens=` | $0.105/co | Batch KYB (2–100 companies) |
@@ -279,6 +280,7 @@ returned at creation is the capability — no account).
 
 ## In this repo
 
+- [`examples/smoke-bodacc-2026-08-11.ts`](examples/smoke-bodacc-2026-08-11.ts) — buy the **BODACC criteria search** for real (3 purchases, $0.09) and check that no court-appointed administrator is ever named in the response.
 - [`examples/smoke-dossier-2026-08-11.ts`](examples/smoke-dossier-2026-08-11.ts) — buy the **à-la-carte company file** for real (4 purchases, ~$0.32) and check the quote matches the blocks asked for.
 - [`examples/suggestions.ts`](examples/suggestions.ts) — the **free** name → SIREN autocomplete, and the checks that prove it stays free (no wallet needed: `npx tsx examples/suggestions.ts`).
 - [`examples/quote.sh`](examples/quote.sh) — inspect a 402 quote with curl.
