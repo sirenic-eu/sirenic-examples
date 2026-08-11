@@ -114,7 +114,7 @@ try {
   const depot = "/home/ubuntu/sirenic-resultats";
   execSync(`cp -r ${dossier} ${depot}/smokes/`, { stdio: "pipe" });
   execSync(
-    `git -C ${depot} add -A && git -C ${depot} -c user.name=cdu -c user.email=contact@sirenic.eu ` +
+    `git -C ${depot} add -A && git -C ${depot} -c user.name=Sirenic -c user.email=contact@sirenic.eu ` +
       `commit -q -m "livraison webhook surveillance : ${signaturesValides}/${recues.length} signature(s) Ed25519 verifiee(s), watch arretee" && ` +
       `git -C ${depot} push -q origin main`,
     { stdio: "pipe" },
