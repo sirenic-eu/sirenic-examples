@@ -246,6 +246,7 @@ Two things this is **not**:
 | `GET /v1/score/defaillance/{siren}` | $0.10 | Failure-risk score (deterministic) |
 | `GET /v1/secteur/{code_naf}/benchmarks` | $0.05 | Sector aggregates (k-anonymised) |
 | `GET /v1/kyb/{siren}` | $0.15 | Full KYB file + sanctions screening |
+| `GET /v1/entreprise/{siren}/dossier?blocs=` | $0.005 + per block, max $0.35 | **One call, you pick the blocks** — identity base plus any of `etablissements`, `alertes_bodacc`, `finances`, `marches_publics`, `marches_publics_ue`, `lobbying`, `risques_industriels`, `agrements`, `pi`, `documents`, `facturation_prep`, `score`. Each block costs what its own endpoint costs, so grouping never costs more than calling separately. A block that cannot be served is named with a reason (`aucune_donnee`, `non_diffusible`, `panne_amont`); if every requested block is down you get a 503 and pay nothing |
 | `GET /v1/kyb/batch?sirens=` | $0.105/co | Batch KYB (2–100 companies) |
 | `GET /v1/sanctions/check?name=` | $0.02 | 6 official sanctions lists (UN, EU, OFAC, UK, FR, Swiss SECO), scored |
 | `GET /v1/regulateurs/fr/alertes?nom=\|siren=` | $0.01 | AMF blacklists + PSAN/SGP registers (scam check, crypto providers) |
@@ -278,6 +279,7 @@ returned at creation is the capability — no account).
 
 ## In this repo
 
+- [`examples/smoke-dossier-2026-08-11.ts`](examples/smoke-dossier-2026-08-11.ts) — buy the **à-la-carte company file** for real (4 purchases, ~$0.32) and check the quote matches the blocks asked for.
 - [`examples/suggestions.ts`](examples/suggestions.ts) — the **free** name → SIREN autocomplete, and the checks that prove it stays free (no wallet needed: `npx tsx examples/suggestions.ts`).
 - [`examples/quote.sh`](examples/quote.sh) — inspect a 402 quote with curl.
 - [`examples/pay-and-call.ts`](examples/pay-and-call.ts) — pay one request end to end.
