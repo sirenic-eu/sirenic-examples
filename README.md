@@ -260,8 +260,8 @@ Two things this is **not**:
 | `GET /v1/documents/{type}/{id}` | $0.10 | Download a filed document (PDF) |
 | `GET /v1/tva/verifier/{numero}` | $0.003 | EU VAT validation (VIES) |
 | `GET /v1/iban/verifier/{iban}` | $0.005 | IBAN check + bank identification (FR/BE/AT/NL, incl. LEI) — not a Verification of Payee |
-| `GET /v1/surveillance/creer?cibles=` | $0.05/target/30d | **Watchlist**: daily checks on companies & directors, signed webhooks + e-mail digests |
-| `GET /v1/surveillance/{token}/renouveler` | $0.05/target/30d | Renew a watchlist (grace: 7 days after expiry) |
+| `GET /v1/surveillance/creer?cibles=&duree=` | $0.05 / $0.135 / $0.50 per target (30 / 90 / 365d) | **Watchlist**: daily checks on companies & directors, signed webhooks + e-mail digests, expiry warning at D-7 |
+| `GET /v1/surveillance/{token}/renouveler?cibles=&duree=` | same per-target prices | Renew a watchlist for any duration, not just the original one (grace: 7 days after expiry; no refund, no pro rata) |
 | `GET /v1/eu/recherche?q=` | $0.003 | Search European registers (BE, NO, EE, LV local; CZ, SK, FI, PL, CH live) + GLEIF |
 | `GET /v1/eu/entreprise/{pays}/{id}` | $0.01 | Unified European profile — 12 countries: BE (KBO, NACEBEL + establishments), CH (Zefix), NO (Brønnøysund), CZ (ARES), SK (RPO), FI (PRH), PL (KRS), EE, LV… Each live country also has its own dedicated path (e.g. `/v1/eu/entreprise/CH/CHE-107.480.920`) |
 | `GET /v1/eu/entreprise/BE/{id}/comptes` | $0.01 | Belgian filings list (official NBB Central Balance Sheet Office) |
@@ -289,6 +289,7 @@ returned at creation is the capability — no account).
   real, dated sample per paid endpoint, truncated to one item per array. The same
   samples are served by the API itself, in the OpenAPI spec, in the x402 payment
   quote and in `llms.txt` — so the contract you read is the contract you get.
+- [`examples/smoke-surveillance-durees-2026-08-11.ts`](examples/smoke-surveillance-durees-2026-08-11.ts) — buy a **90-day** and a **365-day** watchlist for real (~$0.685), renew one at a different duration, and check that an out-of-range duration and an over-long renewal are both refused **without a debit**.
 - [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call **every paid endpoint** once (~$7.40 total, USDC and/or EURC; the watchlist it creates is stopped again for free).
 - [`examples/agent-demo.ts`](examples/agent-demo.ts) — a small autonomous agent that searches, pays and reads profiles.
 - [`examples/mcp-setup.md`](examples/mcp-setup.md) — MCP configuration for Claude, Cursor and generic clients.

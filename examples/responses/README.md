@@ -41,8 +41,8 @@ nothing than a plausible fabrication about a real company.
 | `GET /v1/entreprise/:siren/agrements` | $0.02 | [`entreprise-siren-agrements.json`](entreprise-siren-agrements.json) |
 | `GET /v1/entreprise/:siren/lobbying` | $0.01 | [`entreprise-siren-lobbying.json`](entreprise-siren-lobbying.json) |
 | `GET /v1/eu/agrements` | $0.01 | [`eu-agrements.json`](eu-agrements.json) |
-| `GET /v1/surveillance/creer` | $0.05 | [`surveillance-creer.json`](surveillance-creer.json) |
-| `GET /v1/surveillance/:jeton/renouveler` | $0.05 | [`surveillance-jeton-renouveler.json`](surveillance-jeton-renouveler.json) |
+| `GET /v1/surveillance/creer` | $0.05–$0.50 per target (`duree=30\|90\|365`) | [`surveillance-creer.json`](surveillance-creer.json) |
+| `GET /v1/surveillance/:jeton/renouveler` | $0.05–$0.50 per target (`duree=30\|90\|365`) | [`surveillance-jeton-renouveler.json`](surveillance-jeton-renouveler.json) |
 | `GET /v1/dirigeant/recherche` | $0.02 | [`dirigeant-recherche.json`](dirigeant-recherche.json) |
 | `GET /v1/prospection` | $0.02 | [`prospection.json`](prospection.json) |
 | `GET /v1/intelligence/:siren` | $1.00 | [`intelligence-siren.json`](intelligence-siren.json) |

@@ -1,13 +1,15 @@
 {
   "_endpoint": "/v1/surveillance/{jeton}/renouveler",
   "_price": "$0.05",
-  "_request": "GET https://api.sirenic.eu/v1/surveillance/sw_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/renouveler?cibles=552032534%2C542065479",
-  "_sample_of": "2026-07-29",
+  "_request": "GET https://api.sirenic.eu/v1/surveillance/sw_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/renouveler?cibles=552032534&duree=30",
+  "_sample_of": "2026-08-11",
   "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
   "response": {
     "surveillance_id": "sw_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-    "expire_le": "2026-09-27T07:36:32.134Z",
+    "jeton": "sw_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "duree_jours": 30,
+    "expire_le": "2026-12-09T17:30:26.851Z",
     "source": "Surveillance Sirenic — diffs quotidiens sur sources officielles (Sirene, BODACC, sanctions, AMF, Géorisques, DECP, TED)",
-    "disclaimer": "Vérification QUOTIDIENNE : un événement est signalé au plus tard le jour ouvré suivant sa publication par la source. Les correspondances (sanctions, listes AMF) sont des rapprochements de noms à vérifier — jamais une décision. Cible dirigeant : uniquement le suivi des MANDATS publics (nom + année), purgé à l'expiration."
+    "disclaimer": "Vérification QUOTIDIENNE : un événement est signalé au plus tard le jour ouvré suivant sa publication par la source. Les correspondances (sanctions, listes AMF) sont des rapprochements de noms à vérifier — jamais une décision. Cible dirigeant : uniquement le suivi des MANDATS publics (nom + année), purgé à l'expiration. / Daily checks; matches are name-based screening aids, not decisions; director targets track public offices only and are purged at expiry."
   }
 }

@@ -27,8 +27,9 @@ via ESMA ($0.01), **regulatory licences by SIREN** ($0.02 — EBA PSD2, EIOPA,
 ARCEP), **invoicing files for France and for Belgium/Poland** ($0.03 each —
 the Polish one tells you whether the IBAN is officially declared by that
 taxpayer, which carries legal weight there), **Belgian insider transactions**
-($0.02, FSMA Art. 19 MAR), the $1 intelligence report, 30-day watchlists
-($0.05/target) and a generic `sirenic_get` covering the whole catalog
+($0.02, FSMA Art. 19 MAR), the $1 intelligence report, watchlists of 30, 90 or
+365 days ($0.05 / $0.135 / $0.50 per target) and a generic `sirenic_get`
+covering the whole catalog
 ([prices](https://api.sirenic.eu/llms.txt)).
 
 Safety model: payments are EIP-3009 authorizations signed locally by the

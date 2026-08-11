@@ -1,19 +1,24 @@
 {
   "_endpoint": "/v1/surveillance/creer",
-  "_price": "$0.05",
-  "_request": "GET https://api.sirenic.eu/v1/surveillance/creer?cibles=552032534%2C542065479",
-  "_sample_of": "2026-07-29",
+  "_price": "$0.135",
+  "_request": "GET https://api.sirenic.eu/v1/surveillance/creer?cibles=552032534&duree=90",
+  "_sample_of": "2026-08-11",
   "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
   "response": {
     "surveillance_id": "sw_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.<horodatage_base64url>.<signature_ed25519_base64url>",
-    "cibles": 2,
-    "expire_le": "2026-08-28T07:36:32.134Z",
+    "jeton": "sw_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.<horodatage_base64url>.<signature_ed25519_base64url>",
+    "cibles": 1,
+    "duree_jours": 90,
+    "expire_le": "2026-11-09T17:30:26.851Z",
     "canaux": {
       "webhook": false,
       "email": false,
       "pull": "/v1/surveillance/sw_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
     },
+    "premiere_verification": "à la création, l'état de référence est initialisé SILENCIEUSEMENT au premier tour quotidien — les événements commencent à partir de maintenant, jamais rétroactifs",
+    "renouvellement": "/v1/surveillance/sw_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/renouveler?cibles=<même liste>&duree=30|90|365 — possible jusqu'à 7 j après expiration ; la durée du renouvellement est libre",
+    "sans_remboursement": "aucun remboursement au prorata : l'arrêt (/arreter, gratuit) purge les données mais ne rend pas le montant payé. / No pro-rata refund.",
     "source": "Surveillance Sirenic — diffs quotidiens sur sources officielles (Sirene, BODACC, sanctions, AMF, Géorisques, DECP, TED)",
-    "disclaimer": "Vérification QUOTIDIENNE : un événement est signalé au plus tard le jour ouvré suivant sa publication par la source. Les correspondances (sanctions, listes AMF) sont des rapprochements de noms à vérifier — jamais une décision. Cible dirigeant : uniquement le suivi des MANDATS publics (nom + année), purgé à l'expiration."
+    "disclaimer": "Vérification QUOTIDIENNE : un événement est signalé au plus tard le jour ouvré suivant sa publication par la source. Les correspondances (sanctions, listes AMF) sont des rapprochements de noms à vérifier — jamais une décision. Cible dirigeant : uniquement le suivi des MANDATS publics (nom + année), purgé à l'expiration. / Daily checks; matches are name-based screening aids, not decisions; director targets track public offices only and are purged at expiry."
   }
 }

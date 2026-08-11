@@ -119,11 +119,22 @@ def build_langchain_tools(client: SirenicClient) -> list:
 
     class Watch(BaseModel):
         cibles: str = Field(description="Comma-separated targets: SIRENs and/or dirigeant:Name (1-100)")
+        duree: Optional[int] = Field(
+            default=None,
+            description="Watch duration in days: 30, 90 or 365 (default 30). Sets the unit price per target: 30=$0.05, 90=$0.135, 365=$0.50",
+        )
         webhook: Optional[str] = Field(default=None, description="Public https URL for signed event batches")
         email: Optional[str] = Field(default=None, description="E-mail for digests")
 
-    def _watch(cibles: str, webhook: Optional[str] = None, email: Optional[str] = None) -> str:
+    def _watch(
+        cibles: str,
+        duree: Optional[int] = None,
+        webhook: Optional[str] = None,
+        email: Optional[str] = None,
+    ) -> str:
         params = [("cibles", cibles)]
+        if duree:
+            params.append(("duree", str(duree)))
         if webhook:
             params.append(("webhook", webhook))
         if email:
@@ -176,7 +187,7 @@ def build_langchain_tools(client: SirenicClient) -> list:
         StructuredTool.from_function(
             func=_watch,
             name="sirenic_create_watch",
-            description="Create a 30-day watchlist (daily checks, signed webhooks/e-mail). Targets: SIRENs and/or dirigeant:Name. Price: $0.05 per target per 30 days.",
+            description="Create a 30, 90 or 365-day watchlist (daily checks, signed webhooks/e-mail, expiry warning at D-7). Targets: SIRENs and/or dirigeant:Name. Price per target AND per duration: $0.05 for 30 days, $0.135 for 90, $0.50 for a year. No pro-rata refund.",
             args_schema=Watch,
         ),
         StructuredTool.from_function(

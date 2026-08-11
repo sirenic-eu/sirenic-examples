@@ -29,7 +29,10 @@
  * Two routes are STATEFUL and are therefore exercised once, on the first rail
  * only, then cleaned up:
  *   - the watchlist is created, renewed, then STOPPED (stopping is free, so no
- *     30-day watch is left running and no daily e-mail is triggered);
+ *     watch is left running and no daily e-mail is triggered). Deliberately
+ *     WITHOUT `duree`: this run is the non-regression proof that a caller who
+ *     ignores the parameter still pays the historical 30-day price. The three
+ *     durations have their own smoke, examples/smoke-surveillance-durees-2026-08-11.ts;
  *   - Belgian filings are listed, then one deposit is fetched by its reference.
  */
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -224,6 +227,7 @@ for (const [rail, paidFetch] of RAILS) {
   }
 
   // -- Watchlist: create → renew → stop (only once; stopping is free) --------
+  // No `duree` on purpose — see the header: this is the compatibility check.
   if (!surveillanceFaite) {
     surveillanceFaite = true;
     const cibles = "552032534,542065479";

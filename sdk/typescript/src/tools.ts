@@ -160,8 +160,9 @@ export function sirenicTools(options: SirenicOptions = {}) {
       },
     ),
     tool(
-      async ({ cibles, webhook, email }) => {
+      async ({ cibles, duree, webhook, email }) => {
         const query = new URLSearchParams({ cibles });
+        if (duree) query.set("duree", String(duree));
         if (webhook) query.set("webhook", webhook);
         if (email) query.set("email", email);
         return client.get(`/v1/surveillance/creer?${query.toString()}`);
@@ -169,9 +170,13 @@ export function sirenicTools(options: SirenicOptions = {}) {
       {
         name: "sirenic_create_watch",
         description:
-          "Create a 30-day watchlist: Sirenic checks each target DAILY (filings, status, officers, sanctions, AMF, Seveso, procurement) and pushes events via Ed25519-signed webhook and/or e-mail; always pollable with the returned token. Targets: SIRENs and/or `dirigeant:Name`. Price: $0.05 per target per 30 days.",
+          "Create a 30, 90 or 365-day watchlist: Sirenic checks each target DAILY (filings, status, officers, sanctions, AMF, Seveso, procurement) and pushes events via Ed25519-signed webhook and/or e-mail; always pollable with the returned token, plus an expiry warning 7 days ahead. Targets: SIRENs and/or `dirigeant:Name`. Price PER TARGET AND PER DURATION: $0.05 for 30 days, $0.135 for 90, $0.50 for a year. No pro-rata refund.",
         schema: z.object({
           cibles: z.string().min(2).describe("Comma-separated targets: SIRENs and/or dirigeant:Name (1-100)"),
+          duree: z
+            .union([z.literal(30), z.literal(90), z.literal(365)])
+            .optional()
+            .describe("Watch duration in days (default 30). Sets the unit price: 30=$0.05, 90=$0.135, 365=$0.50"),
           webhook: z.string().url().optional().describe("Public https URL for signed event batches"),
           email: z.string().optional().describe("E-mail for digests"),
         }),
