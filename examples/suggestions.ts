@@ -88,8 +88,15 @@ verifier(
 );
 verifier((c.suggestions ?? []).length <= 5, "plafond de 5 suggestions tenu");
 verifier(
-  !JSON.stringify(c).includes("signature") && !JSON.stringify(c).includes("provenance"),
-  "aucune signature ni provenance annoncée sur une réponse gratuite",
+  !JSON.stringify(c).includes("provenance"),
+  "aucun bloc provenance (réservé aux réponses payantes)",
+);
+// La réponse gratuite est SIGNÉE quand même : middlewareAttestation est monté
+// sur tout /v1, pas seulement sur le payant. C'est une propriété, pas un
+// accident — une suggestion gratuite reste vérifiable hors ligne.
+verifier(
+  carrefour.entetes.get("x-sirenic-signature") !== null,
+  "la réponse gratuite est tout de même signée Ed25519 (en-têtes)",
 );
 console.log(
   (c.suggestions ?? [])
