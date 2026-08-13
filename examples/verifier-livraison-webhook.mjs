@@ -119,7 +119,7 @@ try {
       `git -C ${depot} push -q origin main`,
     { stdio: "pipe" },
   );
-  dire("trace commitée sur kopko13/sirenic-resultats");
+  dire("trace commitée sur le dépôt privé de traces");
 } catch (e) {
   dire(`commit de la trace ÉCHOUÉ (${String(e).slice(0, 120)}) — dossier conservé : ${dossier}`);
 }

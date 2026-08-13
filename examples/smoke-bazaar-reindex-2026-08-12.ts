@@ -23,7 +23,7 @@
  * apparaître index.active, avec un plafond d'attente de ~5 minutes.
  *
  * Les réponses complètes sont conservées (règle CDU) puis commitées sur le
- * dépôt privé de traces kopko13/sirenic-resultats.
+ * dépôt privé de traces.
  *
  *   node --env-file=.env.wallet-test --import tsx examples/smoke-bazaar-reindex-2026-08-12.ts
  */

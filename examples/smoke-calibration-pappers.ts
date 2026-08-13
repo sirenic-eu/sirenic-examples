@@ -4,7 +4,7 @@
  *
  * Chaque réponse complète est conservée dans resultats/<horodatage>/ (règle
  * CDU du 24/07, étendue le 11/08 : le dossier part ensuite sur le dépôt privé
- * kopko13/sirenic-resultats).
+ * le dépôt privé de traces).
  *
  *   node --env-file=.env.wallet-test --import tsx examples/smoke-calibration-pappers.ts
  */
