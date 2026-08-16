@@ -1,0 +1,458 @@
+[
+ {
+  "endpoint": "/v1/recherche",
+  "prix": "$0.001",
+  "mime": "application/json",
+  "url": "/v1/recherche?q=danone"
+ },
+ {
+  "endpoint": "/v1/entreprise/{siren}",
+  "prix": "$0.005",
+  "mime": "application/json",
+  "url": "/v1/entreprise/552032534?geo=true"
+ },
+ {
+  "endpoint": "/v1/entreprise/{siren}/etablissements",
+  "prix": "$0.003",
+  "mime": "application/json",
+  "url": "/v1/entreprise/552032534/etablissements?geo=true"
+ },
+ {
+  "endpoint": "/v1/entreprise/{siren}/alertes",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/entreprise/552032534/alertes"
+ },
+ {
+  "endpoint": "/v1/entreprise/{siren}/capital",
+  "prix": "$0.35",
+  "mime": "application/json",
+  "url": "/v1/entreprise/552032534/capital"
+ },
+ {
+  "endpoint": "/v1/entreprise/{siren}/changements",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/entreprise/552032534/changements?depuis=2020-01-01"
+ },
+ {
+  "endpoint": "/v1/entreprise/{siren}/pi",
+  "prix": "$0.03",
+  "mime": "application/json",
+  "url": "/v1/entreprise/552032534/pi"
+ },
+ {
+  "endpoint": "/v1/entreprise/{siren}/finances",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/entreprise/552032534/finances"
+ },
+ {
+  "endpoint": "/v1/entreprise/{siren}/marches-publics-ue",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/entreprise/428634356/marches-publics-ue"
+ },
+ {
+  "endpoint": "/v1/entreprise/{siren}/marches-publics",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/entreprise/130031487/marches-publics"
+ },
+ {
+  "endpoint": "/v1/entreprise/{siren}/sante",
+  "prix": "$0.15",
+  "mime": "application/json",
+  "url": "/v1/entreprise/552032534/sante"
+ },
+ {
+  "endpoint": "/v1/kyb/batch",
+  "prix": "$0.105",
+  "mime": "application/json",
+  "url": "/v1/kyb/batch?sirens=552032534%2C542065479"
+ },
+ {
+  "endpoint": "/v1/comparer",
+  "prix": "$0.12",
+  "mime": "application/json",
+  "url": "/v1/comparer?sirens=552032534%2C542065479"
+ },
+ {
+  "endpoint": "/v1/kyb/{siren}",
+  "prix": "$0.15",
+  "mime": "application/json",
+  "url": "/v1/kyb/552032534"
+ },
+ {
+  "endpoint": "/v1/sanctions/check",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/sanctions/check?name=Vladimir%20Putin&birth_year=1952"
+ },
+ {
+  "endpoint": "/v1/regulateurs/fr/alertes",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/regulateurs/fr/alertes?siren=552032534"
+ },
+ {
+  "endpoint": "/v1/entreprise/{siren}/risques-industriels",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/entreprise/095580841/risques-industriels"
+ },
+ {
+  "endpoint": "/v1/entreprise/{siren}/agrements",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/entreprise/953990934/agrements"
+ },
+ {
+  "endpoint": "/v1/entreprise/{siren}/lobbying",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/entreprise/552032534/lobbying"
+ },
+ {
+  "endpoint": "/v1/eu/agrements",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/eu/agrements?q=BNP%20Paribas"
+ },
+ {
+  "endpoint": "/v1/surveillance/creer",
+  "prix": "$0.05",
+  "mime": "application/json",
+  "url": "/v1/surveillance/creer?cibles=552032534%2C542065479&duree=30"
+ },
+ {
+  "endpoint": "/v1/surveillance/{jeton}/renouveler",
+  "prix": "$0.05",
+  "mime": "application/json",
+  "url": "/v1/surveillance/sw_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/renouveler?cibles=552032534%2C542065479&duree=30"
+ },
+ {
+  "endpoint": "/v1/dirigeant/recherche",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/dirigeant/recherche?nom=Arnault"
+ },
+ {
+  "endpoint": "/v1/prospection",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/prospection?naf=62.01Z&departement=75&page=1"
+ },
+ {
+  "endpoint": "/v1/intelligence/{siren}",
+  "prix": "$1.00",
+  "mime": "application/json",
+  "url": "/v1/intelligence/552032534"
+ },
+ {
+  "endpoint": "/v1/rapport/{siren}",
+  "prix": "$0.50",
+  "mime": "application/pdf",
+  "url": "/v1/rapport/552032534"
+ },
+ {
+  "endpoint": "/v1/eu/recherche",
+  "prix": "$0.003",
+  "mime": "application/json",
+  "url": "/v1/eu/recherche?q=equinor&pays=NO"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/BE/{id}",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/BE/0403170701"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/CH/{id}",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/CH/CHE-107.480.920"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/NO/{id}",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/NO/923609016"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/CZ/{id}",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/CZ/45274649"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/SK/{id}",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/SK/35763469"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/FI/{id}",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/FI/0112038-9"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/PL/{id}",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/PL/0000006865"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/EE/{id}",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/EE/12417834"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/LV/{id}",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/LV/40003245752"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/ES/{hoja}/actes",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/ES/VI-14412/actes"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/GB/{company_number}/dirigeants",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/GB/00000006/dirigeants"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/GB/{company_number}/beneficiaires-effectifs",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/GB/00446915/beneficiaires-effectifs"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/GB/{company_number}/insolvabilite",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/GB/NI017460/insolvabilite"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/LV/{regnr}/comptes",
+  "prix": "$0.03",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/LV/40003032949/comptes"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/LV/{regnr}/insolvabilite",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/LV/40103144555/insolvabilite"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/LV/{regnr}/dirigeants",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/LV/40203109838/dirigeants"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/LV/{regnr}/beneficiaires-effectifs",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/LV/40003229495/beneficiaires-effectifs"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/EE/{registrikood}/comptes",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/EE/10003666/comptes"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/EE/{registrikood}/evenements",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/EE/10119794/evenements"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/SE/{orgnr}/comptes",
+  "prix": "$0.03",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/SE/5560401977/comptes"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/SE/{orgnr}/evenements",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/SE/5560012402/evenements"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/SE/{id}",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/SE/5560012402"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/CZ/{ico}/insolvabilite",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/CZ/49193881/insolvabilite"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/PL/{krs}/evenements",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/PL/0000006865/evenements"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/{pays}/{id}",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/NO/923609016"
+ },
+ {
+  "endpoint": "/v1/eu/facturation/dossier",
+  "prix": "$0.03",
+  "mime": "application/json",
+  "url": "/v1/eu/facturation/dossier?pays=BE&id=0403199702"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/{pays}/{id}/transactions-dirigeants",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/BE/0428750985/transactions-dirigeants"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/NO/{id}/comptes",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/NO/923609016/comptes"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/NO/{id}/evenements",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/NO/926455249/evenements"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/DK/{id}/comptes",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/DK/41235292/comptes"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/DK/{id}/comptes/{date_cloture}",
+  "prix": "$0.05",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/DK/41235292/comptes/2025-12-31"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/DK/{cvr}/dirigeants",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/DK/24256790/dirigeants?inclure_anciens=true"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/SK/{ico}/comptes",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/SK/36417475/comptes"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/SK/{ico}/comptes/{date_cloture}",
+  "prix": "$0.03",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/SK/36417475/comptes/2025-12-31?perimetre=statutaire"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/GB/{company_number}/comptes",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/GB/00095407/comptes"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/GB/{company_number}/comptes/{date_cloture}",
+  "prix": "$0.05",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/GB/07960839/comptes/2026-03-31"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/{pays}/{id}/comptes",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/BE/0400378485/comptes"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/{pays}/{id}/comptes/{reference}",
+  "prix": "$0.15",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/FI/0103396-3/comptes/2024-12-31?format=pdf"
+ },
+ {
+  "endpoint": "/v1/entreprise/{siren}/documents",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/entreprise/552032534/documents"
+ },
+ {
+  "endpoint": "/v1/documents/{type}/{id}",
+  "prix": "$0.10",
+  "mime": "application/pdf",
+  "url": "/v1/documents/actes/6a33ae8b0397b4bf6e0f5118"
+ },
+ {
+  "endpoint": "/v1/facture/verifier",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/facture/verifier?siren=552032534&tva=FR27552032534&iban=FR1420041010050500013M02606"
+ },
+ {
+  "endpoint": "/v1/facturation/dossier",
+  "prix": "$0.03",
+  "mime": "application/json",
+  "url": "/v1/facturation/dossier?siren=552032534&iban=FR1420041010050500013M02606"
+ },
+ {
+  "endpoint": "/v1/entreprise/{siren}/facturation-prep",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/entreprise/552032534/facturation-prep"
+ },
+ {
+  "endpoint": "/v1/bodacc/recherche",
+  "prix": "$0.03",
+  "mime": "application/json",
+  "url": "/v1/bodacc/recherche?famille=collective&depuis=2026-08-04&jusqu_a=2026-08-11&departement=59"
+ },
+ {
+  "endpoint": "/v1/entreprise/{siren}/dossier",
+  "prix": "$0.005",
+  "mime": "application/json",
+  "url": "/v1/entreprise/552032534/dossier?blocs=finances%2Cpi%2Cscore"
+ },
+ {
+  "endpoint": "/v1/score/defaillance/{siren}",
+  "prix": "$0.10",
+  "mime": "application/json",
+  "url": "/v1/score/defaillance/552032534"
+ },
+ {
+  "endpoint": "/v1/secteur/{code_naf}/benchmarks",
+  "prix": "$0.05",
+  "mime": "application/json",
+  "url": "/v1/secteur/62.01Z/benchmarks"
+ },
+ {
+  "endpoint": "/v1/iban/verifier/{iban}",
+  "prix": "$0.005",
+  "mime": "application/json",
+  "url": "/v1/iban/verifier/FR1420041010050500013M02606"
+ },
+ {
+  "endpoint": "/v1/tva/verifier/{numero}",
+  "prix": "$0.003",
+  "mime": "application/json",
+  "url": "/v1/tva/verifier/FR27552032534"
+ }
+]
