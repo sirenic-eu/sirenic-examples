@@ -129,7 +129,7 @@ Cursor / any MCP client (`mcpServers` config):
 { "mcpServers": { "sirenic": { "url": "https://api.sirenic.eu/mcp" } } }
 ```
 
-72 tools are exposed — including TWO FREE ones: suggest_company_names (type a company name, get its SIREN — start here) and detect_company_identifiers (paste any text, get SIREN/SIRET/VAT/LEI with the right call to make). Plus verify_iban_bank. Search with 0-1 confidence scores, company profiles,
+73 tools are exposed — including TWO FREE ones: suggest_company_names (type a company name, get its SIREN — start here) and detect_company_identifiers (paste any text, get SIREN/SIRET/VAT/LEI with the right call to make). Plus verify_iban_bank. Search with 0-1 confidence scores, company profiles,
 KYB files, an à-la-carte company file where you pick the blocks and pay only for those, a $1 company-intelligence report, sanctions screening, AMF
 regulator alerts, **regulatory authorisations by SIREN (EBA PSD2 register,
 EIOPA, ARCEP)**, EU financial authorisations (ESMA), industrial risk
@@ -260,6 +260,7 @@ Two things this is **not**:
 | `GET /v1/intelligence/{siren}` | $1.00 | Intelligence report: every block cross-referenced — executive summary, officers´ network, filings, trends, closed-list signals, rule-based verdict |
 | `GET /v1/entreprise/{siren}/documents` | $0.02 | List filed documents (INPI) |
 | `GET /v1/documents/{type}/{id}` | $0.10 | Download a filed document (PDF) |
+| `GET /v1/facture/verifier?siren=&tva=&iban=` | $0.02 | **Invoice verification** — cross-check the identifiers printed on an invoice: VAT vs the SIREN's computed number + live VIES, IBAN form/key/bank; verdict coherent/incoherent/inverifiable, closed-list reasons. Not a payee verification |
 | `GET /v1/tva/verifier/{numero}` | $0.003 | EU VAT validation (VIES) |
 | `GET /v1/iban/verifier/{iban}` | $0.005 | IBAN check + bank identification (FR/BE/AT/NL, incl. LEI) — not a Verification of Payee |
 | `GET /v1/surveillance/creer?cibles=&duree=` | $0.05 / $0.135 / $0.50 per target (30 / 90 / 365d) | **Watchlist**: daily checks on companies & directors, signed webhooks + e-mail digests, expiry warning at D-7 |

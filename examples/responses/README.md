@@ -87,6 +87,7 @@ nothing than a plausible fabrication about a real company.
 | `GET /v1/eu/entreprise/:pays/:id/comptes` | $0.01 | [`eu-entreprise-pays-id-comptes.json`](eu-entreprise-pays-id-comptes.json) |
 | `GET /v1/eu/entreprise/:pays/:id/comptes/:reference` | $0.15 | [`eu-entreprise-pays-id-comptes-reference.json`](eu-entreprise-pays-id-comptes-reference.json) |
 | `GET /v1/entreprise/:siren/documents` | $0.02 | [`entreprise-siren-documents.json`](entreprise-siren-documents.json) |
+| `GET /v1/facture/verifier` | $0.02 | [`facture-verifier.json`](facture-verifier.json) — real purchase 2026-08-16; the same smoke proved the incoherent case live (Carrefour's VAT on Danone's SIREN → `tva_ne_correspond_pas_au_siren`) |
 | `GET /v1/facturation/dossier` | $0.03 | [`facturation-dossier.json`](facturation-dossier.json) |
 | `GET /v1/entreprise/:siren/facturation-prep` | $0.02 | [`entreprise-siren-facturation-prep.json`](entreprise-siren-facturation-prep.json) |
 | `GET /v1/score/defaillance/:siren` | $0.10 | [`score-defaillance-siren.json`](score-defaillance-siren.json) |
