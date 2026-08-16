@@ -22,6 +22,8 @@ nothing than a plausible fabrication about a real company.
 | Endpoint | Price | Sample |
 |---|---|---|
 | `GET /v1/recherche` | $0.001 | [`recherche.json`](recherche.json) |
+| `GET /v1/bodacc/recherche` | $0.03 | [`bodacc-recherche.json`](bodacc-recherche.json) |
+| `GET /v1/entreprise/:siren/dossier` | $0.005 + blocks | [`entreprise-siren-dossier.json`](entreprise-siren-dossier.json) |
 | `GET /v1/entreprise/:siren` | $0.005 | [`entreprise-siren.json`](entreprise-siren.json) |
 | `GET /v1/entreprise/:siren/etablissements` | $0.003 | [`entreprise-siren-etablissements.json`](entreprise-siren-etablissements.json) |
 | `GET /v1/entreprise/:siren/alertes` | $0.01 | [`entreprise-siren-alertes.json`](entreprise-siren-alertes.json) |
@@ -72,7 +74,7 @@ nothing than a plausible fabrication about a real company.
 | `GET /v1/eu/entreprise/PL/:krs/evenements` | $0.02 | [`eu-entreprise-PL-krs-evenements.json`](eu-entreprise-PL-krs-evenements.json) |
 | `GET /v1/eu/entreprise/:pays/:id` | $0.01 | [`eu-entreprise-pays-id.json`](eu-entreprise-pays-id.json) |
 | `GET /v1/eu/facturation/dossier` | $0.03 | [`eu-facturation-dossier.json`](eu-facturation-dossier.json) |
-| `GET /v1/eu/entreprise/:pays/:id/transactions-dirigeants` | $0.02 | [`eu-entreprise-pays-id-transactions-dirigeants.json`](eu-entreprise-pays-id-transactions-dirigeants.json) |
+| `GET /v1/eu/entreprise/:pays/:id/transactions-dirigeants` | $0.02 | [`eu-entreprise-pays-id-transactions-dirigeants.json`](eu-entreprise-pays-id-transactions-dirigeants.json) — BE sample; DE (BaFin, LEI/ISIN) covered since 2026-08-15 |
 | `GET /v1/eu/entreprise/NO/:id/comptes` | $0.02 | [`eu-entreprise-NO-id-comptes.json`](eu-entreprise-NO-id-comptes.json) |
 | `GET /v1/eu/entreprise/NO/:id/evenements` | $0.02 | [`eu-entreprise-NO-id-evenements.json`](eu-entreprise-NO-id-evenements.json) |
 | `GET /v1/eu/entreprise/DK/:id/comptes` | $0.01 | [`eu-entreprise-DK-id-comptes.json`](eu-entreprise-DK-id-comptes.json) |

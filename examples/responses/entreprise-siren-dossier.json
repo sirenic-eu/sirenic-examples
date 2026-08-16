@@ -1,0 +1,63 @@
+{
+  "siren": "552032534",
+  "identite": {
+    "siren": "552032534",
+    "denomination": "DANONE",
+    "nature_juridique": "5599",
+    "activite_principale": "70.10Z",
+    "categorie_entreprise": "GE",
+    "etat_administratif": "actif"
+  },
+  "blocs_demandes": [
+    "finances",
+    "pi",
+    "score"
+  ],
+  "blocs": {
+    "finances": {
+      "siren": "552032534",
+      "nombre_exercices": 8,
+      "exercices": [
+        {
+          "date_cloture": "2024-12-31",
+          "chiffre_affaires": 1030000000,
+          "ebe": 697000000,
+          "resultat_net": 592000000
+        }
+      ]
+    },
+    "pi": {
+      "marques": {
+        "nombre": 88,
+        "liste": [
+          {
+            "numero": "4789796",
+            "libelle": "THE ONE HOME",
+            "statut": "Marque enregistrée"
+          }
+        ]
+      },
+      "brevets": {
+        "nombre": 12
+      },
+      "modeles": {
+        "nombre": 3
+      }
+    },
+    "score": {
+      "siren": "552032534",
+      "score_risque": 22,
+      "classe": "sain",
+      "risque_12m": "faible",
+      "confiance": "moyenne",
+      "version_modele": "defaillance-v1.8"
+    }
+  },
+  "blocs_absents": [],
+  "resume": {
+    "demandes": 3,
+    "servis": 3,
+    "absents": 0,
+    "dont_panne_amont": 0
+  }
+}

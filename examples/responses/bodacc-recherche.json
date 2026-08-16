@@ -1,0 +1,52 @@
+{
+  "criteres": {
+    "famille": "collective",
+    "depuis": "2026-08-04",
+    "departement": "59"
+  },
+  "annonces": [
+    {
+      "id": "A202601513770",
+      "date_parution": "2026-08-11",
+      "famille": "Procédures collectives",
+      "type_avis": "Avis initial",
+      "tribunal": "Greffe du Tribunal Judiciaire de Lille",
+      "ville": "Tourcoing, Lille Cedex",
+      "code_postal": "59200, 59009",
+      "departement": "59",
+      "departement_nom": "Nord",
+      "siren": null,
+      "jugement": {
+        "nature": "Autre jugement et ordonnance",
+        "date": "2026-07-09",
+        "famille": "Extrait de jugement"
+      },
+      "url_bodacc": "https://www.bodacc.fr/pages/annonces-commerciales-detail/?q.id=id:A202601513770"
+    },
+    {
+      "id": "A202601503905",
+      "date_parution": "2026-08-09",
+      "famille": "Procédures collectives",
+      "type_avis": "Avis initial",
+      "tribunal": "Greffe du Tribunal de Commerce de Douai",
+      "ville": "Hornaing",
+      "code_postal": "59171",
+      "departement": "59",
+      "departement_nom": "Nord",
+      "siren": "907941801",
+      "jugement": {
+        "nature": "Jugement d'ouverture d'une procédure de redressement judiciaire",
+        "date": "2026-08-04",
+        "famille": "Jugement d'ouverture"
+      },
+      "url_bodacc": "https://www.bodacc.fr/pages/annonces-commerciales-detail/?q.id=id:A202601503905"
+    }
+  ],
+  "total_servi": 56,
+  "exclues_personnes_physiques": 8,
+  "exclues_type_indetermine": 0,
+  "tronque": false,
+  "limite": 100,
+  "consulte_le": "2026-08-11T22:19:24.289Z",
+  "source": "BODACC (Bulletin officiel des annonces civiles et commerciales), DILA — via l'API Opendatasoft officielle, Licence Ouverte 2.0"
+}

@@ -129,7 +129,7 @@ Cursor / any MCP client (`mcpServers` config):
 { "mcpServers": { "sirenic": { "url": "https://api.sirenic.eu/mcp" } } }
 ```
 
-71 tools are exposed — including TWO FREE ones: suggest_company_names (type a company name, get its SIREN — start here) and detect_company_identifiers (paste any text, get SIREN/SIRET/VAT/LEI with the right call to make). Plus verify_iban_bank. Search with 0-1 confidence scores, company profiles,
+72 tools are exposed — including TWO FREE ones: suggest_company_names (type a company name, get its SIREN — start here) and detect_company_identifiers (paste any text, get SIREN/SIRET/VAT/LEI with the right call to make). Plus verify_iban_bank. Search with 0-1 confidence scores, company profiles,
 KYB files, an à-la-carte company file where you pick the blocks and pay only for those, a $1 company-intelligence report, sanctions screening, AMF
 regulator alerts, **regulatory authorisations by SIREN (EBA PSD2 register,
 EIOPA, ARCEP)**, EU financial authorisations (ESMA), industrial risk
@@ -249,6 +249,7 @@ Two things this is **not**:
 | `GET /v1/kyb/{siren}` | $0.15 | Full KYB file + sanctions screening |
 | `GET /v1/entreprise/{siren}/dossier?blocs=` | $0.005 + per block, max $0.35 | **One call, you pick the blocks** — identity base plus any of `etablissements`, `alertes_bodacc`, `finances`, `marches_publics`, `marches_publics_ue`, `lobbying`, `risques_industriels`, `agrements`, `pi`, `documents`, `facturation_prep`, `score`. Each block costs what its own endpoint costs, so grouping never costs more than calling separately. A block that cannot be served is named with a reason (`aucune_donnee`, `non_diffusible`, `panne_amont`); if every requested block is down you get a 503 and pay nothing |
 | `GET /v1/kyb/batch?sirens=` | $0.105/co | Batch KYB (2–100 companies) |
+| `GET /v1/comparer?sirens=` | $0.12/co | Compare 2–5 French companies side by side (identity, financials, score) — with guards against false-but-plausible comparisons (different fiscal years, consolidated vs social accounts, holdings) |
 | `GET /v1/sanctions/check?name=` | $0.02 | 6 official sanctions lists (UN, EU, OFAC, UK, FR, Swiss SECO), scored |
 | `GET /v1/regulateurs/fr/alertes?nom=\|siren=` | $0.01 | AMF blacklists + PSAN/SGP registers (scam check, crypto providers) |
 | `GET /v1/eu/agrements?q=` | $0.01 | EU financial authorisations (ESMA, all EU/EEA, by name or LEI) |
@@ -267,7 +268,8 @@ Two things this is **not**:
 | `GET /v1/eu/entreprise/{pays}/{id}` | $0.01 | Unified European profile — 12 countries: BE (KBO, NACEBEL + establishments), CH (Zefix), NO (Brønnøysund), CZ (ARES), SK (RPO), FI (PRH), PL (KRS), EE, LV… Each live country also has its own dedicated path (e.g. `/v1/eu/entreprise/CH/CHE-107.480.920`) |
 | `GET /v1/eu/entreprise/BE/{id}/comptes` | $0.01 | Belgian filings list (official NBB Central Balance Sheet Office) |
 | `GET /v1/eu/entreprise/BE/{id}/comptes/{ref}` | $0.15 | One Belgian annual-account deposit (JSON since 2022, PDF before) |
-| `GET /v1/eu/entreprise/BE/{id}/transactions-dirigeants` | $0.02 | Insider dealing at a Belgian listed company (FSMA, Art. 19 MAR): are its managers buying or selling? Issuer-level aggregate — **no individual is ever named** |
+| `GET /v1/eu/entreprise/{pays}/{id}/transactions-dirigeants` | $0.02 | Insider dealing at Belgian AND German listed companies (FSMA + BaFin, Art. 19 MAR): are its managers buying or selling? Issuer-level 12-month aggregate — **no individual is ever named**. BE: 10-digit enterprise number; DE: LEI or ISIN |
+| _…plus ~24 dedicated country sub-routes_ | | GB (directors, PSC, insolvency, accounts), DK/SE/SK/LV/EE (filings), NO (accounts & legal events), CZ (insolvency), PL (KRS events), ES (BORME deeds) — all in `/openapi.json` and the MCP tools |
 
 Free: `GET /` (landing), `GET /v1/suggestions?q=` (**company-name autocomplete →
 SIREN**, up to 5 matches, 2,000 calls/day/IP),
@@ -292,7 +294,7 @@ returned at creation is the capability — no account).
   samples are served by the API itself, in the OpenAPI spec, in the x402 payment
   quote and in `llms.txt` — so the contract you read is the contract you get.
 - [`examples/smoke-surveillance-durees-2026-08-11.ts`](examples/smoke-surveillance-durees-2026-08-11.ts) — buy a **90-day** and a **365-day** watchlist for real (~$0.685), renew one at a different duration, and check that an out-of-range duration and an over-long renewal are both refused **without a debit**.
-- [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call **every paid endpoint** once (~$7.40 total, USDC and/or EURC; the watchlist it creates is stopped again for free).
+- [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call the core paid endpoints once (~46 calls across the 75-route catalogue, USDC and/or EURC; the watchlist it creates is stopped again for free). Country deep-dive sub-routes have their own dedicated smokes in this folder.
 - [`examples/agent-demo.ts`](examples/agent-demo.ts) — a small autonomous agent that searches, pays and reads profiles.
 - [`examples/mcp-setup.md`](examples/mcp-setup.md) — MCP configuration for Claude, Cursor and generic clients.
 - [`examples/a2a.ts`](examples/a2a.ts) — call Sirenic as an **A2A agent** (quote for free, then pay on the same task via the a2a-x402 extension).

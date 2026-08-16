@@ -1,8 +1,8 @@
 /**
  * Pay-and-call Sirenic endpoints with REAL money on Base mainnet, in USDC,
- * EURC, or both — a self-check of every route from your side.
+ * EURC, or both — a self-check of the core routes from your side (~46 calls; country deep-dive sub-routes have their own dedicated smokes in this folder).
  *
- *   # Every endpoint once in USDC (data check, a few $):
+ *   # Core endpoints once in USDC (data check, a few $):
  *   TEST_WALLET_KEY=0x... npx tsx examples/smoke-test.ts
  *
  *   # Validate the EURC rail cheaply (only endpoints ≤ $0.005 — search, profile,

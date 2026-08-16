@@ -14,6 +14,16 @@
  *  - 552032534 DANONE — doit rester 22 / sain ;
  *  - 542065479 STELLANTIS AUTO — doit rester 42 / vigilance.
  *
+ * ⚠️ POURQUOI CES ATTENDUS NE PEUVENT PAS ÊTRE UN FAUX ROUGE. La surcharge
+ * BODACC prime sur tout : si l'un des deux nouveaux cas portait une procédure
+ * collective active, la production répondrait `procedure_en_cours` ou
+ * `defaut_avere` et ce script crierait à tort. Vérifié en direct sur l'amont
+ * DILA le 11/08/2026 : les CINQ SIREN portent **zéro procédure collective**.
+ * ZAKADO n'a aucune annonce du tout (0 sur 0) ; SCEB DUFOUR en a 21 — radiation
+ * du 02/04/2026, dépôts de comptes, modifications — mais aucune procédure :
+ * c'est bien une société CESSÉE et non une société DÉFAILLANTE, donc exactement
+ * le cas que la v1.6 cible.
+ *
  * Les réponses complètes sont conservées (règle CDU) puis commitées sur le
  * dépôt privé de traces.
  *
@@ -21,6 +31,8 @@
  */
 import { mkdirSync, writeFileSync } from "node:fs";
 import { privateKeyToAccount } from "viem/accounts";
+import { createPublicClient, http, erc20Abi } from "viem";
+import { base } from "viem/chains";
 import { wrapFetchWithPayment } from "@x402/fetch";
 import { x402Client } from "@x402/core/client";
 import { registerExactEvmScheme } from "@x402/evm/exact/client";
@@ -31,13 +43,31 @@ if (!cle?.startsWith("0x")) {
   console.error("TEST_WALLET_KEY manquante (--env-file=.env.wallet-test)");
   process.exit(1);
 }
+const compte = privateKeyToAccount(cle as `0x${string}`);
 const client = new x402Client();
-registerExactEvmScheme(client, { signer: privateKeyToAccount(cle as `0x${string}`) });
+registerExactEvmScheme(client, { signer: compte });
 const payer = wrapFetchWithPayment(fetch, client) as typeof fetch;
+
+/** Solde USDC on-chain : la dépense RÉELLE se prouve là, pas dans le récit. */
+const USDC = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913" as const;
+const rpc = createPublicClient({ chain: base, transport: http("https://mainnet.base.org") });
+const solde = async (): Promise<bigint | null> => {
+  try {
+    return await rpc.readContract({
+      address: USDC, abi: erc20Abi, functionName: "balanceOf", args: [compte.address],
+    });
+  } catch {
+    return null;
+  }
+};
 
 const horodatage = new Date().toISOString().replace(/[:.]/g, "-");
 const dossier = `/home/ubuntu/sirenic-examples/resultats/smoke-score-v16-${horodatage}`;
 mkdirSync(dossier, { recursive: true });
+
+const soldeAvant = await solde();
+console.log(`wallet de test ${compte.address}`);
+console.log(`solde USDC avant : ${soldeAvant === null ? "illisible" : `${Number(soldeAvant) / 1e6} $`}`);
 
 const echecs: string[] = [];
 const verifier = (ok: boolean, quoi: string): void => {
@@ -67,7 +97,19 @@ const CAS: Array<{ siren: string; nom: string; classe: string; score?: number; n
   { siren: "542065479", nom: "STELLANTIS AUTO", classe: "vigilance", score: 42, noteClasse: false },
 ];
 
-for (const cas of CAS) {
+// Filtre optionnel : `… smoke-score-v16.ts 100000025` n'achète QUE ce SIREN.
+// Sert à re-prouver un correctif de TEXTE pour 0,10 $ au lieu de 0,50 $ — un
+// achat reste nécessaire (la prose ne vit que dans le corps payant), mais rien
+// n'oblige à racheter les cinq.
+const filtre = process.argv[2];
+const aAcheter = filtre ? CAS.filter((c) => c.siren === filtre) : CAS;
+if (aAcheter.length === 0) {
+  console.error(`SIREN ${String(filtre)} absent du lot de témoins`);
+  process.exit(1);
+}
+console.log(`${aAcheter.length} achat(s) prévu(s) — ${(aAcheter.length * 0.1).toFixed(2)} $`);
+
+for (const cas of aAcheter) {
   console.log(`\n— ${cas.nom} (${cas.siren})`);
   const r = await payer(`${api}/v1/score/defaillance/${cas.siren}`);
   console.log(`  HTTP ${r.status}`);
@@ -99,12 +141,67 @@ for (const cas of CAS) {
     cas.noteClasse ? typeof c.note_classe === "string" : c.note_classe === undefined,
     cas.noteClasse ? "note_classe servie (dit POURQUOI c'est indéterminé)" : "pas de note_classe",
   );
+  // La note ne doit nommer que des signaux ATTEIGNABLES : depuis que la
+  // surcharge « cessee » prime, une cessée n'atteint jamais « indetermine »,
+  // donc l'état administratif ne peut plus y peser.
+  if (c.classe === "indetermine") {
+    verifier(
+      !/état administratif|administrative status/.test(String(c.note_classe)),
+      "la note d'indéterminé ne nomme plus l'état administratif",
+    );
+    verifier(/au plus l'ancienneté/.test(String(c.note_classe)), "elle nomme « au plus l'ancienneté »");
+  }
   // F-01 bis : la phrase « comptes non déposés » ne se sert QUE si c'est vrai.
   verifier(
     (c.exercice_reference === null) === (typeof c.note_donnees === "string"),
     "note_donnees servie si et seulement si aucun exercice lu",
   );
 }
+
+// Les règlements se minent en ~2 blocs Base : lire le solde trop tôt sous-estime
+// la dépense et ferait conclure à tort « rien n'a été débité ».
+console.log("\nattente de 35 s (minage des règlements sur Base)…");
+await new Promise((r) => setTimeout(r, 35_000));
+const soldeApres = await solde();
+const depense =
+  soldeAvant !== null && soldeApres !== null ? Number(soldeAvant - soldeApres) / 1e6 : null;
+console.log(`solde USDC après : ${soldeApres === null ? "illisible" : `${Number(soldeApres) / 1e6} $`}`);
+console.log(`dépense réelle   : ${depense === null ? "non mesurable" : `${depense.toFixed(6)} $`}`);
+
+const recap = {
+  campagne: "smoke-score-v16",
+  but: "prouver par ACHAT que le barème v1.6 ne sert plus « sain » sur une absence de comptes ni sur une entreprise cessée",
+  api,
+  horodatage,
+  wallet_test: compte.address,
+  appels: aAcheter.length,
+  cout_annonce_usd: aAcheter.length * 0.1,
+  solde_avant_usdc: soldeAvant === null ? null : Number(soldeAvant) / 1e6,
+  solde_apres_usdc: soldeApres === null ? null : Number(soldeApres) / 1e6,
+  depense_reelle_usd: depense,
+  controles_en_echec: echecs,
+  verdict: echecs.length === 0 ? "vert" : "rouge",
+};
+writeFileSync(`${dossier}/recap.json`, JSON.stringify(recap, null, 2));
+writeFileSync(
+  `${dossier}/RECAP.md`,
+  [
+    `# Smoke payant — score \`defaillance-v1.6\` (${horodatage})`,
+    "",
+    `**But** : ${recap.but}.`,
+    "",
+    `- API : ${api}`,
+    `- Appels payés : ${aAcheter.length} × \\$0.10 = \\$${recap.cout_annonce_usd.toFixed(2)} annoncés`,
+    `- Dépense RÉELLE mesurée on-chain : ${depense === null ? "non mesurable" : `\\$${depense.toFixed(6)}`}`,
+    `- Verdict : **${recap.verdict}**${echecs.length ? ` (${echecs.length} contrôle(s) en échec)` : ""}`,
+    "",
+    "| SIREN | société | attendu |",
+    "|---|---|---|",
+    ...aAcheter.map((c) => `| ${c.siren} | ${c.nom} | ${c.classe}${c.score !== undefined ? ` / ${c.score}` : ""} |`),
+    "",
+    ...(echecs.length ? ["## Contrôles en échec", "", ...echecs.map((e) => `- ${e}`)] : []),
+  ].join("\n"),
+);
 
 console.log(`\nRéponses conservées dans ${dossier}`);
 if (echecs.length > 0) {
