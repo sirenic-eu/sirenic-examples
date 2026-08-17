@@ -129,7 +129,7 @@ Cursor / any MCP client (`mcpServers` config):
 { "mcpServers": { "sirenic": { "url": "https://api.sirenic.eu/mcp" } } }
 ```
 
-73 tools are exposed — including TWO FREE ones: suggest_company_names (type a company name, get its SIREN — start here) and detect_company_identifiers (paste any text, get SIREN/SIRET/VAT/LEI with the right call to make). Plus verify_iban_bank. Search with 0-1 confidence scores, company profiles,
+76 tools are exposed — including TWO FREE ones: suggest_company_names (type a company name, get its SIREN — start here) and detect_company_identifiers (paste any text, get SIREN/SIRET/VAT/LEI with the right call to make). Plus verify_iban_bank. Search with 0-1 confidence scores, company profiles,
 KYB files, an à-la-carte company file where you pick the blocks and pay only for those, a $1 company-intelligence report, sanctions screening, AMF
 regulator alerts, **regulatory authorisations by SIREN (EBA PSD2 register,
 EIOPA, ARCEP)**, EU financial authorisations (ESMA), industrial risk
@@ -235,8 +235,11 @@ Two things this is **not**:
 | `GET /v1/entreprise/{siren}/etablissements` | $0.003 | All establishments (SIRET) |
 | `GET /v1/entreprise/{siren}/alertes` | $0.01 | BODACC legal alerts (insolvency…) |
 | `GET /v1/entreprise/{siren}/finances` | $0.01 | Filed financials + ratios |
-| `GET /v1/entreprise/{siren}/marches-publics` | $0.01 | Public procurement won (French DECP) |
+| `GET /v1/entreprise/{siren}/marches-publics` | $0.01 | Public procurement won (French DECP), with estimated end dates |
 | `GET /v1/entreprise/{siren}/marches-publics-ue` | $0.02 | EU procurement awards (TED, identifier-matched) |
+| `GET /v1/marches/expirations?cpv=&departement=&fenetre_mois=` | $0.05 | **Tender anticipation** — French public contracts EXPIRING in your window (1-24 months), by CPV prefix and department, with incumbent holders. Buyers re-tender 4-9 months before expiry |
+| `GET /v1/acheteur/{siret}/profil` | $0.02 | Public buyer profile: volumes, top CPV, incumbent suppliers and their expiring contracts, framework-agreement share, avg bids received |
+| `GET /v1/entreprise/{siren}/concurrents-marches` | $0.02 | Who wins public contracts on the same CPV segments (last 3 years) |
 | `GET /v1/entreprise/{siren}/risques-industriels` | $0.01 | Industrial risk: Seveso/ICPE facilities + synthesis |
 | `GET /v1/entreprise/{siren}/lobbying` | $0.01 | HATVP lobbying register (org-level: budgets, subjects, clients) |
 | `GET /v1/entreprise/{siren}/changements?depuis=` | $0.01 | New BODACC events since a date |
@@ -295,7 +298,7 @@ returned at creation is the capability — no account).
   samples are served by the API itself, in the OpenAPI spec, in the x402 payment
   quote and in `llms.txt` — so the contract you read is the contract you get.
 - [`examples/smoke-surveillance-durees-2026-08-11.ts`](examples/smoke-surveillance-durees-2026-08-11.ts) — buy a **90-day** and a **365-day** watchlist for real (~$0.685), renew one at a different duration, and check that an out-of-range duration and an over-long renewal are both refused **without a debit**.
-- [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call the core paid endpoints once (~46 calls across the 75-route catalogue, USDC and/or EURC; the watchlist it creates is stopped again for free). Country deep-dive sub-routes have their own dedicated smokes in this folder.
+- [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call the core paid endpoints once (~46 calls across the 79-route catalogue, USDC and/or EURC; the watchlist it creates is stopped again for free). Country deep-dive sub-routes have their own dedicated smokes in this folder.
 - [`examples/agent-demo.ts`](examples/agent-demo.ts) — a small autonomous agent that searches, pays and reads profiles.
 - [`examples/mcp-setup.md`](examples/mcp-setup.md) — MCP configuration for Claude, Cursor and generic clients.
 - [`examples/a2a.ts`](examples/a2a.ts) — call Sirenic as an **A2A agent** (quote for free, then pay on the same task via the a2a-x402 extension).
