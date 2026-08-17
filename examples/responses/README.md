@@ -69,6 +69,7 @@ nothing than a plausible fabrication about a real company.
 | `GET /v1/eu/entreprise/EE/:id/comptes` | $0.02 | [`eu-entreprise-EE-registrikood-comptes.json`](eu-entreprise-EE-registrikood-comptes.json) |
 | `GET /v1/eu/entreprise/EE/:registrikood/evenements` | $0.02 | [`eu-entreprise-EE-registrikood-evenements.json`](eu-entreprise-EE-registrikood-evenements.json) |
 | `GET /v1/eu/entreprise/SE/:orgnr/evenements` | $0.02 | [`eu-entreprise-SE-orgnr-evenements.json`](eu-entreprise-SE-orgnr-evenements.json) |
+| `GET /v1/eu/entreprise/SE/:orgnr/comptes` | $0.02 | [`eu-entreprise-SE-orgnr-comptes.json`](eu-entreprise-SE-orgnr-comptes.json) — real purchase 2026-08-17, first since the route reopened (Swedish iXBRL stock rebuilt: 1.82M filings) |
 | `GET /v1/eu/entreprise/SE/:id` | $0.01 | [`eu-entreprise-SE-id.json`](eu-entreprise-SE-id.json) |
 | `GET /v1/eu/entreprise/CZ/:ico/insolvabilite` | $0.02 | [`eu-entreprise-CZ-ico-insolvabilite.json`](eu-entreprise-CZ-ico-insolvabilite.json) |
 | `GET /v1/eu/entreprise/PL/:krs/evenements` | $0.02 | [`eu-entreprise-PL-krs-evenements.json`](eu-entreprise-PL-krs-evenements.json) |
