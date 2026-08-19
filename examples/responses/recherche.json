@@ -2,7 +2,7 @@
   "_endpoint": "/v1/recherche",
   "_price": "$0.001",
   "_request": "GET https://api.sirenic.eu/v1/recherche?q=danone",
-  "_sample_of": "2026-07-29",
+  "_sample_of": "2026-08-19",
   "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
   "response": {
     "total_results": 10,
@@ -20,6 +20,7 @@
     ],
     "source": "INSEE Sirene / INPI RNE via recherche-entreprises.api.gouv.fr, licence ouverte Etalab 2.0",
     "disclaimer": "Données issues de l'open data, fournies en l'état sans garantie. / Open data, provided as is without warranty.",
-    "data_freshness": "stock Sirene mensuel (2026-07-01), dirigeants temps réel"
+    "etages_abandonnes": [],
+    "data_freshness": "stock Sirene mensuel (2026-08-01), dirigeants temps réel"
   }
 }
