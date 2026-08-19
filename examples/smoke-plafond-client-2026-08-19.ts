@@ -271,13 +271,21 @@ if (process.env.SMOKE_ACHAT_AU_DELA === "0") {
   // matches » (trois étages de recherche abandonnés en silence sur
   // statement_timeout) et l'a affichée verte. On assert désormais la LIVRAISON :
   // un plancher de résultats et le SIREN attendu au rang 1.
+  // Depuis le correctif du même jour, la route DIT sa complétude :
+  // `etages_abandonnes` est toujours servi, `[]` = top 10 complet (un étage
+  // perdu bascule sur le registre temps réel ; un partiel est drapé
+  // `resultats_partiels: true`). L'épreuve exige le contrat complet.
+  const etagesAbandonnes: unknown = corps?.etages_abandonnes;
   noter("4. client par défaut : une route à 0,001 $ s'achète ET livre (payant)",
     r.ok &&
       montantSigne4 === "1000" &&
       paiement.succes === true &&
       Boolean(paiement.tx) &&
       rangs.length >= 5 &&
-      rangs[0] === "552032534",
+      rangs[0] === "552032534" &&
+      Array.isArray(etagesAbandonnes) &&
+      etagesAbandonnes.length === 0 &&
+      corps?.resultats_partiels !== true,
     {
       http: r.status,
       montant_signe: montantSigne4,
@@ -286,6 +294,9 @@ if (process.env.SMOKE_ACHAT_AU_DELA === "0") {
       total_results: corps?.total_results ?? null,
       resultats: rangs.length,
       rang1: rangs[0] ?? null,
+      etages_abandonnes: etagesAbandonnes ?? null,
+      resultats_partiels: corps?.resultats_partiels ?? false,
+      data_freshness: corps?.data_freshness ?? null,
     });
 }
 
