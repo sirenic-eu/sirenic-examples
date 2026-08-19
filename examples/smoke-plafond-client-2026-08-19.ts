@@ -18,17 +18,64 @@
  *      a 0 EURC, aucun règlement en euros n'est possible aujourd'hui)
  *   7. surface MCP payée de bout en bout — 0,001 $ (payant)
  *
- * Dépense attendue : ~1,052 USDC.
+ * Dépense attendue : ~1,052 USDC (0,002 si SMOKE_ACHAT_AU_DELA=0, qui saute le
+ * seul achat au-delà du plafond).
+ *
+ * DURCI le 19/08 après relecture adversariale du premier passage : quatre
+ * assertions ne regardaient que l'enveloppe et pouvaient passer au vert sur une
+ * réponse dégradée, une erreur MCP, une absence comparée à une absence, ou une
+ * régression du devis côté SERVEUR. Chaque épreuve vérifie désormais ce qu'elle
+ * annonce, et le montant réglé est LU dans l'en-tête PAYMENT-RESPONSE au lieu
+ * d'être écrit en dur dans le résumé.
  *
  *   cd /home/ubuntu/sirenic-examples
  *   node --env-file=.env.wallet-test --import tsx examples/smoke-plafond-client-2026-08-19.ts
  */
 import { mkdirSync, writeFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import { privateKeyToAccount } from "viem/accounts";
 import { wrapFetchWithPayment } from "@x402/fetch";
 import { x402Client } from "@x402/core/client";
 import { registerExactEvmScheme } from "@x402/evm/exact/client";
 import { decodePaymentRequiredHeader, encodePaymentSignatureHeader } from "@x402/core/http";
+
+/**
+ * Contenu de l'en-tête PAYMENT-RESPONSE (base64 JSON) = `SettleResponse` du
+ * facilitateur : `success`, `transaction`, `network`, `payer`.
+ *
+ * ⚠️ Il ne porte PAS le montant sur le schéma `exact` (le champ `amount` y est
+ * documenté comme présent seulement pour les schémas type `upto`) : une sonde
+ * qui prétendait vérifier « combien a été réglé » depuis cet en-tête ne pouvait
+ * que rougir à tort — première rédaction de ce durcissement, 19/08. Le montant
+ * qui fait foi est celui du DEVIS SIGNÉ (en-tête PAYMENT-REQUIRED), lisible
+ * GRATUITEMENT avant de payer : c'est `montantSigneDe()` ci-dessous.
+ */
+function reglement(r: Response): {
+  succes: boolean | null;
+  tx: string | null;
+  payeur: string | null;
+  brut: string | null;
+} {
+  const brut = r.headers.get("payment-response") ?? r.headers.get("x-payment-response");
+  if (!brut) return { succes: null, tx: null, payeur: null, brut: null };
+  try {
+    const d = JSON.parse(Buffer.from(brut, "base64").toString("utf8")) as Record<string, any>;
+    return { succes: d.success ?? null, tx: d.transaction ?? null, payeur: d.payer ?? null, brut };
+  } catch {
+    return { succes: null, tx: null, payeur: null, brut };
+  }
+}
+
+/** Montant du devis SIGNÉ pour une URL, lu sur un 402 gratuit (option 1 = USDC). */
+async function montantSigneDe(url: string): Promise<string | null> {
+  const r = await fetch(url);
+  const entete = r.headers.get("payment-required");
+  if (r.status !== 402 || !entete) return null;
+  return decodePaymentRequiredHeader(entete).accepts?.[0]?.amount ?? null;
+}
+
+/** Total réellement réglé pendant la course, lu dans les en-têtes. */
+const regles: { epreuve: string; montant: string | null; tx: string | null }[] = [];
 
 const api = process.env.SIRENIC_URL ?? "https://api.sirenic.eu";
 const cle = process.env.TEST_WALLET_KEY;
@@ -83,9 +130,16 @@ mkdirSync(dossier, { recursive: true });
 
 const journal: Record<string, unknown>[] = [];
 let echecs = 0;
-const versionSdk = (await import("@x402/core/package.json", { with: { type: "json" } }).catch(() => null)) as
-  | { default?: { version?: string } }
-  | null;
+/** Version du SDK client réellement chargée : c'est elle qui décide du plafond,
+ *  donc elle doit figurer dans la trace (une même sonde ne prouve pas la même
+ *  chose en 2.22 et en 2.23). */
+const versionSdk = (() => {
+  try {
+    return createRequire(import.meta.url)("@x402/core/package.json").version as string;
+  } catch {
+    return "inconnue";
+  }
+})();
 
 function noter(nom: string, ok: boolean, details: Record<string, unknown>) {
   if (!ok) echecs += 1;
@@ -113,27 +167,48 @@ function noter(nom: string, ok: boolean, details: Record<string, unknown>) {
 }
 
 // ------------------------------------------------- 2. achat du même devis, plafond levé
-{
+if (process.env.SMOKE_ACHAT_AU_DELA === "0") {
+  console.log("↷ 2. achat au-delà du plafond SAUTÉ (SMOKE_ACHAT_AU_DELA=0)");
+  journal.push({ epreuve: "2. plafond levé : le devis à 1,05 $ est réglé (payant)", ok: null, saute: true });
+} else {
   const payer = wrapFetchWithPayment(fetch, clientNeuf({ plafond: "$100" })) as typeof fetch;
   const r = await payer(`${api}/v1/kyb/batch?sirens=${DIX_SIREN}`, {
     headers: { Accept: "application/json" },
   });
   const texte = await r.text();
   writeFileSync(`${dossier}/2-achat-plafond-leve.json`, texte);
-  const regle = r.headers.get("payment-response") ?? r.headers.get("x-payment-response");
+  const paiement = reglement(r);
+  const montantSigne2 = await montantSigneDe(`${api}/v1/kyb/batch?sirens=${DIX_SIREN}`);
+  regles.push({ epreuve: "2", montant: montantSigne2, tx: paiement.tx });
+  writeFileSync(`${dossier}/2-reglement-entete.json`, JSON.stringify(paiement, null, 2));
   let corps: any = {};
   try { corps = JSON.parse(texte); } catch { /* non-JSON */ }
   // Forme réelle de la route (contrat) : { nombre_demande, nombre_trouve, entreprises[] }.
   const fiches = Array.isArray(corps?.entreprises) ? corps.entreprises.length : null;
+  const trouvees = Array.isArray(corps?.entreprises)
+    ? corps.entreprises.filter((e: any) => e?.trouve === true).length
+    : 0;
   noter(
-    "2. plafond levé : le devis à 1,05 $ est réglé (payant)",
-    r.ok && Boolean(regle) && fiches === 10 && corps?.nombre_demande === 10,
+    "2. plafond levé : le devis à 1,05 $ est réglé ET livré (payant)",
+    r.ok &&
+      // le MONTANT du devis signé, pas seulement le fait qu'il y ait eu
+      // règlement : 1 050 000 atomiques = 1,05 $, le total du lot et non le
+      // prix unitaire. Plus la confirmation du facilitateur et sa transaction.
+      montantSigne2 === "1050000" &&
+      paiement.succes === true &&
+      Boolean(paiement.tx) &&
+      fiches === 10 &&
+      corps?.nombre_demande === 10 &&
+      // livraison : des fiches RÉELLES, pas 10 trouve=false (facturés pareil).
+      trouvees === 10,
     {
       http: r.status,
-      regle: Boolean(regle),
+      montant_signe: montantSigne2,
+      succes_facilitateur: paiement.succes,
+      tx: paiement.tx,
       fiches,
+      fiches_trouvees: trouvees,
       nombre_demande: corps?.nombre_demande ?? null,
-      nombre_trouve: corps?.nombre_trouve ?? null,
     },
   );
 }
@@ -152,17 +227,28 @@ function noter(nom: string, ok: boolean, details: Record<string, unknown>) {
   writeFileSync(`${dossier}/3-402-nu-recherche.json`, JSON.stringify(corpsCheap, null, 2));
 
   const note = String(corps?.pricing_note ?? "");
-  noter("3. le 402 annonce le plafond sur la route concernée, et RIEN sous le plafond (gratuit)",
+  // ⚠️ La contre-épreuve doit prouver que la route CONCURRENTE est bien tarifée
+  // (402 + son prix) avant de conclure qu'elle ne porte pas la note : sinon
+  // c'est une absence comparée à une absence, verte même si la route perdait
+  // son péage. Et l'intitulé est précis : sous le plafond, la route ne porte pas
+  // la note de PLAFOND — elle porte bien, comme toutes, l'avertissement EURC.
+  noter("3. le 402 porte la note de plafond sur la route concernée, PAS sous le plafond (gratuit)",
     r.status === 402 &&
       note.includes("spendControls") &&
       note.includes("up to $10.50") &&
       montantSigne === "1050000" &&
-      !String(corpsCheap?.pricing_note ?? "").includes("spendControls"),
+      cheap.status === 402 &&
+      corpsCheap?.price === "$0.001" &&
+      !String(corpsCheap?.pricing_note ?? "").includes("up to $") &&
+      // l'avertissement EURC, lui, DOIT être là (les deux annonces ne se
+      // confondent pas) et doit nommer le cap par actif.
+      String(corpsCheap?.message ?? "").includes("maxAmountPerPayment"),
     {
       montant_signe: montantSigne,
-      note_batch: note.slice(0, 120),
-      note_recherche: corpsCheap?.pricing_note ?? null,
-      message_eurc: String(corps?.message ?? "").includes("allowedAssets"),
+      http_contre_epreuve: cheap.status,
+      prix_contre_epreuve: corpsCheap?.price ?? null,
+      note_plafond_sous_le_seuil: corpsCheap?.pricing_note ?? null,
+      eurc_cap_par_actif_annonce: String(corpsCheap?.message ?? "").includes("maxAmountPerPayment"),
     });
 }
 
@@ -172,11 +258,35 @@ function noter(nom: string, ok: boolean, details: Record<string, unknown>) {
   const r = await payer(`${api}/v1/recherche?q=danone`, { headers: { Accept: "application/json" } });
   const texte = await r.text();
   writeFileSync(`${dossier}/4-achat-sous-plafond.json`, texte);
-  const regle = r.headers.get("payment-response") ?? r.headers.get("x-payment-response");
-  noter("4. client par défaut : une route à 0,001 $ s'achète toujours (payant)", r.ok && Boolean(regle), {
-    http: r.status,
-    regle: Boolean(regle),
-  });
+  const paiement = reglement(r);
+  const montantSigne4 = await montantSigneDe(`${api}/v1/recherche?q=danone`);
+  regles.push({ epreuve: "4", montant: montantSigne4, tx: paiement.tx });
+  let corps: any = {};
+  try { corps = JSON.parse(texte); } catch { /* non-JSON */ }
+  const rangs: string[] = Array.isArray(corps?.resultats)
+    ? corps.resultats.map((x: any) => String(x?.siren))
+    : [];
+  // ⚠️ Le 19/08, cette épreuve n'assertait que l'enveloppe (200 + réglé) : elle
+  // a acheté une réponse à UN résultat là où la route vend « the top 10
+  // matches » (trois étages de recherche abandonnés en silence sur
+  // statement_timeout) et l'a affichée verte. On assert désormais la LIVRAISON :
+  // un plancher de résultats et le SIREN attendu au rang 1.
+  noter("4. client par défaut : une route à 0,001 $ s'achète ET livre (payant)",
+    r.ok &&
+      montantSigne4 === "1000" &&
+      paiement.succes === true &&
+      Boolean(paiement.tx) &&
+      rangs.length >= 5 &&
+      rangs[0] === "552032534",
+    {
+      http: r.status,
+      montant_signe: montantSigne4,
+      succes_facilitateur: paiement.succes,
+      tx: paiement.tx,
+      total_results: corps?.total_results ?? null,
+      resultats: rangs.length,
+      rang1: rangs[0] ?? null,
+    });
 }
 
 // ------------------------------------------------ 5 & 6. EURC sans puis avec opt-in
@@ -199,9 +309,19 @@ function noter(nom: string, ok: boolean, details: Record<string, unknown>) {
     refus = e instanceof Error ? e.message : String(e);
   }
   writeFileSync(`${dossier}/5-eurc-sans-optin.txt`, refus || "AUCUN REFUS");
-  noter("5. EURC sans opt-in : l'option n'atteint pas le sélecteur (gratuit)",
-    /aucune option EURC|spendControls/.test(refus),
-    { option_eurc_dans_le_devis: Boolean(optionEurc), refus: refus.slice(0, 160) || null });
+  // ⚠️ Le message « aucune option EURC » est jeté par NOTRE sélecteur : sans la
+  // condition `optionEurc`, l'épreuve resterait verte si le SERVEUR cessait de
+  // servir la jambe EURC — en concluant « le client a filtré » alors que le
+  // client n'aurait rien eu à filtrer. Le devis doit d'abord la porter.
+  noter("5. le devis porte l'EURC mais, sans opt-in, l'option n'atteint pas le sélecteur (gratuit)",
+    Boolean(optionEurc) &&
+      optionEurc?.amount === devis.accepts[0]?.amount &&
+      /aucune option EURC|spendControls/.test(refus),
+    {
+      option_eurc_dans_le_devis: Boolean(optionEurc),
+      montant_eurc: optionEurc?.amount ?? null,
+      refus: refus.slice(0, 160) || null,
+    });
 
   let signable = false;
   let erreur = "";
@@ -222,7 +342,7 @@ function noter(nom: string, ok: boolean, details: Record<string, unknown>) {
 
 // ------------------------------------------------------ 7. surface MCP payée de bout en bout
 {
-  const appelMcp = async (args: Record<string, unknown>) => {
+  const appelMcp = async (args: Record<string, unknown>, outil = "search_french_companies") => {
     const r = await fetch(`${api}/mcp`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json, text/event-stream" },
@@ -230,7 +350,7 @@ function noter(nom: string, ok: boolean, details: Record<string, unknown>) {
         jsonrpc: "2.0",
         id: 1,
         method: "tools/call",
-        params: { name: "search_french_companies", arguments: args },
+        params: { name: outil, arguments: args },
       }),
     });
     const texte = await r.text();
@@ -246,24 +366,59 @@ function noter(nom: string, ok: boolean, details: Record<string, unknown>) {
   let erreur = "";
   try {
     const charge = await clientNeuf().createPaymentPayload(structure.quote as never);
-    paye = await appelMcp({ q: "danone", x_payment: encodePaymentSignatureHeader(charge) });
+    const entete = encodePaymentSignatureHeader(charge);
+    paye = await appelMcp({ q: "danone", x_payment: entete });
+    // Le montant réglé côté MCP est celui du devis signé : on le conserve depuis
+    // la charge elle-même (la réponse MCP ne porte pas l'en-tête HTTP).
+    regles.push({
+      epreuve: "7",
+      montant: String((structure.quote as any)?.accepts?.[0]?.amount ?? ""),
+      tx: null,
+    });
     writeFileSync(`${dossier}/7-mcp-paye.json`, JSON.stringify(paye, null, 2));
   } catch (e) {
     erreur = e instanceof Error ? e.message : String(e);
   }
   const payeeStructure = paye?.result?.structuredContent ?? {};
-  noter("7. MCP : indice enrichi au 402 puis flux payé (payant)",
+  const resultatsMcp = Array.isArray(payeeStructure?.resultat?.resultats)
+    ? payeeStructure.resultat.resultats.length
+    : 0;
+  const paiementMcp = regles.find((x) => x.epreuve === "7");
+  // ⚠️ `payment_required: false` + `resultat` non vide sont VRAIS aussi sur un
+  // 429 ou un 500 (resultatOutil range alors { statut_http, ...corps } dans
+  // `resultat`). On lit donc `isError`, posé exprès pour ce cas (audit C67), et
+  // on exige une livraison réelle.
+  noter("7. MCP : flux payé de bout en bout, sans erreur déguisée (payant)",
     structure.payment_required === true &&
-      String(structure.hint ?? "").includes("allowedAssets") &&
+      paye?.result?.isError === false &&
       payeeStructure.payment_required === false &&
-      Boolean(payeeStructure.resultat),
+      resultatsMcp >= 5,
     {
-      indice_opt_in_eurc: String(structure.hint ?? "").includes("allowedAssets"),
+      isError: paye?.result?.isError ?? null,
       paye: payeeStructure.payment_required === false,
-      resultats: Array.isArray(payeeStructure?.resultat?.resultats)
-        ? payeeStructure.resultat.resultats.length
-        : null,
+      resultats: resultatsMcp,
+      montant_regle: paiementMcp?.montant ?? null,
       erreur: erreur.slice(0, 200) || null,
+    });
+
+  // La NOUVEAUTÉ de la surface MCP — la note de plafond reprise dans l'indice —
+  // ne s'exerce que sur un outil dont la route porte une `pricing_note`. Sur
+  // /v1/recherche, l'indice ne montre que la constante statique : la première
+  // rédaction de cette épreuve croyait donc tester l'enrichissement sans jamais
+  // le déclencher. Gratuit : un 402 sans en-tête de paiement ne coûte rien.
+  const devisBatchMcp = await appelMcp(
+    { sirens: DIX_SIREN.split(",") },
+    "get_french_company_kyb_batch",
+  );
+  const indiceBatch = String(devisBatchMcp?.result?.structuredContent?.hint ?? "");
+  writeFileSync(`${dossier}/7bis-mcp-402-batch.json`, JSON.stringify(devisBatchMcp, null, 2));
+  noter("7 bis. MCP : l'indice du lot reprend la note de plafond du corps 402 (gratuit)",
+    devisBatchMcp?.result?.structuredContent?.payment_required === true &&
+      indiceBatch.includes("up to $10.50") &&
+      indiceBatch.includes("maxAmountPerPayment"),
+    {
+      plafond_dans_l_indice: indiceBatch.includes("up to $10.50"),
+      eurc_cap_par_actif: indiceBatch.includes("maxAmountPerPayment"),
     });
 }
 
@@ -274,8 +429,13 @@ writeFileSync(
       horodatage,
       api,
       wallet: compte.address,
-      version_sdk_client: versionSdk?.default?.version ?? "inconnue",
-      depense_attendue_usdc: 1.052,
+      version_sdk_client: versionSdk,
+      // Somme LUE dans les en-têtes de règlement (et le devis signé pour MCP) :
+      // un littéral écrit à la main ne prouvait rien et ne bougeait pas quand
+      // une épreuve était sautée.
+      depense_mesuree_usdc:
+        regles.reduce((t, x) => t + Number(x.montant ?? 0), 0) / 1_000_000,
+      reglements: regles,
       epreuves: journal,
       echecs,
     },
