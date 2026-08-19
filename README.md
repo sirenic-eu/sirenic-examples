@@ -48,7 +48,7 @@ before it decides what to buy. Quota: 2,000 calls per day per IP.
 
 It matches the **start** of the registered name, then whole words (`agricole`
 finds CRÉDIT AGRICOLE) — no typo tolerance and no match-confidence score. For
-those, `GET /v1/recherche` costs $0.001. Then pick your paid call below.
+those, `GET /v1/recherche` costs $0.002. Then pick your paid call below.
 
 ## Quickstart 1 — "Can you safely invoice or pay this company?"
 
@@ -230,7 +230,7 @@ Two things this is **not**:
 |---|---|---|
 | **`GET /v1/facturation/dossier?siren=&iban=`** | **$0.03** | **Verify a French supplier before payment**: e-invoicing prep + live VIES + IBAN/bank check + a deterministic `pret_a_facturer` verdict |
 | `GET /v1/eu/facturation/dossier?pays=&id=&iban=` | $0.03 | Verify a Belgian or Polish supplier before payment: registry identity + VIES + Peppol reachability (BE) + White List account check (PL) + the same verdict |
-| `GET /v1/recherche?q=` | $0.001 | French company search by name or SIREN — company lookup over 30M companies (INSEE Sirene) |
+| `GET /v1/recherche?q=` | $0.002 | French company search by name or SIREN — company lookup over 30M companies (INSEE Sirene) |
 | `GET /v1/entreprise/{siren}` | $0.005 | Full French company profile: identity, officers, NAF code, VAT number |
 | `GET /v1/entreprise/{siren}/etablissements` | $0.003 | All establishments (SIRET) |
 | `GET /v1/entreprise/{siren}/alertes` | $0.01 | BODACC legal alerts (insolvency…) |

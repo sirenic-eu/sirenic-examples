@@ -93,7 +93,7 @@ const RAILS: Array<[string, ReturnType<typeof wrapFetchWithPayment>]> =
 
 // Every paid endpoint, cheapest sample parameters (Danone = SIREN 552032534).
 const CALLS: Array<{ path: string; expect: string; price: string }> = [
-  { path: "/v1/recherche?q=danone", expect: "resultats", price: "$0.001" },
+  { path: "/v1/recherche?q=danone", expect: "resultats", price: "$0.002" },
   { path: "/v1/entreprise/552032534", expect: "denomination", price: "$0.005" },
   { path: "/v1/entreprise/552032534/etablissements", expect: "etablissements", price: "$0.003" },
   { path: "/v1/entreprise/552032534/alertes", expect: "total_annonces", price: "$0.01" },

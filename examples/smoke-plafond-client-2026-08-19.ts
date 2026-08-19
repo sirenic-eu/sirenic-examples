@@ -12,13 +12,13 @@
  *   1. refus par défaut au-delà de 1 $ (gratuit)
  *   2. achat du MÊME devis, plafond levé — 1,05 $ (payant)
  *   3. avertissement servi sur le 402 nu + contre-épreuve sous le plafond (gratuit)
- *   4. route sous le plafond avec un client PAR DÉFAUT — 0,001 $ (payant)
+ *   4. route sous le plafond avec un client PAR DÉFAUT — 0,002 $ (payant ; 0,001 $ avant le 19/08 soir)
  *   5. EURC sans opt-in : l'option n'atteint pas le sélecteur (gratuit)
  *   6. EURC avec opt-in : charge signable produite (gratuit — le wallet de test
  *      a 0 EURC, aucun règlement en euros n'est possible aujourd'hui)
- *   7. surface MCP payée de bout en bout — 0,001 $ (payant)
+ *   7. surface MCP payée de bout en bout — 0,002 $ (payant)
  *
- * Dépense attendue : ~1,052 USDC (0,002 si SMOKE_ACHAT_AU_DELA=0, qui saute le
+ * Dépense attendue : ~1,054 USDC (0,004 si SMOKE_ACHAT_AU_DELA=0, qui saute le
  * seul achat au-delà du plafond).
  *
  * DURCI le 19/08 après relecture adversariale du premier passage : quatre
@@ -238,7 +238,7 @@ if (process.env.SMOKE_ACHAT_AU_DELA === "0") {
       note.includes("up to $10.50") &&
       montantSigne === "1050000" &&
       cheap.status === 402 &&
-      corpsCheap?.price === "$0.001" &&
+      corpsCheap?.price === "$0.002" &&
       !String(corpsCheap?.pricing_note ?? "").includes("up to $") &&
       // l'avertissement EURC, lui, DOIT être là (les deux annonces ne se
       // confondent pas) et doit nommer le cap par actif.
@@ -276,9 +276,9 @@ if (process.env.SMOKE_ACHAT_AU_DELA === "0") {
   // perdu bascule sur le registre temps réel ; un partiel est drapé
   // `resultats_partiels: true`). L'épreuve exige le contrat complet.
   const etagesAbandonnes: unknown = corps?.etages_abandonnes;
-  noter("4. client par défaut : une route à 0,001 $ s'achète ET livre (payant)",
+  noter("4. client par défaut : une route à 0,002 $ s'achète ET livre (payant)",
     r.ok &&
-      montantSigne4 === "1000" &&
+      montantSigne4 === "2000" &&
       paiement.succes === true &&
       Boolean(paiement.tx) &&
       rangs.length >= 5 &&

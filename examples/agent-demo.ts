@@ -1,7 +1,7 @@
 /**
  * A tiny autonomous agent: searches a company by name, pays for the top
  * match's full profile, and prints a decision-ready digest. Total cost:
- * $0.001 (search) + $0.005 (profile) = $0.006 in USDC.
+ * $0.002 (search) + $0.005 (profile) = $0.007 in USDC.
  *
  * Usage:
  *   TEST_WALLET_KEY=0x... npm run agent-demo -- "danone"
