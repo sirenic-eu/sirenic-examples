@@ -1,0 +1,58 @@
+[
+ {
+  "endpoint": "/v1/eu/entreprise/{pays}/{id}",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/NO/923609016",
+  "expire_le": "2026-09-02"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/ES/{hoja}/actes",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/ES/VI-14412/actes",
+  "expire_le": "2026-09-06"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/CZ/{ico}/insolvabilite",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/CZ/49193881/insolvabilite",
+  "expire_le": "2026-09-06"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/PL/{krs}/evenements",
+  "prix": "$0.02",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/PL/0000006865/evenements",
+  "expire_le": "2026-09-06"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/DK/{id}/comptes",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/DK/41235292/comptes",
+  "expire_le": "2026-09-06"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/DK/{id}/comptes/{date_cloture}",
+  "prix": "$0.05",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/DK/41235292/comptes/2025-12-31",
+  "expire_le": "2026-09-11"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/SK/{ico}/comptes",
+  "prix": "$0.01",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/SK/36417475/comptes",
+  "expire_le": "2026-09-11"
+ },
+ {
+  "endpoint": "/v1/eu/entreprise/SK/{ico}/comptes/{date_cloture}",
+  "prix": "$0.03",
+  "mime": "application/json",
+  "url": "/v1/eu/entreprise/SK/36417475/comptes/2025-12-31",
+  "expire_le": "2026-09-11"
+ }
+]
