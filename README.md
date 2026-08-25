@@ -289,6 +289,7 @@ returned at creation is the capability — no account).
 
 - [`examples/smoke-bodacc-2026-08-11.ts`](examples/smoke-bodacc-2026-08-11.ts) — buy the **BODACC criteria search** for real (3 purchases, $0.09) and check that no court-appointed administrator is ever named in the response.
 - [`examples/smoke-dossier-2026-08-11.ts`](examples/smoke-dossier-2026-08-11.ts) — buy the **à-la-carte company file** for real (4 purchases, ~$0.32) and check the quote matches the blocks asked for.
+- [`examples/smoke-eu-recherche-reprise-2026-08-25.ts`](examples/smoke-eu-recherche-reprise-2026-08-25.ts) — re-buy the **European search** for Norway after it answered `503 registres_muets` ($0.003): the script names the three outcomes it can measure — a real result, a **paid empty answer**, or a persistent 503 — and exits non-zero on the last two, because "we retried and it looked fine" is not a measurement.
 - [`examples/suggestions.ts`](examples/suggestions.ts) — the **free** name → SIREN autocomplete, and the checks that prove it stays free (no wallet needed: `npx tsx examples/suggestions.ts`).
 - [`examples/quote.sh`](examples/quote.sh) — inspect a 402 quote with curl.
 - [`examples/pay-and-call.ts`](examples/pay-and-call.ts) — pay one request end to end.
