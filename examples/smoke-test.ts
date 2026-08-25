@@ -103,6 +103,7 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/entreprise/552032534/pi", expect: "marques", price: "$0.03" },
   { path: "/v1/entreprise/552032534/marches-publics-ue", expect: "nombre_avis", price: "$0.02" },
   { path: "/v1/entreprise/552032534/risques-industriels", expect: "synthese", price: "$0.01" },
+  { path: "/v1/entreprise/095580841/emploi", expect: "signaux_recrutement", price: "$0.02" },
   { path: "/v1/entreprise/552032534/lobbying", expect: "inscrit", price: "$0.01" },
   // Circle Internet Financial Europe : établissement de monnaie électronique
   // agréé par l'ACPR — l'émetteur de l'USDC avec lequel on nous paie.
