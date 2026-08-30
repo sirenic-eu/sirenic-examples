@@ -230,7 +230,7 @@ Two things this is **not**:
 |---|---|---|
 | **`GET /v1/facturation/dossier?siren=&iban=`** | **$0.03** | **Verify a French supplier before payment**: e-invoicing prep + live VIES + IBAN/bank check + a deterministic `pret_a_facturer` verdict |
 | `GET /v1/eu/facturation/dossier?pays=&id=&iban=` | $0.03 | Verify a Belgian or Polish supplier before payment: registry identity + VIES + Peppol reachability (BE) + White List account check (PL) + the same verdict |
-| `GET /v1/recherche?q=` | $0.002 | French company search by name or SIREN — company lookup over 30M companies (INSEE Sirene) |
+| `GET /v1/recherche?q=` | $0.002 | French company search by name **or any French identifier** — SIREN, SIRET or VAT number, spaced or labelled (`SIREN : 552 032 534`), resolved directly. Company lookup over 30M companies (INSEE Sirene) |
 | `GET /v1/entreprise/{siren}` | $0.005 | Full French company profile: identity, officers, NAF code, VAT number |
 | `GET /v1/entreprise/{siren}/etablissements` | $0.003 | All establishments (SIRET) |
 | `GET /v1/entreprise/{siren}/alertes` | $0.01 | BODACC legal alerts (insolvency…) |
@@ -258,7 +258,7 @@ Two things this is **not**:
 | `GET /v1/regulateurs/fr/alertes?nom=\|siren=` | $0.01 | AMF blacklists + PSAN/SGP registers (scam check, crypto providers) |
 | `GET /v1/eu/agrements?q=` | $0.01 | EU financial authorisations (ESMA, all EU/EEA, by name or LEI) |
 | `GET /v1/entreprise/{siren}/agrements` | $0.02 | Regulatory licences by SIREN: payment institution, e-money, account information, payment agent or exempt entity (EBA PSD2 register, daily), insurer (EIOPA), telecom operator (ARCEP) — with licensed services, EEA passporting and withdrawals |
-| `GET /v1/dirigeant/recherche?nom=` | $0.02 | Reverse director search |
+| `GET /v1/dirigeant/recherche?nom=` | $0.02 | Reverse director search (surname; unsupported characters are stripped, not rejected) |
 | `GET /v1/prospection?...` | $0.02/page | Multi-criteria prospecting |
 | `GET /v1/rapport/{siren}` | $0.50 | PDF report |
 | `GET /v1/intelligence/{siren}` | $1.00 | Intelligence report: every block cross-referenced — executive summary, officers´ network, filings, trends, closed-list signals, rule-based verdict |
@@ -269,12 +269,19 @@ Two things this is **not**:
 | `GET /v1/iban/verifier/{iban}` | $0.005 | IBAN check + bank identification (FR/BE/AT/NL, incl. LEI) — not a Verification of Payee |
 | `GET /v1/surveillance/creer?cibles=&duree=` | $0.05 / $0.135 / $0.50 per target (30 / 90 / 365d) | **Watchlist**: daily checks on companies & directors, signed webhooks + e-mail digests, expiry warning at D-7 |
 | `GET /v1/surveillance/{token}/renouveler?cibles=&duree=` | same per-target prices | Renew a watchlist for any duration, not just the original one (grace: 7 days after expiry; no refund, no pro rata) |
-| `GET /v1/eu/recherche?q=` | $0.003 | Search European registers (BE, NO, EE, LV local; CZ, SK, FI, PL, CH live) + GLEIF |
+| `GET /v1/eu/recherche?q=` | $0.003 | Search European registers (BE, NO, EE, LV local; CZ, SK, FI, PL, CH live) + GLEIF — name of 2 characters or more |
 | `GET /v1/eu/entreprise/{pays}/{id}` | $0.01 | Unified European profile — 12 countries: BE (KBO, NACEBEL + establishments), CH (Zefix), NO (Brønnøysund), CZ (ARES), SK (RPO), FI (PRH), PL (KRS), EE, LV… Each live country also has its own dedicated path (e.g. `/v1/eu/entreprise/CH/CHE-107.480.920`) |
 | `GET /v1/eu/entreprise/BE/{id}/comptes` | $0.01 | Belgian filings list (official NBB Central Balance Sheet Office) |
 | `GET /v1/eu/entreprise/BE/{id}/comptes/{ref}` | $0.15 | One Belgian annual-account deposit (JSON since 2022, PDF before) |
 | `GET /v1/eu/entreprise/{pays}/{id}/transactions-dirigeants` | $0.02 | Insider dealing at Belgian AND German listed companies (FSMA + BaFin, Art. 19 MAR): are its managers buying or selling? Issuer-level 12-month aggregate — **no individual is ever named**. BE: 10-digit enterprise number; DE: LEI or ISIN |
 | _…plus ~24 dedicated country sub-routes_ | | GB (directors, PSC, insolvency, accounts), DK/SE/SK/LV/EE (filings), NO (accounts & legal events), CZ (insolvency), PL (KRS events), ES (BORME deeds) — all in `/openapi.json` and the MCP tools |
+
+**Don't clean up the query yourself.** Search parameters (`?q=`, `?nom=`) accept
+what an agent naturally produces: quotes, punctuation and unsupported characters
+are **stripped, not rejected** — no 400 for a stray quote. Paste an identifier as
+you found it and it resolves directly: `SIREN : 552 032 534`, a 14-digit SIRET or
+an FR VAT number all land on the right company. A 400 comes back only when nothing
+searchable is left — and **no error response is ever billed**.
 
 Free: `GET /` (landing), `GET /v1/suggestions?q=` (**company-name autocomplete →
 SIREN**, up to 5 matches, 2,000 calls/day/IP),
@@ -290,6 +297,7 @@ returned at creation is the capability — no account).
 - [`examples/smoke-bodacc-2026-08-11.ts`](examples/smoke-bodacc-2026-08-11.ts) — buy the **BODACC criteria search** for real (3 purchases, $0.09) and check that no court-appointed administrator is ever named in the response.
 - [`examples/smoke-dossier-2026-08-11.ts`](examples/smoke-dossier-2026-08-11.ts) — buy the **à-la-carte company file** for real (4 purchases, ~$0.32) and check the quote matches the blocks asked for.
 - [`examples/smoke-eu-recherche-reprise-2026-08-25.ts`](examples/smoke-eu-recherche-reprise-2026-08-25.ts) — re-buy the **European search** for Norway after it answered `503 registres_muets` ($0.003): the script names the three outcomes it can measure — a real result, a **paid empty answer**, or a persistent 503 — and exits non-zero on the last two, because "we retried and it looked fine" is not a measurement.
+- [`examples/smoke-entrees-clementes-2026-08-30.ts`](examples/smoke-entrees-clementes-2026-08-30.ts) — buy the **agent-shaped queries** for real ($0.006): quotes around a name are served, a spaced and labelled SIREN resolves directly, and two negatives — a euro amount must **not** resolve to a company, and a 400 must **not** be billed while still recording which rule and which field refused it.
 - [`examples/suggestions.ts`](examples/suggestions.ts) — the **free** name → SIREN autocomplete, and the checks that prove it stays free (no wallet needed: `npx tsx examples/suggestions.ts`).
 - [`examples/quote.sh`](examples/quote.sh) — inspect a 402 quote with curl.
 - [`examples/pay-and-call.ts`](examples/pay-and-call.ts) — pay one request end to end.
