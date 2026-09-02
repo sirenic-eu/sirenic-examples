@@ -235,10 +235,10 @@ Two things this is **not**:
 | `GET /v1/entreprise/{siren}/etablissements` | $0.003 | All establishments (SIRET) |
 | `GET /v1/entreprise/{siren}/alertes` | $0.01 | BODACC legal alerts (insolvency…) |
 | `GET /v1/entreprise/{siren}/finances` | $0.01 | Filed financials + ratios |
-| `GET /v1/entreprise/{siren}/marches-publics` | $0.01 | Public procurement won (French DECP), with estimated end dates |
+| `GET /v1/entreprise/{siren}/marches-publics` | $0.01 | Public procurement won (French DECP): estimated end dates, lot number, joint holders, CCAG, price type, advance, amendments and declared SUBCONTRACTING with its amount. **Each amount is flagged firm price or ENVELOPE** (call-off orders, subsequent contracts, optional tranches, framework ceiling — 43% of contracts): an amount is the whole contract or lot, excl. VAT, over its full duration, never annual revenue |
 | `GET /v1/entreprise/{siren}/marches-publics-ue` | $0.02 | EU procurement awards (TED, identifier-matched) |
-| `GET /v1/marches/expirations?cpv=&departement=&fenetre_mois=` | $0.05 | **Tender anticipation** — French public contracts EXPIRING in your window (1-24 months), by CPV prefix and department, with incumbent holders. Buyers re-tender 4-9 months before expiry |
-| `GET /v1/acheteur/{siret}/profil` | $0.02 | Public buyer profile: volumes, top CPV, incumbent suppliers and their expiring contracts, framework-agreement share, avg bids received |
+| `GET /v1/marches/expirations?cpv=&departement=&fenetre_mois=` | $0.05 | **Tender anticipation** — French public contracts EXPIRING in your window (1-24 months), by CPV prefix and department, with incumbent holders, lot number, declared subcontracting and amounts flagged firm price or ENVELOPE. Buyers re-tender 4-9 months before expiry |
+| `GET /v1/acheteur/{siret}/profil` | $0.02 | Public buyer profile: volumes, top CPV, incumbent suppliers and their expiring contracts, framework-agreement share, share of amounts that are envelopes rather than firm prices, share with declared subcontracting or an advance, dominant CCAG and price type, publishing platform, avg bids received |
 | `GET /v1/entreprise/{siren}/concurrents-marches` | $0.02 | Who wins public contracts on the same CPV segments (last 3 years) |
 | `GET /v1/entreprise/{siren}/risques-industriels` | $0.01 | Industrial risk: Seveso/ICPE facilities + synthesis |
 | `GET /v1/entreprise/{siren}/emploi` | $0.02 | Hiring signals derived from France Travail data (actively hiring, posting volume, ROME families, pay-range share) + Egapro index + INSEE workforce bracket - aggregated signals only, never posting texts or contacts |
