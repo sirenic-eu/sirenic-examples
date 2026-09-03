@@ -2,7 +2,7 @@
   "_endpoint": "/v1/entreprise/{siren}/pi",
   "_price": "$0.03",
   "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/pi",
-  "_sample_of": "2026-07-29",
+  "_sample_of": "2026-09-03",
   "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
   "response": {
     "siren": "552032534",
@@ -12,31 +12,47 @@
         {
           "numero": "4789796",
           "libelle": "THE ONE HOME",
-          "statut": "Marque enregistrée"
+          "statut": "Marque enregistrée",
+          "date": "2021-07-31",
+          "date_nature": "depot",
+          "date_enregistrement": "2021-12-24",
+          "date_expiration": "2031-07-31",
+          "classification": "41, 44"
         }
-      ]
+      ],
+      "liste_tronquee": true,
+      "nombre_unite": "titres",
+      "liste_ordre": "date_decroissante"
     },
     "brevets": {
       "nombre": 12,
       "liste": [
         {
-          "numero": "<country>FR</country><doc-number>2728873</doc-number><kind>A1</kind>",
+          "numero": "FR2728873A1",
           "libelle": "EMBALLAGE EN FILM DE MATERIAU SOUPLE ET SON PROCEDE DE FABRICATION",
-          "date": "19960705",
-          "classification": null
+          "date": "1996-07-05",
+          "date_nature": "publication",
+          "classification": "B65D 65/32, B65D 75/58"
         }
-      ]
+      ],
+      "liste_tronquee": false,
+      "nombre_unite": "titres",
+      "liste_ordre": "amont_non_trie"
     },
     "dessins_modeles": {
-      "nombre": 12,
+      "nombre": 3,
       "liste": [
         {
           "numero": "054041",
           "libelle": "Ornementation de supports de communication",
-          "date": "20050819",
+          "date": "2005-08-19",
+          "date_nature": "depot",
           "classification": "2003"
         }
-      ]
+      ],
+      "liste_tronquee": false,
+      "nombre_unite": "depots",
+      "liste_ordre": "date_decroissante"
     },
     "source": "INPI — bases ouvertes de propriété industrielle (marques, brevets, dessins & modèles)",
     "data_freshness": "INPI PI open data (marques/brevets hebdo, D&M bimensuel), cache 24 h"
