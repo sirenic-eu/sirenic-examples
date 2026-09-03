@@ -72,6 +72,12 @@ const CALLS: Array<{ path: string; expect: string[]; price: string }> = [
       "lot_numero",
       "sous_traitance",
       "plateforme_source",
+      // Régime DECP de la ligne et durée après avenant : ajoutés le 03/09/2026
+      // avec la profondeur historique 2019-2023. La durée amendée est la
+      // donnée que nos réserves déclaraient ABSENTE de la source — vrai du
+      // régime en vigueur, faux du v3 qui en porte 56 516.
+      "regime",
+      "duree_mois_modifiee",
     ],
     price: "$0.01",
   },
