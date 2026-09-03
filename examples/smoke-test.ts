@@ -110,6 +110,11 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/entreprise/953990934/agrements", expect: "resume", price: "$0.02" },
   // IBA (Ion Beam Applications), societe belge cotee — agregat sans aucun nom.
   { path: "/v1/eu/entreprise/BE/0428750985/transactions-dirigeants", expect: "synthese", price: "$0.02" },
+  // Zalando SE, societe allemande cotee, interrogee par LEI : la BaFin ne publie
+  // aucun numero de registre. Ajoutee le 03/09/2026 apres un achat REEL — la
+  // tranche allemande etait en production depuis le 15/08 sans avoir jamais ete
+  // eprouvee par ce smoke (voir examples/smoke-dirigeants-de-2026-09-03.ts).
+  { path: "/v1/eu/entreprise/DE/529900YRFFGH5AXU4S86/transactions-dirigeants", expect: "synthese", price: "$0.02" },
   { path: "/v1/entreprise/552032534/facturation-prep", expect: "destinataire", price: "$0.02" },
   { path: "/v1/tva/verifier/FR27552032534", expect: "statut", price: "$0.003" },
   { path: "/v1/iban/verifier/FR1420041010050500013M02606", expect: "iban_normalise", price: "$0.005" },
