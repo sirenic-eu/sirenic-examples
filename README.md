@@ -272,7 +272,7 @@ Two things this is **not**:
 | `GET /v1/eu/recherche?q=` | $0.003 | Search European registers (BE, NO, EE, LV local; CZ, SK, FI, PL, CH live) + GLEIF — name of 2 characters or more |
 | `GET /v1/eu/entreprise/{pays}/{id}` | $0.01 | Unified European profile — 12 countries: BE (KBO, NACEBEL + establishments), CH (Zefix), NO (Brønnøysund), CZ (ARES), SK (RPO), FI (PRH), PL (KRS), EE, LV… Each live country also has its own dedicated path (e.g. `/v1/eu/entreprise/CH/CHE-107.480.920`) |
 | `GET /v1/eu/entreprise/BE/{id}/comptes` | $0.01 | Belgian filings list (official NBB Central Balance Sheet Office) |
-| `GET /v1/eu/entreprise/BE/{id}/comptes/{ref}` | $0.15 | One Belgian annual-account deposit (JSON since 2022, PDF before) |
+| `GET /v1/eu/entreprise/BE/{id}/comptes/{ref}` | $0.15 | One Belgian annual-account deposit — structured JSON when the NBB publishes one, official PDF otherwise (`?format=pdf` forces the PDF, `?format=json` refuses the fallback and answers 406, not charged) |
 | `GET /v1/eu/entreprise/{pays}/{id}/transactions-dirigeants` | $0.02 | Insider dealing at Belgian AND German listed companies (FSMA + BaFin, Art. 19 MAR): are its managers buying or selling? Issuer-level 12-month aggregate — **no individual is ever named**. BE: 10-digit enterprise number; DE: LEI or ISIN |
 | _…plus ~24 dedicated country sub-routes_ | | GB (directors, PSC, insolvency, accounts), DK/SE/SK/LV/EE (filings), NO (accounts & legal events), CZ (insolvency), PL (KRS events), ES (BORME deeds) — all in `/openapi.json` and the MCP tools |
 

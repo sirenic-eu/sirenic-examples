@@ -191,6 +191,116 @@ async function call(
   }
 }
 
+/**
+ * `?format=json` doit rendre SOIT un objet, SOIT 406 non facturé — jamais un
+ * PDF. C'est la garantie sur laquelle reposent les clients typés : un module
+ * Make, par exemple, ne branche son analyse de réponse que sur le CODE HTTP,
+ * jamais sur le Content-Type, et un PDF servi sur un 200 le casse net
+ * (« Expected Object, but found Uint8Array », constaté le 02/09/2026).
+ * `call()` ne convient pas ici : il compte tout non-200 comme un échec, or le
+ * 406 est le succès attendu quand la BNB ne publie pas ce dépôt en JSON.
+ */
+async function verifierFormatJson(
+  rail: string,
+  paidFetch: ReturnType<typeof wrapFetchWithPayment>,
+  path: string,
+): Promise<void> {
+  const started = Date.now();
+  try {
+    const r = await paidFetch(`${apiUrl}${path}`, { signal: AbortSignal.timeout(210_000) });
+    const ms = Date.now() - started;
+    const type = r.headers.get("content-type") ?? "";
+    const debite = r.headers.get("x-credits-charged");
+    if (type.includes("pdf")) {
+      failed++;
+      console.log(`✗ [${rail}] ${path} → PDF servi malgré format=json (${ms} ms)`);
+      return;
+    }
+    const body = (await r.json()) as Record<string, unknown>;
+    if (r.status === 406) {
+      // Un refus ne se facture jamais : le vérifier ici, pas le supposer.
+      const gratuit = debite === null || Number(debite) === 0;
+      if (body.error !== "json_indisponible" || !gratuit) {
+        failed++;
+        console.log(`✗ [${rail}] ${path} → 406 inattendu (error=${String(body.error)}, débité=${String(debite)})`);
+        return;
+      }
+      conserver(rail, path, "json", JSON.stringify(body, null, 1));
+      console.log(`✓ [${rail}] ${path} → 406 json_indisponible, NON facturé (${ms} ms)`);
+      return;
+    }
+    if (r.status !== 200) {
+      failed++;
+      console.log(`✗ [${rail}] ${path} → HTTP ${r.status} (${ms} ms)`);
+      return;
+    }
+    conserver(rail, path, "json", JSON.stringify(body, null, 1));
+    paid += 0.15;
+    console.log(`✓ [${rail}] ${path} → JSON structuré, $0.15 (${ms} ms)`);
+  } catch (error) {
+    failed++;
+    console.log(`✗ [${rail}] ${path} → ${String(error).slice(0, 120)}`);
+  }
+}
+
+/**
+ * `/v1/marches/expirations` — et pourquoi elle a sa propre vérification.
+ *
+ * Cette route a coûté de l'argent pour rien le 03/09/2026 : 67 SECONDES à
+ * froid, alors qu'un module Make coupe à ~40 s. Le journal du service porte la
+ * trace exacte — `responseTime: 39910` avec `x-credits-charged: 0.05` : le
+ * client avait abandonné, notre API a terminé et FACTURÉ. Personne ne doit
+ * payer une réponse qu'il n'a pas reçue.
+ *
+ * Cause : la requête touchait 129 180 pages (≈ 1 Go) pour servir 50 lignes.
+ * Corrigée par le lot fdc5792 (pagination sur les seules colonnes indexées,
+ * index couvrant + VACUUM) — mesure après correctif : 2 620 pages, 1,2 s.
+ *
+ * ⚠️ `call()` NE CONVIENT PAS pour l'éprouver : il journalise la durée mais
+ * n'asserte JAMAIS dessus. La route reviendrait à 67 s qu'il l'afficherait en
+ * VERT. Or ici le défaut EST la durée. D'où ce contrôle dédié, avec un plafond
+ * franc — et le plafond n'est pas décoratif : au-delà, un client Make ne reçoit
+ * rien tout en payant.
+ */
+const PLAFOND_EXPIRATIONS_MS = 20_000;
+
+async function verifierExpirations(
+  rail: string,
+  paidFetch: ReturnType<typeof wrapFetchWithPayment>,
+  path: string,
+): Promise<void> {
+  const started = Date.now();
+  try {
+    const r = await paidFetch(`${apiUrl}${path}`, { signal: AbortSignal.timeout(210_000) });
+    const ms = Date.now() - started;
+    if (r.status !== 200) {
+      failed++;
+      console.log(`✗ [${rail}] ${path} → HTTP ${r.status} (${ms} ms)`);
+      return;
+    }
+    const body = (await r.json()) as Record<string, unknown>;
+    conserver(rail, path, "json", JSON.stringify(body, null, 1));
+    paid += 0.05;
+    const marches = body.marches as unknown[] | undefined;
+    // La réponse doit être COMPLÈTE, sinon un plafond de latence se satisferait
+    // d'une page vide servie vite.
+    if (!Array.isArray(marches) || marches.length === 0 || typeof body.total_marches !== "number") {
+      failed++;
+      console.log(`✗ [${rail}] ${path} → corps incomplet (marches=${marches?.length}, total=${String(body.total_marches)})`);
+      return;
+    }
+    if (ms > PLAFOND_EXPIRATIONS_MS) {
+      failed++;
+      console.log(`✗ [${rail}] ${path} → ${ms} ms > ${PLAFOND_EXPIRATIONS_MS} ms : un client Make aurait été coupé APRÈS avoir payé`);
+      return;
+    }
+    console.log(`✓ [${rail}] ${path} → ${marches.length} marchés sur ${body.total_marches}, $0.05 (${ms} ms)`);
+  } catch (error) {
+    failed++;
+    console.log(`✗ [${rail}] ${path} → ${String(error).slice(0, 120)}`);
+  }
+}
+
 console.log(`Wallet: ${account.address}\nAPI: ${apiUrl}\nAssets: ${RAILS.map((r) => r[0]).join(" + ")}\n`);
 // Colruyt : société belge dont les comptes déposés sont nombreux et stables.
 const BE_ENTREPRISE = "0400378485";
@@ -223,9 +333,15 @@ for (const [rail, paidFetch] of RAILS) {
     .sort((a, b) => b.reference.localeCompare(a.reference))[0];
   if (depot?.reference) {
     await call(rail, paidFetch, `/v1/eu/entreprise/BE/${BE_ENTREPRISE}/comptes/${depot.reference}`, "reference", "$0.15");
+    await verifierFormatJson(rail, paidFetch, `/v1/eu/entreprise/BE/${BE_ENTREPRISE}/comptes/${depot.reference}?format=json`);
   } else {
     console.log(`– [${rail}] Belgian deposit skipped (no reference in the list response)`);
   }
+
+  // Deux appels : la fenêtre par défaut, puis une fenêtre + filtre CPV qu'aucun
+  // appel précédent n'a réchauffée — c'est le cas FROID qui avait coûté 67 s.
+  await verifierExpirations(rail, paidFetch, "/v1/marches/expirations");
+  await verifierExpirations(rail, paidFetch, "/v1/marches/expirations?fenetre_mois=18&cpv=45");
 
   // -- Watchlist: create → renew → stop (only once; stopping is free) --------
   // No `duree` on purpose — see the header: this is the compatibility check.
