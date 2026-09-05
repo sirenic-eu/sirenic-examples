@@ -98,7 +98,7 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/entreprise/552032534/etablissements", expect: "etablissements", price: "$0.003" },
   { path: "/v1/entreprise/552032534/alertes", expect: "total_annonces", price: "$0.01" },
   { path: "/v1/entreprise/552032534/finances", expect: "exercices", price: "$0.01" },
-  { path: "/v1/entreprise/552032534/marches-publics", expect: "siren", price: "$0.01" },
+  { path: "/v1/entreprise/552032534/marches-publics", expect: "nombre_marches_dedoublonne", price: "$0.01" },
   { path: "/v1/entreprise/552032534/changements?depuis=2020-01-01", expect: "siren", price: "$0.01" },
   { path: "/v1/entreprise/552032534/pi", expect: "marques", price: "$0.03" },
   { path: "/v1/entreprise/552032534/marches-publics-ue", expect: "nombre_avis", price: "$0.02" },
