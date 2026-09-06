@@ -270,6 +270,9 @@ Two things this is **not**:
 | `GET /v1/eu/agrements?q=` | $0.01 | EU financial authorisations (ESMA, all EU/EEA, by name or LEI) |
 | `GET /v1/entreprise/{siren}/agrements` | $0.02 | Regulatory licences by SIREN: payment institution, e-money, account information, payment agent or exempt entity (EBA PSD2 register, daily), insurer (EIOPA), telecom operator (ARCEP) — with licensed services, EEA passporting and withdrawals |
 | `GET /v1/dirigeant/recherche?nom=` | $0.02 | Reverse director search (surname; unsupported characters are stripped, not rejected) |
+| `GET /v1/association/{rna}` | $0.005 | **French association (loi 1901) by RNA number** — Répertoire national des associations (Ministry of the Interior, monthly): title, purpose, position (active/dissolved/deleted), dates, registered office, website, RUP number as declared, and the SIREN when Sirene confirms it. Covers the associations that have **no SIREN** at all. No officer or declarant data; Alsace-Moselle (local law) excluded |
+| `GET /v1/associations/recherche?q=` | $0.002 | Association search by name (trigram similarity), optional `code_postal`, `departement`, `position` filters — top 20 with `score_confiance` and the RNA number |
+| `GET /v1/association/{rna}/annonces` | $0.01 | Official Journal notices of an association (JOAFE, DILA): creations, modifications, dissolutions — the association equivalent of BODACC, with `couverture` (first and last loaded issue) |
 | `GET /v1/prospection?...` | $0.02/page | Multi-criteria prospecting |
 | `GET /v1/rapport/{siren}` | $0.50 | PDF report |
 | `GET /v1/intelligence/{siren}` | $1.00 | Intelligence report: every block cross-referenced — executive summary, officers´ network, filings, trends, closed-list signals, rule-based verdict with `motifs_verdict` (the codes that decided it), `verdict_plafonne_par` (name-match doubts that capped a would-be « solide » at « correct »), and since v1.7 `synthese.reserves` (closed-list reading caveats: holding scope, newer filing not analysed, unpublished cash, weak name matches…), `portee`, `confiance_financiere` and `par_domaine` (ten domains in closed lists, projected from blocks already served — the verdict word is unchanged) |
@@ -278,7 +281,7 @@ Two things this is **not**:
 | `GET /v1/facture/verifier?siren=&tva=&iban=` | $0.02 | **Invoice verification** — cross-check the identifiers printed on an invoice: VAT vs the SIREN's computed number + live VIES, IBAN form/key/bank; verdict coherent/incoherent/inverifiable, closed-list reasons. Not a payee verification |
 | `GET /v1/tva/verifier/{numero}` | $0.003 | EU VAT validation (VIES) |
 | `GET /v1/iban/verifier/{iban}` | $0.005 | IBAN check + bank identification (FR/BE/AT/NL, incl. LEI) — not a Verification of Payee |
-| `GET /v1/surveillance/creer?cibles=&duree=` | $0.05 / $0.135 / $0.50 per target (30 / 90 / 365d) | **Watchlist**: daily checks on companies & directors, signed webhooks + e-mail digests, expiry warning at D-7 |
+| `GET /v1/surveillance/creer?cibles=&duree=` | $0.05 / $0.135 / $0.50 per target (30 / 90 / 365d) | **Watchlist**: daily checks on companies, directors and associations (RNA numbers, JOAFE notices), signed webhooks + e-mail digests, expiry warning at D-7 |
 | `GET /v1/surveillance/{token}/renouveler?cibles=&duree=` | same per-target prices | Renew a watchlist for any duration, not just the original one (grace: 7 days after expiry; no refund, no pro rata) |
 | `GET /v1/eu/recherche?q=` | $0.003 | Search European registers (BE, NO, EE, LV local; CZ, SK, FI, PL, CH live) + GLEIF — name of 2 characters or more |
 | `GET /v1/eu/entreprise/{pays}/{id}` | $0.01 | Unified European profile — 12 countries: BE (KBO, NACEBEL + establishments), CH (Zefix), NO (Brønnøysund), CZ (ARES), SK (RPO), FI (PRH), PL (KRS), EE, LV… Each live country also has its own dedicated path (e.g. `/v1/eu/entreprise/CH/CHE-107.480.920`) |
@@ -319,7 +322,7 @@ returned at creation is the capability — no account).
   samples are served by the API itself, in the OpenAPI spec, in the x402 payment
   quote and in `llms.txt` — so the contract you read is the contract you get.
 - [`examples/smoke-surveillance-durees-2026-08-11.ts`](examples/smoke-surveillance-durees-2026-08-11.ts) — buy a **90-day** and a **365-day** watchlist for real (~$0.685), renew one at a different duration, and check that an out-of-range duration and an over-long renewal are both refused **without a debit**.
-- [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call the core paid endpoints once (~46 calls across the 79-route catalogue, USDC and/or EURC; the watchlist it creates is stopped again for free). Country deep-dive sub-routes have their own dedicated smokes in this folder.
+- [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call the core paid endpoints once (~46 calls across the 83-route catalogue, USDC and/or EURC; the watchlist it creates is stopped again for free). Country deep-dive sub-routes have their own dedicated smokes in this folder.
 - [`examples/agent-demo.ts`](examples/agent-demo.ts) — a small autonomous agent that searches, pays and reads profiles.
 - [`examples/mcp-setup.md`](examples/mcp-setup.md) — MCP configuration for Claude, Cursor and generic clients.
 - [`examples/a2a.ts`](examples/a2a.ts) — call Sirenic as an **A2A agent** (quote for free, then pay on the same task via the a2a-x402 extension).

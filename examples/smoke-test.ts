@@ -154,6 +154,12 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/entreprise/552032534/capital", expect: "capital", price: "$0.35" },
   { path: "/v1/intelligence/552032534", expect: "synthese", price: "$1.00" },
   { path: "/v1/rapport/552032534", expect: "(PDF)", price: "$0.50" },
+  // 06/09/2026 — associations loi 1901 (RNA + JOAFE) : the Red Cross (W751004076,
+  // SIREN 775672272) and a search by name ; the notices route is smoked on an
+  // association created in the 2026-0035 issue.
+  { path: "/v1/association/W751004076", expect: "titre", price: "$0.005" },
+  { path: "/v1/associations/recherche?q=croix%20rouge&code_postal=75", expect: "resultats", price: "$0.002" },
+  { path: "/v1/association/W011006690/annonces", expect: "couverture", price: "$0.01" },
 ];
 
 let paid = 0;
