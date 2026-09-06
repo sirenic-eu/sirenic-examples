@@ -261,7 +261,7 @@ Two things this is **not**:
 | `GET /v1/dirigeant/recherche?nom=` | $0.02 | Reverse director search (surname; unsupported characters are stripped, not rejected) |
 | `GET /v1/prospection?...` | $0.02/page | Multi-criteria prospecting |
 | `GET /v1/rapport/{siren}` | $0.50 | PDF report |
-| `GET /v1/intelligence/{siren}` | $1.00 | Intelligence report: every block cross-referenced — executive summary, officers´ network, filings, trends, closed-list signals, rule-based verdict with `motifs_verdict` (the codes that decided it) and `verdict_plafonne_par` (name-match doubts that capped a would-be « solide » at « correct ») |
+| `GET /v1/intelligence/{siren}` | $1.00 | Intelligence report: every block cross-referenced — executive summary, officers´ network, filings, trends, closed-list signals, rule-based verdict with `motifs_verdict` (the codes that decided it), `verdict_plafonne_par` (name-match doubts that capped a would-be « solide » at « correct »), and since v1.7 `synthese.reserves` (closed-list reading caveats: holding scope, newer filing not analysed, unpublished cash, weak name matches…), `portee`, `confiance_financiere` and `par_domaine` (ten domains in closed lists, projected from blocks already served — the verdict word is unchanged) |
 | `GET /v1/entreprise/{siren}/documents` | $0.02 | List filed documents (INPI) |
 | `GET /v1/documents/{type}/{id}` | $0.10 | Download a filed document (PDF) |
 | `GET /v1/facture/verifier?siren=&tva=&iban=` | $0.02 | **Invoice verification** — cross-check the identifiers printed on an invoice: VAT vs the SIREN's computed number + live VIES, IBAN form/key/bank; verdict coherent/incoherent/inverifiable, closed-list reasons. Not a payee verification |
