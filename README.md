@@ -15,12 +15,21 @@ EURC** via the [x402 protocol](https://github.com/x402-foundation/x402):
 **no account, no API key** — your agent pays each request on Base. Every paid response is
 **Ed25519-signed** and verifiable offline
 ([recipe](https://api.sirenic.eu/.well-known/sirenic-signing-key)) — and carries
-its **per-block provenance**: which official register each block came from, its
-licence, its version and its `as_of` date, with the exact meaning of that date
-(upstream official publication, Sirenic ingestion, or live consultation).
+its **per-block provenance** (every JSON route since 2026-09-06): which official
+register each block came from, its licence, its version and its `as_of` date, with
+the exact meaning of that date (upstream official publication, Sirenic ingestion,
+or live consultation) — plus a **common per-block envelope**: `etat` in a closed
+list (`servi`, `absence_mesuree`, `absence_non_conclusive`, `partiel`, `perime`,
+`indisponible`, `sans_objet`), `motif` when unavailable, `age_jours`, `couverture`
+(complete / partielle / non_mesurable, with its measure) and `confiance` in bands
+where a measure grounds it. Read the states before the numbers: an
+`absence_non_conclusive` block is never "nothing to report".
 Verify the signature, then read the provenance: your agent can prove to an
-auditor what it knew when it paid. Codes are resolved for free at
-[`/v1/provenance/registres`](https://api.sirenic.eu/v1/provenance/registres).
+auditor what it knew when it paid. Register codes are resolved for free at
+[`/v1/provenance/registres`](https://api.sirenic.eu/v1/provenance/registres),
+and the states, closed lists and reading rules (a score is not a probability, a
+match is not a sanction, never sum procurement rows, an absence is not a zero…)
+at [`/v1/lecture`](https://api.sirenic.eu/v1/lecture) — both free.
 
 - Landing & pricing: https://api.sirenic.eu
 - OpenAPI: https://api.sirenic.eu/openapi.json
@@ -204,9 +213,11 @@ parsing prose — and a VIES outage yields an honest `tva_non_verifiable`, never
 false invalid.
 
 Every one of these responses is Ed25519-signed, and the **provenance travels
-inside the signed bytes**: which official register served each block, and its
-`as_of` date. Verify the signature, then read the provenance — that is an audit
-trail you can hand to an accountant.
+inside the signed bytes**: which official register served each block, its
+`as_of` date, and since 2026-09-06 its `etat` (served, measured absence,
+non-conclusive absence, partial, stale, unavailable, not applicable). Verify the
+signature, then read the provenance — that is an audit trail you can hand to an
+accountant.
 [`examples/verify-invoice-file.ts`](examples/verify-invoice-file.ts) writes one
 to disk and re-verifies it from the files alone.
 

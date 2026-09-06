@@ -97,7 +97,8 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/entreprise/552032534", expect: "denomination", price: "$0.005" },
   { path: "/v1/entreprise/552032534/etablissements", expect: "etablissements", price: "$0.003" },
   { path: "/v1/entreprise/552032534/alertes", expect: "total_annonces", price: "$0.01" },
-  { path: "/v1/entreprise/552032534/finances", expect: "decalage_analytique", price: "$0.01" },
+  // 06/09/2026 : `interpretabilite` — les ratios d'activité d'une holding sont calculables, pas interprétables.
+  { path: "/v1/entreprise/552032534/finances", expect: "interpretabilite", price: "$0.01" },
   { path: "/v1/entreprise/552032534/marches-publics", expect: "nombre_marches_dedoublonne", price: "$0.01" },
   { path: "/v1/entreprise/552032534/changements?depuis=2020-01-01", expect: "siren", price: "$0.01" },
   { path: "/v1/entreprise/552032534/pi", expect: "marques", price: "$0.03" },
@@ -127,7 +128,9 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/eu/agrements?q=BNP%20Paribas", expect: "requete", price: "$0.01" },
   // Facturé PAR SOCIÉTÉ : 2 SIREN = 2 × $0.105.
   { path: "/v1/kyb/batch?sirens=552032534,542065479", expect: "nombre_demande", price: "$0.21" },
-  { path: "/v1/comparer?sirens=552032534,542065479", expect: "comparabilite", price: "$0.24" },
+  // 06/09/2026 : `eligibilite_classements` dit QUI est classé dans `risque_le_plus_faible`
+  // (un score sans axe trésorerie ne se range plus au-dessus d'un score qui l'a subi).
+  { path: "/v1/comparer?sirens=552032534,542065479", expect: "eligibilite_classements", price: "$0.24" },
   { path: "/v1/sanctions/check?name=Danone", expect: "correspondances", price: "$0.02" },
   { path: "/v1/dirigeant/recherche?nom=Faber", expect: "resultats", price: "$0.02" },
   { path: "/v1/eu/recherche?q=equinor&pays=NO", expect: "resultats", price: "$0.003" },
@@ -143,7 +146,8 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/eu/entreprise/LV/40003245752", expect: "denomination", price: "$0.01" }, // airBaltic
   { path: "/v1/prospection?naf=62.01Z&departement=75", expect: "resultats", price: "$0.02" },
   { path: "/v1/secteur/62.01Z/benchmarks", expect: "code_naf", price: "$0.05" },
-  { path: "/v1/score/defaillance/552032534", expect: "score_risque", price: "$0.10" },
+  // 06/09/2026 : `couverture_axes` — les axes évalués et les axes muets, avec leur motif.
+  { path: "/v1/score/defaillance/552032534", expect: "couverture_axes", price: "$0.10" },
   { path: "/v1/entreprise/552032534/documents", expect: "actes", price: "$0.02" },
   { path: "/v1/kyb/552032534", expect: "score_completude", price: "$0.15" },
   { path: "/v1/entreprise/552032534/sante", expect: "synthese", price: "$0.15" },
@@ -154,6 +158,25 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
 
 let paid = 0;
 let failed = 0;
+/** Since 2026-09-06 every paid JSON response carries `provenance[]` with a closed-list
+ *  `etat` per block (the common envelope). A paid JSON body without it is a defect,
+ *  not a style choice — counted, and reported in the final summary. */
+let sansEnveloppe = 0;
+const ETATS = new Set(["servi", "absence_mesuree", "absence_non_conclusive", "partiel", "perime", "indisponible", "sans_objet"]);
+function enveloppeOk(body: Record<string, unknown>): boolean {
+  const provenance = body.provenance;
+  if (Array.isArray(provenance) && provenance.length > 0) {
+    return provenance.every((p) => p && typeof p === "object" && ETATS.has(String((p as { etat?: unknown }).etat)));
+  }
+  // The KYB batch carries the envelope INSIDE each found company file.
+  const entreprises = body.entreprises;
+  if (Array.isArray(entreprises)) {
+    return entreprises
+      .filter((e) => e && typeof e === "object" && (e as { trouve?: unknown }).trouve === true)
+      .every((e) => enveloppeOk(e as Record<string, unknown>));
+  }
+  return false;
+}
 
 /** Pays via one rail, prints a report line, returns the JSON body (null for PDF/error/skip). */
 async function call(
@@ -187,7 +210,9 @@ async function call(
     const body = (await r.json()) as Record<string, unknown>;
     conserver(rail, path, "json", JSON.stringify(body, null, 1));
     paid += Number(price.slice(1));
-    console.log(`${expect in body ? "✓" : "?"} [${rail}] ${path} → ${price} (${ms} ms)`);
+    const enveloppe = enveloppeOk(body);
+    if (!enveloppe) sansEnveloppe++;
+    console.log(`${expect in body ? "✓" : "?"} [${rail}] ${path} → ${price} (${ms} ms)${enveloppe ? "" : " — ⚠ sans enveloppe provenance[].etat"}`);
     return body;
   } catch (error) {
     failed++;
@@ -365,6 +390,6 @@ for (const [rail, paidFetch] of RAILS) {
     }
   }
 }
-console.log(`\nTotal paid: ~$${paid.toFixed(3)} — failures: ${failed}`);
+console.log(`\nTotal paid: ~$${paid.toFixed(3)} — failures: ${failed} — paid JSON bodies without the provenance envelope: ${sansEnveloppe}`);
 console.log(`Every paid response was saved under ${dossierResultats}/`);
 console.log("Every 200 response above was settled on-chain via x402 before being released.");
