@@ -1,0 +1,77 @@
+{
+  "_endpoint": "/v1/association/{rna}",
+  "_price": "$0.005",
+  "_request": "GET https://api.sirenic.eu/v1/association/W751004076",
+  "_sample_of": "2026-09-07",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "rna": "W751004076",
+    "titre": "CROIX ROUGE FRANCAISE",
+    "titre_court": "CROIX ROUGE FRANCAISE",
+    "objet": "prévenir et alléger en toutes circonstances les souffrances humaines. Protéger la vie et la santé ainsi qu'à faire respecter la personnes humaine.",
+    "objet_social_codes": [
+      "017055"
+    ],
+    "nature": {
+      "code": "R",
+      "libelle": "reconnue_utilite_publique"
+    },
+    "groupement": {
+      "code": "S",
+      "libelle": "simple"
+    },
+    "position": {
+      "code": "A",
+      "libelle": "active"
+    },
+    "dates": {
+      "creation": "1964-12-30",
+      "derniere_declaration": "2025-09-26",
+      "publication_jo": null,
+      "dissolution": null
+    },
+    "siege": {
+      "adresse": "98 RUE Didot",
+      "code_insee": "75114",
+      "code_postal": "75694",
+      "commune": "Paris 14e"
+    },
+    "site_web": null,
+    "publication_web_autorisee": false,
+    "rup_mi": "75.000.0001",
+    "prefecture_gestionnaire": "759S",
+    "siren": null,
+    "siren_origine": null,
+    "siret_declare": null,
+    "fichier_source": "waldec",
+    "fraicheur": {
+      "qualite": "declaree",
+      "derniere_mise_a_jour": "2026-03-28T19:00:02.000Z",
+      "millesime_export": "2026-09-01"
+    },
+    "anomalies": [],
+    "couverture": "France métropolitaine et outre-mer, HORS Moselle (57), Bas-Rhin (67) et Haut-Rhin (68) : les associations de droit local alsacien-mosellan sont inscrites au registre des associations du tribunal, pas au RNA. / Mainland France and overseas, EXCLUDING Moselle (57), Bas-Rhin (67) and Haut-Rhin (68): local-law associations there are registered with the court, not in the RNA.",
+    "source": "Répertoire national des associations (RNA), ministère de l'Intérieur, export mensuel data.gouv.fr — licence ouverte 2.0, mention de la source obligatoire.",
+    "disclaimer": "Données reproduites telles que publiées par le ministère (déclarations des associations elles-mêmes). Le numéro RUP est servi tel que déclaré et ne vaut pas reconnaissance d'utilité publique ; un SIRET déclaré n'est rattaché qu'après contrôle dans Sirene (catégorie juridique association). Aucune donnée de dirigeant ni de déclarant. / Published as declared by the associations themselves; no officer or declarant data.",
+    "data_freshness": "export RNA 2026-09-01 (photo mensuelle, 0 j)",
+    "provenance": [
+      {
+        "bloc": "association",
+        "source_code": "rna_interieur",
+        "registre": "Répertoire national des associations (RNA)",
+        "mode": "stock",
+        "licence": "etalab-2.0",
+        "version": "2026-09-01",
+        "as_of": "2026-09-01",
+        "precision_as_of": "publication_officielle",
+        "age_jours": 6,
+        "etat": "servi",
+        "couverture": {
+          "etat": "complete",
+          "mesure": "export RNA mensuel entier, hors Alsace-Moselle (droit local) / full monthly RNA export, Alsace-Moselle excluded (local law)"
+        },
+        "confiance": "forte"
+      }
+    ]
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "_endpoint": "/v1/association/{rna}/annonces",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/association/W011006690/annonces",
+  "_sample_of": "2026-09-07",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "rna": "W011006690",
+    "association": {
+      "titre": "MEXIMIEUX EN MOUVEMENT",
+      "position": "active"
+    },
+    "nombre": 1,
+    "tronque": false,
+    "annonces": [
+      {
+        "identifiant": "202600350001",
+        "parution": "20260035",
+        "date_parution": "2026-09-01",
+        "numero_annonce": 1,
+        "type": {
+          "code": "1",
+          "libelle": "creation"
+        },
+        "forme": "assoLoi1901",
+        "departement": "01",
+        "date_declaration": "2026-08-23",
+        "lieu_declaration": "Belley",
+        "titre": "MEXIMIEUX EN MOUVEMENT",
+        "ancien_titre": null,
+        "nouveau_titre": null,
+        "objet": "promouvoir, organiser et développer la pratique sportive sous toutes ses formes, dans une optique multisport, à destination de tous les publics",
+        "nouvel_objet": null,
+        "siege": {
+          "adresse": "8 rue du Faubourg",
+          "code_postal": "01800",
+          "commune": "Meximieux"
+        },
+        "site_web": null,
+        "themes": [
+          {
+            "code": "011005",
+            "libelle": "associations multisports locales"
+          }
+        ],
+        "fichier_pdf": "JOAFE_PDF_Unitaire_20260035_00001.pdf"
+      }
+    ],
+    "couverture": {
+      "depuis": "2009-09-26",
+      "jusqu_a": "2026-09-01",
+      "parutions": 768,
+      "annees_incompletes": []
+    },
+    "source": "Journal officiel des associations et fondations d'entreprise (JOAFE), DILA, flux XML hebdomadaire echanges.dila.gouv.fr — licence ouverte 2.0.",
+    "disclaimer": "Annonces reproduites telles que publiées au JOAFE (créations, modifications, dissolutions, rectificatifs). La couverture commence à la première parution chargée (voir `couverture`) ; une association sans annonce dans cette fenêtre n'est pas une association sans histoire. / As published in the JOAFE; coverage starts at the first loaded issue.",
+    "data_freshness": "JOAFE parution 20190052 (0 j)",
+    "provenance": [
+      {
+        "bloc": "annonces",
+        "source_code": "joafe_dila",
+        "registre": "Journal officiel des associations et fondations d'entreprise (JOAFE)",
+        "mode": "stock",
+        "licence": "etalab-2.0",
+        "version": "20190052",
+        "as_of": "2026-09-07",
+        "precision_as_of": "ingestion",
+        "age_jours": 0,
+        "etat": "servi",
+        "couverture": {
+          "etat": "partielle",
+          "mesure": "parutions chargées 2009-09-26 → 2026-09-01 ; le JOAFE n'est publié en XML exploitable qu'à partir de 2012 (fragments HTML sans identifiant avant) et les créations d'avant 1985 ont paru au JORF / loaded issues 2009-09-26 → 2026-09-01; JOAFE is only published as usable XML from 2012 (HTML fragments without identifiers before) and pre-1985 creations appeared in the JORF",
+          "detail": {
+            "depuis": "2009-09-26",
+            "jusqu_a": "2026-09-01"
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "_endpoint": "/v1/associations/recherche",
+  "_price": "$0.002",
+  "_request": "GET https://api.sirenic.eu/v1/associations/recherche?q=croix%20rouge&code_postal=75",
+  "_sample_of": "2026-09-07",
+  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "response": {
+    "q": "croix rouge",
+    "filtres": {
+      "code_postal": "75",
+      "departement": null,
+      "position": null
+    },
+    "total_results": 20,
+    "resultats": [
+      {
+        "rna": "W751004076",
+        "titre": "CROIX ROUGE FRANCAISE",
+        "position": "active",
+        "code_postal": "75694",
+        "commune": "Paris 14e",
+        "date_creation": "1964-12-30",
+        "siren": null,
+        "fichier_source": "waldec",
+        "correspondance": "debut_du_titre",
+        "score_confiance": 0.55
+      }
+    ],
+    "etages_abandonnes": [],
+    "couverture": "France métropolitaine et outre-mer, HORS Moselle (57), Bas-Rhin (67) et Haut-Rhin (68) : les associations de droit local alsacien-mosellan sont inscrites au registre des associations du tribunal, pas au RNA. / Mainland France and overseas, EXCLUDING Moselle (57), Bas-Rhin (67) and Haut-Rhin (68): local-law associations there are registered with the court, not in the RNA.",
+    "source": "Répertoire national des associations (RNA), ministère de l'Intérieur, export mensuel data.gouv.fr — licence ouverte 2.0, mention de la source obligatoire.",
+    "disclaimer": "Données reproduites telles que publiées par le ministère (déclarations des associations elles-mêmes). Le numéro RUP est servi tel que déclaré et ne vaut pas reconnaissance d'utilité publique ; un SIRET déclaré n'est rattaché qu'après contrôle dans Sirene (catégorie juridique association). Aucune donnée de dirigeant ni de déclarant. / Published as declared by the associations themselves; no officer or declarant data.",
+    "data_freshness": "export RNA 2026-09-01 (photo mensuelle, 0 j)",
+    "provenance": [
+      {
+        "bloc": "resultats",
+        "source_code": "rna_interieur",
+        "registre": "Répertoire national des associations (RNA)",
+        "mode": "stock",
+        "licence": "etalab-2.0",
+        "version": "2026-09-01",
+        "as_of": "2026-09-01",
+        "precision_as_of": "publication_officielle",
+        "age_jours": 6,
+        "etat": "partiel",
+        "couverture": {
+          "etat": "partielle",
+          "mesure": "titres du RNA commençant par la requête (complets) puis titres similaires, hors Alsace-Moselle / RNA titles starting with the query (complete) then similar titles, Alsace-Moselle excluded"
+        }
+      }
+    ]
+  }
+}

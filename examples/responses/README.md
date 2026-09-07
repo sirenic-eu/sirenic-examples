@@ -22,6 +22,9 @@ nothing than a plausible fabrication about a real company.
 | Endpoint | Price | Sample |
 |---|---|---|
 | `GET /v1/recherche` | $0.001 | [`recherche.json`](recherche.json) |
+| `GET /v1/association/{rna}` | $0.005 | [`association-rna.json`](association-rna.json) |
+| `GET /v1/associations/recherche` | $0.002 | [`associations-recherche.json`](associations-recherche.json) |
+| `GET /v1/association/{rna}/annonces` | $0.01 | [`association-rna-annonces.json`](association-rna-annonces.json) |
 | `GET /v1/bodacc/recherche` | $0.03 | [`bodacc-recherche.json`](bodacc-recherche.json) |
 | `GET /v1/entreprise/:siren/dossier` | $0.005 + blocks | [`entreprise-siren-dossier.json`](entreprise-siren-dossier.json) |
 | `GET /v1/entreprise/:siren` | $0.005 | [`entreprise-siren.json`](entreprise-siren.json) |
