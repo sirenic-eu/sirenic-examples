@@ -13,10 +13,11 @@
         "etat_administratif": "actif"
       },
       "solidite": {
-        "score_risque": 30,
-        "classe": "vigilance",
-        "confiance": "forte",
-        "exercice_reference": "2024-12-31"
+        "score_risque": 22,
+        "classe": "sain",
+        "confiance": "moyenne",
+        "exercice_reference": "2024-12-31",
+        "version_modele": "defaillance-v1.8"
       },
       "finances": {
         "exercice": "2024-12-31",
@@ -27,6 +28,7 @@
       "alertes": {
         "procedure_collective_active": false,
         "liquidation_judiciaire": false,
+        "cloture_insuffisance_actif": false,
         "radiations": 0
       },
       "sanctions": {
@@ -37,10 +39,6 @@
     }
   ],
   "classements": {
-    "risque_le_plus_faible": [
-      "552032534",
-      "542065479"
-    ],
     "chiffre_affaires": [
       "542065479",
       "552032534"
@@ -49,6 +47,16 @@
       "542065479",
       "552032534"
     ]
+  },
+  "eligibilite_classements": {
+    "risque_le_plus_faible": {
+      "type": "evaluatif",
+      "statut": "interdit",
+      "raison": [
+        "secteurs_differents",
+        "holding_dans_le_lot"
+      ]
+    }
   },
   "ecarts": [
     {

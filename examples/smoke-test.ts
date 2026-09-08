@@ -128,8 +128,10 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/eu/agrements?q=BNP%20Paribas", expect: "requete", price: "$0.01" },
   // Facturé PAR SOCIÉTÉ : 2 SIREN = 2 × $0.105.
   { path: "/v1/kyb/batch?sirens=552032534,542065479", expect: "nombre_demande", price: "$0.21" },
-  // 06/09/2026 : `eligibilite_classements` dit QUI est classé dans `risque_le_plus_faible`
-  // (un score sans axe trésorerie ne se range plus au-dessus d'un score qui l'a subi).
+  // 08/09/2026 : chaque classement porte un statut dans `eligibilite_classements`
+  // (`autorise` / `interdit` avec ses raisons, `evaluatif` / `descriptif`) ; le classement
+  // risque n'est servi qu'entre scores calculés sur les MÊMES axes, dans un lot comparable —
+  // ce lot (secteurs différents, holding) le sert `interdit`, sans `risque_le_plus_faible`.
   { path: "/v1/comparer?sirens=552032534,542065479", expect: "eligibilite_classements", price: "$0.24" },
   { path: "/v1/sanctions/check?name=Danone", expect: "correspondances", price: "$0.02" },
   { path: "/v1/dirigeant/recherche?nom=Faber", expect: "resultats", price: "$0.02" },
