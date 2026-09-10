@@ -253,6 +253,7 @@ Two things this is **not**:
 | `GET /v1/entreprise/{siren}/concurrents-marches` | $0.02 | Who wins public contracts on the same CPV segments (last 3 years) |
 | `GET /v1/entreprise/{siren}/risques-industriels` | $0.01 | Industrial risk: Seveso/ICPE facilities + synthesis |
 | `GET /v1/entreprise/{siren}/emploi` | $0.02 | Hiring signals derived from France Travail data (actively hiring, posting volume, ROME families, pay-range share) + Egapro index + INSEE workforce bracket - aggregated signals only, never posting texts or contacts |
+| `GET /v1/entreprise/{siren}/contentieux` | $0.01 | Commercial-court decisions linked to the company (Cour de cassation open data, Judilibre): counts, closed-list nature and role, other companies involved (SIREN only), official link per decision - no text, no individual's name; partial measured coverage (about 62%), so an empty list never means no litigation |
 | `GET /v1/entreprise/{siren}/lobbying` | $0.01 | HATVP lobbying register (org-level: budgets, subjects, clients) |
 | `GET /v1/entreprise/{siren}/changements?depuis=` | $0.01 | New BODACC events since a date |
 | `GET /v1/entreprise/{siren}/pi` | $0.03 | Industrial property (trademarks, patents, designs) |
