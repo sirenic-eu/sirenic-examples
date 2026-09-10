@@ -288,7 +288,7 @@ Two things this is **not**:
 | `GET /v1/eu/entreprise/BE/{id}/comptes` | $0.01 | Belgian filings list (official NBB Central Balance Sheet Office) |
 | `GET /v1/eu/entreprise/BE/{id}/comptes/{ref}` | $0.15 | One Belgian annual-account deposit — structured JSON when the NBB publishes one, official PDF otherwise (`?format=pdf` forces the PDF, `?format=json` refuses the fallback and answers 406, not charged) |
 | `GET /v1/eu/entreprise/{pays}/{id}/transactions-dirigeants` | $0.02 | Insider dealing at Belgian AND German listed companies (FSMA + BaFin, Art. 19 MAR): are its managers buying or selling? Issuer-level 12-month aggregate — **no individual is ever named**. BE: 10-digit enterprise number; DE: LEI or ISIN |
-| _…plus ~24 dedicated country sub-routes_ | | GB (directors, PSC, insolvency, accounts), DK/SE/SK/LV/EE (filings), NO (accounts & legal events), CZ (insolvency), PL (KRS events), ES (BORME deeds) — all in `/openapi.json` and the MCP tools |
+| _…plus ~26 dedicated country sub-routes_ | | GB (directors, PSC, insolvency, accounts), DK/SE/SK/LV/EE (filings), LV (legal events, members & shareholders — corporate holders named, natural persons counted), NO (accounts & legal events), CZ (insolvency), PL (KRS events), ES (BORME deeds) — all in `/openapi.json` and the MCP tools |
 
 **Don't clean up the query yourself.** Search parameters (`?q=`, `?nom=`) accept
 what an agent naturally produces: quotes, punctuation and unsupported characters

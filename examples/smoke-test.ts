@@ -146,6 +146,9 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/eu/entreprise/PL/0000006865", expect: "denomination", price: "$0.01" }, // CD Projekt (KRS)
   { path: "/v1/eu/entreprise/EE/12417834", expect: "denomination", price: "$0.01" }, // Bolt Technology
   { path: "/v1/eu/entreprise/LV/40003245752", expect: "denomination", price: "$0.01" }, // airBaltic
+  // 10/09/2026 : tranche 1 Europe — événements de vie et associés lettons (Uzņēmumu reģistrs, CC0).
+  { path: "/v1/eu/entreprise/LV/50203219311/evenements", expect: "evenements", price: "$0.02" },
+  { path: "/v1/eu/entreprise/LV/40103774127/associes", expect: "associes", price: "$0.02" },
   { path: "/v1/prospection?naf=62.01Z&departement=75", expect: "resultats", price: "$0.02" },
   { path: "/v1/secteur/62.01Z/benchmarks", expect: "code_naf", price: "$0.05" },
   // 06/09/2026 : `couverture_axes` — les axes évalués et les axes muets, avec leur motif.
