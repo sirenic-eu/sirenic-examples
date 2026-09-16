@@ -140,6 +140,9 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   // Un appel par pays : chaque pays a sa carte Bazaar dédiée depuis le 29/07,
   // et une carte n'est indexée/rafraîchie qu'au premier paiement réglé dessus.
   { path: "/v1/eu/entreprise/NO/923609016", expect: "denomination", price: "$0.01" }, // Equinor
+  // Norway depth (16/09/2026): roles and local units from the daily national Brreg bulks — legal persons only.
+  { path: "/v1/eu/entreprise/NO/923609016/dirigeants", expect: "mandats", price: "$0.01" }, // Equinor — officers and board
+  { path: "/v1/eu/entreprise/NO/923609016/etablissements", expect: "unites_locales", price: "$0.01" }, // Equinor — local units (SIRET-like)
   { path: "/v1/eu/entreprise/CZ/45274649", expect: "denomination", price: "$0.01" }, // ČEZ
   { path: "/v1/eu/entreprise/CH/CHE-107.480.920", expect: "denomination", price: "$0.01" }, // Logitech (Zefix)
   { path: "/v1/eu/entreprise/SK/35763469", expect: "denomination", price: "$0.01" }, // Slovak Telekom
