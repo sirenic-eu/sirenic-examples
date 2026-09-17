@@ -127,7 +127,7 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   // vérifie jamais qu'il appartient bien à cette société.
   { path: "/v1/eu/facturation/dossier?pays=BE&id=0400378485&iban=BE68539007547034", expect: "verdict", price: "$0.03" },
   { path: "/v1/regulateurs/fr/alertes?siren=552032534", expect: "source", price: "$0.01" },
-  { path: "/v1/eu/agrements?q=BNP%20Paribas", expect: "requete", price: "$0.01" },
+  { path: "/v1/eu/agrements?q=BNP%20Paribas", expect: "supervision_bce", price: "$0.01" }, // three registers since 17/09/2026: ESMA MiFID + ECB list of supervised entities + ESMA benchmark administrators
   // Facturé PAR SOCIÉTÉ : 2 SIREN = 2 × $0.105.
   { path: "/v1/kyb/batch?sirens=552032534,542065479", expect: "nombre_demande", price: "$0.21" },
   // 08/09/2026 : chaque classement porte un statut dans `eligibilite_classements`
