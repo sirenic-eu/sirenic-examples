@@ -153,6 +153,9 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/eu/entreprise/FI/0112038-9", expect: "denomination", price: "$0.01" }, // Nokia (PRH)
   { path: "/v1/eu/entreprise/PL/0000006865", expect: "denomination", price: "$0.01" }, // CD Projekt (KRS)
   { path: "/v1/eu/entreprise/EE/12417834", expect: "denomination", price: "$0.01" }, // Bolt Technology
+  // 17/09/2026 : tranche 5 Europe — dirigeants et associés estoniens (e-äriregister, RIK, CC BY 4.0, photo quotidienne).
+  { path: "/v1/eu/entreprise/EE/10060701/dirigeants", expect: "mandats", price: "$0.01" }, // Swedbank AS
+  { path: "/v1/eu/entreprise/EE/14532901/associes", expect: "associes", price: "$0.02" }, // Bolt Operations OÜ
   { path: "/v1/eu/entreprise/LV/40003245752", expect: "denomination", price: "$0.01" }, // airBaltic
   // 10/09/2026 : tranche 1 Europe — événements de vie et associés lettons (Uzņēmumu reģistrs, CC0).
   { path: "/v1/eu/entreprise/LV/50203219311/evenements", expect: "evenements", price: "$0.02" },
