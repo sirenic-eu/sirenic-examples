@@ -143,6 +143,8 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   // Norway depth (16/09/2026): roles and local units from the daily national Brreg bulks — legal persons only.
   { path: "/v1/eu/entreprise/NO/923609016/dirigeants", expect: "mandats", price: "$0.01" }, // Equinor — officers and board
   { path: "/v1/eu/entreprise/NO/923609016/etablissements", expect: "unites_locales", price: "$0.01" }, // Equinor — local units (SIRET-like)
+  // United Kingdom (16/09/2026): The Gazette corporate insolvency notices (official journal, category 24) — partial coverage, said so.
+  { path: "/v1/eu/entreprise/GB/SC540982/annonces", expect: "annonces", price: "$0.02" }, // PRIME PSYCHOLOGY LTD — CVL notices of 16/09/2026
   { path: "/v1/eu/entreprise/CZ/45274649", expect: "denomination", price: "$0.01" }, // ČEZ
   { path: "/v1/eu/entreprise/CH/CHE-107.480.920", expect: "denomination", price: "$0.01" }, // Logitech (Zefix)
   { path: "/v1/eu/entreprise/SK/35763469", expect: "denomination", price: "$0.01" }, // Slovak Telekom
