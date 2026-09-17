@@ -103,6 +103,7 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/entreprise/552032534/changements?depuis=2020-01-01", expect: "siren", price: "$0.01" },
   { path: "/v1/entreprise/552032534/pi", expect: "marques", price: "$0.03" },
   { path: "/v1/entreprise/552032534/marches-publics-ue", expect: "nombre_avis", price: "$0.02" },
+  { path: "/v1/entreprise/319632790/financements-ue", expect: "nombre_projets", price: "$0.02" }, // ARKEMA FRANCE SA — CORDIS H2020 + Horizon Europe (17/09/2026)
   { path: "/v1/entreprise/552032534/risques-industriels", expect: "synthese", price: "$0.01" },
   { path: "/v1/entreprise/095580841/emploi", expect: "signaux_recrutement", price: "$0.02" },
   { path: "/v1/entreprise/450776968/contentieux", expect: "synthese", price: "$0.01" },
@@ -155,6 +156,7 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   // 10/09/2026 : tranche 1 Europe — événements de vie et associés lettons (Uzņēmumu reģistrs, CC0).
   { path: "/v1/eu/entreprise/LV/50203219311/evenements", expect: "evenements", price: "$0.02" },
   { path: "/v1/eu/entreprise/LV/40103774127/associes", expect: "associes", price: "$0.02" },
+  { path: "/v1/eu/entreprise/LV/40003242737/marches-publics", expect: "nombre_attributions", price: "$0.02" }, // VIRŠI-A — IUB awards (17/09/2026)
   { path: "/v1/prospection?naf=62.01Z&departement=75", expect: "resultats", price: "$0.02" },
   { path: "/v1/secteur/62.01Z/benchmarks", expect: "code_naf", price: "$0.05" },
   // 06/09/2026 : `couverture_axes` — les axes évalués et les axes muets, avec leur motif.
