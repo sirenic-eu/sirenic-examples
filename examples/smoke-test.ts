@@ -159,6 +159,9 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/eu/entreprise/LV/40103774127/associes", expect: "associes", price: "$0.02" },
   { path: "/v1/eu/entreprise/LV/40003242737/marches-publics", expect: "nombre_attributions", price: "$0.02" }, // VIRŠI-A — IUB awards (17/09/2026)
   { path: "/v1/eu/entreprise/LV/40003242722/marches-publics-ue", expect: "nombre_avis", price: "$0.02" }, // SIA NORDE — TED award notices matched by national identifier, nine countries (17/09/2026)
+  // Croatia (17/09/2026): Sudski registar daily snapshot — profile by OIB, insolvency, court-register entries, filings.
+  { path: "/v1/eu/entreprise/HR/92803032010", expect: "registre_hr", price: "$0.01" }, // KOESTLIN d.d.
+  { path: "/v1/eu/entreprise/HR/39620744214/insolvabilite", expect: "procedure", price: "$0.02" }, // TIM-PUTEVI — bankruptcy (stečaj)
   { path: "/v1/prospection?naf=62.01Z&departement=75", expect: "resultats", price: "$0.02" },
   { path: "/v1/secteur/62.01Z/benchmarks", expect: "code_naf", price: "$0.05" },
   // 06/09/2026 : `couverture_axes` — les axes évalués et les axes muets, avec leur motif.
