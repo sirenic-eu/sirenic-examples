@@ -156,6 +156,10 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   // 17/09/2026 : tranche 5 Europe — dirigeants et associés estoniens (e-äriregister, RIK, CC BY 4.0, photo quotidienne).
   { path: "/v1/eu/entreprise/EE/10060701/dirigeants", expect: "mandats", price: "$0.01" }, // Swedbank AS
   { path: "/v1/eu/entreprise/EE/14532901/associes", expect: "associes", price: "$0.02" }, // Bolt Operations OÜ
+  // 17/09/2026 : tranche 6 Europe — Lituanie, pays neuf (data.gov.lt / API Spinta, CC BY 4.0, cinq photos quotidiennes).
+  { path: "/v1/eu/entreprise/LT/304500803", expect: "registre_lt", price: "$0.01" }, // UAB Autotitanas
+  { path: "/v1/eu/entreprise/LT/304500803/comptes", expect: "exercices", price: "$0.02" },
+  { path: "/v1/eu/entreprise/LT/110518825/insolvabilite", expect: "procedures", price: "$0.02" }, // IS FASHION BALTIC, liquidation pour cause de faillite
   { path: "/v1/eu/entreprise/LV/40003245752", expect: "denomination", price: "$0.01" }, // airBaltic
   // 10/09/2026 : tranche 1 Europe — événements de vie et associés lettons (Uzņēmumu reģistrs, CC0).
   { path: "/v1/eu/entreprise/LV/50203219311/evenements", expect: "evenements", price: "$0.02" },
