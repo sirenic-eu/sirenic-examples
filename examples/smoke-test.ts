@@ -146,6 +146,7 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/eu/entreprise/NO/923609016/etablissements", expect: "unites_locales", price: "$0.01" }, // Equinor — local units (SIRET-like)
   // United Kingdom (16/09/2026): The Gazette corporate insolvency notices (official journal, category 24) — partial coverage, said so.
   { path: "/v1/eu/entreprise/GB/SC540982/annonces", expect: "annonces", price: "$0.02" }, // PRIME PSYCHOLOGY LTD — CVL notices of 16/09/2026
+  { path: "/v1/eu/entreprise/GB/10868035/marches-publics", expect: "nombre_attributions", price: "$0.02" }, // CHANGEMAKER ASSOCIATES LIMITED — FTS award of 16/09/2026
   { path: "/v1/eu/entreprise/CZ/45274649", expect: "denomination", price: "$0.01" }, // ČEZ
   { path: "/v1/eu/entreprise/CH/CHE-107.480.920", expect: "denomination", price: "$0.01" }, // Logitech (Zefix)
   { path: "/v1/eu/entreprise/SK/35763469", expect: "denomination", price: "$0.01" }, // Slovak Telekom
@@ -157,6 +158,7 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/eu/entreprise/LV/50203219311/evenements", expect: "evenements", price: "$0.02" },
   { path: "/v1/eu/entreprise/LV/40103774127/associes", expect: "associes", price: "$0.02" },
   { path: "/v1/eu/entreprise/LV/40003242737/marches-publics", expect: "nombre_attributions", price: "$0.02" }, // VIRŠI-A — IUB awards (17/09/2026)
+  { path: "/v1/eu/entreprise/LV/40003242722/marches-publics-ue", expect: "nombre_avis", price: "$0.02" }, // SIA NORDE — TED award notices matched by national identifier, nine countries (17/09/2026)
   { path: "/v1/prospection?naf=62.01Z&departement=75", expect: "resultats", price: "$0.02" },
   { path: "/v1/secteur/62.01Z/benchmarks", expect: "code_naf", price: "$0.05" },
   // 06/09/2026 : `couverture_axes` — les axes évalués et les axes muets, avec leur motif.

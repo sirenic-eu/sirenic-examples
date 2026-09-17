@@ -66,7 +66,8 @@ await achat("LV_40003242737_VIRSI_A", "https://api.sirenic.eu/v1/eu/entreprise/L
     ok(Number(corps.nombre_attributions) > 0 && corps.aucune_attribution === false, `${String(corps.nombre_attributions)} attributions (${a.length} servies, tronqué ${String(corps.tronque_attributions)}), ${String(corps.valeur_totale_eur)} € au total`),
     ok(typeof objet(premiere.acheteur).regnr === "string" && typeof objet(premiere.contrat).valeur_eur !== "undefined" && /^\d{4}-\d{2}-\d{2}$/.test(String(premiere.publie_le)), `dernière attribution : ${String(premiere.publie_le)}, acheteur ${String(objet(premiere.acheteur).nom)}, contrat ${String(objet(premiere.contrat).reference)}, ${String(objet(premiere.contrat).valeur_eur)} €`),
     ...commun(corps),
-    ok(entree(corps, "attributions")?.etat === "servi" && objet(entree(corps, "attributions")?.couverture).etat === "partielle", `provenance[attributions] = ${String(entree(corps, "attributions")?.etat)}, couverture partielle`),
+    // Une liste coupée à 100 est annoncée « partiel » (troncature dite), une liste entière « servi » ; jamais « complete ».
+    ok((corps.tronque_attributions === true ? entree(corps, "attributions")?.etat === "partiel" : entree(corps, "attributions")?.etat === "servi") && objet(entree(corps, "attributions")?.couverture).etat === "partielle", `provenance[attributions] = ${String(entree(corps, "attributions")?.etat)} (tronqué ${String(corps.tronque_attributions)}), couverture partielle`),
   ];
 });
 
@@ -74,7 +75,7 @@ await achat("LV_40003242737_VIRSI_A", "https://api.sirenic.eu/v1/eu/entreprise/L
 await achat("LV_40003619950_RIGAS_SATIKSME", "https://api.sirenic.eu/v1/eu/entreprise/LV/40003619950/marches-publics", 0.02, (corps) => [
   ok(Number(corps.nombre_avis_emis) > 0 && liste(corps.avis_emis).every((x) => FORMES.includes(String(x.forme))), `${String(corps.nombre_avis_emis)} avis émis comme acheteur (${liste(corps.avis_emis).length} servis)`),
   ...commun(corps),
-  ok(entree(corps, "avis_emis")?.etat === "servi", `provenance[avis_emis] = ${String(entree(corps, "avis_emis")?.etat)}`),
+  ok(corps.tronque_avis_emis === true ? entree(corps, "avis_emis")?.etat === "partiel" : entree(corps, "avis_emis")?.etat === "servi", `provenance[avis_emis] = ${String(entree(corps, "avis_emis")?.etat)} (tronqué ${String(corps.tronque_avis_emis)})`),
 ]);
 
 // (3) 50203219311 (exemple des événements lettons, société connue du registre) : vraisemblablement sans marché.
