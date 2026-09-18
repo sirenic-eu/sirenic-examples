@@ -162,6 +162,9 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/eu/entreprise/LT/110518825/insolvabilite", expect: "procedures", price: "$0.02" }, // IS FASHION BALTIC, liquidation pour cause de faillite
   // 18/09/2026 : tranche 7 Europe — avis du registre du commerce finlandais (PRH, en direct).
   { path: "/v1/eu/entreprise/FI/0112038-9/evenements", expect: "evenements", price: "$0.02" }, // Nokia Oyj
+  // 18/09/2026 : tranche 8 Europe — publications FOSC/SHAB suisses (SECO, API publique, en direct).
+  { path: "/v1/eu/entreprise/CH/CHE-102.732.681/evenements", expect: "publications", price: "$0.02" }, // A.S. Consulta AG
+  { path: "/v1/eu/entreprise/CH/CHE-138.657.350/insolvabilite", expect: "procedures", price: "$0.02" }, // Skytender Group Holding AG
   { path: "/v1/eu/entreprise/LV/40003245752", expect: "denomination", price: "$0.01" }, // airBaltic
   // 10/09/2026 : tranche 1 Europe — événements de vie et associés lettons (Uzņēmumu reģistrs, CC0).
   { path: "/v1/eu/entreprise/LV/50203219311/evenements", expect: "evenements", price: "$0.02" },
