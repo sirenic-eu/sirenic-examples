@@ -47,7 +47,13 @@ async function achat(nom: string, url: string, prix: number, verifier: (corps: C
 const entree = (corps: Corps, nom: string) => (corps.provenance as Array<Corps> | undefined)?.find((e) => e.bloc === nom);
 const ok = (b: boolean, texte: string) => `${b ? "✅" : "❌"} ${texte}`;
 const liste = (v: unknown): Corps[] => (Array.isArray(v) ? (v as Corps[]) : []);
-const sansTracePersonnelle = (corps: Corps) => !/@|\bul\.\s|\b\d{2}-\d{3}\b/.test(JSON.stringify(corps)); // courriel, rue, code postal polonais
+// Courriel, rue, code postal polonais — cherchés partout SAUF dans l'objet du marché, qui décrit légitimement un lieu de travaux public
+// (« Szkoła Podstawowa nr 4 … przy ul. Obrzyckiej 88 w Obornikach » : l'adresse d'une école, pas d'une personne — constaté au premier passage).
+const sansTracePersonnelle = (corps: Corps) => {
+  const copie = JSON.parse(JSON.stringify(corps)) as Corps;
+  for (const a of [...liste(copie.attributions), ...liste(copie.avis_emis)]) { delete a.objet; delete a.objet_partie; }
+  return !/@|\bul\.\s|\b\d{2}-\d{3}\b/.test(JSON.stringify(copie));
+};
 
 // M&M JOB CONNECT Sp. z o.o. (6040248554) : partie 4 de l'avis de résultat 2026/BZP 00441969/01 (ZUS Gdańsk), contrat du 01/09/2026.
 await achat("PL_6040248554_marches", "https://api.sirenic.eu/v1/eu/entreprise/PL/6040248554/marches-publics", 0.02, (corps) => {
