@@ -165,6 +165,13 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   // 18/09/2026 : tranche 8 Europe — publications FOSC/SHAB suisses (SECO, API publique, en direct).
   { path: "/v1/eu/entreprise/CH/CHE-102.732.681/evenements", expect: "publications", price: "$0.02" }, // A.S. Consulta AG
   { path: "/v1/eu/entreprise/CH/CHE-138.657.350/insolvabilite", expect: "procedures", price: "$0.02" }, // Skytender Group Holding AG
+  { path: "/v1/eu/entreprise/CY/HE165", expect: "registre_cy", price: "$0.01" }, // Bank of Cyprus Public Company Limited (tranche 9, after the first monthly ingestion)
+  { path: "/v1/eu/entreprise/CY/HE165/dirigeants", expect: "mandats", price: "$0.01" },
+  { path: "/v1/eu/entreprise/RO/3474203", expect: "registre_ro", price: "$0.01" }, // ORIENT COMEX S.R.L. (tranche 10, after the first monthly ingestion)
+  { path: "/v1/eu/entreprise/RO/3474203/dirigeants", expect: "mandats", price: "$0.01" },
+  { path: "/v1/eu/entreprise/RO/29023037/insolvabilite", expect: "statuts_procedure", price: "$0.02" }, // ALPIN IMPACT TELECOM SRL, faliment
+  { path: "/v1/eu/entreprise/ES/A28582013/marches-publics", expect: "attributions", price: "$0.02" }, // CHM OBRAS E INFRAESTRUCTURAS SA (tranche 11 PLACSP, after the archive backfill)
+  { path: "/v1/eu/entreprise/PL/6040248554/marches-publics", expect: "attributions", price: "$0.02" }, // M&M JOB CONNECT Sp. z o.o. (tranche 12 BZP, after the 2021→ backfill)
   { path: "/v1/eu/entreprise/LV/40003245752", expect: "denomination", price: "$0.01" }, // airBaltic
   // 10/09/2026 : tranche 1 Europe — événements de vie et associés lettons (Uzņēmumu reģistrs, CC0).
   { path: "/v1/eu/entreprise/LV/50203219311/evenements", expect: "evenements", price: "$0.02" },
