@@ -6,11 +6,13 @@
   "license": "MIT",
   "scripts": {
     "pay-and-call": "tsx examples/pay-and-call.ts",
+    "rederive-provenance": "tsx examples/rederive-response-provenance.ts",
     "agent-demo": "tsx examples/agent-demo.ts",
     "kyb-agent": "tsx tutorial-kyb-agent/kyb-agent.ts"
   },
   "dependencies": {
     "@x402/core": "^2.18.0",
+    "canonicalize": "^2.1.0",
     "@x402/evm": "^2.18.0",
     "@x402/fetch": "^2.18.0",
     "viem": "^2.55.2"
