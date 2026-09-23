@@ -1,0 +1,84 @@
+{
+  "_endpoint": "/v1/eu/entreprise/LT/{kodas}",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/LT/304500803",
+  "_sample_of": "2026-09-23",
+  "_note": "Real paid response of 2026-09-23 (settled on-chain), trimmed by removal: the generic EU profile fields shown by the other profiles (lei, activite, lien_registre, identifiants, statut_detail, groupe_lei, financements_ue), four fields of registre_lt (forme, inscrit_le, radie_le, associes_par_categorie) and, in fiscalite_lt, par_mois and 2 of 3 yearly totals; source, disclaimer, data_freshness and provenance, present in every live response, are left out. A dated snapshot, not live data.",
+  "response": {
+    "pays": "LT",
+    "registre": "Juridinių asmenų registras (Registrų centras)",
+    "id_national": "304500803",
+    "denomination": "UAB \"Autotitanas\"",
+    "forme_juridique": {
+      "code": "310",
+      "libelle": "Uždaroji akcinė bendrovė"
+    },
+    "statut": "actif",
+    "date_creation": "2017-04-11",
+    "adresse_siege": {
+      "adresse": null,
+      "code_postal": null,
+      "ville": "Vilniaus miesto savivaldybė",
+      "pays": "LT"
+    },
+    "registre_lt": {
+      "statut": "servi",
+      "photo": "2026-09-23",
+      "etat": {
+        "code": 0,
+        "libelle": "Teisinis statusas neįregistruotas",
+        "libelle_en": "No legal proceedings",
+        "famille": "aucun",
+        "fr": "aucun statut juridique particulier",
+        "depuis": "2017-04-11"
+      },
+      "denomination_anonymisee": false,
+      "adresse_non_publiee_sous_licence_ouverte": true,
+      "capital": {
+        "montant": 2500,
+        "devise": "Eur",
+        "depuis": "2017-04-11",
+        "historique": 1
+      },
+      "contribuable": {
+        "type": {
+          "code": 124,
+          "libelle": "Uždarosios akcinės bendrovės"
+        },
+        "inscrit_le": "2017-04-12",
+        "radie_le": null,
+        "tva": {
+          "numero": "LT100010913410",
+          "inscrit_le": "2017-05-19",
+          "radie_le": "2024-05-01",
+          "active": false
+        },
+        "commune": {
+          "code": 13,
+          "libelle": "Vilniaus miesto savivaldybė"
+        }
+      },
+      "obligations_comptables": {
+        "non_depot_jusqu_a": null,
+        "retard_jusqu_a": null,
+        "en_regle_selon_registre": true
+      }
+    },
+    "fiscalite_lt": {
+      "statut": "servi",
+      "photo": "2026-09-23",
+      "arrieres": null,
+      "aucun_arriere_publie": true,
+      "impots_payes": {
+        "par_annee": [
+          {
+            "annee": 2024,
+            "total": 758.12,
+            "mois_publies": 1
+          }
+        ],
+        "dernier_mois_publie": "2024-12"
+      }
+    }
+  }
+}

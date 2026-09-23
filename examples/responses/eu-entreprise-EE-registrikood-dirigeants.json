@@ -1,0 +1,73 @@
+{
+  "_endpoint": "/v1/eu/entreprise/EE/{registrikood}/dirigeants",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/EE/10060701/dirigeants",
+  "_sample_of": "2026-09-23",
+  "_note": "Real paid response of 2026-09-23 (settled on-chain), trimmed by removal: 2 of 16 mandates kept whole (the first one on the registry card, the natural person's first and last name replaced by a template; the audit firm, a legal person); source, licence, disclaimer, data_freshness and provenance, present in every live response, are left out. A dated snapshot, not live data.",
+  "response": {
+    "pays": "EE",
+    "id_national": "10060701",
+    "denomination": "Swedbank AS",
+    "forme_juridique": {
+      "code": "AS",
+      "libelle": "Aktsiaselts"
+    },
+    "nombre_mandats": 16,
+    "nombre_personnes_physiques": 14,
+    "nombre_entites": 2,
+    "aucun_mandat_inscrit": false,
+    "mandats": [
+      {
+        "organe": "direction",
+        "role": "membre_direction",
+        "role_source": "JUHL",
+        "role_libelle": "Juhatuse liige",
+        "role_fr": "membre du conseil d'administration (juhatuse liige)",
+        "origine": "carte",
+        "titulaire": {
+          "type": "personne",
+          "prenom": "<prénom>",
+          "nom": "<nom>"
+        },
+        "inscrit_le": "2017-02-23",
+        "carte": {
+          "type": "R",
+          "numero": 1,
+          "inscription": 53
+        }
+      },
+      {
+        "organe": "reviseur",
+        "role": "cabinet_audit",
+        "role_source": "D",
+        "role_libelle": "Audiitorettevõtja",
+        "role_fr": "cabinet d'audit (audiitorettevõtja)",
+        "origine": "hors_carte",
+        "titulaire": {
+          "type": "entite",
+          "registrikood": "10142876",
+          "code_etranger": null,
+          "pays": null,
+          "pays_libelle": null,
+          "nom": "Aktsiaselts PricewaterhouseCoopers",
+          "apport": null
+        },
+        "inscrit_le": "2019-05-03",
+        "carte": null
+      }
+    ],
+    "regles_representation": {
+      "standard": [
+        {
+          "role": "membre_direction",
+          "role_source": "JUHL",
+          "texte": "Aktsiaseltsi võib kõikide tehingute tegemisel esindada iga juhatuse liige.",
+          "depuis": null
+        }
+      ],
+      "speciales": []
+    },
+    "photo_le": "2026-09-23",
+    "ingere_le": "2026-09-23"
+  }
+}

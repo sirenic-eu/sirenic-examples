@@ -71,6 +71,12 @@ nothing than a plausible fabrication about a real company.
 | `GET /v1/eu/entreprise/LV/:regnr/beneficiaires-effectifs` | $0.02 | [`eu-entreprise-LV-regnr-beneficiaires-effectifs.json`](eu-entreprise-LV-regnr-beneficiaires-effectifs.json) |
 | `GET /v1/eu/entreprise/EE/:id/comptes` | $0.02 | [`eu-entreprise-EE-registrikood-comptes.json`](eu-entreprise-EE-registrikood-comptes.json) |
 | `GET /v1/eu/entreprise/EE/:registrikood/evenements` | $0.02 | [`eu-entreprise-EE-registrikood-evenements.json`](eu-entreprise-EE-registrikood-evenements.json) |
+| `GET /v1/eu/entreprise/EE/:registrikood/dirigeants` | $0.01 | [`eu-entreprise-EE-registrikood-dirigeants.json`](eu-entreprise-EE-registrikood-dirigeants.json), real purchase 2026-09-23 (natural persons shown as a template) |
+| `GET /v1/eu/entreprise/EE/:registrikood/associes` | $0.02 | [`eu-entreprise-EE-registrikood-associes.json`](eu-entreprise-EE-registrikood-associes.json), real purchase 2026-09-23 |
+| `GET /v1/eu/entreprise/LT/:kodas` | $0.01 | [`eu-entreprise-LT-kodas.json`](eu-entreprise-LT-kodas.json), real purchase 2026-09-23 |
+| `GET /v1/eu/entreprise/LT/:kodas/comptes` | $0.02 | [`eu-entreprise-LT-kodas-comptes.json`](eu-entreprise-LT-kodas-comptes.json), real purchase 2026-09-23 |
+| `GET /v1/eu/entreprise/LT/:kodas/insolvabilite` | $0.02 | [`eu-entreprise-LT-kodas-insolvabilite.json`](eu-entreprise-LT-kodas-insolvabilite.json), real purchase 2026-09-23 |
+| `GET /v1/eu/entreprise/FI/:id/evenements` | $0.02 | [`eu-entreprise-FI-id-evenements.json`](eu-entreprise-FI-id-evenements.json), real purchase 2026-09-18 |
 | `GET /v1/eu/entreprise/SE/:orgnr/evenements` | $0.02 | [`eu-entreprise-SE-orgnr-evenements.json`](eu-entreprise-SE-orgnr-evenements.json) |
 | `GET /v1/eu/entreprise/SE/:orgnr/comptes` | $0.02 | [`eu-entreprise-SE-orgnr-comptes.json`](eu-entreprise-SE-orgnr-comptes.json) — real purchase 2026-08-17, first since the route reopened (Swedish iXBRL stock rebuilt: 1.82M filings) |
 | `GET /v1/eu/entreprise/SE/:id` | $0.01 | [`eu-entreprise-SE-id.json`](eu-entreprise-SE-id.json) |

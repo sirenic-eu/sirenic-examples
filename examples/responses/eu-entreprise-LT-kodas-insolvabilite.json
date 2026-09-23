@@ -1,0 +1,52 @@
+{
+  "_endpoint": "/v1/eu/entreprise/LT/{kodas}/insolvabilite",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/LT/110518825/insolvabilite",
+  "_sample_of": "2026-09-23",
+  "_note": "Real paid response of 2026-09-23 (settled on-chain), whole except the reference texts: source, licence, disclaimer, data_freshness and provenance, present in every live response, are left out. A dated snapshot, not live data.",
+  "response": {
+    "pays": "LT",
+    "id_national": "110518825",
+    "denomination": "Bendra Lietuvos ir Vokietijos įmonė uždaroji akcinė bendrovė \"IS FASHION BALTIC\"",
+    "statut_registre": {
+      "code": 26,
+      "libelle": "Likviduojamas dėl bankroto",
+      "libelle_en": "Liquidation due to bankruptcy",
+      "famille": "faillite",
+      "fr": "en liquidation pour cause de faillite",
+      "depuis": "2025-01-28"
+    },
+    "procedure_au_registre": true,
+    "aucune_procedure": false,
+    "nombre_procedures": 1,
+    "procedures": [
+      {
+        "nature": "faillite",
+        "ouverture_le": "2024-07-30",
+        "tribunal": "Kauno apygardos teismas",
+        "initiateur": "Įmonės vadovas",
+        "hors_tribunal_le": null,
+        "simplifiee_le": null,
+        "simplifiee_arretee_le": null,
+        "intentionnelle_le": null,
+        "intentionnelle_annulee_le": null,
+        "liquidation_le": "2025-01-14",
+        "arret_le": null,
+        "arret_motif": null,
+        "plan_approuve_le": null,
+        "fin_le": null,
+        "radiation_le": null,
+        "activite": {
+          "code": "141300",
+          "libelle": "141300 - Kitų viršutinių drabužių siuvimas"
+        },
+        "commune": "Kaunas",
+        "en_cours": true
+      }
+    ],
+    "photo": {
+      "registre": "2026-09-23",
+      "avnt": "2026-09-23"
+    }
+  }
+}

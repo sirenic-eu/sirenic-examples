@@ -1,0 +1,86 @@
+{
+  "_endpoint": "/v1/eu/entreprise/EE/{registrikood}/associes",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/EE/14532901/associes",
+  "_sample_of": "2026-09-23",
+  "_note": "Real paid response of 2026-09-23 (settled on-chain), whole except the reference texts: source, licence, disclaimer, data_freshness and provenance, present in every live response, are left out. A dated snapshot, not live data.",
+  "response": {
+    "pays": "EE",
+    "id_national": "14532901",
+    "denomination": "Bolt Operations OÜ",
+    "forme_juridique": {
+      "code": "OÜ",
+      "libelle": "Osaühing"
+    },
+    "aucun_associe_inscrit": false,
+    "nombre_associes": 1,
+    "associes": [
+      {
+        "type": "personne_morale",
+        "nom": "Omanikukonto: Bolt Holdings OÜ",
+        "registrikood_entite": "14056464",
+        "code_etranger": null,
+        "pays": null,
+        "pays_libelle": null,
+        "part_pct": 100,
+        "valeur_nominale": 2701,
+        "devise": "EUR",
+        "propriete": {
+          "code": "L",
+          "libelle": "Ainuomand"
+        },
+        "fraction": null,
+        "groupe": null,
+        "controle": {
+          "code": "V1",
+          "libelle": "NASDAQ andmed",
+          "le": "2024-04-24"
+        },
+        "depuis": "2024-04-24",
+        "role_source": "O"
+      }
+    ],
+    "nombre_actionnaires_hors_carte": 0,
+    "actionnaires_hors_carte": [],
+    "fondateurs": {
+      "nombre": 1,
+      "nombre_personnes_physiques": 0,
+      "liste": [
+        {
+          "type": "personne_morale",
+          "nom": "Taxify Shareholder SPV OÜ",
+          "registrikood_entite": "14056464",
+          "code_etranger": null,
+          "pays": null,
+          "pays_libelle": null,
+          "part_pct": null,
+          "valeur_nominale": 2500,
+          "devise": "EUR",
+          "propriete": {
+            "code": "L",
+            "libelle": "Ainuomand"
+          },
+          "fraction": null,
+          "groupe": null,
+          "controle": {
+            "code": "ELK",
+            "libelle": "Elektrooniliselt esitatud (kande)avaldus",
+            "le": "2018-07-25"
+          },
+          "depuis": "2018-07-25",
+          "role_source": "A"
+        }
+      ]
+    },
+    "gages_sur_parts": [],
+    "capital": {
+      "montant": 2701,
+      "devise": "EUR",
+      "depuis": "2022-05-02",
+      "actions_sans_valeur_nominale": null
+    },
+    "detenu_par_personnes_physiques_pct": 0,
+    "photo_le": "2026-09-23",
+    "ingere_le": "2026-09-23"
+  }
+}

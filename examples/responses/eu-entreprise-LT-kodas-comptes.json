@@ -1,0 +1,61 @@
+{
+  "_endpoint": "/v1/eu/entreprise/LT/{kodas}/comptes",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/LT/304500803/comptes",
+  "_sample_of": "2026-09-23",
+  "_note": "Real paid response of 2026-09-23 (settled on-chain), trimmed by removal: the most recent of 8 financial years, kept whole; source, licence, disclaimer, data_freshness and provenance, present in every live response, are left out. A dated snapshot, not live data.",
+  "response": {
+    "pays": "LT",
+    "id_national": "304500803",
+    "nombre_exercices": 8,
+    "dernier_exercice": "2024-12-31",
+    "exercices": [
+      {
+        "debut": "2024-01-01",
+        "fin": "2024-12-31",
+        "consolide": false,
+        "etats": [
+          {
+            "gabarit": {
+              "code": "FS0329",
+              "libelle": "Mažų ir labai mažų įmonių, netaikančių išimčių, finansinių ataskaitų rinkinys"
+            },
+            "standard": {
+              "code": "BST124",
+              "libelle": "BALANSAS (Sutrumpintas)"
+            }
+          },
+          {
+            "gabarit": {
+              "code": "FS0329",
+              "libelle": "Mažų ir labai mažų įmonių, netaikančių išimčių, finansinių ataskaitų rinkinys"
+            },
+            "standard": {
+              "code": "IST024",
+              "libelle": "PELNO (NUOSTOLIŲ) ATASKAITA"
+            }
+          }
+        ],
+        "depose_le": "2025-05-16",
+        "devise": "EUR",
+        "bilan": {
+          "actif_non_courant": 127,
+          "actif_courant": 3999,
+          "total_actif": 4126,
+          "immobilisations_corporelles": null,
+          "capitaux_propres": 4126,
+          "dettes": 0
+        },
+        "compte_resultat": {
+          "chiffre_affaires": 3430,
+          "produits": null,
+          "resultat_avant_impot": 1655,
+          "resultat_net": 1655
+        },
+        "autres_postes": [],
+        "postes_divergents": []
+      }
+    ],
+    "photo": "2026-09-23"
+  }
+}

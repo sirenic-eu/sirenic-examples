@@ -1,0 +1,71 @@
+{
+  "_endpoint": "/v1/eu/entreprise/FI/{id}/evenements",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/FI/0112038-9/evenements",
+  "_sample_of": "2026-09-18",
+  "_note": "Real paid response of 2026-09-18 (settled on-chain), trimmed by removal: 2 of 162 notices (the most recent) and 1 of 7 register entries (VAT), each kept whole; source, licence, disclaimer, data_freshness and provenance, present in every live response, are left out. A dated snapshot, not live data.",
+  "response": {
+    "pays": "FI",
+    "id_national": "0112038-9",
+    "denomination": "Nokia Oyj",
+    "evenements": [
+      {
+        "date": "2026-06-08",
+        "reference": "2026/300040",
+        "type": "modification",
+        "type_source": "M",
+        "inscriptions": [
+          {
+            "code": "NIMP",
+            "libelle": {
+              "en": "PROCURATION RIGHTS",
+              "fi": "PROKURAT",
+              "sv": "PROKUROR"
+            },
+            "famille": "representation"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-05",
+        "reference": "2026/46611V",
+        "type": "comptes_annuels",
+        "type_source": "TA",
+        "inscriptions": [
+          {
+            "code": "TASE",
+            "libelle": {
+              "en": "FINANCIAL STATEMENTS",
+              "fi": "TILINPÄÄTÖSASIAKIRJAT",
+              "sv": "BOKSLUTSHANDLINGAR"
+            },
+            "famille": "comptes"
+          }
+        ]
+      }
+    ],
+    "nombre_evenements": 162,
+    "dernier_avis_le": "2026-06-08",
+    "premier_avis_le": "2014-11-28",
+    "procedures_inscrites": [],
+    "aucun_avis": false,
+    "registres": [
+      {
+        "registre": "tva",
+        "registre_code": "6",
+        "statut": {
+          "en": "VAT-liable for business activity",
+          "fi": "Liiketoiminnasta arvonlisäverovelvollinen",
+          "sv": "Momsskyldig för rörelseverksamhet"
+        },
+        "statut_code": "80",
+        "autorite": "Verohallinto (administration fiscale)",
+        "autorite_code": "1",
+        "inscrit_le": "1994-06-01",
+        "radie_le": null
+      }
+    ],
+    "tva_active": true,
+    "consulte_le": "2026-09-18T02:40:17.447Z"
+  }
+}
