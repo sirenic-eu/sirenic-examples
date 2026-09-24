@@ -10,7 +10,7 @@ European company data for AI agents: company lookup by name or SIREN, full
 company profiles, KYB verification and due-diligence files, AML sanctions
 screening, annual accounts and financial statements, default-risk scoring and
 company monitoring, from the French company registry (INSEE Sirene, INPI RNE)
-and official registers across 12 European countries. Pay-per-call in **USDC or
+and the official national company registers of European countries. Pay-per-call in **USDC or
 EURC** via the [x402 protocol](https://github.com/x402-foundation/x402):
 **no account, no API key** — your agent pays each request on Base. Every paid response is
 **Ed25519-signed** and verifiable offline
@@ -286,8 +286,8 @@ Two things this is **not**:
 | `GET /v1/iban/verifier/{iban}` | $0.005 | IBAN check + bank identification (FR/BE/AT/NL, incl. LEI) — not a Verification of Payee |
 | `GET /v1/surveillance/creer?cibles=&duree=` | $0.05 / $0.135 / $0.50 per target (30 / 90 / 365d) | **Watchlist**: daily checks on companies, directors and associations (RNA numbers, JOAFE notices), signed webhooks + e-mail digests, expiry warning at D-7 |
 | `GET /v1/surveillance/{token}/renouveler?cibles=&duree=` | same per-target prices | Renew a watchlist for any duration, not just the original one (grace: 7 days after expiry; no refund, no pro rata) |
-| `GET /v1/eu/recherche?q=` | $0.003 | Search European registers (BE, NO, EE, LV local; CZ, SK, FI, PL, CH live) + GLEIF — name of 2 characters or more |
-| `GET /v1/eu/entreprise/{pays}/{id}` | $0.01 | Unified European profile — 12 countries: BE (KBO, NACEBEL + establishments), CH (Zefix), NO (Brønnøysund), CZ (ARES), SK (RPO), FI (PRH), PL (KRS), EE, LV… Each live country also has its own dedicated path (e.g. `/v1/eu/entreprise/CH/CHE-107.480.920`). Every profile carries `groupe_lei` (GLEIF level-2: consolidating parents named, or the declared reason for none; `sans_objet` without a LEI — 17/09/2026) |
+| `GET /v1/eu/recherche?q=` | $0.003 | Search European registers by name. Local copies, all searched without a country filter: BE, CY, EE, HR, IE, LT, LV, NO, RO, SE, and ES from the BORME (hoja key); live registers, only with `pays`: CH, CZ, FI, SK; PL through GLEIF (the KRS has no name search); DK and GB when enabled; plus GLEIF (LEI) worldwide. Name of 2 characters or more |
+| `GET /v1/eu/entreprise/{pays}/{id}` | $0.01 | Unified European profile from the national registers. Local copies: BE (KBO/BCE, NACEBEL + establishments), CY (DRCOR), EE (e-Business Register), HR (Sudski registar), IE (CRO), LT (Juridinių asmenų registras), LV (Uzņēmumu reģistrs), NO (Brønnøysund), RO (ONRC), SE (Bolagsverket); live: CH (Zefix), CZ (ARES), FI (PRH), PL (KRS), SK (RPO); DK and GB when enabled; elsewhere GLEIF. Each of these countries also has its own dedicated path (e.g. `/v1/eu/entreprise/CH/CHE-107.480.920`). Every profile carries `groupe_lei` (GLEIF level-2: consolidating parents named, or the declared reason for none; `sans_objet` without a LEI, since 17/09/2026) |
 | `GET /v1/eu/entreprise/BE/{id}/comptes` | $0.01 | Belgian filings list (official NBB Central Balance Sheet Office) |
 | `GET /v1/eu/entreprise/BE/{id}/comptes/{ref}` | $0.15 | One Belgian annual-account deposit — structured JSON when the NBB publishes one, official PDF otherwise (`?format=pdf` forces the PDF, `?format=json` refuses the fallback and answers 406, not charged) |
 | `GET /v1/eu/entreprise/{pays}/{id}/transactions-dirigeants` | $0.02 | Insider dealing at Belgian AND German listed companies (FSMA + BaFin, Art. 19 MAR): are its managers buying or selling? Issuer-level 12-month aggregate — **no individual is ever named**. BE: 10-digit enterprise number; DE: LEI or ISIN |
