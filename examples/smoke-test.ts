@@ -382,17 +382,18 @@ let surveillanceFaite = false;
 for (const [rail, paidFetch] of RAILS) {
   for (const c of CALLS) {
     const body = await call(rail, paidFetch, c.path, c.expect, c.price);
+    // Since 2026-09-19 articles and minutes (`actes`) are served to API-key accounts
+    // only (401 compte_requis without a key, no quote): this x402 run buys a balance
+    // sheet. examples/smoke-jautiva-2026-09-19.ts checks the 401 for free.
     if (c.path.endsWith("/documents") && body && !documentId) {
-      const actes = body.actes as Array<{ id: string }> | undefined;
       const bilans = body.bilans as Array<{ id: string }> | undefined;
-      if (actes?.[0]) documentId = { type: "actes", id: actes[0].id };
-      else if (bilans?.[0]) documentId = { type: "bilans", id: bilans[0].id };
+      if (bilans?.[0]) documentId = { type: "bilans", id: bilans[0].id };
     }
   }
   if (documentId) {
     await call(rail, paidFetch, `/v1/documents/${documentId.type}/${documentId.id}`, "(PDF)", "$0.10");
   } else {
-    console.log(`– [${rail}] PDF document skipped (no document id in the list response)`);
+    console.log(`– [${rail}] PDF document skipped (no balance sheet in the list response)`);
   }
 
   // -- Belgian filings: list, then fetch one deposit by its reference --------

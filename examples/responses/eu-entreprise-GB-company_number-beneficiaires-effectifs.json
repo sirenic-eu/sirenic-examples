@@ -10,6 +10,14 @@
     "nombre_actifs": 1,
     "nombre_cesses": 0,
     "exemption_possible": false,
+    "personnes_physiques_omises": {
+      "actifs": 0,
+      "cesses": 0
+    },
+    "autres_types_omis": {
+      "actifs": 0,
+      "cesses": 0
+    },
     "beneficiaires": [
       {
         "type": "entite",
