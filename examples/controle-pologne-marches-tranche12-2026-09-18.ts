@@ -88,7 +88,10 @@ await achat("PL_5832622111_acheteur", "https://api.sirenic.eu/v1/eu/entreprise/P
     ok(corps.aucune_attribution === true && entree(corps, "avis_emis")?.etat === "servi" && entree(corps, "attributions")?.etat === "absence_non_conclusive", `aucune attribution ; provenance[avis_emis] = ${String(entree(corps, "avis_emis")?.etat)}, provenance[attributions] = ${String(entree(corps, "attributions")?.etat)}`),
   ];
 });
-await achat("PL_0000000000_inconnu", "https://api.sirenic.eu/v1/eu/entreprise/PL/0000000000/marches-publics", 0.02, (corps, statut, regle) => [
+// REJOUE le 24/09/2026 (ticket #99) : 0000000000, la sonde « NIP inconnu » du 18/09 ecrite avant toute execution, est un
+// bouche-trou REEL publie par la source (148 parties gagnees + 5 avis achetes en stock, ticket #164) : la production avait
+// raison de servir 200. Le NIP a cle valide prouve ABSENT sur la copie restauree du 24/09 est 1234563218.
+await achat("PL_1234563218_inconnu", "https://api.sirenic.eu/v1/eu/entreprise/PL/1234563218/marches-publics", 0.02, (corps, statut, regle) => [
   ok(statut === 404 && corps.error === "entreprise_inconnue" && !regle, `NIP sans ligne : HTTP ${statut}, ${String(corps.error)}, paiement annulé`),
 ]);
 await achat("PL_mal_forme", "https://api.sirenic.eu/v1/eu/entreprise/PL/12345/marches-publics", 0.02, (corps, statut, regle) => [
