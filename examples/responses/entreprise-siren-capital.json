@@ -11,6 +11,8 @@
       "montant_capital_eur": 170739060,
       "forme_juridique": "Société anonyme",
       "associes": [],
+      "associes_personnes_physiques": 0,
+      "detenu_par_personnes_physiques_pct": 0,
       "clauses_notables": [
         "droit_de_vote_double"
       ],
