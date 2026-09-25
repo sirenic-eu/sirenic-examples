@@ -99,7 +99,7 @@ nothing than a plausible fabrication about a real company.
 | `GET /v1/facture/verifier` | $0.02 | [`facture-verifier.json`](facture-verifier.json) — real purchase 2026-08-16; the same smoke proved the incoherent case live (Carrefour's VAT on Danone's SIREN → `tva_ne_correspond_pas_au_siren`) |
 | `GET /v1/facturation/dossier` | $0.03 | [`facturation-dossier.json`](facturation-dossier.json) |
 | `GET /v1/entreprise/:siren/facturation-prep` | $0.02 | [`entreprise-siren-facturation-prep.json`](entreprise-siren-facturation-prep.json) |
-| `GET /v1/score/defaillance/:siren` | $0.10 | [`score-defaillance-siren.json`](score-defaillance-siren.json) |
+| `GET /v1/score/defaillance/:siren` | $0.10 | [`score-defaillance-siren.json`](score-defaillance-siren.json) (real purchase 2026-09-25: scale `defaillance-v1.9`, with the dated French backtest of the scale in `echelle.backtest`, observed rates and never a probability) |
 | `GET /v1/secteur/:code_naf/benchmarks` | $0.05 | [`secteur-code_naf-benchmarks.json`](secteur-code_naf-benchmarks.json) |
 | `GET /v1/iban/verifier/:iban` | $0.005 | [`iban-verifier-iban.json`](iban-verifier-iban.json) |
 | `GET /v1/tva/verifier/:numero` | $0.003 | [`tva-verifier-numero.json`](tva-verifier-numero.json) |
