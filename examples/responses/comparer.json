@@ -1,78 +1,87 @@
 {
-  "nombre_demande": 2,
-  "nombre_trouve": 2,
-  "entreprises": [
-    {
-      "trouve": true,
-      "siren": "552032534",
-      "denomination": "DANONE",
-      "identite": {
-        "activite_principale": "70.10Z",
-        "categorie_entreprise": "GE",
-        "creee_en": 1955,
-        "etat_administratif": "actif"
-      },
-      "solidite": {
-        "score_risque": 22,
-        "classe": "sain",
-        "confiance": "moyenne",
-        "exercice_reference": "2024-12-31",
-        "version_modele": "defaillance-v1.8"
-      },
-      "finances": {
-        "exercice": "2024-12-31",
-        "perimetre": "social",
-        "chiffre_affaires": 1030000000,
-        "resultat_net": 592000000
-      },
-      "alertes": {
-        "procedure_collective_active": false,
-        "liquidation_judiciaire": false,
-        "cloture_insuffisance_actif": false,
-        "radiations": 0
-      },
-      "sanctions": {
-        "statut": "aucune_correspondance",
-        "nombre_correspondances": 0,
-        "cible": "denomination"
+  "_endpoint": "/v1/comparer",
+  "_price": "$0.12",
+  "_request": "GET https://api.sirenic.eu/v1/comparer?sirens=552032534%2C542065479",
+  "_sample_of": "2026-09-25",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/comparer.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "nombre_demande": 2,
+    "nombre_trouve": 2,
+    "entreprises": [
+      {
+        "trouve": true,
+        "siren": "552032534",
+        "denomination": "DANONE",
+        "identite": {
+          "activite_principale": "70.10Z",
+          "categorie_entreprise": "GE",
+          "etat_administratif": "actif"
+        },
+        "solidite": {
+          "score_risque": 22,
+          "classe": "sain",
+          "confiance": "moyenne",
+          "exercice_reference": "2024-12-31",
+          "version_modele": "defaillance-v1.9"
+        },
+        "finances": {
+          "exercice": "2024-12-31",
+          "perimetre": "social",
+          "chiffre_affaires": 1030000000,
+          "resultat_net": 592000000
+        },
+        "alertes": {
+          "procedure_collective_active": false,
+          "liquidation_judiciaire": false,
+          "cloture_insuffisance_actif": false,
+          "radiations": 0
+        },
+        "sanctions": {
+          "statut": "aucune_correspondance",
+          "nombre_correspondances": 0
+        }
       }
-    }
-  ],
-  "classements": {
-    "chiffre_affaires": [
-      "542065479",
-      "552032534"
     ],
-    "anciennete": [
-      "542065479",
-      "552032534"
-    ]
-  },
-  "eligibilite_classements": {
-    "risque_le_plus_faible": {
-      "type": "evaluatif",
-      "statut": "interdit",
-      "raison": [
-        "secteurs_differents",
-        "holding_dans_le_lot"
+    "classements": {
+      "chiffre_affaires": [
+        "542065479",
+        "552032534"
+      ],
+      "anciennete": [
+        "542065479",
+        "552032534"
+      ],
+      "resultat_net": [
+        "552032534",
+        "542065479"
+      ]
+    },
+    "eligibilite_classements": {
+      "risque_le_plus_faible": {
+        "type": "evaluatif",
+        "statut": "interdit",
+        "raison": [
+          "secteurs_differents",
+          "holding_dans_le_lot"
+        ]
+      }
+    },
+    "ecarts": [
+      {
+        "code": "ecart_taille_ca",
+        "min": 1030000000,
+        "max": 62589489000
+      }
+    ],
+    "comparabilite": {
+      "fiable": false,
+      "avertissements": [
+        {
+          "code": "secteurs_differents",
+          "portee": "bloquante",
+          "lecture": "Les entreprises comparées n'ont pas le même code NAF : les scores et les ratios ne se comparent pas d'un secteur à l'autre. / The companies have different NAF activity codes: scores and ratios are not comparable across sectors."
+        }
       ]
     }
-  },
-  "ecarts": [
-    {
-      "code": "ecart_taille_ca",
-      "min": 1030000000,
-      "max": 62589489000
-    }
-  ],
-  "comparabilite": {
-    "fiable": false,
-    "avertissements": [
-      {
-        "code": "secteurs_differents",
-        "portee": "bloquante",
-        "lecture": "Les entreprises comparées n'ont pas le même code NAF : les scores et les ratios ne se comparent pas d'un secteur à l'autre. / The companies have different NAF activity codes: scores and ratios are not comparable across sectors."
-      }
-    ]
   }
 }

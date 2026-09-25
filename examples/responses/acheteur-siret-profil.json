@@ -1,0 +1,48 @@
+{
+  "_endpoint": "/v1/acheteur/{siret}/profil",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/acheteur/26310012500016/profil",
+  "_sample_of": "2026-09-02",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/acheteur-siret-profil.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "acheteur": {
+      "siret": "26310012500016",
+      "siren": "263100125",
+      "nom": "CENTRE HOSPITALIER UNIVERSITAIRE DE TOULOUSE"
+    },
+    "nombre_marches": 5723,
+    "montant_total": 11823128968.9,
+    "montant_moyen": 2065897,
+    "marches_en_cours": 4830,
+    "echeances_12_mois": 1167,
+    "prochaine_echeance": "2026-09-05",
+    "habitudes": {
+      "part_accords_cadres_pct": 78.4,
+      "offres_recues_moyenne": 3.5,
+      "delai_publication_median_jours": 11,
+      "part_montants_enveloppe_pct": 79.8,
+      "modalites_connues": 5723,
+      "part_sous_traitance_declaree_pct": 77.6,
+      "sous_traitance_connue": 5723,
+      "part_avances_pct": 57.4,
+      "avance_connue": 5723,
+      "ccag_dominant": "Fournitures courantes et services",
+      "types_prix_dominant": "Définitif révisable",
+      "plateforme_publication_dominante": "DGFIP – PES MARCHÉ"
+    },
+    "top_cpv": [
+      {
+        "cpv4": "3300",
+        "nombre": 3002
+      }
+    ],
+    "titulaires_principaux": [
+      {
+        "siren": "433944485",
+        "nom": "ARROW GENERIQUES",
+        "nombre_marches": 164,
+        "marches_expirant_18_mois": 67
+      }
+    ]
+  }
+}

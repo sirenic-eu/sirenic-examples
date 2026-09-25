@@ -1,0 +1,28 @@
+{
+  "_endpoint": "/v1/eu/entreprise/HR/{oib}/comptes",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/HR/92803032010/comptes",
+  "_sample_of": "2026-09-17",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-HR-oib-comptes.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "pays": "HR",
+    "id_national": "92803032010",
+    "mbs": "10000162",
+    "denomination": "KOESTLIN dioničko društvo,tvornica keksa i vafla",
+    "nombre_depots": 18,
+    "aucun_depot": false,
+    "dernier_exercice": 2025,
+    "depots": [
+      {
+        "annee": 2025,
+        "type_code": 0,
+        "type": "GFI-POD izvještaj",
+        "consolide": false,
+        "exercice_du": "2025-01-01",
+        "exercice_au": "2025-12-31",
+        "depose_le": "2026-06-25"
+      }
+    ],
+    "photo": "2026-09-17"
+  }
+}

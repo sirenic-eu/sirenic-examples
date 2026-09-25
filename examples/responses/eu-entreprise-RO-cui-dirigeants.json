@@ -1,0 +1,34 @@
+{
+  "_endpoint": "/v1/eu/entreprise/RO/{cui}/dirigeants",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/RO/3474203/dirigeants",
+  "_sample_of": "2026-09-02",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-RO-cui-dirigeants.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "pays": "RO",
+    "id_national": "3474203",
+    "denomination": "ORIENT COMEX S.R.L.",
+    "statut_registre": {
+      "unifie": "actif",
+      "detail": null
+    },
+    "nombre_mandats": 3,
+    "aucun_mandat_publie": false,
+    "mandats": [
+      {
+        "nom": "<prénom nom>",
+        "nature": "personne",
+        "role": {
+          "registre": "administrator",
+          "famille": "administrateur",
+          "fr": "administrateur"
+        },
+        "cod_inmatriculare": "J2024004913234"
+      }
+    ],
+    "photo": {
+      "registre": "2026-09-02",
+      "representants": "2026-09-02"
+    }
+  }
+}

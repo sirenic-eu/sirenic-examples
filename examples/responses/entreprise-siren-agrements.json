@@ -3,7 +3,7 @@
   "_price": "$0.02",
   "_request": "GET https://api.sirenic.eu/v1/entreprise/953990934/agrements",
   "_sample_of": "2026-07-29",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-agrements.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "siren": "953990934",
     "denomination": "CIRCLE INTERNET FINANCIAL EUROPE SAS",
@@ -35,7 +35,7 @@
       }
     ],
     "source": "EBA (Payment Institutions Register), EIOPA (Register of Insurance Undertakings), ARCEP (opérateurs déclarés) — reproduction autorisée avec mention de la source.",
-    "disclaimer": "Registres publics reproduits tels que publiés. Le registre EBA n'a pas de valeur juridique : l'absence d'inscription ne prouve pas l'absence d'agrément, et l'inscription ne confère aucun droit — vérifiez auprès de l'autorité compétente. Ces données sont disponibles gratuitement auprès de l'EBA, de l'EIOPA et de l'ARCEP.",
+    "disclaimer": "Registres publics reproduits tels que publiés. Le registre EBA n'a pas de valeur juridique : l'absence d'inscription ne prouve pas l'absence d'agrément, et l'inscription ne confère aucun droit — vérifiez auprès de l'autorité compétente. Ces données sont disponibles gratuitement auprès de l'EBA, de l'EIOPA et de l'ARCEP. / Public registers as published; the EBA register has no legal significance. Data freely available from the sources.",
     "data_freshness": "eiopa-assureurs 2026-07-28, eba-pir 2026-07-28, arcep-operateurs 2026-07-28"
   }
 }

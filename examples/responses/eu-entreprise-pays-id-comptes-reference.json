@@ -3,7 +3,7 @@
   "_price": "$0.15",
   "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/FI/0103396-3/comptes/2024-12-31?format=pdf",
   "_sample_of": "2026-07-29",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-pays-id-comptes-reference.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "FI",
     "id_national": "0103396-3",
@@ -24,6 +24,6 @@
       }
     },
     "source": "PRH / avoindata.prh.fi — Patentti- ja rekisterihallitus (Finnish Patent and Registration Office), licence CC BY 4.0",
-    "disclaimer": "Comptes annuels finlandais LORSQU'ILS SONT DÉPOSÉS EN XBRL au PRH (~5 % des sociétés à responsabilité limitée)"
+    "disclaimer": "Comptes annuels finlandais LORSQU'ILS SONT DÉPOSÉS EN XBRL au PRH (~5 % des sociétés à responsabilité limitée) ; montants EUR tels que publiés, chiffre_affaires null = non publié (compte de résultat abrégé), jamais zéro ; une part des sociétés couvertes n'a qu'un seul exercice. / Finnish annual accounts WHEN FILED IN XBRL with the PRH (~5% of limited companies); figures as published; null revenue = not published, never zero."
   }
 }

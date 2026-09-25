@@ -1,34 +1,59 @@
 {
   "_endpoint": "/v1/eu/entreprise/EE/{registrikood}/evenements",
   "_price": "$0.02",
-  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/EE/10119794/evenements",
-  "_sample_of": "2026-07-29",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/EE/10060701/evenements",
+  "_sample_of": "2026-09-23",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-EE-registrikood-evenements.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "EE",
-    "id_national": "10119794",
+    "id_national": "10060701",
     "aucune_ordonnance": false,
-    "nombre_alertes": 2,
+    "nombre_alertes": 0,
     "types_non_qualifies": [
       {
-        "code": "K1",
-        "libelle": "Kanne"
+        "code": "K",
+        "libelle": "Jaatav kandeotsus"
       }
     ],
     "evenements": [
       {
-        "numero": "Ä 30001556 / M1",
-        "date_ordonnance": "2021-02-03",
-        "date_inscription": null,
-        "delai_supplementaire": "2021-08-03",
-        "type_code": "X2",
-        "type_libelle": "Hoiatusmäärus registrist kustutamiseks: majandusaasta aruanne esitamata",
+        "numero": "Ä 10003534 / 73",
+        "date_ordonnance": "2025-09-01",
+        "date_inscription": "2025-09-01",
+        "delai_supplementaire": null,
+        "type_code": "K1",
+        "type_libelle": "Kanne",
         "etat_code": "J",
         "etat_libelle": "Jõustunud",
-        "alerte": true
+        "inscription_code": "33",
+        "inscription_libelle": "Muutmiskanne TsMS § 595¹ lg 1 alusel",
+        "date_effet": "2025-09-01",
+        "effet_code": "J",
+        "effet_libelle": "Jõustub kande tegemisel",
+        "alerte": false
       }
     ],
-    "photo_le": "2026-07-29",
+    "inscriptions_registre": {
+      "statut": "servi",
+      "nombre": 73,
+      "cartes": [
+        {
+          "type": "R",
+          "numero": 1,
+          "region": 5,
+          "inscriptions": [
+            {
+              "numero": 73,
+              "date": "2025-09-01",
+              "type_code": "33",
+              "type_libelle": "Muutmiskanne TsMS § 595¹ lg 1 alusel"
+            }
+          ]
+        }
+      ],
+      "photo": "2026-09-23"
+    },
+    "photo_le": "2026-09-22",
     "source": "e-äriregister (Registre du commerce estonien) — open data avaandmed.ariregister.rik.ee (aruannete elemendid, määrused), RIK, licence CC BY 4.0"
   }
 }

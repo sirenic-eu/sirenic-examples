@@ -1,0 +1,58 @@
+{
+  "_endpoint": "/v1/eu/entreprise/NO/{id}/etablissements",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/NO/923609016/etablissements",
+  "_sample_of": "2026-09-16",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-NO-id-etablissements.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "pays": "NO",
+    "id_national": "923609016",
+    "denomination": "EQUINOR ASA",
+    "forme_juridique": "ASA",
+    "nombre_unites_locales": 35,
+    "effectif_cumule": 21267,
+    "unites_effectif_publie": 21,
+    "aucune_unite_locale": false,
+    "unites_locales": [
+      {
+        "orgnr": "973152351",
+        "denomination": "EQUINOR ASA AVD KONTOR STAVANGER",
+        "forme_source": "BEDR",
+        "forme_libelle": "Underenhet til næringsdrivende og offentlig forvaltning",
+        "activite": {
+          "code": "06.100",
+          "libelle": "Utvinning av råolje"
+        },
+        "activites_secondaires": [],
+        "activite_auxiliaire": {
+          "code": "70.100",
+          "libelle": "Hovedkontortjenester"
+        },
+        "effectif": 4254,
+        "effectif_publie": true,
+        "effectif_le": "2026-09-12",
+        "adresse": {
+          "adresse": "Forusbeen 50",
+          "code_postal": "4035",
+          "ville": "STAVANGER",
+          "commune": "STAVANGER",
+          "commune_code": "1103",
+          "pays": "NO"
+        },
+        "adresse_postale": {
+          "adresse": "Postboks 8500",
+          "code_postal": "4035",
+          "ville": "STAVANGER",
+          "pays": "NO"
+        },
+        "inscrite_le": "1995-03-12",
+        "debut_activite": "1981-01-01",
+        "changement_proprietaire_le": null,
+        "tva": false
+      }
+    ],
+    "source": "Data from Brønnøysundregistrene — Enhetsregisteret, underenheter (data.brreg.no, bulk national quotidien underenheter/lastned), licence NLOD 2.0",
+    "licence": "Data from Brønnøysundregistrene, NLOD 2.0",
+    "data_freshness": "bulk national quotidien de Brønnøysundregistrene pré-ingéré (régénéré chaque nuit vers 04:00-04:30 CEST, ingéré à 03:30 UTC)"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "_endpoint": "/v1/entreprise/{siren}/contentieux",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/contentieux",
+  "_sample_of": "2026-09-10",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-contentieux.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "siren": "552032534",
+    "denomination": "DANONE",
+    "exhaustivite": "partielle",
+    "avertissement": "Une absence de résultat ne vaut pas absence de contentieux.",
+    "synthese": {
+      "nombre_decisions": 1,
+      "par_nature": {
+        "condamnation_ou_injonction_a_payer": 1
+      }
+    },
+    "decisions": [
+      {
+        "id_judilibre": "69f4703ccdc6046d4731b4af",
+        "date": "2026-04-30",
+        "juridiction": "Tribunal de commerce d'Orléans",
+        "nature": "condamnation_ou_injonction_a_payer",
+        "role": "demandeur",
+        "mode_rattachement": "identifiant_etiquete",
+        "confiance": "certain",
+        "url_officielle": "https://www.courdecassation.fr/decision/69f4703ccdc6046d4731b4af"
+      }
+    ],
+    "tronque": false,
+    "source": "Cour de cassation — base Judilibre (open data, source juritcom), Licence Ouverte 2.0 ; dernière mise à jour de notre stock : 2026-09-10.",
+    "consulte_le": "2026-09-10T11:44:00Z",
+    "data_freshness": "stock Judilibre tcom collecté quotidiennement (dernier passage réussi : 2026-09-10) ; identité Sirene"
+  }
+}

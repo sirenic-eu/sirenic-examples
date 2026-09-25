@@ -1,0 +1,37 @@
+{
+  "_endpoint": "/v1/entreprise/{siren}/emploi",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/095580841/emploi",
+  "_sample_of": "2026-08-25",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-emploi.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "siren": "095580841",
+    "denomination": "TEREGA",
+    "signaux_recrutement": {
+      "recrute_activement": null,
+      "annonces_actives": 0,
+      "familles_rome": [],
+      "methode": {
+        "comptage": "correspondance_denomination",
+        "zones": {
+          "type": "departements",
+          "interrogees": 5,
+          "connues": 12
+        },
+        "annonces_examinees": 1050,
+        "couverture_complete": false
+      },
+      "consulte_le": "2026-08-25T05:39:42.272Z"
+    },
+    "index_egapro": [
+      {
+        "annee": 2025,
+        "note": 93
+      }
+    ],
+    "effectif": {
+      "tranche": "500 à 999 salariés",
+      "annee": "2023"
+    }
+  }
+}

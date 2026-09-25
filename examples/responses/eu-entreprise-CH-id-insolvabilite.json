@@ -1,0 +1,43 @@
+{
+  "_endpoint": "/v1/eu/entreprise/CH/{id}/insolvabilite",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/CH/CHE-138.657.350/insolvabilite",
+  "_sample_of": "2026-09-18",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-CH-id-insolvabilite.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "pays": "CH",
+    "id_national": "CHE-138.657.350",
+    "denomination": "Skytender Group Holding AG",
+    "nombre_procedures": 1,
+    "troncature": false,
+    "aucune_procedure": false,
+    "derniere_publication_le": "2026-09-17",
+    "procedures": [
+      {
+        "date": "2026-09-17",
+        "numero": "KK01-1006758893",
+        "type": "avis_prealable_faillite",
+        "sous_rubrique": "KK01",
+        "libelle": {
+          "de": "Vorläufige Konkursanzeige",
+          "fr": "Avis préalable d'ouverture de faillite",
+          "it": "Avviso preliminare di apertura del fallimento",
+          "en": "Preliminary bankruptcy notice"
+        },
+        "langue": "de",
+        "cantons": [
+          "ZG"
+        ],
+        "office": "Konkursamt des Kantons Zug",
+        "debiteur": {
+          "nom": "Skytender Group Holding AG",
+          "uid": "CHE-138.657.350",
+          "siege": "Baar"
+        },
+        "date_decision": "2026-09-10",
+        "texte_retenu": true
+      }
+    ],
+    "consulte_le": "2026-09-18T05:30:00.000Z"
+  }
+}

@@ -2,12 +2,12 @@
   "_endpoint": "/v1/intelligence/{siren}",
   "_price": "$1.00",
   "_request": "GET https://api.sirenic.eu/v1/intelligence/552032534",
-  "_sample_of": "2026-07-29",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_sample_of": "2026-09-25",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/intelligence-siren.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "siren": "552032534",
     "type_rapport": "intelligence",
-    "version_rapport": "1.4",
+    "version_rapport": "1.12",
     "identite": {
       "denomination": "DANONE",
       "categorie_entreprise": "GE",
@@ -15,24 +15,52 @@
       "etat_administratif": "actif"
     },
     "tva_vies": {
-      "statut": "valide"
+      "statut": "indisponible"
     },
     "risques": {
       "score_defaillance": {
-        "score_risque": 30,
-        "classe": "vigilance",
-        "risque_12m": "modéré"
+        "score_risque": 22,
+        "classe": "sain",
+        "risque_12m": "faible"
       }
     },
     "signaux": [
       {
         "signal": "propriete_industrielle_presente",
         "source": "bases PI INPI",
-        "detail": "112 titre(s)"
+        "detail": "103 titre(s)"
       }
     ],
     "synthese": {
       "verdict_global": "solide",
+      "motifs_verdict": [
+        "classe_sain"
+      ],
+      "verdict_plafonne_par": [],
+      "reserves": [
+        "perimetre_tete_de_groupe",
+        "depot_plus_recent_non_analyse",
+        "exercices_a_verifier_dans_la_serie",
+        "tresorerie_non_publiee",
+        "comptes_consolides_non_notes",
+        "rapprochements_faibles_sanctions",
+        "tva_non_verifiable"
+      ],
+      "portee": "tete_de_groupe_comptes_sociaux",
+      "confiance_financiere": "moyenne",
+      "par_domaine": {
+        "identite": "confirmee",
+        "profil": "tete_de_groupe",
+        "finances_sociales": "atypiques_tete_de_groupe",
+        "finances_consolidees": "disponibles_non_notees",
+        "fraicheur_financiere": "depot_plus_recent_non_analyse",
+        "defaillance": "sain",
+        "procedures_collectives": "aucune_connue",
+        "sanctions": "rapprochements_partiels_seulement",
+        "amf": "aucune_alerte",
+        "marches_publics": "aucun_detecte_dans_le_perimetre_observable",
+        "contentieux": "aucune_decision_rattachee"
+      },
       "points_forts": [
         "anciennete_etablie"
       ],

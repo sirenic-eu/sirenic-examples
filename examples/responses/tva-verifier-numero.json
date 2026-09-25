@@ -3,7 +3,7 @@
   "_price": "$0.003",
   "_request": "GET https://api.sirenic.eu/v1/tva/verifier/FR27552032534",
   "_sample_of": "2026-07-29",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/tva-verifier-numero.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "numero": "FR27552032534",
     "pays": "FR",
@@ -14,6 +14,6 @@
     "verifie_le": "2026-07-29T07:29:08.915Z",
     "valide": true,
     "source": "VIES — Commission européenne (service officiel de validation TVA)",
-    "disclaimer": "Statut au moment de la consultation ; en cas d'indisponibilité du service de l'État membre, le statut est `indisponible` (jamais un faux invalide)."
+    "disclaimer": "Statut au moment de la consultation ; en cas d'indisponibilité du service de l'État membre, le statut est `indisponible` (jamais un faux invalide). / Status at consultation time; member-state outages yield `indisponible`, never a false invalid."
   }
 }

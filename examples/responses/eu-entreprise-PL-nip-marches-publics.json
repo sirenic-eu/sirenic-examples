@@ -1,0 +1,65 @@
+{
+  "_endpoint": "/v1/eu/entreprise/PL/{nip}/marches-publics",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/PL/6040248554/marches-publics",
+  "_sample_of": "2026-09-18",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-PL-nip-marches-publics.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "pays": "PL",
+    "nip": "6040248554",
+    "attributions": [
+      {
+        "avis_id": "2026/BZP 00441969/01",
+        "type_avis": "TenderResultNotice",
+        "publie_le": "2026-09-17T05:36:05Z",
+        "type_marche": "travaux",
+        "type_marche_source": "Works",
+        "sous_seuil_ue": true,
+        "objet": "Wykonanie remontu dla części: Część I: Malowanie - I/Tczew; Część II: Remont pokoi biurowych - I/Gdynia; Część III: Remont pokoi biurowych - I/Kartuzy; Część IV: Remont pokoi biurowych - I/Malbork",
+        "cpv": [
+          "45400000-1"
+        ],
+        "acheteur": {
+          "nom": "ZAKŁAD UBEZPIECZEŃ SPOŁECZNYCH ODDZIAŁ W GDAŃSKU",
+          "ville": "Gdańsk",
+          "province": "PL22",
+          "pays": "PL",
+          "nip": "5832622111"
+        },
+        "nombre_parties": 4,
+        "partie": 4,
+        "issue": "contrat conclu",
+        "issue_source": "zawarcieUmowy",
+        "offres_recues": 2,
+        "offres_pme": 2,
+        "prix_retenu_pln": 581992.37,
+        "groupement": false,
+        "date_contrat": "2026-09-01",
+        "valeur_contrat_pln": 581992.37,
+        "duree": "126 dni",
+        "gagnant": {
+          "nip": "6040248554",
+          "nom_publie": "M&M JOB CONNECT Sp. z o.o.",
+          "ville": "Pszczółki",
+          "province": "PL22",
+          "pays": "PL",
+          "taille": "micro-entreprise",
+          "taille_source": "Mikro przedsiębiorca"
+        }
+      }
+    ],
+    "nombre_attributions": 1,
+    "valeur_totale_pln": 581992.37,
+    "tronque_attributions": false,
+    "aucune_attribution": false,
+    "avis_emis": [],
+    "nombre_avis_emis": 0,
+    "tronque_avis_emis": false,
+    "nature_nip": "personne_morale",
+    "stock": {
+      "depuis": "2021-01-01",
+      "dernier_jour_complet": "2026-09-17",
+      "gagnants_a_classer": 1832
+    }
+  }
+}

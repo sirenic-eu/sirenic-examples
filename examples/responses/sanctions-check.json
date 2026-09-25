@@ -1,15 +1,20 @@
 {
   "_endpoint": "/v1/sanctions/check",
   "_price": "$0.02",
-  "_request": "GET https://api.sirenic.eu/v1/sanctions/check?name=Vladimir%20Putin&birth_year=1952",
+  "_request": "GET https://api.sirenic.eu/v1/sanctions/check?name=Vladimir+Putin&birth_year=1952",
   "_sample_of": "2026-07-29",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/sanctions-check.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "requete": {
       "nom": "Vladimir Putin",
       "annee_naissance": 1952
     },
     "nombre_correspondances": 1,
+    "repartition_niveaux": {
+      "forte": 1,
+      "possible": 0,
+      "faible": 0
+    },
     "correspondances": [
       {
         "liste": "ue",
@@ -19,6 +24,14 @@
         "regime": "(EU) 2022/330"
       }
     ],
+    "troncature": {
+      "tronquee": false,
+      "correspondances_servies": 1,
+      "non_servies": 0,
+      "niveau_non_servi": null,
+      "prefiltre_sature": false,
+      "note": null
+    },
     "listes_consultees": [
       {
         "liste": "ue",

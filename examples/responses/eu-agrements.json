@@ -1,9 +1,9 @@
 {
   "_endpoint": "/v1/eu/agrements",
   "_price": "$0.01",
-  "_request": "GET https://api.sirenic.eu/v1/eu/agrements?q=BNP%20Paribas",
-  "_sample_of": "2026-07-29",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_request": "GET https://api.sirenic.eu/v1/eu/agrements?q=BNP+Paribas",
+  "_sample_of": "2026-09-17",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-agrements.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "requete": {
       "q": "BNP Paribas",
@@ -17,18 +17,58 @@
         "nom": "BNP PARIBAS ASSET MANAGEMENT EUROPE",
         "lei": "W51AX6427FJZJFPF8H34",
         "type_entite": "UCITS management company",
-        "autorite_competente": "Autorité des Marchés Financiers (AMF)",
         "pays_origine": "FRANCE",
-        "pays_accueil": [
-          "AUSTRIA"
-        ],
-        "statut": "Active",
-        "date_autorisation": "2002-04-01T00:00:00Z",
-        "date_retrait": null
+        "statut": "Active"
       }
     ],
-    "source": "ESMA Registers — European Securities and Markets Authority (registers.esma.europa.eu). This data is freely available at the source.",
-    "disclaimer": "Entités telles que publiées dans le registre unifié ESMA au moment de la consultation (statuts, autorités, passeports) — ni un avis de conformité ni une confirmation d'agrément ; vérifier auprès de l'autorité compétente.",
-    "data_freshness": "interrogation ESMA en direct, cache 1 h"
+    "supervision_bce": {
+      "nombre_total": 10,
+      "entites": [
+        {
+          "identifiant": "R0MUWSFPU8MPRO8K5P83",
+          "nom": "BNP Paribas S.A.",
+          "categorie": "significative",
+          "groupe_numero": 54,
+          "groupe_tete": true
+        }
+      ],
+      "photo": {
+        "version": "202608"
+      }
+    },
+    "administrateurs_indices": {
+      "nombre_total": 1,
+      "administrateurs": [
+        {
+          "nom": "BNP PARIBAS",
+          "lei": "R0MUWSFPU8MPRO8K5P83",
+          "statut_ue_eee": "Registration under Art. 34",
+          "nombre_indices": 0
+        }
+      ]
+    },
+    "fonds_monetaires": {
+      "nombre_total": 36,
+      "tronque": true,
+      "fonds": [
+        {
+          "lei": "21380096QN526QUJVA22",
+          "nom": "BNP PARIBAS INSTICASH - BNP PARIBAS INSTICASH EUR 1D CNAV",
+          "gestionnaire": {
+            "lei": "B25DM5T7808MMC5QRG60"
+          },
+          "statut": "Withdrawn"
+        }
+      ]
+    },
+    "iorp": {
+      "nombre_total": 0,
+      "institutions": [],
+      "stock": {
+        "version": "2026-09-17"
+      }
+    },
+    "blocs_absents": [],
+    "source": "ESMA Registers — European Securities and Markets Authority (registers.esma.europa.eu). This data is freely available at the source."
   }
 }

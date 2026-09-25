@@ -1,0 +1,60 @@
+{
+  "_endpoint": "/v1/eu/entreprise/CH/{id}/evenements",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/CH/CHE-102.732.681/evenements",
+  "_sample_of": "2026-09-18",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-CH-id-evenements.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "pays": "CH",
+    "id_national": "CHE-102.732.681",
+    "denomination": "A.S. Consulta AG",
+    "nombre_publications": 7,
+    "nombre_listees": 7,
+    "troncature": false,
+    "premiere_publication_le": "2021-05-27",
+    "derniere_publication_le": "2026-09-18",
+    "aucune_publication": false,
+    "publications": [
+      {
+        "date": "2026-09-18",
+        "numero": "HR02-1006759561",
+        "type": "mutation",
+        "sous_rubrique": "HR02",
+        "langue": "de",
+        "cantons": [
+          "ZH"
+        ],
+        "office": "Handelsregisteramt des Kantons Zürich",
+        "societe": {
+          "nom": "A.S. Consulta AG",
+          "uid": "CHE-102.732.681",
+          "siege": "Zürich",
+          "forme": {
+            "code": "0106",
+            "libelle": "société anonyme"
+          },
+          "adresse": {
+            "rue": "Apfelbaumstrasse",
+            "numero": "41",
+            "npa": "8050",
+            "localite": "Zürich"
+          },
+          "capital": {
+            "nominal": 100000,
+            "libere": 100000
+          },
+          "renonciation_revision": false
+        },
+        "changements": [
+          "autres_inscriptions"
+        ],
+        "publication_precedente": {
+          "date": "2025-12-05",
+          "numero": "1006503744"
+        },
+        "texte_retenu": true
+      }
+    ],
+    "consulte_le": "2026-09-18T05:30:00.000Z"
+  }
+}

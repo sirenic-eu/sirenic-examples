@@ -1,0 +1,62 @@
+{
+  "_endpoint": "/v1/eu/entreprise/CY/{id}",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/CY/HE165",
+  "_sample_of": "2026-09-08",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-CY-id.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "pays": "CY",
+    "registre": "Department of the Registrar of Companies and Intellectual Property (DRCOR, Τμήμα Εφόρου Εταιρειών)",
+    "id_national": "HE165",
+    "denomination": "BANK OF CYPRUS PUBLIC COMPANY LIMITED",
+    "forme_juridique": {
+      "code": "HE",
+      "libelle": "Εταιρεία — Δημόσια"
+    },
+    "statut": "actif",
+    "statut_detail": null,
+    "date_creation": "1943-12-31",
+    "adresse_siege": {
+      "adresse": "Στασίνου, 51",
+      "code_postal": "2002",
+      "ville": "Στρόβολος",
+      "pays": "CY"
+    },
+    "identifiants": {
+      "tva": null,
+      "lei": null
+    },
+    "registre_cy": {
+      "statut": "servi",
+      "photo": "2026-09-08",
+      "type": {
+        "code": "HE",
+        "prefixe": "ΗΕ",
+        "libelle_el": "Εταιρεία",
+        "fr": "société"
+      },
+      "numero_registre": 165,
+      "sous_type": {
+        "libelle_el": "Δημόσια",
+        "code": "publique"
+      },
+      "etat": {
+        "libelle_el": "Εγγεγραμμένη",
+        "famille": "aucun",
+        "fr": "inscrite",
+        "depuis": null
+      },
+      "procedure_au_registre": false,
+      "inscrit_le": "1943-12-31",
+      "siege": {
+        "ligne": "Στασίνου, 51",
+        "territoire": "Αγία Παρασκευή, Στρόβολος, 2002, Λευκωσία, Κύπρος",
+        "code_postal": "2002",
+        "ville": "Στρόβολος",
+        "pays_libelle": "Κύπρος"
+      },
+      "mandats_publies": 12,
+      "nom_courant_seul": true
+    }
+  }
+}

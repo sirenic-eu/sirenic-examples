@@ -1,0 +1,56 @@
+{
+  "_endpoint": "/v1/eu/entreprise/GB/{company_number}/marches-publics",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/GB/10868035/marches-publics",
+  "_sample_of": "2026-09-17",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-GB-company_number-marches-publics.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "pays": "GB",
+    "company_number": "10868035",
+    "attributions": [
+      {
+        "ocid": "ocds-h6vhtk-0773eb",
+        "award_id": "1",
+        "source": "fts",
+        "publie_le": "2026-09-16",
+        "titre": "Facilitate Away Days and LGR Transition",
+        "valeur": 36606.36,
+        "devise": "GBP",
+        "date_attribution": null,
+        "date_signature": "2026-07-27",
+        "debut": "2026-07-27",
+        "fin": "2028-04-01",
+        "statut": "active",
+        "acheteur": {
+          "id": "GB-PPON-PGGG-5373-XYZX",
+          "company_number": null,
+          "nom": "Dacorum Borough Council"
+        },
+        "fournisseur": {
+          "nom_publie": "CHANGEMAKER ASSOCIATES LIMITED",
+          "id": "GB-COH-10868035"
+        },
+        "lien": "https://www.find-tender.service.gov.uk/Notice/087976-2026"
+      }
+    ],
+    "nombre_attributions": 1,
+    "valeur_totale_gbp": 36606.36,
+    "tronque_attributions": false,
+    "aucune_attribution": false,
+    "avis_emis": [],
+    "nombre_avis_emis": 0,
+    "tronque_avis_emis": false,
+    "aucun_marche": false,
+    "existence_verifiee": false,
+    "stock": {
+      "fts": {
+        "depuis": "2021-01-01",
+        "dernier_jour_collecte": "2026-09-16"
+      },
+      "cf": {
+        "depuis": "2023-01-01",
+        "dernier_jour_collecte": "2026-09-16"
+      }
+    }
+  }
+}

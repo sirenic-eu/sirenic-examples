@@ -1,0 +1,48 @@
+{
+  "_endpoint": "/v1/eu/entreprise/CY/{id}/dirigeants",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/CY/HE165/dirigeants",
+  "_sample_of": "2026-09-08",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-CY-id-dirigeants.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "pays": "CY",
+    "id_national": "HE165",
+    "denomination": "BANK OF CYPRUS PUBLIC COMPANY LIMITED",
+    "type": {
+      "code": "HE",
+      "prefixe": "ΗΕ",
+      "libelle_el": "Εταιρεία",
+      "fr": "société"
+    },
+    "statut_registre": {
+      "libelle_el": "Εγγεγραμμένη",
+      "famille": "aucun",
+      "fr": "inscrite",
+      "depuis": null
+    },
+    "nombre_mandats": 12,
+    "aucun_mandat_publie": false,
+    "mandats": [
+      {
+        "nom": "<prénom nom>",
+        "role": {
+          "registre": "Διευθυντής",
+          "famille": "dirigeant",
+          "fr": "administrateur (director)"
+        }
+      },
+      {
+        "nom": "<prénom nom>",
+        "role": {
+          "registre": "Γραμματέας",
+          "famille": "secretaire",
+          "fr": "secrétaire (company secretary)"
+        }
+      }
+    ],
+    "photo": {
+      "registre": "2026-09-08",
+      "mandats": "2026-09-08"
+    }
+  }
+}

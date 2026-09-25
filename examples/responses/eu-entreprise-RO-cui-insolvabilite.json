@@ -1,0 +1,57 @@
+{
+  "_endpoint": "/v1/eu/entreprise/RO/{cui}/insolvabilite",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/RO/29023037/insolvabilite",
+  "_sample_of": "2026-09-02",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-RO-cui-insolvabilite.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "pays": "RO",
+    "id_national": "29023037",
+    "denomination": "ALPIN IMPACT TELECOM SRL",
+    "statut_registre": {
+      "unifie": "autre",
+      "detail": "faillite"
+    },
+    "statuts_procedure": [
+      {
+        "code": 1070,
+        "libelle_ro": "faliment",
+        "famille": "faillite",
+        "fr": "faillite"
+      },
+      {
+        "code": 1139,
+        "libelle_ro": "este sub incidența Legii nr. 85/2014",
+        "famille": "insolvabilite",
+        "fr": "procédure d'insolvabilité (insolvență, reorganizare judiciară, redresare)"
+      }
+    ],
+    "procedure_au_registre": true,
+    "mandataires": [
+      {
+        "nom": "A.R.T. INSOLV SPRL",
+        "nature": "entite",
+        "role": {
+          "registre": "lichidator judiciar",
+          "famille": "liquidateur_judiciaire",
+          "fr": "liquidateur judiciaire"
+        },
+        "cod_inmatriculare": "J40/10208/2011"
+      }
+    ],
+    "nombre_mandataires": 1,
+    "aucune_procedure": false,
+    "autres_statuts": [
+      {
+        "code": 2069,
+        "libelle_ro": "sediu expirat",
+        "famille": "alerte_administrative",
+        "fr": "alerte administrative (siège, mandats, dépôts, capital, procédure devant le tribunal)"
+      }
+    ],
+    "photo": {
+      "registre": "2026-09-02",
+      "representants": "2026-09-02"
+    }
+  }
+}

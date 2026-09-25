@@ -3,7 +3,7 @@
   "_price": "$0.03",
   "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/LV/40003032949/comptes",
   "_sample_of": "2026-07-29",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-LV-regnr-comptes.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "LV",
     "id_national": "40003032949",
@@ -27,8 +27,8 @@
         }
       }
     ],
-    "source": "Uzņēmumu reģistrs / VID — open data data.gov.lv",
+    "source": "Uzņēmumu reģistrs / VID — open data data.gov.lv (Gada pārskatu finanšu dati, Maksātnespējas procesi, Amatpersonas, Patiesie labuma guvēji), licence CC0 1.0",
     "licence": "Uzņēmumu reģistrs / VID, data.gov.lv, CC0 1.0",
-    "disclaimer": "Postes clés des rapports annuels déposés au VID, tels que publiés par l'Uzņēmumu reģistrs (CC0)"
+    "disclaimer": "Postes clés des rapports annuels déposés au VID, tels que publiés par l'Uzņēmumu reģistrs (CC0) : montants dans la devise du dépôt (EUR, LVL avant 2014), dans l'unité d'arrondi publiée (`arrondi` : THOUSANDS = milliers, jamais multipliés par nos soins) ; null = non publié, jamais zéro ; dépôts statutaires (UGP) et consolidés (UKGP) restitués SÉPARÉMENT (`perimetre`), jamais fusionnés ; en cas de re-dépôt corrigé, le plus récent est servi. / Key items of Latvian VID filings as published; null = not published, never zero; statutory and consolidated filings kept apart."
   }
 }

@@ -1,0 +1,62 @@
+{
+  "_endpoint": "/v1/eu/entreprise/RO/{cui}/comptes",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/RO/3474203/comptes",
+  "_sample_of": "2026-09-18",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-RO-cui-comptes.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "pays": "RO",
+    "id_national": "3474203",
+    "denomination": "ORIENT COMEX S.R.L.",
+    "statut_registre": {
+      "unifie": "actif",
+      "detail": null
+    },
+    "nombre_exercices": 6,
+    "dernier_exercice": 2024,
+    "exercices": [
+      {
+        "exercice": 2024,
+        "format": "abrege",
+        "fichier_source": "WEB_UU_AN2024",
+        "publie_le": "2025-06-30",
+        "devise": "RON",
+        "activite": {
+          "caen": "5510",
+          "libelle_ro": "Hoteluri și alte facilități de cazare similare",
+          "version_caen": "Rev. 2"
+        },
+        "bilan": {
+          "actifs_immobilises": 6265384,
+          "actifs_circulants": 3359334,
+          "stocks": null,
+          "creances": 3108593,
+          "tresorerie": 250741,
+          "charges_constatees_avance": 750,
+          "dettes": -45266,
+          "produits_constates_avance": 392482,
+          "provisions": null,
+          "capitaux_propres": 9278252,
+          "capital_souscrit_verse": 61010,
+          "patrimoine_regie": null
+        },
+        "compte_resultat": {
+          "chiffre_affaires_net": 2516001,
+          "produits_totaux": 2571015,
+          "charges_totales": 2363878,
+          "benefice_brut": 207137,
+          "perte_brute": 0,
+          "benefice_net": 172884,
+          "perte_nette": 0,
+          "resultat_brut": 207137,
+          "resultat_net": 172884
+        },
+        "effectif_moyen": 2
+      }
+    ],
+    "photo": {
+      "registre": "2026-09-02",
+      "comptes": "2025-07-27"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "_endpoint": "/v1/entreprise/{siren}/financements-ue",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/319632790/financements-ue",
+  "_sample_of": "2026-09-17",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-financements-ue.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "siren": "319632790",
+    "nombre_projets": 1,
+    "nombre_participations": 1,
+    "contribution_ue_totale_eur": 284375,
+    "en_cours": 1,
+    "tronque": false,
+    "projets": [
+      {
+        "id": "101069508",
+        "programme": "HORIZON",
+        "programme_libelle": "Horizon Europe (2021-2027)",
+        "acronyme": "SolDAC",
+        "titre": "Full spectrum SOLar Direct Air Capture & conversion",
+        "statut": "signe",
+        "statut_source": "SIGNED",
+        "debut": "2022-09-01",
+        "fin": "2027-08-31",
+        "cout_total_eur": 2073781.25,
+        "contribution_ue_max_eur": 2073781.25,
+        "regime_financement": "HORIZON-RIA",
+        "appel": "HORIZON-CL5-2021-D2-01",
+        "lien": "https://cordis.europa.eu/project/id/101069508",
+        "participation": {
+          "role": "participant",
+          "role_source": "participant",
+          "contribution_ue_eur": 284375,
+          "contribution_ue_nette_eur": 284375,
+          "cout_total_eur": 284375,
+          "fin_anticipee": false,
+          "pme": false,
+          "type_activite": "entreprise_privee",
+          "nom_publie": "ARKEMA FRANCE SA"
+        }
+      }
+    ],
+    "aucun_financement": false,
+    "couverture": {
+      "programmes": [
+        "Horizon Europe (2021-2027)",
+        "Horizon 2020 (2014-2020)"
+      ],
+      "publication": "2026-08-06",
+      "note": "Entité retrouvée par la TVA publiée (≈ 90 % des participations françaises). / Matched by the published VAT number."
+    }
+  }
+}

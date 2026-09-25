@@ -2,8 +2,8 @@
   "_endpoint": "/v1/entreprise/{siren}/pi",
   "_price": "$0.03",
   "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/pi",
-  "_sample_of": "2026-09-03",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_sample_of": "2026-09-02",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-pi.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "siren": "552032534",
     "marques": {
