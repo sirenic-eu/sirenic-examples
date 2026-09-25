@@ -1,0 +1,76 @@
+{
+  "_endpoint": "/v1/eu/entreprise/IE/{numero}",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/IE/600161",
+  "_sample_of": "2026-09-18",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-IE-numero.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "pays": "IE",
+    "registre": "Companies Registration Office (CRO)",
+    "id_national": "600161",
+    "lei": null,
+    "denomination": "VOXCITIO LIMITED",
+    "forme_juridique": {
+      "code": "1153",
+      "libelle": "société privée à responsabilité limitée par actions (LTD)"
+    },
+    "statut": "actif",
+    "statut_detail": null,
+    "date_creation": "2017-03-09",
+    "adresse_siege": {
+      "adresse": "74 SOUTH MALL, CO. CORK,CORK, CO. CORK, CORK, IRELAND",
+      "code_postal": "T12 F3FD",
+      "ville": "CORK",
+      "pays": "IE"
+    },
+    "registre_ie": {
+      "statut": "servi",
+      "photo": "2026-09-18",
+      "numero_registre": "600161",
+      "type": {
+        "code": "1153",
+        "famille": "sarl",
+        "fr": "société privée à responsabilité limitée par actions (LTD)"
+      },
+      "etat": {
+        "code": "1151",
+        "libelle": "Normal",
+        "famille": "normal",
+        "fr": "active (normal)",
+        "depuis": null
+      },
+      "procedure_au_registre": false,
+      "immatriculee_le": "2017-03-09",
+      "dissoute_le": null,
+      "declarations_annuelles": {
+        "derniere_le": "2025-09-09",
+        "prochaine_le": "2026-09-09"
+      },
+      "derniers_comptes_le": "2025-08-31",
+      "siege": {
+        "lignes": [
+          "74 SOUTH MALL",
+          "CO. CORK,CORK",
+          "CO. CORK, CORK, IRELAND"
+        ],
+        "eircode": "T12 F3FD"
+      },
+      "nace_v2": "62.01",
+      "depots_comptes": {
+        "statut": "servi",
+        "annees": [
+          2022,
+          2023,
+          2024
+        ],
+        "depots": [
+          {
+            "exercice_clos_le": "2024-08-31",
+            "recu_le": "2024-11-04",
+            "soumission": "SR3835963"
+          }
+        ]
+      }
+    }
+  }
+}

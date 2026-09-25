@@ -1,0 +1,51 @@
+{
+  "_endpoint": "/v1/eu/entreprise/{pays}/{id}/marches-publics-ue",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/LV/40003242722/marches-publics-ue",
+  "_sample_of": "2026-09-17",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-pays-id-marches-publics-ue.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "pays": "LV",
+    "id_national": "40003242722",
+    "variantes_identifiant": [
+      "\"40003242722\""
+    ],
+    "nombre_avis": 16,
+    "nombre_retourne": 16,
+    "tronque": false,
+    "periode_couverte": "avis eForms (identifiants gagnants publiés depuis le 2023-10-25)",
+    "avis": [
+      {
+        "reference_ted": "547293-2026",
+        "date_publication": "2026-08-07",
+        "type_avis": "can-standard",
+        "objet": "Trīs jaunu automašīnu piegāde Bauskas novada pašvaldības iestādēm",
+        "acheteur": {
+          "nom": "Bauskas novada pašvaldība",
+          "pays": "LVA"
+        },
+        "montant_avis": {
+          "valeur": 24000,
+          "devise": "EUR",
+          "portee": "avis entier (tous lots/titulaires)"
+        },
+        "codes_cpv": [
+          "34110000"
+        ],
+        "co_titulaires": [
+          "Sabiedrība ar ierobežotu atbildību \"NORDE\""
+        ],
+        "identifiants_gagnants": [
+          "40003242722"
+        ],
+        "lien_ted": "https://ted.europa.eu/en/notice/547293-2026/pdf",
+        "correspondance": {
+          "methode": "identifiant",
+          "confiance": "haute"
+        }
+      }
+    ],
+    "source": "TED — Tenders Electronic Daily (ted.europa.eu), Office des publications de l'UE ; réutilisation libre, © Union européenne",
+    "data_freshness": "interrogation TED en direct, cache 24 h"
+  }
+}

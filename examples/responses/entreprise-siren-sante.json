@@ -2,31 +2,62 @@
   "_endpoint": "/v1/entreprise/{siren}/sante",
   "_price": "$0.15",
   "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/sante",
-  "_sample_of": "2026-07-29",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_sample_of": "2026-09-25",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-sante.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "siren": "552032534",
     "synthese": {
-      "resume": "[texte libre en français, 800 à 1 500 caractères — abrégé dans cet exemple]",
       "points_forts": [
-        "Aucune vente ou cession d'actifs recensée au BODACC"
+        "Résultats nets positifs récurrents"
       ],
       "points_vigilance": [
-        "Résultat net déclaré à 0 pour les exercices 2022 et 2023 malgré des EBE substantiels, incohérence à clarifier"
+        "Ratios incohérents dans la source officielle"
       ],
-      "tendance_activite": "indeterminee",
-      "niveau_confiance": "faible",
       "donnees_manquantes": [
-        "Effectif salarié précis (seule une tranche est fournie)"
+        "Structure du passif"
+      ],
+      "verdict": "contraste",
+      "tendance_activite": "croissance",
+      "niveau_confiance": "faible"
+    },
+    "grille": {
+      "verdict": "contraste",
+      "ca_tendance": "croissance_forte",
+      "ca_regularite": "irreguliere",
+      "rentabilite_niveau": "forte",
+      "rentabilite_tendance": "volatile",
+      "endettement_niveau": "eleve",
+      "endettement_tendance": "volatil",
+      "autonomie_financiere": "correcte",
+      "liquidite": "echelle_non_etablie",
+      "capacite_remboursement": "correcte",
+      "bfr_exploitation": "atypique_negatif",
+      "structure_synthese": "equilibree",
+      "points_forts": [
+        "resultats_nets_positifs_recurrents"
+      ],
+      "points_vigilance": [
+        "ratios_incoherents"
+      ],
+      "confiance_niveau": "faible",
+      "confiance_motifs": [
+        "incoherences_detectees"
+      ],
+      "donnees_manquantes": [
+        "structure_du_passif"
       ]
     },
+    "divergences_modele": [
+      "tendance CA calculée : volatil_sans_tendance -> croissance_forte"
+    ],
     "modele": "claude-sonnet-5",
-    "version_prompt": "sante-v1",
-    "genere_le": "2026-07-24T16:53:14.027Z",
+    "version_prompt": "sante-v2",
+    "version_gabarit": "g-8806003c",
+    "genere_le": "2026-09-25T21:50:25.245Z",
     "donnees": {
       "score_completude": 100,
-      "data_freshness": "identité : stock Sirene mensuel (2026-07-01)"
+      "data_freshness": "identité : stock Sirene mensuel (2026-09-01)"
     },
-    "depuis_cache": true
+    "depuis_cache": false
   }
 }

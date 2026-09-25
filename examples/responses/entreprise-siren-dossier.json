@@ -1,63 +1,73 @@
 {
-  "siren": "552032534",
-  "identite": {
+  "_endpoint": "/v1/entreprise/{siren}/dossier",
+  "_price": "$0.005",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/dossier?blocs=finances%2Cpi%2Cscore",
+  "_sample_of": "2026-08-11",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-dossier.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
     "siren": "552032534",
-    "denomination": "DANONE",
-    "nature_juridique": "5599",
-    "activite_principale": "70.10Z",
-    "categorie_entreprise": "GE",
-    "etat_administratif": "actif"
-  },
-  "blocs_demandes": [
-    "finances",
-    "pi",
-    "score"
-  ],
-  "blocs": {
-    "finances": {
+    "identite": {
       "siren": "552032534",
-      "nombre_exercices": 8,
-      "exercices": [
-        {
-          "date_cloture": "2024-12-31",
-          "chiffre_affaires": 1030000000,
-          "ebe": 697000000,
-          "resultat_net": 592000000
-        }
-      ]
+      "denomination": "DANONE",
+      "nature_juridique": "5599",
+      "activite_principale": "70.10Z",
+      "categorie_entreprise": "GE",
+      "etat_administratif": "actif"
     },
-    "pi": {
-      "marques": {
-        "nombre": 88,
-        "liste": [
+    "blocs_demandes": [
+      "finances",
+      "pi",
+      "score"
+    ],
+    "blocs": {
+      "finances": {
+        "siren": "552032534",
+        "nombre_exercices": 8,
+        "exercices": [
           {
-            "numero": "4789796",
-            "libelle": "THE ONE HOME",
-            "statut": "Marque enregistrée"
+            "date_cloture": "2024-12-31",
+            "chiffre_affaires": 1030000000,
+            "ebe": 697000000,
+            "resultat_net": 592000000
           }
         ]
       },
-      "brevets": {
-        "nombre": 12
+      "pi": {
+        "marques": {
+          "nombre": 88,
+          "liste": [
+            {
+              "numero": "4789796",
+              "libelle": "THE ONE HOME",
+              "statut": "Marque enregistrée",
+              "date": "2021-07-31",
+              "date_nature": "depot",
+              "classification": "41, 44"
+            }
+          ]
+        },
+        "brevets": {
+          "nombre": 12
+        },
+        "modeles": {
+          "nombre": 3
+        }
       },
-      "modeles": {
-        "nombre": 3
+      "score": {
+        "siren": "552032534",
+        "score_risque": 22,
+        "classe": "sain",
+        "risque_12m": "faible",
+        "confiance": "moyenne",
+        "version_modele": "defaillance-v1.9"
       }
     },
-    "score": {
-      "siren": "552032534",
-      "score_risque": 22,
-      "classe": "sain",
-      "risque_12m": "faible",
-      "confiance": "moyenne",
-      "version_modele": "defaillance-v1.8"
+    "blocs_absents": [],
+    "resume": {
+      "demandes": 3,
+      "servis": 3,
+      "absents": 0,
+      "dont_panne_amont": 0
     }
-  },
-  "blocs_absents": [],
-  "resume": {
-    "demandes": 3,
-    "servis": 3,
-    "absents": 0,
-    "dont_panne_amont": 0
   }
 }

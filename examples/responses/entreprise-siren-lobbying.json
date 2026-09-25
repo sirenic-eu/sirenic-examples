@@ -3,7 +3,7 @@
   "_price": "$0.01",
   "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/lobbying",
   "_sample_of": "2026-07-29",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-lobbying.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "siren": "552032534",
     "inscrit": true,
@@ -34,7 +34,7 @@
     ],
     "clients": [],
     "source": "HATVP — Répertoire des représentants d'intérêts (AGORA), Licence Ouverte 2.0",
-    "disclaimer": "Données DÉCLARATIVES publiées par la HATVP, restituées au niveau de l'organisation (aucune personne physique) et resynchronisées régulièrement — le champ `objet` des sujets est le texte déclaré par l'organisation. Ni un avis ni une appréciation sur la licéité des activités.",
+    "disclaimer": "Données DÉCLARATIVES publiées par la HATVP, restituées au niveau de l'organisation (aucune personne physique) et resynchronisées régulièrement — le champ `objet` des sujets est le texte déclaré par l'organisation. Ni un avis ni une appréciation sur la licéité des activités. / Declarative data as published by the HATVP, organisation-level only, regularly resynced; the `objet` free text is the organisation's own wording.",
     "data_freshness": "répertoire HATVP (extrait 2026-07-27)"
   }
 }

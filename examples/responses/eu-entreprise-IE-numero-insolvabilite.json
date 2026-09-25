@@ -1,0 +1,38 @@
+{
+  "_endpoint": "/v1/eu/entreprise/IE/{numero}/insolvabilite",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/IE/551667/insolvabilite",
+  "_sample_of": "2026-09-18",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-IE-numero-insolvabilite.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "pays": "IE",
+    "id_national": "551667",
+    "denomination": "CCT DUBLIN FUNDING DESIGNATED ACTIVITY COMPANY",
+    "statut_registre": {
+      "code": "1152",
+      "libelle": "Liquidation",
+      "famille": "liquidation",
+      "fr": "en liquidation",
+      "depuis": "2025-12-08"
+    },
+    "statut_unifie": "autre",
+    "procedure_au_registre": true,
+    "procedures": [
+      {
+        "nature": "liquidation",
+        "libelle_fr": "en liquidation",
+        "libelle_registre": "Liquidation",
+        "depuis": "2025-12-08",
+        "en_cours": true
+      }
+    ],
+    "nombre_procedures": 1,
+    "aucune_procedure": false,
+    "radiation": {
+      "en_cours": false,
+      "radiee": false,
+      "dissoute_le": null
+    },
+    "photo": "2026-09-18"
+  }
+}

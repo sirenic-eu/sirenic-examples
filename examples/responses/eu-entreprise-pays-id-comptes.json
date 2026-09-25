@@ -3,7 +3,7 @@
   "_price": "$0.01",
   "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/BE/0400378485/comptes",
   "_sample_of": "2026-07-29",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-pays-id-comptes.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "BE",
     "id_national": "0400378485",
@@ -23,9 +23,9 @@
         }
       }
     ],
-    "telechargement": "GET /v1/eu/entreprise/BE/{id}/comptes/{reference}",
+    "telechargement": "GET /v1/eu/entreprise/BE/{id}/comptes/{reference} — le dépôt complet ($0.15, JSON quand la BNB en publie un, PDF officiel sinon ; ?format=pdf force le PDF, ?format=json refuse le repli et rend 406 non facturé)",
     "source": "Banque nationale de Belgique — Centrale des bilans (CBSO), webservice Authentic Data",
-    "disclaimer": "Comptes annuels tels que déposés et publiés par la Centrale des bilans de la BNB (dépôts immuables)",
+    "disclaimer": "Comptes annuels tels que déposés et publiés par la Centrale des bilans de la BNB (dépôts immuables) ; JSON structuré pour les dépôts publiés depuis avril 2022, PDF officiel pour l'historique. / Annual accounts as filed and published by the NBB Central Balance Sheet Office.",
     "data_freshness": "BNB CBSO temps réel, liste en cache 24 h"
   }
 }

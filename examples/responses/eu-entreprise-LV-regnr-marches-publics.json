@@ -1,0 +1,53 @@
+{
+  "_endpoint": "/v1/eu/entreprise/LV/{regnr}/marches-publics",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/LV/40003242737/marches-publics",
+  "_sample_of": "2026-09-17",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-LV-regnr-marches-publics.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "pays": "LV",
+    "id_national": "40003242737",
+    "attributions": [
+      {
+        "avis_id": "d5267a7f-3473-4ab0-8fc0-9272d7b9bb8a",
+        "type_avis": "contract-execution",
+        "forme": "execution",
+        "forme_source": "execution",
+        "publie_le": "2026-09-16",
+        "objet": "Degvielas iegāde Aizkraukles novada pašvaldības iestādēm",
+        "cpv": "09000000-3",
+        "nature": null,
+        "acheteur": {
+          "regnr": "90000074812",
+          "nom": "Aizkraukles novada pašvaldība",
+          "type": "la-main"
+        },
+        "contrat": {
+          "reference": "6.2/2024/64",
+          "titre": "Līgums",
+          "valeur_eur": 10061.17,
+          "conclusion_le": "2024-05-02",
+          "decision_le": null,
+          "debut_le": null,
+          "fin_le": "2026-01-01",
+          "statut": null
+        },
+        "gagnant": {
+          "nom_publie": "Akciju sabiedrība \"VIRŠI-A\"",
+          "taille": null
+        }
+      }
+    ],
+    "nombre_attributions": 1,
+    "valeur_totale_eur": 10061.17,
+    "tronque_attributions": false,
+    "aucune_attribution": false,
+    "avis_emis": [],
+    "nombre_avis_emis": 0,
+    "tronque_avis_emis": false,
+    "stock": {
+      "depuis": "2023-10-25",
+      "dernier_jour_collecte": "2026-09-16"
+    }
+  }
+}

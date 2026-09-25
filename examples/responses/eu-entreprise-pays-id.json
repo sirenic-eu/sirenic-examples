@@ -1,34 +1,40 @@
 {
   "_endpoint": "/v1/eu/entreprise/{pays}/{id}",
   "_price": "$0.01",
-  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/NO/923609016",
-  "_sample_of": "2026-07-29",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/GB/00000006",
+  "_sample_of": "2026-09-04",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-pays-id.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
-    "pays": "NO",
-    "registre": "Enhetsregisteret (Brønnøysundregistrene)",
-    "id_national": "923609016",
-    "denomination": "EQUINOR ASA",
+    "pays": "GB",
+    "registre": "Companies House",
+    "id_national": "00000006",
+    "lei": null,
+    "denomination": "MARINE AND GENERAL MUTUAL LIFE ASSURANCE SOCIETY",
     "forme_juridique": {
-      "code": "ASA",
-      "libelle": "Allmennaksjeselskap"
+      "code": "private-unlimited-nsc",
+      "libelle": null
     },
-    "statut": "actif",
-    "statut_detail": null,
-    "date_creation": "1995-03-12",
+    "statut": "cesse",
+    "statut_detail": "dissolved",
+    "date_creation": "1862-10-25",
     "adresse_siege": {
-      "adresse": "Forusbeen 50",
-      "code_postal": "4035",
-      "ville": "STAVANGER",
-      "pays": "NO"
+      "adresse": "Cms Cameron Mckenna Llp Cannon Place",
+      "code_postal": "EC4N 6AF",
+      "ville": "London",
+      "pays": "GB"
+    },
+    "activite": {
+      "nomenclature": "SIC-2007",
+      "code": "65110",
+      "libelle": null
     },
     "identifiants": {
-      "tva": "NO923609016MVA",
-      "lei": "OW6OFBNCKXC4US5C7523"
+      "tva": null,
+      "lei": null
     },
-    "lien_registre": "https://virksomhet.brreg.no/nb/oppslag/enheter/923609016",
-    "data_freshness": "stock Enhetsregisteret (Brønnøysundregistrene) (2026-07)",
-    "source": "Registres officiels : Brønnøysundregistrene (NO, NLOD), e-Business Register (EE, CC-BY 4.0), Uzņēmumu reģistrs (LV), KBO/BCE (BE), CVR (DK), Companies House (GB, OGL), ARES (CZ), Register právnických osôb (SK, CC-BY 4.0), PRH/YTJ (FI, CC-BY 4.0), Krajowy Rejestr Sądowy (PL), Zefix (CH, OGD), Bolagsverket (SE), GLEIF (CC0)",
+    "lien_registre": "https://find-and-update.company-information.service.gov.uk/company/00000006",
+    "data_freshness": "Companies House temps réel (cache 24 h)",
+    "source": "Registres officiels : Brønnøysundregistrene (NO, NLOD), e-Business Register (EE, CC-BY 4.0), Uzņēmumu reģistrs (LV), KBO/BCE (BE), CVR (DK), Companies House (GB, OGL), ARES (CZ), Register právnických osôb (SK, CC-BY 4.0), PRH/YTJ (FI, CC-BY 4.0), Krajowy Rejestr Sądowy (PL), Zefix (CH, OGD), Bolagsverket (SE), Sudski registar (HR, Otvorena dozvola), Juridinių asmenų registras (LT, CC-BY 4.0), Companies Registration Office (IE, CC-BY 4.0), DRCOR (CY, CC-BY 4.0), ONRC Registrul Comerțului (RO, CC-BY 4.0), BORME (ES), GLEIF (CC0)",
     "disclaimer": "Données rediffusées telles que publiées par les registres officiels, dans un schéma unifié ; `statut` est une normalisation en 3 valeurs, le libellé source est conservé dans `statut_detail`. / Official register data as published, unified schema; `statut` is a 3-value normalization."
   }
 }

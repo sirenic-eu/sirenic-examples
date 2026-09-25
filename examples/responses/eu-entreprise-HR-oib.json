@@ -1,0 +1,51 @@
+{
+  "_endpoint": "/v1/eu/entreprise/HR/{oib}",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/HR/92803032010",
+  "_sample_of": "2026-09-17",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-HR-oib.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "pays": "HR",
+    "registre": "Sudski registar (Ministarstvo pravosuđa, uprave i digitalne transformacije)",
+    "id_national": "92803032010",
+    "denomination": "KOESTLIN dioničko društvo,tvornica keksa i vafla",
+    "forme_juridique": {
+      "code": "4",
+      "libelle": "dioničko društvo — d.d."
+    },
+    "statut": "actif",
+    "statut_detail": null,
+    "date_creation": "1992-12-31",
+    "adresse_siege": {
+      "adresse": "Slavonska cesta 2a",
+      "code_postal": null,
+      "ville": "Bjelovar",
+      "pays": "HR"
+    },
+    "identifiants": {
+      "tva": "HR92803032010",
+      "lei": null
+    },
+    "registre_hr": {
+      "mbs": "10000162",
+      "tribunal": "Trgovački sud u Bjelovaru",
+      "denomination_abregee": "KOESTLIN d.d.",
+      "procedure": {
+        "code": "aucune",
+        "libelle": "aucune procédure / no procedure",
+        "en_cours": false
+      },
+      "masse_faillite": false,
+      "succursale_societe_etrangere": false,
+      "capital": {
+        "montant": 12775884,
+        "devise": "euro"
+      },
+      "emails_publies": [
+        "koes.info@koestlin.hr"
+      ],
+      "photo": "2026-09-17"
+    },
+    "source": "Sudski registar — Portal otvorenih podataka (sudreg-data.gov.hr), API « javni », photo quotidienne"
+  }
+}

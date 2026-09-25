@@ -3,7 +3,7 @@
   "_price": "$0.002",
   "_request": "GET https://api.sirenic.eu/v1/recherche?q=danone",
   "_sample_of": "2026-09-25",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/recherche.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "total_results": 49,
     "resultats": [
@@ -19,31 +19,9 @@
       }
     ],
     "tronque": true,
-    "note_troncature": "total_results est une borne basse : l'index local lit au plus 25 à 40 candidats par étage de recherche (nom exact, préfixe, mots, fautes de frappe) et l'un d'eux a atteint sa borne, ou n'a pas pu être interrogé ; d'autres sociétés correspondent. Pour une société précise, affinez la requête (nom complet, commune) ou cherchez par SIREN. / total_results is a lower bound: the local index reads at most 25 to 40 candidates per search stage and one of them hit its cap, or could not be queried; more companies match. For a given company, refine the query (full name, town) or search by SIREN.",
     "source": "INSEE Sirene / INPI RNE via recherche-entreprises.api.gouv.fr, licence ouverte Etalab 2.0",
     "disclaimer": "Données issues de l'open data, fournies en l'état sans garantie. / Open data, provided as is without warranty.",
     "etages_abandonnes": [],
-    "data_freshness": "stock Sirene mensuel (2026-09-01), dirigeants temps réel",
-    "provenance": [
-      {
-        "bloc": "resultats",
-        "source_code": "insee_sirene",
-        "registre": "Répertoire Sirene des entreprises et de leurs établissements (INSEE)",
-        "mode": "stock",
-        "licence": "etalab-2.0",
-        "version": "2026-09-01",
-        "as_of": "2026-09-01",
-        "precision_as_of": "publication_officielle",
-        "age_jours": 24,
-        "etat": "partiel",
-        "couverture": {
-          "etat": "partielle",
-          "mesure": "10/49 résultats servis (page) / results served (page)",
-          "detail": {
-            "total_results": 49
-          }
-        }
-      }
-    ]
+    "data_freshness": "stock Sirene mensuel (2026-09-01), dirigeants temps réel"
   }
 }

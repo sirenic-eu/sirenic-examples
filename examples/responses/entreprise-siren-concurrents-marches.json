@@ -1,0 +1,33 @@
+{
+  "_endpoint": "/v1/entreprise/{siren}/concurrents-marches",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/130031487/concurrents-marches",
+  "_sample_of": "2026-09-02",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-concurrents-marches.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "siren": "130031487",
+    "segments_cpv": [
+      {
+        "cpv4": "7999",
+        "nombre": 7
+      },
+      {
+        "cpv4": "8053",
+        "nombre": 4
+      }
+    ],
+    "periode_comparaison_annees": 3,
+    "concurrents": [
+      {
+        "siren": "444523526",
+        "nom": "ARTELIA",
+        "nombre_marches": 262,
+        "montant_total": 116410066.59,
+        "segments_communs": [
+          "7124",
+          "7931"
+        ]
+      }
+    ]
+  }
+}

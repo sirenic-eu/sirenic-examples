@@ -1,0 +1,86 @@
+{
+  "_endpoint": "/v1/eu/entreprise/RO/{cui}",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/RO/3474203",
+  "_sample_of": "2026-09-02",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-RO-cui.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "pays": "RO",
+    "registre": "Oficiul Național al Registrului Comerțului (ONRC, Registrul Comerțului)",
+    "id_national": "3474203",
+    "denomination": "ORIENT COMEX S.R.L.",
+    "forme_juridique": {
+      "code": "SRL",
+      "libelle": "société à responsabilité limitée (societate cu răspundere limitată)"
+    },
+    "statut": "actif",
+    "statut_detail": null,
+    "date_creation": "1992-03-10",
+    "adresse_siege": {
+      "adresse": "Str. <rue>, nr. <n>",
+      "code_postal": null,
+      "ville": "Chiajna",
+      "pays": "RO"
+    },
+    "identifiants": {
+      "tva": null,
+      "lei": null
+    },
+    "registre_ro": {
+      "statut": "servi",
+      "photo": "2026-09-02",
+      "cui": "3474203",
+      "inscriptions": [
+        {
+          "cod_inmatriculare": "J2024004913234",
+          "euid": "ROONRC.J2024004913234",
+          "denomination": "ORIENT COMEX S.R.L.",
+          "forme": {
+            "code": "SRL"
+          },
+          "inscrit_le": "2024-07-08",
+          "judet": "Ilfov",
+          "courante": true
+        },
+        {
+          "cod_inmatriculare": "J40/5594/1992",
+          "euid": "ROONRC.J40/5594/1992",
+          "denomination": "ORIENT COMEX SRL",
+          "forme": {
+            "code": "SRL"
+          },
+          "inscrit_le": "1992-03-10",
+          "judet": "Bucureşti",
+          "courante": false
+        }
+      ],
+      "premiere_immatriculation_le": "1992-03-10",
+      "statuts": [
+        {
+          "code": 1048,
+          "libelle_ro": "funcțiune",
+          "famille": "active",
+          "fr": "en fonction"
+        },
+        {
+          "code": 1084,
+          "libelle_ro": "radiată",
+          "famille": "radiation",
+          "fr": "radiée"
+        }
+      ],
+      "familles_presentes": [
+        "active",
+        "radiation"
+      ],
+      "procedure_au_registre": false,
+      "siege": {
+        "judet": "Ilfov",
+        "localitate": "Chiajna",
+        "pays": "RO"
+      },
+      "succursales_autres_etats_membres": [],
+      "mandats_publies": 3
+    }
+  }
+}

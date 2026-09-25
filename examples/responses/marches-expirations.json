@@ -1,0 +1,44 @@
+{
+  "_endpoint": "/v1/marches/expirations",
+  "_price": "$0.05",
+  "_request": "GET https://api.sirenic.eu/v1/marches/expirations?cpv=45&fenetre_mois=6",
+  "_sample_of": "2026-09-02",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/marches-expirations.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "filtres": {
+      "cpv": "45",
+      "departement": null,
+      "fenetre_mois": 6
+    },
+    "total_marches": 34249,
+    "page": 1,
+    "pages": 685,
+    "marches": [
+      {
+        "id": "2777529",
+        "objet": "Travaux de menuiserie pour l'accueil de la DRFIP 44",
+        "acheteur": {
+          "siret": "13001292500017",
+          "nom": "DIRECTION REGIONALE FINANCES PUBLIQUES PAYS DE LA LOIRE ET DEPARTEMENT LOIRE ATLANTIQUE"
+        },
+        "montant": 9788.8,
+        "accord_cadre": false,
+        "montant_est_enveloppe": true,
+        "modalites_execution": "Marchés subséquents",
+        "sous_traitance_declaree": false,
+        "lot_numero": null,
+        "date_notification": "2025-09-02",
+        "duree_mois": 12,
+        "date_fin_estimee": "2026-09-02",
+        "code_cpv": "45421100-5",
+        "departement": null,
+        "titulaires_sortants": [
+          {
+            "siren": "501383251",
+            "nom": "SOGEA ATLANTIQUE BTP"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -2,28 +2,29 @@
   "_endpoint": "/v1/entreprise/{siren}/capital",
   "_price": "$0.35",
   "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/capital",
-  "_sample_of": "2026-07-29",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_sample_of": "2026-09-25",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-capital.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "siren": "552032534",
     "modele": "claude-sonnet-5",
     "capital": {
-      "montant_capital_eur": 170739060,
+      "montant_capital_eur": 170834294.25,
       "forme_juridique": "Société anonyme",
       "associes": [],
       "associes_personnes_physiques": 0,
       "detenu_par_personnes_physiques_pct": 0,
+      "motif_absence_associes": "statuts_sans_liste_associes",
       "clauses_notables": [
         "droit_de_vote_double"
       ],
       "confiance": "faible"
     },
-    "version_prompt": "capital-v2",
+    "version_prompt": "capital-v5",
     "document_source": {
-      "id": "6a33ae8b0397b4bf6e0f5118",
-      "nom": "Statuts_Danone_26_mai_2026_signes_2",
+      "id": "6a8c2d0c78bc80869c012039",
+      "nom": "statuts",
       "type": "actes",
-      "date_depot": "2026-06-16"
+      "date_depot": "2026-08-13"
     },
     "depuis_cache": true,
     "source": "INPI — actes/statuts publics déposés au registre national des entreprises (RNE)"

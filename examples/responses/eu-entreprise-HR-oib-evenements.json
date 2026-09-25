@@ -1,0 +1,37 @@
+{
+  "_endpoint": "/v1/eu/entreprise/HR/{oib}/evenements",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/HR/92963223473/evenements",
+  "_sample_of": "2026-09-17",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-HR-oib-evenements.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "pays": "HR",
+    "id_national": "92963223473",
+    "mbs": "80000014",
+    "denomination": "ZAGREBAČKA BANKA DIONIČKO DRUŠTVO",
+    "nombre_inscriptions": 12,
+    "textes_servis": 2,
+    "textes_retenus": 10,
+    "inscriptions": [
+      {
+        "rang": 1,
+        "type_id": 3,
+        "type": "Statut",
+        "categorie": "autre",
+        "texte": null,
+        "texte_retenu": true,
+        "decision": null
+      },
+      {
+        "rang": 10,
+        "type_id": 33,
+        "type": "Razlozi za prestanak",
+        "categorie": "acte",
+        "texte": "Odlukom Uprave banke od 31. listopada 2000.g., s danom 31. prosinca 2000.g. prestaje s radom podružnica broj 019, ZAGREBAČKA BANKA d.d. Fili",
+        "texte_retenu": false,
+        "decision": null
+      }
+    ],
+    "photo": "2026-09-17"
+  }
+}

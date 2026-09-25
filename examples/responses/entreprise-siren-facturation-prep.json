@@ -3,7 +3,7 @@
   "_price": "$0.02",
   "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/facturation-prep",
   "_sample_of": "2026-07-29",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-facturation-prep.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "siren": "552032534",
     "statut_diffusion": "totale",
@@ -41,6 +41,6 @@
     },
     "avertissements": [],
     "data_freshness": "identité : stock Sirene mensuel (2026-07-01)",
-    "disclaimer": "Données de préparation fournies à titre indicatif ; Sirenic n'émet, ne transmet ni ne route aucune facture, et ne confirme pas l'enregistrement du destinataire sur le PPF ou une PDP."
+    "disclaimer": "Données de préparation fournies à titre indicatif ; Sirenic n'émet, ne transmet ni ne route aucune facture, et ne confirme pas l'enregistrement du destinataire sur le PPF ou une PDP. / Preparation data provided for guidance only; Sirenic does not issue, transmit or route any invoice, and does not confirm the recipient's registration on the PPF or any accredited platform (PDP)."
   }
 }

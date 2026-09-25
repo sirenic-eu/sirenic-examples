@@ -2,21 +2,25 @@
   "_endpoint": "/v1/dirigeant/recherche",
   "_price": "$0.02",
   "_request": "GET https://api.sirenic.eu/v1/dirigeant/recherche?nom=Arnault",
-  "_sample_of": "2026-07-29",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_sample_of": "2026-08-13",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/dirigeant-recherche.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "nombre_resultats": 1,
     "tronque": false,
     "resultats": [
       {
-        "siren": "552032534",
-        "denomination": "GROUPE ARNAULT",
+        "siren": "314685454",
+        "denomination": "AGACHE",
+        "etat_administratif": "actif",
+        "statut_diffusion": "totale",
         "correspondance_locale": true,
         "mandats": [
           {
             "type": "personne_physique",
             "nom": "ARNAULT",
-            "fonction": "Président"
+            "prenoms": "BERNARD",
+            "fonction": "Autre",
+            "annee_de_naissance": "1949"
           }
         ]
       }

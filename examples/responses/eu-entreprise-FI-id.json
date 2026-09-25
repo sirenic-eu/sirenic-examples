@@ -2,8 +2,8 @@
   "_endpoint": "/v1/eu/entreprise/FI/{id}",
   "_price": "$0.01",
   "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/FI/0112038-9",
-  "_sample_of": "2026-07-29",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_sample_of": "2026-09-18",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-FI-id.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "FI",
     "registre": "YTJ / PRH Business Information System (CC-BY 4.0)",
@@ -33,7 +33,27 @@
     },
     "lien_registre": "https://tietopalvelu.ytj.fi/yritys/0112038-9",
     "data_freshness": "PRH/YTJ open data temps réel (cache 24 h)",
-    "source": "Registres officiels : Brønnøysundregistrene (NO, NLOD), e-Business Register (EE, CC-BY 4.0), Uzņēmumu reģistrs (LV), KBO/BCE (BE), CVR (DK), Companies House (GB, OGL), ARES (CZ), Register právnických osôb (SK, CC-BY 4.0), PRH/YTJ (FI, CC-BY 4.0), Krajowy Rejestr Sądowy (PL), Zefix (CH, OGD), Bolagsverket (SE), GLEIF (CC0)",
+    "registres_fi": {
+      "statut": "servi",
+      "registres": [
+        {
+          "registre": "registre_commerce",
+          "registre_code": "1",
+          "statut": {
+            "en": "Registered",
+            "fi": "Rekisterissä",
+            "sv": "Registrerad"
+          },
+          "statut_code": "1",
+          "autorite": "PRH (Patentti- ja rekisterihallitus)",
+          "autorite_code": "2",
+          "inscrit_le": "1896-12-19",
+          "radie_le": null
+        }
+      ],
+      "tva_active": true,
+      "consulte_le": "2026-09-18T02:40:18.909Z"
+    },
     "disclaimer": "Données rediffusées telles que publiées par les registres officiels, dans un schéma unifié ; `statut` est une normalisation en 3 valeurs, le libellé source est conservé dans `statut_detail`. / Official register data as published, unified schema; `statut` is a 3-value normalization."
   }
 }

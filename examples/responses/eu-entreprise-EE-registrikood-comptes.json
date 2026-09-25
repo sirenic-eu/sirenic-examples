@@ -3,7 +3,7 @@
   "_price": "$0.02",
   "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/EE/10003666/comptes",
   "_sample_of": "2026-07-29",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-EE-registrikood-comptes.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "EE",
     "id_national": "10003666",
@@ -27,8 +27,7 @@
         }
       }
     ],
-    "source": "e-äriregister (Registre du commerce estonien) — open data avaandmed.ariregister.rik.ee",
-    "licence": "Registrite ja Infosüsteemide Keskus (RIK) — e-äriregistri avaandmed, CC BY 4.0",
-    "disclaimer": "Chiffres clés des rapports annuels tels que publiés par le e-äriregister (RIK, CC BY 4.0), millésimes 2019 et suivants"
+    "source": "e-äriregister (Registre du commerce estonien) — open data avaandmed.ariregister.rik.ee (aruannete elemendid, määrused), RIK, licence CC BY 4.0",
+    "licence": "Registrite ja Infosüsteemide Keskus (RIK) — e-äriregistri avaandmed, CC BY 4.0"
   }
 }

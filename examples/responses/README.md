@@ -1,23 +1,22 @@
 # Response samples
 
-One file per paid endpoint: the **real** response you get, truncated to one item
-per array. These are **dated snapshots**, not live data — regenerating them
-costs money, so they are refreshed at each paid smoke run.
+One file per paid endpoint, each an extract of **real** data (a paid response, or the source's own
+records): trimmed by removal (one item per array, some fields left out), never rewritten; natural
+persons and bearer tokens appear only as placeholders. These are **dated snapshots**, not live data:
+they are refreshed from paid purchases.
 
 Each sample is also served **live by the API**, free, at
-`https://api.sirenic.eu/exemples/<file>` — the landing page links to it from every
+`https://api.sirenic.eu/exemples/<file>`: the landing page links to it from every
 row of the pricing table, so you can see what a route returns before paying for it.
 
 The same samples are served by the API itself: in the OpenAPI spec
 (`responses.200.content."application/json".example`), in the x402 payment quote
-(`extensions.bazaar.info.output.example`) and in `llms.txt`. One source of
-truth, four surfaces.
+(`extensions.bazaar.info.output.example`) and in `llms.txt`. One source of truth, from which this
+folder is regenerated. One file is the full paid response rather than the served extract:
+`score-defaillance-siren.json` (2026-09-25).
 
 Two endpoints return a **PDF** and therefore have no JSON sample:
-`GET /v1/rapport/{siren}` and `GET /v1/documents/{type}/{id}`. Two more are
-waiting before we publish anything — capital links and Swedish accounts — because
-the only material available is invented test data, and we would rather show
-nothing than a plausible fabrication about a real company.
+`GET /v1/rapport/{siren}` and `GET /v1/documents/{type}/{id}`.
 
 | Endpoint | Price | Sample |
 |---|---|---|
@@ -77,13 +76,13 @@ nothing than a plausible fabrication about a real company.
 | `GET /v1/eu/entreprise/LT/:kodas/insolvabilite` | $0.02 | [`eu-entreprise-LT-kodas-insolvabilite.json`](eu-entreprise-LT-kodas-insolvabilite.json), real purchase 2026-09-23 |
 | `GET /v1/eu/entreprise/FI/:id/evenements` | $0.02 | [`eu-entreprise-FI-id-evenements.json`](eu-entreprise-FI-id-evenements.json), real purchase 2026-09-18 |
 | `GET /v1/eu/entreprise/SE/:orgnr/evenements` | $0.02 | [`eu-entreprise-SE-orgnr-evenements.json`](eu-entreprise-SE-orgnr-evenements.json) |
-| `GET /v1/eu/entreprise/SE/:orgnr/comptes` | $0.02 | [`eu-entreprise-SE-orgnr-comptes.json`](eu-entreprise-SE-orgnr-comptes.json) — real purchase 2026-08-17, first since the route reopened (Swedish iXBRL stock rebuilt: 1.82M filings) |
+| `GET /v1/eu/entreprise/SE/:orgnr/comptes` | $0.02 | [`eu-entreprise-SE-orgnr-comptes.json`](eu-entreprise-SE-orgnr-comptes.json), real purchase 2026-08-17, first since the route reopened (Swedish iXBRL stock rebuilt: 1.82M filings) |
 | `GET /v1/eu/entreprise/SE/:id` | $0.01 | [`eu-entreprise-SE-id.json`](eu-entreprise-SE-id.json) |
 | `GET /v1/eu/entreprise/CZ/:ico/insolvabilite` | $0.02 | [`eu-entreprise-CZ-ico-insolvabilite.json`](eu-entreprise-CZ-ico-insolvabilite.json) |
 | `GET /v1/eu/entreprise/PL/:krs/evenements` | $0.02 | [`eu-entreprise-PL-krs-evenements.json`](eu-entreprise-PL-krs-evenements.json) |
 | `GET /v1/eu/entreprise/:pays/:id` | $0.01 | [`eu-entreprise-pays-id.json`](eu-entreprise-pays-id.json) |
 | `GET /v1/eu/facturation/dossier` | $0.03 | [`eu-facturation-dossier.json`](eu-facturation-dossier.json) |
-| `GET /v1/eu/entreprise/:pays/:id/transactions-dirigeants` | $0.02 | [`eu-entreprise-pays-id-transactions-dirigeants.json`](eu-entreprise-pays-id-transactions-dirigeants.json) — BE sample; DE (BaFin, LEI/ISIN) covered since 2026-08-15 |
+| `GET /v1/eu/entreprise/:pays/:id/transactions-dirigeants` | $0.02 | [`eu-entreprise-pays-id-transactions-dirigeants.json`](eu-entreprise-pays-id-transactions-dirigeants.json), BE sample; DE (BaFin, LEI/ISIN) covered since 2026-08-15 |
 | `GET /v1/eu/entreprise/NO/:id/comptes` | $0.02 | [`eu-entreprise-NO-id-comptes.json`](eu-entreprise-NO-id-comptes.json) |
 | `GET /v1/eu/entreprise/NO/:id/evenements` | $0.02 | [`eu-entreprise-NO-id-evenements.json`](eu-entreprise-NO-id-evenements.json) |
 | `GET /v1/eu/entreprise/DK/:id/comptes` | $0.01 | [`eu-entreprise-DK-id-comptes.json`](eu-entreprise-DK-id-comptes.json) |
@@ -96,10 +95,42 @@ nothing than a plausible fabrication about a real company.
 | `GET /v1/eu/entreprise/:pays/:id/comptes` | $0.01 | [`eu-entreprise-pays-id-comptes.json`](eu-entreprise-pays-id-comptes.json) |
 | `GET /v1/eu/entreprise/:pays/:id/comptes/:reference` | $0.15 | [`eu-entreprise-pays-id-comptes-reference.json`](eu-entreprise-pays-id-comptes-reference.json) |
 | `GET /v1/entreprise/:siren/documents` | $0.02 | [`entreprise-siren-documents.json`](entreprise-siren-documents.json) |
-| `GET /v1/facture/verifier` | $0.02 | [`facture-verifier.json`](facture-verifier.json) — real purchase 2026-08-16; the same smoke proved the incoherent case live (Carrefour's VAT on Danone's SIREN → `tva_ne_correspond_pas_au_siren`) |
+| `GET /v1/facture/verifier` | $0.02 | [`facture-verifier.json`](facture-verifier.json), real purchase 2026-08-16; the same smoke proved the incoherent case live (Carrefour's VAT on Danone's SIREN → `tva_ne_correspond_pas_au_siren`) |
 | `GET /v1/facturation/dossier` | $0.03 | [`facturation-dossier.json`](facturation-dossier.json) |
 | `GET /v1/entreprise/:siren/facturation-prep` | $0.02 | [`entreprise-siren-facturation-prep.json`](entreprise-siren-facturation-prep.json) |
 | `GET /v1/score/defaillance/:siren` | $0.10 | [`score-defaillance-siren.json`](score-defaillance-siren.json) (real purchase 2026-09-25: scale `defaillance-v1.9`, with the dated French backtest of the scale in `echelle.backtest`, observed rates and never a probability) |
 | `GET /v1/secteur/:code_naf/benchmarks` | $0.05 | [`secteur-code_naf-benchmarks.json`](secteur-code_naf-benchmarks.json) |
 | `GET /v1/iban/verifier/:iban` | $0.005 | [`iban-verifier-iban.json`](iban-verifier-iban.json) |
 | `GET /v1/tva/verifier/:numero` | $0.003 | [`tva-verifier-numero.json`](tva-verifier-numero.json) |
+| `GET /v1/acheteur/:siret/profil` | $0.02 | [`acheteur-siret-profil.json`](acheteur-siret-profil.json) |
+| `GET /v1/entreprise/:siren/accords-collectifs` | $0.02 | [`entreprise-siren-accords-collectifs.json`](entreprise-siren-accords-collectifs.json) |
+| `GET /v1/entreprise/:siren/concurrents-marches` | $0.02 | [`entreprise-siren-concurrents-marches.json`](entreprise-siren-concurrents-marches.json) |
+| `GET /v1/entreprise/:siren/contentieux` | $0.01 | [`entreprise-siren-contentieux.json`](entreprise-siren-contentieux.json) |
+| `GET /v1/entreprise/:siren/emploi` | $0.02 | [`entreprise-siren-emploi.json`](entreprise-siren-emploi.json) |
+| `GET /v1/entreprise/:siren/financements-ue` | $0.02 | [`entreprise-siren-financements-ue.json`](entreprise-siren-financements-ue.json) |
+| `GET /v1/eu/entreprise/CH/:id/evenements` | $0.02 | [`eu-entreprise-CH-id-evenements.json`](eu-entreprise-CH-id-evenements.json) |
+| `GET /v1/eu/entreprise/CH/:id/insolvabilite` | $0.02 | [`eu-entreprise-CH-id-insolvabilite.json`](eu-entreprise-CH-id-insolvabilite.json) |
+| `GET /v1/eu/entreprise/CY/:id/dirigeants` | $0.01 | [`eu-entreprise-CY-id-dirigeants.json`](eu-entreprise-CY-id-dirigeants.json) |
+| `GET /v1/eu/entreprise/CY/:id` | $0.01 | [`eu-entreprise-CY-id.json`](eu-entreprise-CY-id.json) |
+| `GET /v1/eu/entreprise/ES/:nif/marches-publics` | $0.02 | [`eu-entreprise-ES-nif-marches-publics.json`](eu-entreprise-ES-nif-marches-publics.json) |
+| `GET /v1/eu/entreprise/GB/:company_number/annonces` | $0.02 | [`eu-entreprise-GB-company_number-annonces.json`](eu-entreprise-GB-company_number-annonces.json) |
+| `GET /v1/eu/entreprise/GB/:company_number/marches-publics` | $0.02 | [`eu-entreprise-GB-company_number-marches-publics.json`](eu-entreprise-GB-company_number-marches-publics.json) |
+| `GET /v1/eu/entreprise/HR/:oib/comptes` | $0.01 | [`eu-entreprise-HR-oib-comptes.json`](eu-entreprise-HR-oib-comptes.json) |
+| `GET /v1/eu/entreprise/HR/:oib/evenements` | $0.02 | [`eu-entreprise-HR-oib-evenements.json`](eu-entreprise-HR-oib-evenements.json) |
+| `GET /v1/eu/entreprise/HR/:oib/insolvabilite` | $0.02 | [`eu-entreprise-HR-oib-insolvabilite.json`](eu-entreprise-HR-oib-insolvabilite.json) |
+| `GET /v1/eu/entreprise/HR/:oib` | $0.01 | [`eu-entreprise-HR-oib.json`](eu-entreprise-HR-oib.json) |
+| `GET /v1/eu/entreprise/IE/:numero/insolvabilite` | $0.01 | [`eu-entreprise-IE-numero-insolvabilite.json`](eu-entreprise-IE-numero-insolvabilite.json) |
+| `GET /v1/eu/entreprise/IE/:numero` | $0.01 | [`eu-entreprise-IE-numero.json`](eu-entreprise-IE-numero.json) |
+| `GET /v1/eu/entreprise/LV/:regnr/associes` | $0.02 | [`eu-entreprise-LV-regnr-associes.json`](eu-entreprise-LV-regnr-associes.json) |
+| `GET /v1/eu/entreprise/LV/:regnr/evenements` | $0.02 | [`eu-entreprise-LV-regnr-evenements.json`](eu-entreprise-LV-regnr-evenements.json) |
+| `GET /v1/eu/entreprise/LV/:regnr/marches-publics` | $0.02 | [`eu-entreprise-LV-regnr-marches-publics.json`](eu-entreprise-LV-regnr-marches-publics.json) |
+| `GET /v1/eu/entreprise/NO/:id/dirigeants` | $0.01 | [`eu-entreprise-NO-id-dirigeants.json`](eu-entreprise-NO-id-dirigeants.json) |
+| `GET /v1/eu/entreprise/NO/:id/etablissements` | $0.01 | [`eu-entreprise-NO-id-etablissements.json`](eu-entreprise-NO-id-etablissements.json) |
+| `GET /v1/eu/entreprise/PL/:nip/marches-publics` | $0.02 | [`eu-entreprise-PL-nip-marches-publics.json`](eu-entreprise-PL-nip-marches-publics.json) |
+| `GET /v1/eu/entreprise/PT/:nipc/marches-publics` | $0.02 | [`eu-entreprise-PT-nipc-marches-publics.json`](eu-entreprise-PT-nipc-marches-publics.json) |
+| `GET /v1/eu/entreprise/RO/:cui/comptes` | $0.02 | [`eu-entreprise-RO-cui-comptes.json`](eu-entreprise-RO-cui-comptes.json) |
+| `GET /v1/eu/entreprise/RO/:cui/dirigeants` | $0.01 | [`eu-entreprise-RO-cui-dirigeants.json`](eu-entreprise-RO-cui-dirigeants.json) |
+| `GET /v1/eu/entreprise/RO/:cui/insolvabilite` | $0.02 | [`eu-entreprise-RO-cui-insolvabilite.json`](eu-entreprise-RO-cui-insolvabilite.json) |
+| `GET /v1/eu/entreprise/RO/:cui` | $0.01 | [`eu-entreprise-RO-cui.json`](eu-entreprise-RO-cui.json) |
+| `GET /v1/eu/entreprise/:pays/:id/marches-publics-ue` | $0.02 | [`eu-entreprise-pays-id-marches-publics-ue.json`](eu-entreprise-pays-id-marches-publics-ue.json) |
+| `GET /v1/marches/expirations` | $0.05 | [`marches-expirations.json`](marches-expirations.json) |

@@ -1,34 +1,65 @@
 {
   "_endpoint": "/v1/eu/entreprise/EE/{id}",
   "_price": "$0.01",
-  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/EE/12417834",
-  "_sample_of": "2026-07-29",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/EE/10060701",
+  "_sample_of": "2026-09-24",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-EE-id.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "EE",
     "registre": "e-Business Register (RIK)",
-    "id_national": "12417834",
-    "denomination": "Bolt Technology OÜ",
+    "id_national": "10060701",
+    "denomination": "Swedbank AS",
     "forme_juridique": {
       "code": null,
-      "libelle": "Osaühing"
+      "libelle": "Aktsiaselts"
     },
     "statut": "actif",
     "statut_detail": "Registrisse kantud",
-    "date_creation": "2013-02-07",
+    "date_creation": "1996-07-11",
     "adresse_siege": {
-      "adresse": "Vana-Lõuna tn 15",
-      "code_postal": "10134",
+      "adresse": "Liivalaia tn 34",
+      "code_postal": "15040",
       "ville": "Kesklinna linnaosa, Tallinn, Harju maakond",
       "pays": "EE"
     },
     "identifiants": {
-      "tva": "EE102090374",
-      "lei": null
+      "tva": "EE100354546",
+      "lei": "549300PHQZ4HL15HH975"
     },
-    "lien_registre": "https://ariregister.rik.ee/est/company/12417834",
-    "data_freshness": "stock e-Business Register (RIK) (2026-07)",
-    "source": "Registres officiels : Brønnøysundregistrene (NO, NLOD), e-Business Register (EE, CC-BY 4.0), Uzņēmumu reģistrs (LV), KBO/BCE (BE), CVR (DK), Companies House (GB, OGL), ARES (CZ), Register právnických osôb (SK, CC-BY 4.0), PRH/YTJ (FI, CC-BY 4.0), Krajowy Rejestr Sądowy (PL), Zefix (CH, OGD), Bolagsverket (SE), GLEIF (CC0)",
+    "data_freshness": "stock e-Business Register (RIK) (2026-09)",
+    "registre_ee": {
+      "statut": "servi",
+      "photo": "2026-09-23",
+      "premiere_inscription": "1996-07-11",
+      "forme": {
+        "code": "AS",
+        "libelle": "Aktsiaselts"
+      },
+      "capital": {
+        "montant": 85000000,
+        "devise": "EUR",
+        "depuis": "2011-07-15",
+        "actions_sans_valeur_nominale": null
+      },
+      "activites": [
+        {
+          "depuis": "2025-04-08",
+          "nace_code": "64.19",
+          "emtak_code": "64191",
+          "principale": true,
+          "emtak_libelle": "Krediidiasutused",
+          "emtak_version": "EMTAK 2025"
+        }
+      ],
+      "nombre_remarques": 2
+    },
+    "gages_commerciaux": {
+      "statut": "servi",
+      "nombre": 0,
+      "montant_total_par_devise": {},
+      "gages": [],
+      "photo": "2026-09-23"
+    },
     "disclaimer": "Données rediffusées telles que publiées par les registres officiels, dans un schéma unifié ; `statut` est une normalisation en 3 valeurs, le libellé source est conservé dans `statut_detail`. / Official register data as published, unified schema; `statut` is a 3-value normalization."
   }
 }

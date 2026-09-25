@@ -2,10 +2,10 @@
   "_endpoint": "/v1/eu/recherche",
   "_price": "$0.003",
   "_request": "GET https://api.sirenic.eu/v1/eu/recherche?q=equinor&pays=NO",
-  "_sample_of": "2026-07-29",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_sample_of": "2026-09-25",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-recherche.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
-    "nombre_resultats": 10,
+    "nombre_resultats": 30,
     "resultats": [
       {
         "pays": "NO",
@@ -18,15 +18,17 @@
         "score_confiance": 1
       }
     ],
+    "tronque": true,
+    "registres_muets": [],
     "pays_couverts": [
       {
         "pays": "NO",
         "registre": "Enhetsregisteret (Brønnøysundregistrene)",
         "mode": "base locale",
-        "entites": 1168483
+        "entites": 1172209
       }
     ],
-    "source": "Registres officiels : Brønnøysundregistrene (NO, NLOD), e-Business Register (EE, CC-BY 4.0), Uzņēmumu reģistrs (LV), KBO/BCE (BE), CVR (DK), Companies House (GB, OGL), ARES (CZ), Register právnických osôb (SK, CC-BY 4.0), PRH/YTJ (FI, CC-BY 4.0), Krajowy Rejestr Sądowy (PL), Zefix (CH, OGD), Bolagsverket (SE), GLEIF (CC0)",
+    "source": "Registres officiels : Brønnøysundregistrene (NO, NLOD), e-Business Register (EE, CC-BY 4.0), Uzņēmumu reģistrs (LV), KBO/BCE (BE), CVR (DK), Companies House (GB, OGL), ARES (CZ), Register právnických osôb (SK, CC-BY 4.0), PRH/YTJ (FI, CC-BY 4.0), Krajowy Rejestr Sądowy (PL), Zefix (CH, OGD), Bolagsverket (SE), Sudski registar (HR, Otvorena dozvola), Juridinių asmenų registras (LT, CC-BY 4.0), Companies Registration Office (IE, CC-BY 4.0), DRCOR (CY, CC-BY 4.0), ONRC Registrul Comerțului (RO, CC-BY 4.0), BORME (ES), GLEIF (CC0)",
     "disclaimer": "Données rediffusées telles que publiées par les registres officiels, dans un schéma unifié ; `statut` est une normalisation en 3 valeurs, le libellé source est conservé dans `statut_detail`. / Official register data as published, unified schema; `statut` is a 3-value normalization."
   }
 }

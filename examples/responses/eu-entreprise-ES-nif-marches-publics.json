@@ -1,0 +1,69 @@
+{
+  "_endpoint": "/v1/eu/entreprise/ES/{nif}/marches-publics",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/ES/A28582013/marches-publics",
+  "_sample_of": "2026-09-18",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-ES-nif-marches-publics.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "pays": "ES",
+    "nif": "A28582013",
+    "attributions": [
+      {
+        "id": "19724487",
+        "flux": "licitaciones",
+        "expediente": "26/030",
+        "lien": "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=JGc4e4Jv86zECtSnloz%2BZQ%3D%3D",
+        "statut": "attribuée",
+        "statut_source": "ADJ",
+        "objet": "Ejecución de las obras del \"Proyecto de construcción para la prolongación de los andenes de las estaciones de la Línea 3 de Metrovalencia\"",
+        "type_contrat": "travaux",
+        "type_contrat_source": "3",
+        "procedure": "ouvert",
+        "procedure_source": "1",
+        "cpv": [
+          "45234121",
+          "45234126"
+        ],
+        "nuts": "ES521",
+        "budget_ht_eur": 2897272.46,
+        "fonds_ue": false,
+        "acheteur": {
+          "nom": "Gerencia de Ferrocarrils de la Generalitat Valenciana",
+          "dir3": null,
+          "nif": "Q9650001B",
+          "type": "7",
+          "hierarchie": [
+            "Ferrocarrils de la Generalitat Valenciana",
+            "Comunidad Valenciana"
+          ]
+        },
+        "mis_a_jour": "2026-09-17T18:10:24Z",
+        "lot": null,
+        "resultat": "attribué",
+        "resultat_source": "8",
+        "date_attribution": "2026-09-16",
+        "montant_ht_eur": 2576254.67,
+        "montant_ttc_eur": 3117268.15,
+        "offres_recues": 9,
+        "pme": false,
+        "gagnant": {
+          "nif": "A28582013",
+          "nom_publie": "CHM OBRAS E INFRAESTRUCTURAS SA",
+          "nuts": "ES521",
+          "localite": "ALICANTE"
+        }
+      }
+    ],
+    "nombre_attributions": 1,
+    "valeur_totale_ht_eur": 2576254.67,
+    "tronque_attributions": false,
+    "aucune_attribution": false,
+    "avis_emis": [],
+    "nombre_avis_emis": 0,
+    "tronque_avis_emis": false,
+    "stock": {
+      "depuis": "2012",
+      "dernier_mis_a_jour": "2026-09-17T20:22:33.237+02:00"
+    }
+  }
+}

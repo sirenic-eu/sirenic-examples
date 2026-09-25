@@ -1,0 +1,61 @@
+{
+  "_endpoint": "/v1/eu/entreprise/LV/{regnr}/associes",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/LV/40103774127/associes",
+  "_sample_of": "2026-09-09",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-LV-regnr-associes.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "pays": "LV",
+    "id_national": "40103774127",
+    "aucun_associe_inscrit": false,
+    "nombre_associes": 2,
+    "associes": [
+      {
+        "type": "personne_morale",
+        "nom": "JC, Sabiedrība ar ierobežotu atbildību",
+        "regnr_entite": "40003666739",
+        "titres": {
+          "nature": "parts_sociales",
+          "nombre": 1530,
+          "valeur_nominale": 1,
+          "devise": "EUR",
+          "votes": null,
+          "type_actions": null
+        },
+        "part_capital_pct": 51,
+        "coproprietaires": null,
+        "actionnaires_non_publies": false,
+        "depuis": "2014-03-27",
+        "inscrit_le": "2014-03-27",
+        "modifie_le": "2014-03-27T16:38:01Z"
+      },
+      {
+        "type": "personne_physique",
+        "nom": null,
+        "regnr_entite": null,
+        "titres": {
+          "nature": "parts_sociales",
+          "nombre": 1470,
+          "valeur_nominale": 1,
+          "devise": "EUR",
+          "votes": null,
+          "type_actions": null
+        },
+        "part_capital_pct": 49,
+        "coproprietaires": null,
+        "actionnaires_non_publies": false,
+        "depuis": "2014-03-27",
+        "inscrit_le": "2014-03-27",
+        "modifie_le": "2014-03-27T16:38:01Z"
+      }
+    ],
+    "capital": {
+      "nature": "parts_sociales",
+      "nombre_titres": 3000,
+      "valeur_nominale_totale": 3000,
+      "devise": "EUR",
+      "detenu_par_personnes_physiques_pct": 49
+    },
+    "licence": "Uzņēmumu reģistrs / VID, data.gov.lv, CC0 1.0"
+  }
+}
