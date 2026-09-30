@@ -51,12 +51,16 @@ source list. This is a screening aid, not a compliance opinion.
 
 ## Going further
 
-- `GET /v1/entreprise/{siren}/sante` ($0.15): an AI-written health summary
-  (strengths, warning signs, confidence level) generated from the same
-  official data only.
+- `GET /v1/entreprise/{siren}/sante` ($0.15): a health check (verdict,
+  strengths, warning signs, confidence level) from the same official data
+  only: a model fills a closed evaluation grid, and every figure, date and
+  sentence is assembled by Sirenic.
 - `GET /v1/rapport/{siren}` ($0.50): the whole file as a shareable PDF.
-- `GET /v1/eu/entreprise/{pays}/{id}` ($0.01): same idea across European
-  registers (Norway, Estonia, Latvia + GLEIF worldwide).
+- `GET /v1/eu/entreprise/{pays}/{id}` ($0.01): same idea across the official
+  national registers of European countries, in one schema
+  ([European company data](https://api.sirenic.eu/en/use-cases/european-company-data-official-registers-one-schema)).
+- What each block of this file means, walked through:
+  [KYB verification with provenance on every block](https://api.sirenic.eu/en/use-cases/kyb-automated-business-verification-with-per-block).
 
 Full API: https://api.sirenic.eu/openapi.json · Data: official open data
 (Etalab 2.0 and other open licenses), redistributed as published.

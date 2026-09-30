@@ -32,6 +32,11 @@ match is not a sanction, never sum procurement rows, an absence is not a zero…
 at [`/v1/lecture`](https://api.sirenic.eu/v1/lecture) — both free.
 
 - Landing & pricing: https://api.sirenic.eu
+- Use cases, step by step: [KYB verification with provenance on every block](https://api.sirenic.eu/en/use-cases/kyb-automated-business-verification-with-per-block),
+  [verify a supplier before payment](https://api.sirenic.eu/en/use-cases/verify-supplier-before-payment-identity-vat-iban),
+  [get your supplier master data ready for French e-invoicing](https://api.sirenic.eu/en/use-cases/french-e-invoicing-get-your-supplier-master-data-ready),
+  and [all use cases](https://api.sirenic.eu/en/use-cases)
+- About the service and how every answer describes itself: https://api.sirenic.eu/en/about
 - OpenAPI: https://api.sirenic.eu/openapi.json
 - For LLMs: https://api.sirenic.eu/llms.txt
 - MCP server: `https://api.sirenic.eu/mcp` (streamable HTTP)
@@ -369,7 +374,7 @@ Sirenic settles on Base mainnet.
 
 Sirenic redistributes official open data as published (Etalab 2.0 and other
 open licenses). It does not guarantee accuracy or completeness, and outputs
-(including sanctions screening and AI summaries) are decision aids — not
+(including sanctions screening, scores and health checks) are decision aids, not
 legal, financial or compliance advice.
 
 License: MIT.
