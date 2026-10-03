@@ -42,6 +42,8 @@ at [`/v1/lecture`](https://api.sirenic.eu/v1/lecture) — both free.
 - MCP server: `https://api.sirenic.eu/mcp` (streamable HTTP)
 - A2A agent: `POST https://api.sirenic.eu/a2a` (JSON-RPC, a2a-x402 payment
   extension) — card at `https://api.sirenic.eu/.well-known/agent-card.json`
+- No-code, ready-made n8n and Make workflows: https://api.sirenic.eu/en/workflows
+  ([how to import them](#no-code-ready-made-n8n-and-make-workflows))
 
 Data sources: INSEE Sirene / INPI RNE and other official registers, open
 licenses (Etalab 2.0, NLOD, CC-BY 4.0, OGL, CC0). Data is redistributed
@@ -143,16 +145,32 @@ Cursor / any MCP client (`mcpServers` config):
 { "mcpServers": { "sirenic": { "url": "https://api.sirenic.eu/mcp" } } }
 ```
 
-76 tools are exposed — including TWO FREE ones: suggest_company_names (type a company name, get its SIREN — start here) and detect_company_identifiers (paste any text, get SIREN/SIRET/VAT/LEI with the right call to make). Plus verify_iban_bank. Search with 0-1 confidence scores, company profiles,
-KYB files, an à-la-carte company file where you pick the blocks and pay only for those, a $1 company-intelligence report, sanctions screening, AMF
-regulator alerts, **regulatory authorisations by SIREN (EBA PSD2 register,
-EIOPA, ARCEP)**, EU financial authorisations (ESMA), industrial risk
-(Seveso/ICPE), lobbying register, EU procurement awards (TED), **watchlists
-with daily checks and Ed25519-signed webhooks**, financials, capital structure, sector benchmarks, failure-risk score, Belgian annual accounts…). Each tool accepts
-an optional `x_payment` parameter: without it you get the 402 quote; sign it
-with an x402 client and call again. Every tool declares an **output schema**
-and returns `structuredContent`, plus MCP annotations (read-only vs. state-
-changing), so a client can type-check responses instead of parsing prose. The
+The server publishes its own tool list: any MCP client reads it with
+`tools/list`, and the [connectors page](https://api.sirenic.eu/en/connectors)
+shows how many tools are served today. To count them from a terminal:
+
+```bash
+curl -s https://api.sirenic.eu/mcp -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' | jq '.result.tools | length'
+```
+
+Start for free with suggest_company_names (type a company name, get its SIREN;
+start here) and detect_company_identifiers (paste any text, get
+SIREN/SIRET/VAT/LEI with the right call to make). Then verify_iban_bank, search
+with 0-1 confidence scores, company profiles, KYB files, an à-la-carte company
+file where you pick the blocks and pay only for those, a $1 company-intelligence
+report, sanctions screening, AMF regulator alerts, **regulatory authorisations
+by SIREN (EBA PSD2 register, EIOPA, ARCEP)**, EU financial authorisations
+(ESMA), industrial risk (Seveso/ICPE), lobbying register, EU procurement awards
+(TED), **watchlists with daily checks and Ed25519-signed webhooks**, financials,
+capital structure, sector benchmarks, failure-risk score, Belgian annual
+accounts and more. Each paid tool accepts an optional `x_payment` parameter:
+without it you get the 402 quote; sign it with an x402 client and call again.
+Every tool carries MCP annotations (read-only vs. state-changing), and every
+tool except the ones that can return a PDF (filed documents, the PDF report,
+Belgian filings) declares an **output schema** and returns `structuredContent`,
+so a client can type-check responses instead of parsing prose. The
 quote you get back is the **signable x402 payment requirements**
 (`{x402Version, accepts[]}`) — an agent can pay entirely from MCP, without
 touching the REST API.
@@ -185,6 +203,49 @@ tools = build_crewai_tools(SirenicClient(wallet_key=key, max_price_usd=0.25))
 
 CrewAI can also use Sirenic's MCP server directly, no SDK:
 `Agent(..., mcps=["https://api.sirenic.eu/mcp"])`.
+
+## No-code: ready-made n8n and Make workflows
+
+Ready-made workflows for n8n and Make are served for free on the
+[Workflows page](https://api.sirenic.eu/en/workflows): each one says what it
+calls and what it costs per run. Download a file, import it, plug in your key.
+
+The same catalogue is machine-readable at `GET https://api.sirenic.eu/workflows`
+(JSON; a browser asking for HTML gets the page): `workflows` lists each one with
+its `id`, `titre_en`, the `routes` it calls, its `n8n` file and its `make`
+blueprints, `import` gives the import steps and `cle` the page where you create
+your key.
+
+```bash
+curl -s https://api.sirenic.eu/workflows | jq -r '.workflows[] | "\(.id)  \(.titre_en)"'
+```
+
+These workflows authenticate with an API key: sign in at
+[api.sirenic.eu/compte](https://api.sirenic.eu/compte?lang=en), create a
+`srn_live_…` key, and the workflows send it in the `X-Api-Key` header.
+
+- **n8n**: download the `.json` file, then in n8n choose Workflows, Import from
+  File, and add a Header Auth credential named `X-Api-Key`. To build your own
+  workflows instead, the
+  [n8n-nodes-sirenic](https://github.com/sirenic-eu/n8n-nodes-sirenic)
+  community node calls the same routes.
+- **Make**: download the `.make.json` blueprint, then in Make create a scenario
+  and choose Import Blueprint. In every HTTP module, under Credentials, pick a
+  key of type API key: your `srn_live_…` key, placed in the header, named
+  `X-Api-Key`, created once for all modules. The blueprints only use Make's
+  HTTP modules, so they import right away; the Sirenic app for Make is under
+  review at Make (2026-10-03).
+
+Also in the official n8n template gallery, published by
+[Sirenic](https://n8n.io/creators/sirenic/) (read on 2026-10-03); from a
+template page, "Use workflow" opens it in your n8n:
+
+- [Verify French suppliers before payment with Google Sheets, Sirenic, and Slack](https://n8n.io/workflows/17756)
+- [Route French KYB onboarding checks with Sirenic, Slack, and Google Sheets](https://n8n.io/workflows/18271)
+- [Generate official French company PDF reports with Sirenic, Google Drive and Slack](https://n8n.io/workflows/19752)
+
+Each setup, step by step, with the MCP clients too:
+[api.sirenic.eu/en/connectors](https://api.sirenic.eu/en/connectors).
 
 ## Verify a supplier before you pay — the 2026 e-invoicing window
 
@@ -246,7 +307,7 @@ Two things this is **not**:
 |---|---|---|
 | **`GET /v1/facturation/dossier?siren=&iban=`** | **$0.03** | **Verify a French supplier before payment**: e-invoicing prep + live VIES + IBAN/bank check + a deterministic `pret_a_facturer` verdict |
 | `GET /v1/eu/facturation/dossier?pays=&id=&iban=` | $0.03 | Verify a Belgian or Polish supplier before payment: registry identity + VIES + Peppol reachability (BE) + White List account check (PL) + the same verdict |
-| `GET /v1/recherche?q=` | $0.002 | French company search by name **or any French identifier** — SIREN, SIRET or VAT number, spaced or labelled (`SIREN : 552 032 534`), resolved directly. Company lookup over 30M companies (INSEE Sirene) |
+| `GET /v1/recherche?q=` | $0.002 | French company search by name **or any French identifier** — SIREN, SIRET or VAT number, spaced or labelled (`SIREN : 552 032 534`), resolved directly. Company lookup over the INSEE Sirene register |
 | `GET /v1/entreprise/{siren}` | $0.005 | Full French company profile: identity, officers, NAF code, VAT number — plus `groupe_lei` for LEI holders: GLEIF level-2 consolidating parents (direct and ultimate, named) or the declared reason for none (17/09/2026) |
 | `GET /v1/entreprise/{siren}/etablissements` | $0.003 | All establishments (SIRET) |
 | `GET /v1/entreprise/{siren}/alertes` | $0.01 | BODACC legal alerts (insolvency…) |
@@ -307,7 +368,7 @@ Two things this is **not**:
 | `GET /v1/eu/entreprise/LT/{kodas}/insolvabilite` | $0.02 | Lithuanian insolvency from two sources: the register's legal status (closed-list family: bankruptcy, liquidation, restructuring, removal) and the AVNT case files since 2020 (court, initiator, opening, liquidation, termination, closing and removal dates, simplified procedure, intentional-bankruptcy ruling, restructuring plan); `aucune_procedure` is measured on both snapshots. Lithuania also joins `/marches-publics-ue` (TED, 9-digit JAR code) (17/09/2026) |
 | `GET /v1/eu/entreprise/PL/{nip}/marches-publics` | $0.02 | Polish public procurement from the Biuletyn Zamówień Publicznych (e-Zamówienia public API, CC0; national below-EU-threshold notices since 2021): contracts WON by a legal-person NIP — buyer, object, CPV, part, outcome, bids, price and contract value in PLN, date, company size — and notices ISSUED as buyer; a winner is served only when proven a legal person (legal form or KRS), never a sole trader |
 | `GET /v1/eu/entreprise/PT/{nipc}/marches-publics` | $0.02 | Portuguese public contracts from IMPIC's Portal BASE (weekly open-data files, public domain; every public contract since 2012): contracts WON by NIPC — buyer, procedure and contract type, CPV, lots, contract/base/final prices in EUR, dates, framework agreement, closure, bidder count, contract modifications —, contracts ISSUED as buyer and Diário da República notices; winners published without a NIF are never named, only counted |
-| `GET /v1/eu/entreprise/IE/{numero}` | $0.01 | Irish company file from the Companies Registration Office open data (CC BY 4.0, complete daily snapshot of 824,918 live and dissolved companies): common identity plus the CRO block — 33 status codes and 45 type codes in closed families, annual-return and last-accounts dates, registered office with Eircode, NACE, 2022-2024 accounts-filing index (dates only); absence is measured on the complete snapshot |
+| `GET /v1/eu/entreprise/IE/{numero}` | $0.01 | Irish company file from the Companies Registration Office open data (CC BY 4.0, complete daily snapshot: 824,918 live and dissolved companies on 2026-09-18): common identity plus the CRO block — 33 status codes and 45 type codes in closed families, annual-return and last-accounts dates, registered office with Eircode, NACE, 2022-2024 accounts-filing index (dates only); absence is measured on the complete snapshot |
 | `GET /v1/eu/entreprise/IE/{numero}/insolvabilite` | $0.01 | Irish company insolvency status derived from the CRO register status: liquidation, liquidation stayed, examinership, administration, with the status date; strike-off and dissolution reported separately |
 | `GET /v1/eu/entreprise/FI/{id}/evenements` | $0.02 | Finnish trade-register notices served live from the PRH open data (CC BY 4.0, 24 h cache): every notice since late 2014 — date, record number, type (formation, change, annual accounts, rectification, merger; source code always served) and its register entry codes, each with the PRH labels in EN/FI/SV and a closed-list family (board, representation, capital, shares, office, auditors, articles, bankruptcy, restructuring, liquidation, removal, merger, demerger…); `procedures_inscrites` summarises insolvency-family codes; register memberships (trade, VAT, prepayment, employer) and `tva_active`. The FI profile also carries `registres_fi` (18/09/2026) |
 | `GET /v1/eu/entreprise/CH/{id}/evenements` | $0.02 | Swiss commercial-register publications from the Swiss Official Gazette of Commerce (SOGC/SHAB, SECO public API, live with a 24 h cache, online since July 2018): every registration, change and deletion carrying the company's UID, newest first — date, publication number, canton, office, the company as published before and after (name, UID, seat, eCH legal-form code, purpose, capital, address without the c/o line) and closed-list change flags (name, seat, address, purpose, capital, legal form, bankruptcy, liquidation, suspension, re-entry, other entries). The published free text is withheld (`texte_retenu: true`): it names persons (18/09/2026) |
@@ -318,7 +379,7 @@ Two things this is **not**:
 | `GET /v1/eu/entreprise/RO/{cui}/dirigeants` | $0.01 | Romanian company legal representatives from the ONRC open data: every mandate published under each registration of the CUI — administrators, permanent representatives of corporate administrators, general director, supervisory board, directorate, liquidators, judicial administrators — with the Romanian label, a closed-list family and the nature (natural person / entity, inferred from the presence of a birth date), deduplicated and sorted; `aucun_mandat_publie` measured on the complete snapshot. Name and capacity only: birth date, birthplace and domicile published by the source are never stored. |
 | `GET /v1/eu/entreprise/RO/{cui}/insolvabilite` | $0.02 | Romanian company insolvency from the ONRC register: status codes of the bankruptcy, insolvency (Laws 85/2014, 85/2006, 64/1995, judicial reorganisation, recovery), liquidation and dissolution families with their published Romanian labels, plus the published insolvency practitioners (judicial liquidator, judicial administrator, special or concordat administrator, liquidator); `aucune_procedure` measured on the complete snapshot; statuses are undated and court decisions are not published (`autres_statuts` carries the other entries). |
 | `GET /v1/eu/entreprise/RO/{cui}/comptes` | $0.02 | Romanian company annual accounts from the Ministry of Finance open data (data.gov.ro, CC BY 4.0, financial years 2019-2024), every published year in one call: balance sheet (fixed and current assets, inventories, receivables, cash, liabilities, provisions, equity, paid-up capital), income statement (net turnover, total income and expenses, gross and net result), average headcount, CAEN Rev. 2 class and filing format (abridged or full). RON as published; null = not published. Legal persons only. |
-| _…plus ~30 dedicated country sub-routes_ | | GB (directors, PSC limited to corporate controllers with natural persons counted, insolvency, accounts, The Gazette insolvency notices — official journal, coverage partial and said so —, public procurement from Find a Tender and Contracts Finder: contracts won matched by company number and notices issued, 17/09/2026), DK/SE/SK/LV/EE (filings), LV/NO/BE/DK/FI/SE/CZ/SK/EE (`/marches-publics-ue`: TED award notices matched by national identifier in every form TED publishes it — 40 to 86% of notices carry one depending on the country, measured and said so, 17/09/2026), LV (legal events, members & shareholders — corporate holders named, natural persons counted —, public procurement from the IUB daily notices: contracts won and notices issued, never a natural-person winner, 17/09/2026), NO (accounts, legal events, officers & board with who elected them, local units with published headcount — natural persons never with a birth date), CZ (insolvency), PL (KRS events), ES (PLACSP public procurement by NIF, BORME deeds), PL (BZP public procurement by NIP: winners served only when proven legal persons), PT (Portal BASE public contracts by NIPC, with contract modifications), IE (CRO register file and insolvency by company number) — all in `/openapi.json` and the MCP tools |
+| _…plus the other dedicated country sub-routes_ | | GB (directors, PSC limited to corporate controllers with natural persons counted, insolvency, accounts, The Gazette insolvency notices — official journal, coverage partial and said so —, public procurement from Find a Tender and Contracts Finder: contracts won matched by company number and notices issued, 17/09/2026), DK/SE/SK/LV/EE (filings), LV/NO/BE/DK/FI/SE/CZ/SK/EE (`/marches-publics-ue`: TED award notices matched by national identifier in every form TED publishes it — 40 to 86% of notices carry one depending on the country, measured and said so, 17/09/2026), LV (legal events, members & shareholders — corporate holders named, natural persons counted —, public procurement from the IUB daily notices: contracts won and notices issued, never a natural-person winner, 17/09/2026), NO (accounts, legal events, officers & board with who elected them, local units with published headcount — natural persons never with a birth date), CZ (insolvency), PL (KRS events), ES (PLACSP public procurement by NIF, BORME deeds), PL (BZP public procurement by NIP: winners served only when proven legal persons), PT (Portal BASE public contracts by NIPC, with contract modifications), IE (CRO register file and insolvency by company number) — all in `/openapi.json` and the MCP tools |
 
 **Don't clean up the query yourself.** Search parameters (`?q=`, `?nom=`) accept
 what an agent naturally produces: quotes, punctuation and unsupported characters
@@ -355,7 +416,7 @@ returned at creation is the capability — no account).
   samples are served by the API itself, in the OpenAPI spec, in the x402 payment
   quote and in `llms.txt` — so the contract you read is the contract you get.
 - [`examples/smoke-surveillance-durees-2026-08-11.ts`](examples/smoke-surveillance-durees-2026-08-11.ts) — buy a **90-day** and a **365-day** watchlist for real (~$0.685), renew one at a different duration, and check that an out-of-range duration and an over-long renewal are both refused **without a debit**.
-- [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call the core paid endpoints once (~46 calls across the 83-route catalogue, USDC and/or EURC; the watchlist it creates is stopped again for free). Country deep-dive sub-routes have their own dedicated smokes in this folder.
+- [`examples/smoke-test.ts`](examples/smoke-test.ts) — pay and call the core paid endpoints once (USDC and/or EURC; the calls are listed in the script, and the watchlist it creates is stopped again for free). Country deep-dive sub-routes have their own dedicated smokes in this folder.
 - [`examples/agent-demo.ts`](examples/agent-demo.ts) — a small autonomous agent that searches, pays and reads profiles.
 - [`examples/mcp-setup.md`](examples/mcp-setup.md) — MCP configuration for Claude, Cursor and generic clients.
 - [`examples/a2a.ts`](examples/a2a.ts) — call Sirenic as an **A2A agent** (quote for free, then pay on the same task via the a2a-x402 extension).
