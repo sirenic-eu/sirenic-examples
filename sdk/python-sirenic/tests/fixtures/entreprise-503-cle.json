@@ -1,0 +1,18 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://api.sirenic.eu/v1/entreprise/490586708",
+  "auth": "api_key"
+ },
+ "status": 503,
+ "recorded_at": null,
+ "origin": "written, not recorded: an upstream outage cannot be provoked. Code and status from the closed list motif_panne served by GET /v1/lecture (amont_indisponible: 503); message from the served code (commit 1ad4bb2, src/domain/pannes.ts).",
+ "removed": [],
+ "headers": {
+  "content-type": "application/json; charset=utf-8"
+ },
+ "body": {
+  "error": "amont_indisponible",
+  "message": "Source de données temporairement indisponible. Réessayez. / Upstream temporarily unavailable."
+ }
+}

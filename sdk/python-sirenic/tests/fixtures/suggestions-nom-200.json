@@ -1,0 +1,54 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://api.sirenic.eu/v1/suggestions?q=airvance",
+  "auth": "none"
+ },
+ "status": 200,
+ "recorded_at": "2026-10-05T23:16:06Z",
+ "origin": "recorded from the live service, no key, no payment",
+ "removed": [
+  "header x-sirenic-key-id",
+  "header x-sirenic-signature",
+  "header x-sirenic-timestamp"
+ ],
+ "headers": {
+  "content-type": "application/json; charset=utf-8",
+  "ratelimit-limit": "60",
+  "ratelimit-policy": "60;w=60",
+  "ratelimit-remaining": "58",
+  "ratelimit-reset": "58",
+  "x-request-id": "fb8f277c-339f-4cda-9817-f8e7d500bf17"
+ },
+ "body": {
+  "suggestions": [
+   {
+    "siren": "490586708",
+    "denomination": "AIRVANCE GROUP",
+    "code_postal": "01700",
+    "commune": "BEYNOST",
+    "code_naf": "64.20Z",
+    "actif": true
+   },
+   {
+    "siren": "908165145",
+    "denomination": "AIRVANCE INTERNATIONAL B.V",
+    "code_postal": null,
+    "commune": null,
+    "code_naf": "66.30Z",
+    "actif": true
+   }
+  ],
+  "gratuit": true,
+  "limite": 5,
+  "listes_bornees": {
+   "suggestions": {
+    "nombre_total": 2,
+    "tronque": false
+   }
+  },
+  "source": "Base Sirene locale (INSEE, open data), version 2026-10-01 — personnes morales et entrepreneurs individuels en diffusion totale.",
+  "pour_aller_plus_loin": "Fiche complète : GET /v1/entreprise/{siren} ($0.005). Recherche tolérante aux fautes de frappe, avec score de confiance : GET /v1/recherche ($0.002).",
+  "disclaimer": "Correspondance sur le DÉBUT de la dénomination, puis sur les mots entiers ; sans tolérance aux fautes de frappe et plafonnée à 5 résultats. / Prefix and whole-word match only, no fuzzy matching, capped at 5 results."
+ }
+}

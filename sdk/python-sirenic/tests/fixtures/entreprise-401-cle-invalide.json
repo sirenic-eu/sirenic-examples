@@ -1,0 +1,24 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://api.sirenic.eu/v1/entreprise/490586708",
+  "auth": "api_key",
+  "x_api_key": "srn_live_0000000000000000"
+ },
+ "status": 401,
+ "recorded_at": "2026-10-05T23:21:14Z",
+ "origin": "recorded from the live service with a fake key (srn_live_ followed by zeros), nothing charged",
+ "removed": [],
+ "headers": {
+  "content-type": "application/json; charset=utf-8",
+  "ratelimit-limit": "120",
+  "ratelimit-policy": "120;w=60",
+  "ratelimit-remaining": "118",
+  "ratelimit-reset": "56",
+  "x-request-id": "b355b6f3-c4fe-4ecc-8d1e-5989dddb3cc8"
+ },
+ "body": {
+  "error": "cle_invalide",
+  "message": "Clé API inconnue, révoquée ou mal formée (attendu : srn_live_… dans X-Api-Key ou Authorization: Bearer). / Unknown, revoked or malformed API key (expected srn_live_… in X-Api-Key or Authorization: Bearer)."
+ }
+}

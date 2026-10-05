@@ -4,3 +4,10 @@ node_modules/
 dist/
 .env.wallet-test
 resultats/
+
+# Python (sdk/python, sdk/python-sirenic)
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+.pytest_cache/

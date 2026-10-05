@@ -1,0 +1,24 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://api.sirenic.eu/v1/documents/actes/000000000000000000000000",
+  "auth": "none"
+ },
+ "status": 401,
+ "recorded_at": "2026-10-05T23:21:10Z",
+ "origin": "recorded from the live service, no key, no payment",
+ "removed": [],
+ "headers": {
+  "content-type": "application/json; charset=utf-8",
+  "ratelimit-limit": "120",
+  "ratelimit-policy": "120;w=60",
+  "ratelimit-remaining": "119",
+  "ratelimit-reset": "60",
+  "x-request-id": "963ecd81-c0f1-4e29-90c5-05cab50e6c43"
+ },
+ "body": {
+  "error": "compte_requis",
+  "message": "Les actes déposés (statuts, procès-verbaux…) sont réservés aux comptes Sirenic identifiés depuis le 19/09/2026 : ils portent des données personnelles (noms d'associés, parfois adresses et dates de naissance complètes). Présentez la clé d'API d'un compte (en-tête x-api-key) ; les comptes annuels (/v1/documents/bilans/{id}) restent accessibles en x402. Aucun paiement n'est demandé. / Filed deeds (statutes, minutes…) have been reserved to identified Sirenic accounts since 2026-09-19: they carry personal data. Present an account API key (x-api-key header); filed annual accounts (/v1/documents/bilans/{id}) remain available via x402. Nothing is charged.",
+  "compte_url": "https://api.sirenic.eu/compte?utm_source=api&utm_campaign=compte-requis"
+ }
+}

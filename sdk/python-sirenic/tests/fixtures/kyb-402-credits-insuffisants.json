@@ -1,0 +1,22 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://api.sirenic.eu/v1/kyb/490586708",
+  "auth": "api_key"
+ },
+ "status": 402,
+ "recorded_at": null,
+ "origin": "written, not recorded: the test account was not drained. Served OpenAPI (securitySchemes.ApiKeyAuth): insufficient balance answers 402 {error: credits_insuffisants} WITHOUT a PAYMENT-REQUIRED header; other fields from the served code (commit 1ad4bb2, src/compte/rail.ts). Balance and price values are illustrative.",
+ "removed": [],
+ "headers": {
+  "content-type": "application/json; charset=utf-8"
+ },
+ "body": {
+  "error": "credits_insuffisants",
+  "message": "Solde de crédits insuffisant pour cet appel. Rechargez votre compte (packs 10/20/50/100 €) ou payez cet appel en x402. / Insufficient credit balance for this call. Top up your account (10/20/50/100 € packs) or pay this call with x402.",
+  "solde": 0.1,
+  "prix": 0.15,
+  "unite": "EUR (1 crédit = 1 €)",
+  "recharge_url": "https://api.sirenic.eu/compte"
+ }
+}

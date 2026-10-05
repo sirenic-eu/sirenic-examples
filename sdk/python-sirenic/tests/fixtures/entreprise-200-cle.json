@@ -1,0 +1,173 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://api.sirenic.eu/v1/entreprise/490586708",
+  "auth": "api_key"
+ },
+ "status": 200,
+ "recorded_at": "2026-10-05T23:23:31Z",
+ "origin": "recorded from the live service with the Sirenic test API key (internal credits account), no x402 payment",
+ "removed": [
+  "header x-credits-remaining",
+  "header x-sirenic-key-id",
+  "header x-sirenic-signature",
+  "header x-sirenic-timestamp",
+  "body.dirigeants (natural persons)"
+ ],
+ "headers": {
+  "content-type": "application/json; charset=utf-8",
+  "ratelimit-limit": "120",
+  "ratelimit-policy": "120;w=60",
+  "ratelimit-remaining": "118",
+  "ratelimit-reset": "23",
+  "x-credits-charged": "0.005",
+  "x-request-id": "3c518318-76a1-4ba6-9e24-c262090c0d89"
+ },
+ "body": {
+  "siren": "490586708",
+  "denomination": "AIRVANCE GROUP",
+  "sigle": null,
+  "statut_diffusion": "totale",
+  "nature_juridique": "5710",
+  "activite_principale": "64.20Z",
+  "section_activite_principale": "K",
+  "categorie_entreprise": "ETI",
+  "tranche_effectif_salarie": "11",
+  "date_creation": "2006-06-12",
+  "date_fermeture": null,
+  "etat_administratif": "actif",
+  "siege": {
+   "siret": "49058670800011",
+   "adresse": "383 RUE DES BARRONIERES 01700 BEYNOST",
+   "code_postal": "01700",
+   "commune": "BEYNOST"
+  },
+  "conventions_collectives": [
+   "3248"
+  ],
+  "conventions_collectives_notes": [],
+  "tva_intracommunautaire": "FR88490586708",
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "source": "INSEE Sirene / INPI RNE via recherche-entreprises.api.gouv.fr, licence ouverte Etalab 2.0 ; index Egapro (ministère du Travail) et annuaire RGE (ADEME), licence ouverte Etalab 2.0",
+  "disclaimer": "Données issues de l'open data, fournies en l'état sans garantie. / Open data, provided as is without warranty.",
+  "index_egapro": [],
+  "certifications_rge": [],
+  "data_freshness": "stock Sirene mensuel (2026-10-01), dirigeants temps réel",
+  "groupe_lei": {
+   "lei": "969500Q21MSE49FR6877",
+   "mere_directe": null,
+   "mere_ultime": null,
+   "absence_mere": {
+    "directe": {
+     "motif": "mere_non_publique",
+     "motif_source": "NON_PUBLIC",
+     "motif_2_source": null
+    },
+    "ultime": {
+     "motif": "mere_non_publique",
+     "motif_source": "NON_PUBLIC",
+     "motif_2_source": null
+    }
+   },
+   "declaration": "exception",
+   "filiales_consolidees": {
+    "directement": 1,
+    "en_dernier_ressort": 0
+   },
+   "fonds": {
+    "geres": 0,
+    "compartiments": 0,
+    "nourriciers": 0
+   },
+   "succursales_internationales": 0,
+   "relations_inactives": 0,
+   "publication": null
+  },
+  "provenance": [
+   {
+    "bloc": "identite",
+    "source_code": "insee_sirene",
+    "registre": "Répertoire Sirene des entreprises et de leurs établissements (INSEE)",
+    "mode": "stock",
+    "licence": "etalab-2.0",
+    "version": "2026-10-01",
+    "as_of": "2026-10-01",
+    "precision_as_of": "publication_officielle",
+    "age_jours": 4,
+    "etat": "servi",
+    "couverture": {
+     "etat": "complete",
+     "mesure": "diffusion totale au répertoire Sirene / full public disclosure in the Sirene register"
+    },
+    "confiance": "forte"
+   },
+   {
+    "bloc": "dirigeants",
+    "source_code": "inpi_rne",
+    "registre": "Registre national des entreprises (INPI)",
+    "mode": "temps_reel",
+    "licence": "etalab-2.0",
+    "as_of": "2026-10-05T23:23:31.552Z",
+    "precision_as_of": "consultation",
+    "etat": "servi",
+    "couverture": {
+     "etat": "complete",
+     "mesure": "diffusion totale au répertoire Sirene / full public disclosure in the Sirene register"
+    }
+   },
+   {
+    "bloc": "tva_intracommunautaire",
+    "source_code": "calcul_sirenic",
+    "registre": "Numéro calculé par Sirenic (clé de contrôle) — non vérifié auprès de VIES",
+    "mode": "calcul",
+    "etat": "servi"
+   },
+   {
+    "bloc": "index_egapro",
+    "source_code": "egapro",
+    "registre": "Index de l'égalité professionnelle femmes-hommes (Egapro)",
+    "mode": "stock",
+    "licence": "etalab-2.0",
+    "version": "2026-10-01",
+    "as_of": "2026-10-01",
+    "precision_as_of": "publication_officielle",
+    "age_jours": 4,
+    "etat": "sans_objet"
+   },
+   {
+    "bloc": "certifications_rge",
+    "source_code": "rge",
+    "registre": "Annuaire des professionnels RGE (Reconnu Garant de l'Environnement)",
+    "mode": "stock",
+    "licence": "etalab-2.0",
+    "version": "2026-10-02",
+    "as_of": "2026-10-02",
+    "precision_as_of": "publication_officielle",
+    "age_jours": 3,
+    "etat": "absence_mesuree",
+    "couverture": {
+     "etat": "complete",
+     "mesure": "annuaire RGE entier ingéré / full RGE directory ingested"
+    }
+   },
+   {
+    "bloc": "groupe_lei",
+    "source_code": "gleif_rr",
+    "registre": "GLEIF — relations de niveau 2 (Relationship Records, RR-CDF 2.1) et exceptions de déclaration",
+    "mode": "stock",
+    "licence": "cc0",
+    "version": "2026-10-05",
+    "empreinte_sha256": "53157c732aa55cc71af2fa4972070f4c1e287283b35ce319e3a773f94b96455c",
+    "as_of": "2026-10-05",
+    "precision_as_of": "publication_officielle",
+    "age_jours": 0,
+    "etat": "absence_mesuree",
+    "couverture": {
+     "etat": "complete",
+     "mesure": "déclaration de niveau 2 au GLEIF (relation ou exception motivée) / level-2 declaration to GLEIF (relationship or reasoned exception)"
+    }
+   }
+  ]
+ }
+}

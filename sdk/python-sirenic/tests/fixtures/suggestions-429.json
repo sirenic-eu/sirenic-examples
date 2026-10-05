@@ -1,0 +1,23 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://api.sirenic.eu/v1/suggestions?q=airvance",
+  "auth": "none"
+ },
+ "status": 429,
+ "recorded_at": null,
+ "origin": "written, not recorded: a 429 cannot be provoked without a burst of calls. Status from the served OpenAPI (GET /v1/suggestions, 429: 2,000 calls per day per IP, or 60 per minute); body and headers from the served code (commit 1ad4bb2, src/server.ts seau suggestions-jour and src/limiteurs.ts). Retry-After and RateLimit values are illustrative.",
+ "removed": [],
+ "headers": {
+  "content-type": "application/json; charset=utf-8",
+  "retry-after": "3600",
+  "ratelimit-policy": "2000;w=86400",
+  "ratelimit-limit": "2000",
+  "ratelimit-remaining": "0",
+  "ratelimit-reset": "3600"
+ },
+ "body": {
+  "error": "quota_journalier_atteint",
+  "message": "Quota gratuit quotidien atteint pour cette adresse IP (2 000 appels/jour). Pour un usage sans quota : GET /v1/recherche ($0.002, sans compte ni clé). / Free daily quota reached for this IP (2,000 calls/day). For unmetered use: GET /v1/recherche ($0.002, no account, no key)."
+ }
+}

@@ -1,0 +1,46 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://api.sirenic.eu/v1/suggestions?q=490586708",
+  "auth": "none"
+ },
+ "status": 200,
+ "recorded_at": "2026-10-05T23:16:03Z",
+ "origin": "recorded from the live service, no key, no payment",
+ "removed": [
+  "header x-sirenic-key-id",
+  "header x-sirenic-signature",
+  "header x-sirenic-timestamp"
+ ],
+ "headers": {
+  "content-type": "application/json; charset=utf-8",
+  "ratelimit-limit": "60",
+  "ratelimit-policy": "60;w=60",
+  "ratelimit-remaining": "59",
+  "ratelimit-reset": "60",
+  "x-request-id": "5c70a561-9cab-40ae-a399-b1d08e339a75"
+ },
+ "body": {
+  "suggestions": [
+   {
+    "siren": "490586708",
+    "denomination": "AIRVANCE GROUP",
+    "code_postal": "01700",
+    "commune": "BEYNOST",
+    "code_naf": "64.20Z",
+    "actif": true
+   }
+  ],
+  "gratuit": true,
+  "limite": 5,
+  "listes_bornees": {
+   "suggestions": {
+    "nombre_total": 1,
+    "tronque": false
+   }
+  },
+  "source": "Base Sirene locale (INSEE, open data), version 2026-10-01 — personnes morales et entrepreneurs individuels en diffusion totale.",
+  "pour_aller_plus_loin": "Fiche complète : GET /v1/entreprise/{siren} ($0.005). Recherche tolérante aux fautes de frappe, avec score de confiance : GET /v1/recherche ($0.002).",
+  "disclaimer": "Correspondance sur le DÉBUT de la dénomination, puis sur les mots entiers ; sans tolérance aux fautes de frappe et plafonnée à 5 résultats. / Prefix and whole-word match only, no fuzzy matching, capped at 5 results."
+ }
+}

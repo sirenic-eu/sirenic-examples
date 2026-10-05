@@ -1,0 +1,18 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://api.sirenic.eu/v1/kyb/490586708",
+  "auth": "api_key"
+ },
+ "status": 503,
+ "recorded_at": null,
+ "origin": "written, not recorded: an outage cannot be provoked. Code and status from the closed list motif_panne served by GET /v1/lecture (base_indisponible: 503, common to every paid route); message from the served code (commit 1ad4bb2, src/domain/pannes.ts).",
+ "removed": [],
+ "headers": {
+  "content-type": "application/json; charset=utf-8"
+ },
+ "body": {
+  "error": "base_indisponible",
+  "message": "La base de données de Sirenic ne répond pas (redémarrage ou surcharge) : la réponse n'est pas servie plutôt que d'être fausse. Le paiement n'est pas débité ; réessayez dans quelques instants. / Sirenic's database is not responding (restart or overload): the response is not served rather than being wrong. The payment is not settled; retry in a moment."
+ }
+}

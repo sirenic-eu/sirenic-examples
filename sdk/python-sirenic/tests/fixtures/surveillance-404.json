@@ -1,0 +1,23 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://api.sirenic.eu/v1/surveillance/jeton-inconnu-t476",
+  "auth": "none"
+ },
+ "status": 404,
+ "recorded_at": "2026-10-05T23:25:51Z",
+ "origin": "recorded from the live service, no key, no payment",
+ "removed": [],
+ "headers": {
+  "content-type": "application/json; charset=utf-8",
+  "ratelimit-limit": "120",
+  "ratelimit-policy": "120;w=60",
+  "ratelimit-remaining": "119",
+  "ratelimit-reset": "60",
+  "x-request-id": "d057cc8f-9248-4731-b4a1-60bdd233f65a"
+ },
+ "body": {
+  "error": "surveillance_introuvable",
+  "message": "Jeton inconnu. / Unknown watch token."
+ }
+}

@@ -1,0 +1,160 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://api.sirenic.eu/v1/facturation/dossier?siren=490586708",
+  "auth": "api_key"
+ },
+ "status": 200,
+ "recorded_at": "2026-10-05T23:23:45Z",
+ "origin": "recorded from the live service with the Sirenic test API key (internal credits account), no x402 payment",
+ "removed": [
+  "header x-credits-remaining",
+  "header x-sirenic-key-id",
+  "header x-sirenic-signature",
+  "header x-sirenic-timestamp"
+ ],
+ "headers": {
+  "content-type": "application/json; charset=utf-8",
+  "ratelimit-limit": "120",
+  "ratelimit-policy": "120;w=60",
+  "ratelimit-remaining": "119",
+  "ratelimit-reset": "60",
+  "x-credits-charged": "0.03",
+  "x-request-id": "97f4dd13-d13b-42ca-8471-fd391a6c6ad0"
+ },
+ "body": {
+  "siren": "490586708",
+  "destinataire": {
+   "siren": "490586708",
+   "statut_diffusion": "totale",
+   "destinataire": {
+    "denomination": "AIRVANCE GROUP",
+    "sigle": null,
+    "nature_juridique": "5710",
+    "etat_administratif": "actif",
+    "date_creation": "2006-06-12",
+    "date_fermeture": null,
+    "activite_principale": "64.20Z",
+    "section_activite_principale": "K",
+    "categorie_entreprise": "ETI"
+   },
+   "tva": {
+    "numero_intracommunautaire_calcule": "FR88490586708",
+    "avertissement": "Numéro calculé algorithmiquement à partir du SIREN : il ne prouve ni l'assujettissement à la TVA ni la validité fiscale (franchise en base, régimes particuliers). Vérification officielle VIES : GET /v1/tva/verifier/{numero}. / Computed from the SIREN; does not prove VAT liability. Official VIES check: GET /v1/tva/verifier/{numero}."
+   },
+   "adressage": {
+    "siege": {
+     "siret": "49058670800011",
+     "adresse": "383 RUE DES BARRONIERES 01700 BEYNOST",
+     "code_postal": "01700",
+     "commune": "BEYNOST"
+    },
+    "nombre_etablissements": 1,
+    "etablissements": [
+     {
+      "siret": "49058670800011",
+      "est_siege": true,
+      "adresse": "383 RUE DES BARRONIERES 01700 BEYNOST",
+      "code_postal": "01700",
+      "commune": "BEYNOST",
+      "etat_administratif": "actif",
+      "activite_principale": "64.20Z",
+      "date_creation": "2006-06-12",
+      "date_fermeture": null,
+      "enseignes": [],
+      "tranche_effectif_salarie": "11"
+     }
+    ]
+   },
+   "calendrier_reforme": {
+    "reception_obligatoire_depuis": "2026-09-01",
+    "emission_obligatoire_depuis": "2026-09-01",
+    "base_calcul": "catégorie d'entreprise INSEE : ETI",
+    "precision": "Émission obligatoire au 2026-09-01 pour GE/ETI, au 2027-09-01 pour PME/micro-entreprises, d'après la catégorie INSEE en base — indicatif : la catégorie légale s'apprécie selon le décret n° 2008-1354. / Indicative dates based on the INSEE size category."
+   },
+   "annuaire_facturation_electronique": {
+    "consultation_officielle": "https://facturation.chorus-pro.gouv.fr/annuaire/#/",
+    "note": "L'annuaire central (adresse de réception, plateforme agréée du destinataire) est réservé aux plateformes agréées — Sirenic n'y a pas accès ; seule l'URL de consultation humaine officielle est fournie. / The central e-invoicing directory is restricted to accredited platforms; Sirenic has no access to it — official manual-lookup URL only.",
+    "obtention_adresse_de_routage": "L'adresse de routage du destinataire (sa plateforme agréée) s'obtient auprès de vos propres clients — à l'ouverture du compte ou par mise à jour de votre référentiel tiers — ou se consulte manuellement sur l'annuaire officiel ci-dessus ; Sirenic ne fournit pas cette adresse. / The recipient's routing address (their accredited platform) is obtained from your own customers — at onboarding or through a master-data update — or looked up manually in the official directory above; Sirenic does not provide this address."
+   },
+   "avertissements": [],
+   "data_freshness": "identité : stock Sirene mensuel (2026-10-01)",
+   "source": "INSEE Sirene / INPI RNE via recherche-entreprises (identité, établissements) ; numéro de TVA calculé à partir du SIREN ; calendrier d'obligation : loi de finances pour 2024 (art. 91)",
+   "disclaimer": "Données de préparation fournies à titre indicatif ; Sirenic n'émet, ne transmet ni ne route aucune facture, et ne confirme pas l'enregistrement du destinataire sur le PPF ou une PDP. / Preparation data provided for guidance only; Sirenic does not issue, transmit or route any invoice, and does not confirm the recipient's registration on the PPF or any accredited platform (PDP)."
+  },
+  "tva_vies": {
+   "numero": "FR88490586708",
+   "statut": "valide"
+  },
+  "banque": null,
+  "verdict": {
+   "pret_a_facturer": true,
+   "raisons": [
+    {
+     "code": "iban_non_fourni",
+     "niveau": "information",
+     "source": "paramètre iban absent"
+    }
+   ]
+  },
+  "provenance": [
+   {
+    "bloc": "destinataire.destinataire",
+    "source_code": "insee_sirene",
+    "registre": "Répertoire Sirene des entreprises et de leurs établissements (INSEE)",
+    "mode": "stock",
+    "licence": "etalab-2.0",
+    "version": "2026-10-01",
+    "as_of": "2026-10-01",
+    "precision_as_of": "publication_officielle",
+    "age_jours": 4,
+    "etat": "servi"
+   },
+   {
+    "bloc": "destinataire.adressage",
+    "source_code": "sirene_etablissements",
+    "registre": "Répertoire Sirene — établissements (INSEE)",
+    "mode": "stock",
+    "licence": "etalab-2.0",
+    "version": "2026-10-01",
+    "as_of": "2026-10-01",
+    "precision_as_of": "publication_officielle",
+    "age_jours": 4,
+    "etat": "servi"
+   },
+   {
+    "bloc": "destinataire.tva",
+    "source_code": "calcul_sirenic",
+    "registre": "Numéro calculé par Sirenic (clé de contrôle) — non vérifié auprès de VIES",
+    "mode": "calcul",
+    "etat": "servi"
+   },
+   {
+    "bloc": "destinataire.calendrier_reforme",
+    "source_code": "sirenic_regles",
+    "registre": "Signaux en liste fermée et verdict calculés par règles déterministes Sirenic",
+    "mode": "calcul",
+    "etat": "servi"
+   },
+   {
+    "bloc": "tva_vies",
+    "source_code": "vies_commission_ue",
+    "registre": "VIES — validation des numéros de TVA intracommunautaire",
+    "mode": "temps_reel",
+    "licence": "conditions_source",
+    "as_of": "2026-10-05T23:23:47.084Z",
+    "precision_as_of": "consultation",
+    "etat": "servi"
+   },
+   {
+    "bloc": "verdict",
+    "source_code": "sirenic_regles",
+    "registre": "Signaux en liste fermée et verdict calculés par règles déterministes Sirenic",
+    "mode": "calcul",
+    "etat": "servi"
+   }
+  ],
+  "source": "Composition Sirenic : préparation e-facturation (INSEE Sirene), VIES (Commission européenne, live), contrôle de forme IBAN + registres bancaires officiels",
+  "disclaimer": "Aide à la décision déterministe (raisons en liste fermée, tracées à leur source) — ni un avis de conformité fiscale, ni une Verification of Payee : le volet bancaire contrôle la FORME et identifie la banque, sans vérifier l'existence du compte ni le nom du titulaire ; la TVA (VIES) et l'état Sirene, eux, sont vérifiés en direct. / Deterministic decision support — neither tax-compliance advice nor a Verification of Payee: the bank leg checks FORM (structure + key digits) and identifies the bank, without checking the account's existence or the holder's name; the VAT (VIES) and the Sirene registry status are checked live."
+ }
+}

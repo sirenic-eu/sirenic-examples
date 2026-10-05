@@ -1,0 +1,62 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://api.sirenic.eu/v1/entreprise/490586708/dossier?blocs=finances%2Cpi",
+  "auth": "none"
+ },
+ "status": 402,
+ "recorded_at": "2026-10-05T23:22:53Z",
+ "origin": "recorded from the live service, no key, no payment",
+ "removed": [],
+ "headers": {
+  "content-type": "application/json; charset=utf-8",
+  "payment-required": "eyJ4NDAyVmVyc2lvbiI6MiwiZXJyb3IiOiJQYXltZW50IHJlcXVpcmVkIiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9hcGkuc2lyZW5pYy5ldS92MS9lbnRyZXByaXNlL3tzaXJlbn0vZG9zc2llciIsImRlc2NyaXB0aW9uIjoiRnVsbCBGcmVuY2ggY29tcGFueSBmaWxlIGluIE9ORSBjYWxsOiBpZGVudGl0eSBpcyB0aGUgYmFzZSwgdGhlbiBhZGQgdGhlIGJsb2NrcyB5b3Ugd2FudCBhbmQgcGF5IG9ubHkgZm9yIHRob3NlIOKAlCBldGFibGlzc2VtZW50cywgYWxlcnRlc19ib2RhY2MsIGNvbnRlbnRpZXV4LCBmaW5hbmNlcywgbWFyY2hlc19wdWJsaWNzLCBtYXJjaGVzX3B1YmxpY3NfdWUsIGxvYmJ5aW5nLCByaXNxdWVzX2luZHVzdHJpZWxzLCBhZ3JlbWVudHMsIHBpLCBkb2N1bWVudHMsIGZhY3R1cmF0aW9uX3ByZXAsIHNjb3JlLiBFeGFtcGxlOiBibG9jcz1maW5hbmNlcyxwaSxzY29yZS4gRWFjaCBibG9jayBjb3N0cyB3aGF0IGl0cyBvd24gZW5kcG9pbnQgY29zdHMsIHRvdGFsIGNhcHBlZCBhdCAkMC4zNS4gQSBibG9jayB0aGF0IGNhbm5vdCBiZSBzZXJ2ZWQgaXMgTkFNRUQgd2l0aCBpdHMgcmVhc29uOiBubyBkYXRhLCBub3QgZGlzY2xvc2FibGUsIG9yIHVwc3RyZWFtIG91dGFnZS4iLCJtaW1lVHlwZSI6ImFwcGxpY2F0aW9uL2pzb24iLCJzZXJ2aWNlTmFtZSI6IlNpcmVuaWMiLCJ0YWdzIjpbImZyYW5jZSIsImNvbXBhbnktZmlsZSIsIm9uZS1jYWxsIiwiYnVuZGxlIiwiZHVlLWRpbGlnZW5jZSJdLCJpY29uVXJsIjoiaHR0cHM6Ly9hcGkuc2lyZW5pYy5ldS9sb2dvLnBuZyJ9LCJhY2NlcHRzIjpbeyJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MyIsImFtb3VudCI6IjQ1MDAwIiwiYXNzZXQiOiIweDgzMzU4OWZDRDZlRGI2RTA4ZjRjN0MzMkQ0ZjcxYjU0YmRBMDI5MTMiLCJwYXlUbyI6IjB4NzZBNjcyRUVlNTZEMjlENDc1YjA3MTVjYzAzQjhDOTlENzBFQzhBMiIsIm1heFRpbWVvdXRTZWNvbmRzIjoyMDAsImV4dHJhIjp7Im5hbWUiOiJVU0QgQ29pbiIsInZlcnNpb24iOiIyIn19LHsic2NoZW1lIjoiZXhhY3QiLCJuZXR3b3JrIjoiZWlwMTU1Ojg0NTMiLCJhbW91bnQiOiI0NTAwMCIsImFzc2V0IjoiMHg2MGEzRTM1Q2MzMDJiRkE0NENiMjg4QmM1YTRGMzE2RmRiMWFkYjQyIiwicGF5VG8iOiIweDc2QTY3MkVFZTU2RDI5RDQ3NWIwNzE1Y2MwM0I4Qzk5RDcwRUM4QTIiLCJtYXhUaW1lb3V0U2Vjb25kcyI6MjAwLCJleHRyYSI6eyJuYW1lIjoiRVVSQyIsInZlcnNpb24iOiIyIn19XSwiZXh0ZW5zaW9ucyI6eyJiYXphYXIiOnsiaW5mbyI6eyJpbnB1dCI6eyJ0eXBlIjoiaHR0cCIsIm1ldGhvZCI6IkdFVCIsInF1ZXJ5UGFyYW1zIjp7ImJsb2NzIjoiZmluYW5jZXMscGksc2NvcmUifSwicGF0aFBhcmFtcyI6eyJzaXJlbiI6IjQ5MDU4NjcwOCJ9fSwib3V0cHV0Ijp7InR5cGUiOiJqc29uIiwiZXhhbXBsZSI6eyJzaXJlbiI6IjU1MjAzMjUzNCIsImlkZW50aXRlIjp7InNpcmVuIjoiNTUyMDMyNTM0IiwiZGVub21pbmF0aW9uIjoiREFOT05FIiwibmF0dXJlX2p1cmlkaXF1ZSI6IjU1OTkiLCJhY3Rpdml0ZV9wcmluY2lwYWxlIjoiNzAuMTBaIiwiY2F0ZWdvcmllX2VudHJlcHJpc2UiOiJHRSIsImV0YXRfYWRtaW5pc3RyYXRpZiI6ImFjdGlmIn0sImJsb2NzX2RlbWFuZGVzIjpbImZpbmFuY2VzIiwicGkiLCJzY29yZSJdLCJibG9jcyI6eyJmaW5hbmNlcyI6eyJzaXJlbiI6IjU1MjAzMjUzNCIsIm5vbWJyZV9leGVyY2ljZXMiOjgsImV4ZXJjaWNlcyI6W3siZGF0ZV9jbG90dXJlIjoiMjAyNC0xMi0zMSIsImNoaWZmcmVfYWZmYWlyZXMiOjEwMzAwMDAwMDAsImViZSI6Njk3MDAwMDAwLCJyZXN1bHRhdF9uZXQiOjU5MjAwMDAwMH1dfSwicGkiOnsibWFycXVlcyI6eyJub21icmUiOjg4LCJsaXN0ZSI6W3sibnVtZXJvIjoiNDc4OTc5NiIsImxpYmVsbGUiOiJUSEUgT05FIEhPTUUiLCJzdGF0dXQiOiJNYXJxdWUgZW5yZWdpc3Ryw6llIiwiZGF0ZSI6IjIwMjEtMDctMzEiLCJkYXRlX25hdHVyZSI6ImRlcG90IiwiY2xhc3NpZmljYXRpb24iOiI0MSwgNDQifV19LCJicmV2ZXRzIjp7Im5vbWJyZSI6MTJ9LCJtb2RlbGVzIjp7Im5vbWJyZSI6M319LCJzY29yZSI6eyJzaXJlbiI6IjU1MjAzMjUzNCIsInNjb3JlX3Jpc3F1ZSI6MjIsImNsYXNzZSI6InNhaW4iLCJyaXNxdWVfMTJtIjoiZmFpYmxlIiwiY29uZmlhbmNlIjoibW95ZW5uZSIsInZlcnNpb25fbW9kZWxlIjoiZGVmYWlsbGFuY2UtdjEuOSJ9fSwiYmxvY3NfYWJzZW50cyI6W10sInJlc3VtZSI6eyJkZW1hbmRlcyI6Mywic2VydmlzIjozLCJhYnNlbnRzIjowLCJkb250X3Bhbm5lX2Ftb250IjowfX19fSwic2NoZW1hIjp7IiRzY2hlbWEiOiJodHRwczovL2pzb24tc2NoZW1hLm9yZy9kcmFmdC8yMDIwLTEyL3NjaGVtYSIsInR5cGUiOiJvYmplY3QiLCJwcm9wZXJ0aWVzIjp7ImlucHV0Ijp7InR5cGUiOiJvYmplY3QiLCJwcm9wZXJ0aWVzIjp7InR5cGUiOnsidHlwZSI6InN0cmluZyIsImNvbnN0IjoiaHR0cCJ9LCJtZXRob2QiOnsidHlwZSI6InN0cmluZyIsImVudW0iOlsiR0VUIl19LCJxdWVyeVBhcmFtcyI6eyJ0eXBlIjoib2JqZWN0IiwicHJvcGVydGllcyI6eyJibG9jcyI6eyJ0eXBlIjoic3RyaW5nIiwiZGVzY3JpcHRpb24iOiJDb21tYS1zZXBhcmF0ZWQgYmxvY2tzIHRvIGFkZCB0byB0aGUgaWRlbnRpdHkgYmFzZS4gQXZhaWxhYmxlOiBldGFibGlzc2VtZW50cywgYWxlcnRlc19ib2RhY2MsIGNvbnRlbnRpZXV4LCBmaW5hbmNlcywgbWFyY2hlc19wdWJsaWNzLCBtYXJjaGVzX3B1YmxpY3NfdWUsIGxvYmJ5aW5nLCByaXNxdWVzX2luZHVzdHJpZWxzLCBhZ3JlbWVudHMsIHBpLCBkb2N1bWVudHMsIGZhY3R1cmF0aW9uX3ByZXAsIHNjb3JlLiBCaWxsZWQgcGVyIGJsb2NrIG9uIHRvcCBvZiB0aGUgJDAuMDA1IGJhc2UsIGNhcHBlZCBhdCAkMC4zNS4gRXhhbXBsZTogYmxvY3M9ZmluYW5jZXMscGksc2NvcmUgb24gc2lyZW4gNTUyMDMyNTM0LiJ9fSwicmVxdWlyZWQiOlsiYmxvY3MiXX0sInBhdGhQYXJhbXMiOnsidHlwZSI6Im9iamVjdCIsInByb3BlcnRpZXMiOnsic2lyZW4iOnsidHlwZSI6InN0cmluZyIsImRlc2NyaXB0aW9uIjoiOS1kaWdpdCBTSVJFTiwgZS5nLiA1NTIwMzI1MzQifX0sInJlcXVpcmVkIjpbInNpcmVuIl19fSwicmVxdWlyZWQiOlsidHlwZSIsIm1ldGhvZCJdLCJhZGRpdGlvbmFsUHJvcGVydGllcyI6ZmFsc2V9LCJvdXRwdXQiOnsidHlwZSI6Im9iamVjdCIsInByb3BlcnRpZXMiOnsidHlwZSI6eyJ0eXBlIjoic3RyaW5nIn0sImV4YW1wbGUiOnsidHlwZSI6Im9iamVjdCJ9fSwicmVxdWlyZWQiOlsidHlwZSJdfX0sInJlcXVpcmVkIjpbImlucHV0Il19LCJyb3V0ZVRlbXBsYXRlIjoiL3YxL2VudHJlcHJpc2UvOnNpcmVuL2Rvc3NpZXIifX19",
+  "ratelimit-limit": "120",
+  "ratelimit-policy": "120;w=60",
+  "ratelimit-remaining": "119",
+  "ratelimit-reset": "60",
+  "x-request-id": "0aea7faa-be20-4f2f-b43d-cc51da14e503"
+ },
+ "body": {
+  "x402Version": 2,
+  "error": "payment_required",
+  "message": "Paid endpoint. Retry with an x402 payment header. Price: $0.045 in USDC (or the same numeric amount in EURC) on Base (mainnet). Paying in EURC requires an explicit client opt-in since @x402/core 2.23 (spendControls.allowedAssets), otherwise your client silently keeps the USDC option. Set allowedAssets[].maxAmountPerPayment as well (integer ATOMIC amount, e.g. \"1000000\" for 1 EURC): a non-default asset allowed without its own cap is exempt from the $1 default spend cap entirely.",
+  "price": "$0.045",
+  "accepts": [
+   {
+    "scheme": "exact",
+    "network": "eip155:8453",
+    "payTo": "0x76A672EEe56D29D475b0715cc03B8C99D70EC8A2",
+    "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "amount": "45000",
+    "maxAmountRequired": "45000",
+    "maxTimeoutSeconds": 200,
+    "resource": "https://api.sirenic.eu/v1/entreprise/{siren}/dossier",
+    "description": "Full French company file in ONE call: identity is the base, then add the blocks you want and pay only for those — etablissements, alertes_bodacc, contentieux, finances, marches_publics, marches_publics_ue, lobbying, risques_industriels, agrements, pi, documents, facturation_prep, score. Example: blocs=finances,pi,score. Each block costs what its own endpoint costs, total capped at $0.35. A block that cannot be served is NAMED with its reason: no data, not disclosable, or upstream outage.",
+    "mimeType": "application/json",
+    "extra": {
+     "name": "USD Coin",
+     "version": "2"
+    }
+   },
+   {
+    "scheme": "exact",
+    "network": "eip155:8453",
+    "payTo": "0x76A672EEe56D29D475b0715cc03B8C99D70EC8A2",
+    "asset": "0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42",
+    "amount": "45000",
+    "maxAmountRequired": "45000",
+    "maxTimeoutSeconds": 200,
+    "resource": "https://api.sirenic.eu/v1/entreprise/{siren}/dossier",
+    "description": "Full French company file in ONE call: identity is the base, then add the blocks you want and pay only for those — etablissements, alertes_bodacc, contentieux, finances, marches_publics, marches_publics_ue, lobbying, risques_industriels, agrements, pi, documents, facturation_prep, score. Example: blocs=finances,pi,score. Each block costs what its own endpoint costs, total capped at $0.35. A block that cannot be served is NAMED with its reason: no data, not disclosable, or upstream outage.",
+    "mimeType": "application/json",
+    "extra": {
+     "name": "EURC",
+     "version": "2"
+    }
+   }
+  ],
+  "documentation": "https://api.sirenic.eu/llms.txt",
+  "preview": "https://api.sirenic.eu/preview/entreprise/55203253400646"
+ }
+}

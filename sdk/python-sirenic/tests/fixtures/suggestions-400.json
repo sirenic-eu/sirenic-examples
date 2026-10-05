@@ -1,0 +1,24 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://api.sirenic.eu/v1/suggestions?q=ai",
+  "auth": "none"
+ },
+ "status": 400,
+ "recorded_at": "2026-10-05T23:21:08Z",
+ "origin": "recorded from the live service, no key, no payment",
+ "removed": [],
+ "headers": {
+  "content-type": "application/json; charset=utf-8",
+  "ratelimit-limit": "60",
+  "ratelimit-policy": "60;w=60",
+  "ratelimit-remaining": "59",
+  "ratelimit-reset": "60",
+  "x-request-id": "42f01139-3e32-4682-8142-be40dfb6babb"
+ },
+ "body": {
+  "error": "parametre_invalide",
+  "champ": "q",
+  "message": "Paramètre `q` requis (3 à 100 caractères, ou un SIREN à 9 chiffres). / Query `q` required (3-100 chars, or a 9-digit SIREN)."
+ }
+}

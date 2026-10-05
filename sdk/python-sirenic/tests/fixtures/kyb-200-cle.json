@@ -1,0 +1,1458 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://api.sirenic.eu/v1/kyb/490586708",
+  "auth": "api_key"
+ },
+ "status": 200,
+ "recorded_at": "2026-10-05T23:23:43Z",
+ "origin": "recorded from the live service with the Sirenic test API key (internal credits account), no x402 payment",
+ "removed": [
+  "header x-credits-remaining",
+  "header x-sirenic-key-id",
+  "header x-sirenic-signature",
+  "header x-sirenic-timestamp",
+  "body.finances.bilans_saisis_inpi: 8 of 9 items (size only), the first kept",
+  "body.identite.dirigeants (natural persons)",
+  "body.criblage_sanctions.cibles: 10 officer entries (natural persons), the company entry kept",
+  "body.criblage_sanctions.cibles[].correspondances: 27 list entries (names from sanctions lists), nombre_correspondances kept",
+  "body.criblage_sanctions.cibles_ecartees[].cible (name)"
+ ],
+ "headers": {
+  "content-type": "application/json; charset=utf-8",
+  "ratelimit-limit": "120",
+  "ratelimit-policy": "120;w=60",
+  "ratelimit-remaining": "116",
+  "ratelimit-reset": "11",
+  "x-credits-charged": "0.15",
+  "x-request-id": "3a4dc450-b7ee-4438-b10d-2294cc1f1363"
+ },
+ "body": {
+  "siren": "490586708",
+  "identite": {
+   "siren": "490586708",
+   "denomination": "AIRVANCE GROUP",
+   "sigle": null,
+   "statut_diffusion": "totale",
+   "nature_juridique": "5710",
+   "activite_principale": "64.20Z",
+   "section_activite_principale": "K",
+   "categorie_entreprise": "ETI",
+   "tranche_effectif_salarie": "11",
+   "date_creation": "2006-06-12",
+   "date_fermeture": null,
+   "etat_administratif": "actif",
+   "siege": {
+    "siret": "49058670800011",
+    "adresse": "383 RUE DES BARRONIERES 01700 BEYNOST",
+    "code_postal": "01700",
+    "commune": "BEYNOST"
+   },
+   "conventions_collectives": [
+    "3248"
+   ],
+   "conventions_collectives_notes": [],
+   "tva_intracommunautaire": "FR88490586708",
+   "nombre_etablissements": 1,
+   "nombre_etablissements_ouverts": 1,
+   "source": "INSEE Sirene / INPI RNE via recherche-entreprises.api.gouv.fr, licence ouverte Etalab 2.0",
+   "disclaimer": "Données issues de l'open data, fournies en l'état sans garantie. / Open data, provided as is without warranty."
+  },
+  "tva_intracommunautaire": "FR88490586708",
+  "alertes_bodacc": {
+   "siren": "490586708",
+   "denomination": "AIRVANCE GROUP",
+   "denomination_source": "sirene",
+   "procedures_collectives": [],
+   "mentions_comme_partie": [],
+   "radiations": [],
+   "ventes_cessions": [
+    {
+     "id": "A202502191",
+     "date_parution": "2025-11-14",
+     "type_avis": "Avis initial",
+     "tribunal": "Greffe du Tribunal de Commerce de Bourg-en-Bresse",
+     "jugement": null,
+     "publication": "A",
+     "role": "sujet",
+     "libelle_annonce": "AIRVANCE GROUP"
+    }
+   ],
+   "autres_annonces": {
+    "Modifications diverses": 27,
+    "Dépôts des comptes": 25
+   },
+   "total_annonces": 53,
+   "couverture": {
+    "annonces_total": 53,
+    "annonces_lues": 53,
+    "procedures_collectives_completes": true,
+    "familles_completes": "toutes",
+    "tronque": false
+   },
+   "consulte_le": "2026-10-05T23:23:43.691Z"
+  },
+  "contentieux": {
+   "couvert": true,
+   "perimetre": "Tribunaux de commerce et tribunaux des activités économiques, décisions publiées en open data par la Cour de cassation (Judilibre, source juritcom) à compter du 31/12/2024, rattachées à des personnes morales par leur identifiant RCS/SIREN. / French commercial courts, open data published by the Cour de cassation since 2024-12-31, linked to legal entities by their RCS/SIREN identifier.",
+   "exhaustivite": "partielle",
+   "couverture": {
+    "taux_rattachement_mesure": 0.618,
+    "mesure_le": "2026-09-09",
+    "decisions_lues": 1260,
+    "greffes": 80,
+    "lecture": "Part des décisions de tribunaux de commerce que Sirenic sait rattacher à une personne morale (identifiant RCS/SIREN lisible, personne morale diffusible, dénomination non occultée), mesurée sur un échantillon stratifié par greffe. Le reste ne porte aucun identifiant exploitable : ces décisions ne sont rattachées à personne. / Share of commercial-court decisions Sirenic can link to a legal entity, measured on a court-stratified sample; the rest carries no usable identifier and is linked to no one."
+   },
+   "derniere_decision_servie_par_la_source": "2026-09-22",
+   "synthese": {
+    "nombre_decisions": 0,
+    "nombre_decisions_servies": 0,
+    "nombre_hors_procedure_collective": 0,
+    "par_annee": {},
+    "par_nature": {},
+    "par_role": {},
+    "premiere_decision": null,
+    "derniere_decision": null
+   },
+   "decisions_recentes": [],
+   "nombre_decisions_dans_le_rapport": 0,
+   "tronque_dans_le_rapport": false,
+   "avertissement": "Deux causes d'absence, indiscernables : aucun identifiant exploitable dans la décision (environ 38 % des décisions), ou décision non encore mise à disposition (délai légal de six mois, art. R. 111-10 COJ ; latence observée d'un à deux mois). L'absence de résultat ne vaut pas absence de contentieux. Les procédures collectives sont déjà servies par /alertes (BODACC) : ici, leur valeur est le lien vers le jugement. / Two indistinguishable causes of absence: no usable identifier in the decision (about 38% of decisions), or decision not yet published (six-month legal window). No result never means no litigation. Insolvency judgments are already served by /alertes; here they carry the link to the judgment itself.",
+   "source": "Cour de cassation, base Judilibre (open data, source juritcom), Licence Ouverte 2.0 ; dernière mise à jour de notre stock : 2026-10-05.",
+   "source_mise_a_jour": "2026-10-05T03:30:03Z",
+   "consulte_le": "2026-10-05T03:30:03Z",
+   "avis": "Aucune appréciation n'est portée sur une décision : consultez-la à la source (url_officielle). Aucun nom de personne physique, aucun texte, aucun montant n'est repris. / No opinion is given on any decision: read it at the source. No natural person's name, no text, no amount is reproduced.",
+   "disclaimer": "Liens décision ↔ société établis par extraction d'un identifiant RCS/SIREN dans la décision, personne morale diffusible et dénomination non occultée seulement ; exhaustivité partielle mesurée ; aucune donnée de personne physique ni de magistrat. Indicateur d'aide à la décision, non contractuel. / Decision-to-company links built from an RCS/SIREN identifier found in the decision; measured partial coverage; no natural-person or judge data. Decision-support only.",
+   "data_freshness": "stock Judilibre tcom collecté quotidiennement (dernier passage réussi : 2026-10-05) ; identité Sirene ; route fermée au-delà de 7 jours sans passage réussi ou sans mise à jour Judilibre plus récente (stock.flux)"
+  },
+  "finances": {
+   "siren": "490586708",
+   "nombre_exercices": 9,
+   "exercices": [
+    {
+     "date_cloture": "2024-12-31",
+     "chiffre_affaires": 4483357,
+     "marge_brute": 4483357,
+     "ebe": -1602284,
+     "ebit": -1814516,
+     "resultat_net": 19027375,
+     "ratios": {
+      "taux_endettement": 225.306,
+      "autonomie_financiere": 30.256,
+      "ratio_liquidite": 700.677,
+      "caf_sur_ca": 582.403,
+      "capacite_remboursement": 7.257,
+      "marge_ebe": -35.738,
+      "rcai_sur_ca": 445.942,
+      "couverture_interets": -1189.325,
+      "bfr_exploitation_sur_ca": 409.469
+     },
+     "confidentialite": "public",
+     "qualite": {
+      "fiabilite": "exploitable",
+      "anomalies": [],
+      "champs_douteux": [],
+      "champs_non_renseignes": []
+     },
+     "ratios_interpretabilite": {
+      "marge_ebe": "limitee",
+      "rcai_sur_ca": "limitee",
+      "caf_sur_ca": "limitee",
+      "bfr_exploitation_sur_ca": "limitee",
+      "couverture_interets": "limitee"
+     }
+    },
+    {
+     "date_cloture": "2023-12-31",
+     "chiffre_affaires": 4536089,
+     "marge_brute": 4536089,
+     "ebe": -1905800,
+     "ebit": -1344709,
+     "resultat_net": 19026840,
+     "ratios": {
+      "taux_endettement": 245.603,
+      "autonomie_financiere": 28.615,
+      "ratio_liquidite": 1033.47,
+      "caf_sur_ca": 577.904,
+      "capacite_remboursement": 7.063,
+      "marge_ebe": -42.014,
+      "rcai_sur_ca": 438.631,
+      "couverture_interets": -1018.15,
+      "bfr_exploitation_sur_ca": 416.305
+     },
+     "confidentialite": "public",
+     "qualite": {
+      "fiabilite": "exploitable",
+      "anomalies": [],
+      "champs_douteux": [],
+      "champs_non_renseignes": []
+     },
+     "ratios_interpretabilite": {
+      "marge_ebe": "limitee",
+      "rcai_sur_ca": "limitee",
+      "caf_sur_ca": "limitee",
+      "bfr_exploitation_sur_ca": "limitee",
+      "couverture_interets": "limitee"
+     }
+    },
+    {
+     "date_cloture": "2022-12-31",
+     "chiffre_affaires": 5097102,
+     "marge_brute": 5097102,
+     "ebe": -3907564,
+     "ebit": -4718862,
+     "resultat_net": 11477527,
+     "ratios": {
+      "taux_endettement": 309.112,
+      "autonomie_financiere": 24.024,
+      "ratio_liquidite": 599.489,
+      "caf_sur_ca": 326.61,
+      "capacite_remboursement": 11.611,
+      "marge_ebe": -76.662,
+      "rcai_sur_ca": 137.804,
+      "couverture_interets": -515.252,
+      "bfr_exploitation_sur_ca": 337.518
+     },
+     "confidentialite": "public",
+     "qualite": {
+      "fiabilite": "exploitable",
+      "anomalies": [],
+      "champs_douteux": [],
+      "champs_non_renseignes": []
+     },
+     "ratios_interpretabilite": {
+      "marge_ebe": "limitee",
+      "rcai_sur_ca": "limitee",
+      "caf_sur_ca": "limitee",
+      "bfr_exploitation_sur_ca": "limitee",
+      "couverture_interets": "limitee"
+     }
+    },
+    {
+     "date_cloture": "2021-12-31",
+     "chiffre_affaires": 5279211,
+     "marge_brute": 5279211,
+     "ebe": -16290915,
+     "ebit": -16545505,
+     "resultat_net": 12747492,
+     "ratios": {
+      "taux_endettement": 222.898,
+      "autonomie_financiere": 28.913,
+      "ratio_liquidite": 210.11,
+      "caf_sur_ca": 180.481,
+      "capacite_remboursement": 18.019,
+      "marge_ebe": -308.586,
+      "rcai_sur_ca": 128.246,
+      "couverture_interets": -85.963,
+      "bfr_exploitation_sur_ca": 126.04
+     },
+     "confidentialite": "public",
+     "qualite": {
+      "fiabilite": "exploitable",
+      "anomalies": [],
+      "champs_douteux": [],
+      "champs_non_renseignes": []
+     },
+     "ratios_interpretabilite": {
+      "marge_ebe": "limitee",
+      "rcai_sur_ca": "limitee",
+      "caf_sur_ca": "limitee",
+      "bfr_exploitation_sur_ca": "limitee",
+      "couverture_interets": "limitee"
+     }
+    },
+    {
+     "date_cloture": "2020-12-31",
+     "chiffre_affaires": 4519887,
+     "marge_brute": 4519887,
+     "ebe": -7689862,
+     "ebit": -7686174,
+     "resultat_net": 18182821,
+     "ratios": {
+      "taux_endettement": 288.693,
+      "autonomie_financiere": 24.711,
+      "ratio_liquidite": 297.178,
+      "caf_sur_ca": 538.71,
+      "capacite_remboursement": 7.442,
+      "marge_ebe": -170.134,
+      "rcai_sur_ca": 372.641,
+      "couverture_interets": -189.844,
+      "bfr_exploitation_sur_ca": 214.03
+     },
+     "confidentialite": "public",
+     "qualite": {
+      "fiabilite": "exploitable",
+      "anomalies": [],
+      "champs_douteux": [],
+      "champs_non_renseignes": []
+     },
+     "ratios_interpretabilite": {
+      "marge_ebe": "limitee",
+      "rcai_sur_ca": "limitee",
+      "caf_sur_ca": "limitee",
+      "bfr_exploitation_sur_ca": "limitee",
+      "couverture_interets": "limitee"
+     }
+    },
+    {
+     "date_cloture": "2019-12-31",
+     "chiffre_affaires": 5134900,
+     "marge_brute": 5134900,
+     "ebe": 32792,
+     "ebit": -11086,
+     "resultat_net": -170989,
+     "ratios": {
+      "taux_endettement": 0.575,
+      "autonomie_financiere": 94.783,
+      "ratio_liquidite": 98.397,
+      "caf_sur_ca": -3.084,
+      "capacite_remboursement": -1.59,
+      "marge_ebe": 0.639,
+      "rcai_sur_ca": -0.032,
+      "couverture_interets": 0.521,
+      "bfr_exploitation_sur_ca": -32.608
+     },
+     "confidentialite": "public",
+     "qualite": {
+      "fiabilite": "exploitable",
+      "anomalies": [],
+      "champs_douteux": [],
+      "champs_non_renseignes": []
+     },
+     "ratios_interpretabilite": {
+      "marge_ebe": "limitee",
+      "rcai_sur_ca": "limitee",
+      "caf_sur_ca": "limitee",
+      "bfr_exploitation_sur_ca": "limitee",
+      "couverture_interets": "limitee"
+     }
+    },
+    {
+     "date_cloture": "2018-12-31",
+     "chiffre_affaires": 5014009,
+     "marge_brute": 5014009,
+     "ebe": 277115,
+     "ebit": 295585,
+     "resultat_net": 476753,
+     "ratios": {
+      "taux_endettement": 1.927,
+      "autonomie_financiere": 94.703,
+      "ratio_liquidite": 406.935,
+      "caf_sur_ca": 5.225,
+      "capacite_remboursement": 3.503,
+      "marge_ebe": 5.527,
+      "rcai_sur_ca": 7.748,
+      "couverture_interets": 0.001,
+      "bfr_exploitation_sur_ca": -18.035
+     },
+     "confidentialite": "public",
+     "qualite": {
+      "fiabilite": "exploitable",
+      "anomalies": [],
+      "champs_douteux": [],
+      "champs_non_renseignes": []
+     },
+     "ratios_interpretabilite": {
+      "marge_ebe": "limitee",
+      "rcai_sur_ca": "limitee",
+      "caf_sur_ca": "limitee",
+      "bfr_exploitation_sur_ca": "limitee",
+      "couverture_interets": "limitee"
+     }
+    },
+    {
+     "date_cloture": "2017-12-31",
+     "chiffre_affaires": 4898746,
+     "marge_brute": 4898746,
+     "ebe": -509756,
+     "ebit": -480921,
+     "resultat_net": 357684,
+     "ratios": {
+      "taux_endettement": 0.609,
+      "autonomie_financiere": 94.388,
+      "ratio_liquidite": 321.258,
+      "caf_sur_ca": 3.838,
+      "capacite_remboursement": 1.57,
+      "marge_ebe": -10.406,
+      "rcai_sur_ca": -7.675,
+      "couverture_interets": -0.002,
+      "bfr_exploitation_sur_ca": -30.557
+     },
+     "confidentialite": "public",
+     "qualite": {
+      "fiabilite": "exploitable",
+      "anomalies": [],
+      "champs_douteux": [],
+      "champs_non_renseignes": []
+     },
+     "ratios_interpretabilite": {
+      "marge_ebe": "limitee",
+      "rcai_sur_ca": "limitee",
+      "caf_sur_ca": "limitee",
+      "bfr_exploitation_sur_ca": "limitee",
+      "couverture_interets": "limitee"
+     }
+    },
+    {
+     "date_cloture": "2016-12-31",
+     "chiffre_affaires": 3898331,
+     "marge_brute": 3898331,
+     "ebe": 288137,
+     "ebit": 255279,
+     "resultat_net": 6836498,
+     "ratios": {
+      "taux_endettement": 0.977,
+      "autonomie_financiere": 95.781,
+      "ratio_liquidite": 483.762,
+      "caf_sur_ca": 174.214,
+      "capacite_remboursement": 0.071,
+      "marge_ebe": 7.391,
+      "rcai_sur_ca": 184.324,
+      "couverture_interets": 0.022,
+      "bfr_exploitation_sur_ca": -31.594
+     },
+     "confidentialite": "public",
+     "qualite": {
+      "fiabilite": "exploitable",
+      "anomalies": [],
+      "champs_douteux": [],
+      "champs_non_renseignes": []
+     },
+     "ratios_interpretabilite": {
+      "marge_ebe": "limitee",
+      "rcai_sur_ca": "limitee",
+      "caf_sur_ca": "limitee",
+      "bfr_exploitation_sur_ca": "limitee",
+      "couverture_interets": "limitee"
+     }
+    }
+   ],
+   "perimetre_comptable": {
+    "perimetre": "social",
+    "lecture": "Comptes sociaux de l'entité juridique interrogée, filiales non consolidées. / Statutory accounts of the queried legal entity; subsidiaries not consolidated."
+   },
+   "interpretabilite": {
+    "profil": "holding_ou_siege",
+    "ratios_activite": "limitee",
+    "ratios_concernes": [
+     "marge_ebe",
+     "rcai_sur_ca",
+     "caf_sur_ca",
+     "bfr_exploitation_sur_ca",
+     "couverture_interets"
+    ],
+    "lecture": "Holding ou siège social (NAF 64.20 / 70.10) : le résultat vient de produits financiers comptabilisés après l'EBE, et le chiffre d'affaires social ne mesure pas l'activité du groupe. Les ratios listés sont calculables mais économiquement peu interprétables ; les montants restent ceux déposés. / Holding or head office (NAF 64.20 / 70.10): income comes from financial products booked after EBITDA, and standalone revenue does not measure group activity. The listed ratios are computable but economically hard to interpret; amounts are as filed."
+   },
+   "qualification": {
+    "lecture": "Chaque exercice porte un objet `qualite` : `fiabilite` (exploitable / a_verifier / non_exploitable), `anomalies` (codes de la liste fermée ci-dessous), `champs_douteux` (montants ou clés de `ratios` présents mais contredits — n'alimentent aucun verdict) et `champs_non_renseignes` (publiés à 0 par une source qui ne laisse jamais de case vide : servis `null`, à lire « non publié »). `exercices` ne porte qu'UNE ligne par date de clôture, la mieux qualifiée ; les autres lignes de la source (second formulaire pour la même clôture, ligne non exploitable) sont servies dans `exercices_ecartes` avec leur motif. Le consolidé de `comptes_consolides` est qualifié de la même façon. / Each fiscal year carries a `qualite` object: `fiabilite` (exploitable / a_verifier / non_exploitable), `anomalies` (codes from the closed list below), `champs_douteux` (amounts or `ratios` keys present but contradicted — they feed no verdict) and `champs_non_renseignes` (published as 0 by a source that never leaves a blank: served `null`, read “not published”). `exercices` carries ONE row per closing date, the best qualified; the source's other rows (a second form for the same date, an unusable row) are served under `exercices_ecartes` with their reason. The consolidated accounts under `comptes_consolides` are qualified the same way.",
+    "fiabilites": {
+     "exploitable": "Aucune contradiction constatée : les montants peuvent alimenter une tendance, un classement ou un verdict. Les champs listés dans `champs_non_renseignes` valent « non publié », jamais zéro. / No contradiction found: amounts may feed a trend, a ranking or a verdict. Fields listed under `champs_non_renseignes` mean “not published”, never zero.",
+     "a_verifier": "Au moins un montant se contredit avec un autre de la même ligne ou de la série : les champs listés dans `champs_douteux` ne doivent alimenter aucun verdict ; les autres restent lisibles. / At least one amount contradicts another on the same row or in the series: fields listed under `champs_douteux` must not feed any verdict; the others remain readable.",
+     "non_exploitable": "La ligne entière est démontrée fausse ou hors périmètre (unité incohérente, copie du consolidé, montant invraisemblable) : elle est servie dans `exercices_ecartes`, avec son motif, et n'alimente rien. / The whole row is demonstrably wrong or out of scope (inconsistent unit, copy of the consolidated row, implausible amount): it is served under `exercices_ecartes` with its reason and feeds nothing."
+    },
+    "anomalies": {}
+   },
+   "bilans_saisis_inpi": [
+    {
+     "date_cloture": "2024-12-31",
+     "date_cloture_precedente": "2023-12-31",
+     "duree_exercice_mois": 12,
+     "type_bilan": "complet",
+     "devise": "EUR",
+     "confidentialite": "public",
+     "confidentialite_inpi": "Public",
+     "pages_servies": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      16
+     ],
+     "postes_cles": {
+      "chiffre_affaires": 4483357,
+      "resultat_exploitation": -1814516,
+      "resultat_net": 19027375,
+      "capitaux_propres": 84572605,
+      "total_bilan": 279522031
+     },
+     "liasses": [
+      {
+       "code": "AF",
+       "m1": 1245000,
+       "m2": null,
+       "m3": 1245000,
+       "m4": 1245000
+      },
+      {
+       "code": "AT",
+       "m1": null,
+       "m2": null,
+       "m3": null,
+       "m4": 232
+      },
+      {
+       "code": "CU",
+       "m1": 226486519,
+       "m2": 13423931,
+       "m3": 213062587,
+       "m4": 205013523
+      },
+      {
+       "code": "BD",
+       "m1": 108,
+       "m2": null,
+       "m3": 108,
+       "m4": 106
+      },
+      {
+       "code": "BH",
+       "m1": 26976500,
+       "m2": null,
+       "m3": 26976500,
+       "m4": 27263300
+      },
+      {
+       "code": "BJ",
+       "m1": 254708126,
+       "m2": 13423931,
+       "m3": 241284195,
+       "m4": 233522161
+      },
+      {
+       "code": "BV",
+       "m1": null,
+       "m2": null,
+       "m3": null,
+       "m4": 122
+      },
+      {
+       "code": "BX",
+       "m1": 97158,
+       "m2": null,
+       "m3": 97158,
+       "m4": null
+      },
+      {
+       "code": "BZ",
+       "m1": 31601455,
+       "m2": 5012146,
+       "m3": 26589309,
+       "m4": 24864014
+      },
+      {
+       "code": "CD",
+       "m1": null,
+       "m2": null,
+       "m3": null,
+       "m4": 1706686
+      },
+      {
+       "code": "CF",
+       "m1": 11509236,
+       "m2": null,
+       "m3": 11509236,
+       "m4": 3539731
+      },
+      {
+       "code": "CH",
+       "m1": 42133,
+       "m2": null,
+       "m3": 42133,
+       "m4": 10717
+      },
+      {
+       "code": "CJ",
+       "m1": 43249982,
+       "m2": 5012146,
+       "m3": 38237836,
+       "m4": 30121270
+      },
+      {
+       "code": "CO",
+       "m1": 297958108,
+       "m2": 18436077,
+       "m3": 279522031,
+       "m4": 263643431
+      },
+      {
+       "code": "DA",
+       "m1": 23095340,
+       "m2": 23941923,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "DB",
+       "m1": 1241956,
+       "m2": 1241956,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "DD",
+       "m1": 3214181,
+       "m2": 3214181,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "DG",
+       "m1": 33648009,
+       "m2": 24670146,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "DI",
+       "m1": 19027375,
+       "m2": 19026840,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "DK",
+       "m1": 4345744,
+       "m2": 3347050,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "DL",
+       "m1": 84572605,
+       "m2": 75442096,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "DP",
+       "m1": null,
+       "m2": 146521,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "DR",
+       "m1": null,
+       "m2": 146521,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "DU",
+       "m1": 165208976,
+       "m2": 163971368,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "DV",
+       "m1": 25338171,
+       "m2": 21316656,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "DX",
+       "m1": 377402,
+       "m2": 122726,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "DY",
+       "m1": 1910004,
+       "m2": 2088688,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "DZ",
+       "m1": 300000,
+       "m2": null,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "EA",
+       "m1": 1814874,
+       "m2": 555134,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "EC",
+       "m1": 194949426,
+       "m2": 188054572,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "ED",
+       "m1": null,
+       "m2": 241,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "EE",
+       "m1": 279522031,
+       "m2": 263643431,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "EG",
+       "m1": 41842758,
+       "m2": 33894572,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "EH",
+       "m1": 1048976,
+       "m2": 146990,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "FG",
+       "m1": 4483357,
+       "m2": null,
+       "m3": 4483357,
+       "m4": 4536089
+      },
+      {
+       "code": "FJ",
+       "m1": 4483357,
+       "m2": null,
+       "m3": 4483357,
+       "m4": 4536089
+      },
+      {
+       "code": "FP",
+       "m1": null,
+       "m2": null,
+       "m3": 78043,
+       "m4": 862365
+      },
+      {
+       "code": "FQ",
+       "m1": null,
+       "m2": null,
+       "m3": 7973,
+       "m4": 13
+      },
+      {
+       "code": "FR",
+       "m1": null,
+       "m2": null,
+       "m3": 4569372,
+       "m4": 5398467
+      },
+      {
+       "code": "FW",
+       "m1": null,
+       "m2": null,
+       "m3": 1357074,
+       "m4": 1424431
+      },
+      {
+       "code": "FX",
+       "m1": null,
+       "m2": null,
+       "m3": 194526,
+       "m4": 177283
+      },
+      {
+       "code": "FY",
+       "m1": null,
+       "m2": null,
+       "m3": 3183434,
+       "m4": 3387098
+      },
+      {
+       "code": "FZ",
+       "m1": null,
+       "m2": null,
+       "m3": 1350607,
+       "m4": 1453077
+      },
+      {
+       "code": "GA",
+       "m1": null,
+       "m2": null,
+       "m3": 232,
+       "m4": 3206
+      },
+      {
+       "code": "GE",
+       "m1": null,
+       "m2": null,
+       "m3": 298016,
+       "m4": 298080
+      },
+      {
+       "code": "GF",
+       "m1": null,
+       "m2": null,
+       "m3": 6383889,
+       "m4": 6743175
+      },
+      {
+       "code": "GG",
+       "m1": null,
+       "m2": null,
+       "m3": -1814516,
+       "m4": -1344709
+      },
+      {
+       "code": "GJ",
+       "m1": null,
+       "m2": null,
+       "m3": 34807386,
+       "m4": 35150090
+      },
+      {
+       "code": "GL",
+       "m1": null,
+       "m2": null,
+       "m3": 5264692,
+       "m4": 4703019
+      },
+      {
+       "code": "GM",
+       "m1": null,
+       "m2": null,
+       "m3": 146521,
+       "m4": null
+      },
+      {
+       "code": "GN",
+       "m1": null,
+       "m2": null,
+       "m3": 645459,
+       "m4": 792214
+      },
+      {
+       "code": "GP",
+       "m1": null,
+       "m2": null,
+       "m3": 40864058,
+       "m4": 40645323
+      },
+      {
+       "code": "GQ",
+       "m1": null,
+       "m2": null,
+       "m3": 6309477,
+       "m4": 7152122
+      },
+      {
+       "code": "GR",
+       "m1": null,
+       "m2": null,
+       "m3": 11970183,
+       "m4": 11936387
+      },
+      {
+       "code": "GS",
+       "m1": null,
+       "m2": null,
+       "m3": 776711,
+       "m4": 315400
+      },
+      {
+       "code": "GU",
+       "m1": null,
+       "m2": null,
+       "m3": 19056371,
+       "m4": 19403909
+      },
+      {
+       "code": "GV",
+       "m1": null,
+       "m2": null,
+       "m3": 21807687,
+       "m4": 21241415
+      },
+      {
+       "code": "GW",
+       "m1": null,
+       "m2": null,
+       "m3": 19993170,
+       "m4": 19896706
+      },
+      {
+       "code": "HE",
+       "m1": 100,
+       "m2": 50,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "HG",
+       "m1": 998694,
+       "m2": 894444,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "HH",
+       "m1": 998794,
+       "m2": 894495,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "HI",
+       "m1": -998794,
+       "m2": -894495,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "HK",
+       "m1": -32998,
+       "m2": -24628,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "HL",
+       "m1": 45433430,
+       "m2": 46043790,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "HM",
+       "m1": 26406055,
+       "m2": 27016950,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "HN",
+       "m1": 19027375,
+       "m2": 19026840,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "A1",
+       "m1": 78043,
+       "m2": 85387,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "KD",
+       "m1": 1245000,
+       "m2": null,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "LN",
+       "m1": 15070,
+       "m2": null,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "LQ",
+       "m1": 241173861,
+       "m2": null,
+       "m3": 20131993,
+       "m4": null
+      },
+      {
+       "code": "0G",
+       "m1": 242433931,
+       "m2": null,
+       "m3": 20131993,
+       "m4": null
+      },
+      {
+       "code": "IO",
+       "m1": null,
+       "m2": null,
+       "m3": 1245000,
+       "m4": null
+      },
+      {
+       "code": "IY",
+       "m1": null,
+       "m2": 15070,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "I3",
+       "m1": null,
+       "m2": 7842728,
+       "m3": 253463126,
+       "m4": null
+      },
+      {
+       "code": "I4",
+       "m1": null,
+       "m2": 7857798,
+       "m3": 254708126,
+       "m4": null
+      },
+      {
+       "code": "QU",
+       "m1": 14839,
+       "m2": 232,
+       "m3": 15070,
+       "m4": null
+      },
+      {
+       "code": "0N",
+       "m1": 14839,
+       "m2": 232,
+       "m3": 15070,
+       "m4": null
+      },
+      {
+       "code": "3X",
+       "m1": null,
+       "m2": null,
+       "m3": null,
+       "m4": 4345744
+      },
+      {
+       "code": "3Z",
+       "m1": 3347050,
+       "m2": 998694,
+       "m3": null,
+       "m4": 4345744
+      },
+      {
+       "code": "5Z",
+       "m1": 146521,
+       "m2": null,
+       "m3": 146521,
+       "m4": null
+      },
+      {
+       "code": "9U",
+       "m1": null,
+       "m2": null,
+       "m3": null,
+       "m4": 13423931
+      },
+      {
+       "code": "6X",
+       "m1": 3229669,
+       "m2": 1782477,
+       "m3": null,
+       "m4": 5012146
+      },
+      {
+       "code": "7B",
+       "m1": 12126600,
+       "m2": 6309477,
+       "m3": null,
+       "m4": 18436077
+      },
+      {
+       "code": "7C",
+       "m1": 15620172,
+       "m2": 7308171,
+       "m3": 146521,
+       "m4": 22781821
+      },
+      {
+       "code": "UG",
+       "m1": null,
+       "m2": 6309477,
+       "m3": 146521,
+       "m4": null
+      },
+      {
+       "code": "UJ",
+       "m1": null,
+       "m2": 998694,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "UT",
+       "m1": 26976500,
+       "m2": null,
+       "m3": 26976500,
+       "m4": null
+      },
+      {
+       "code": "UX",
+       "m1": 97158,
+       "m2": 97158,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "VB",
+       "m1": 35040,
+       "m2": 35040,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "VP",
+       "m1": 66,
+       "m2": 66,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "VC",
+       "m1": 31260223,
+       "m2": 31260223,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "VR",
+       "m1": 306126,
+       "m2": 306126,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "VS",
+       "m1": 42133,
+       "m2": 42133,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "VT",
+       "m1": 58717246,
+       "m2": 31740746,
+       "m3": 26976500,
+       "m4": null
+      },
+      {
+       "code": "VG",
+       "m1": 1048976,
+       "m2": 1048976,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "VH",
+       "m1": 164160000,
+       "m2": 11053332,
+       "m3": 153106668,
+       "m4": null
+      },
+      {
+       "code": "8B",
+       "m1": 377402,
+       "m2": 377402,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "8C",
+       "m1": 1291566,
+       "m2": 1291566,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "8D",
+       "m1": 502440,
+       "m2": 502440,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "VW",
+       "m1": 70566,
+       "m2": 70566,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "VQ",
+       "m1": 45432,
+       "m2": 45432,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "8J",
+       "m1": 300000,
+       "m2": 300000,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "VI",
+       "m1": 25338171,
+       "m2": 25338171,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "8K",
+       "m1": 1814874,
+       "m2": 1814874,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "VY",
+       "m1": 194949426,
+       "m2": 41842758,
+       "m3": 153106668,
+       "m4": null
+      },
+      {
+       "code": "VJ",
+       "m1": 10000000,
+       "m2": null,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "VK",
+       "m1": 8720000,
+       "m2": null,
+       "m3": null,
+       "m4": null
+      },
+      {
+       "code": "YP",
+       "m1": 10,
+       "m2": null,
+       "m3": null,
+       "m4": null
+      }
+     ]
+    }
+   ],
+   "note_bilans_inpi": "Liasse fiscale saisie par l'INPI (RNE) : les 20 liasses publiées les plus récentes au plus, une par exercice et par périmètre (social et consolidé comptés à part ; 9 ici, sur 9 publiées), y compris la partie bilan des dépôts à compte de résultat confidentiel, marqués `confidentialite` et `pages_servies` ; montants en euros. `postes_cles` n'est renseigné que pour les formulaires complet/consolidé ; le détail intégral est dans `liasses` (sémantique des colonnes = formulaire Cerfa du type de bilan). / INPI-keyed tax-form line items: at most the 20 latest public filings, one per fiscal year and scope (standalone and consolidated counted separately; 9 here, out of 9 published), amounts in EUR.",
+   "listes_bornees": {
+    "bilans_saisis_inpi": {
+     "nombre_total": 9,
+     "tronque": false
+    }
+   },
+   "decalage_analytique": {
+    "dernier_exercice_analyse": "2024-12-31",
+    "version_jeu_ratios": "2026-09-15",
+    "dernier_depot_connu": {
+     "date_cloture": "2024-12-31",
+     "types": [
+      "complet"
+     ]
+    },
+    "exercices_deposes_non_analyses": [],
+    "motif": "aucun_depot_plus_recent",
+    "decalage": false,
+    "lecture": "Aucun dépôt plus récent que l'exercice analysé (2024-12-31) n'est connu du registre (liasses INPI lues, dernière close le 2024-12-31). Jeu de ratios INPI-BCE version 2026-09-15. / No filing more recent than the analysed year (2024-12-31) is known at the register (INPI statements read, latest closed 2024-12-31). INPI-BCE ratio dataset version 2026-09-15."
+   },
+   "note": "Seuls les comptes déposés et publiés sont couverts, y compris la partie bilan des dépôts à compte de résultat confidentiel (art. L. 232-25 C. com. : exercices marqués `confidentialite` = compte_de_resultat_confidentiel, chiffre d'affaires et EBE non publiés, bilan lu) ; l'absence d'exercice ne signifie pas l'absence d'activité (une PME peut demander la confidentialité totale de ses comptes). / Only filed and published accounts are covered, including the balance-sheet part of filings with a confidential income statement (art. L. 232-25: years flagged `confidentialite` = compte_de_resultat_confidentiel, revenue and EBITDA unpublished, balance sheet read); a missing year does not mean no activity (an SME may request full confidentiality).",
+   "source": "Ratios financiers INPI / Banque de France (comptes annuels déposés) via data.economie.gouv.fr, licence ouverte 2.0",
+   "disclaimer": "Montants en euros, comptes annuels tels que déposés ; publication décalée d'un à deux exercices. Le périmètre — comptes sociaux ou consolidés — est indiqué par `perimetre_comptable`. Chaque exercice porte sa `qualite` (voir `qualification`) : les règles de qualification tournent sur la série servie ET sur `comptes_consolides` ; un champ publié à 0 que la source ne calcule pas est servi `null`. `controles_coherence` (série des ratios, doublons de clôture compris) et `controles_coherence_bilans_inpi` (liasse INPI) restent servis ; l'absence d'anomalie signifie qu'aucune des règles nommées n'a rien trouvé. / Amounts in EUR from filed annual accounts; one-to-two-year publication lag. The scope — statutory or consolidated — is given by `perimetre_comptable`. Each fiscal year carries its `qualite` (see `qualification`): qualification rules run on the served series AND on `comptes_consolides`; a field published as 0 that the source does not compute is served `null`. `controles_coherence` (ratio series, duplicated closing dates included) and `controles_coherence_bilans_inpi` (INPI forms) are still served; the absence of an anomaly means none of the named rules found anything.",
+   "data_freshness": "jeu ratios_inpi_bce du 2026-09-15"
+  },
+  "criblage_sanctions": {
+   "statut": "rapprochements_partiels_seulement",
+   "cibles": [
+    {
+     "cible": "AIRVANCE GROUP",
+     "role": "entreprise",
+     "nombre_correspondances": 62,
+     "troncature": {
+      "tronquee": true,
+      "correspondances_servies": 27,
+      "non_servies": 35,
+      "niveau_non_servi": "faible",
+      "prefiltre_sature": false,
+      "note": "35 correspondance(s) de niveau faible (homonymes partiels, score < 70) ne sont pas servies ; toutes les fortes et possibles le sont, et nombre_correspondances reste le total réel. Affinez avec le nom complet ou l'année de naissance. / 35 weak match(es) (partial homonyms, score < 70) are not served; every strong and possible match is, and nombre_correspondances stays the true total. Refine with the full name or birth year."
+     }
+    }
+   ],
+   "cibles_ecartees": [
+    {
+     "role": "commissaire_aux_comptes",
+     "motif": "Commissaire aux comptes : contrôleur légal, ni mandataire social ni bénéficiaire effectif — non criblé, un cabinet d'audit apparie des entités sans rapport (mesuré : 22 % des correspondances des dossiers). / Statutory auditor: neither an officer nor a beneficial owner — not screened."
+    }
+   ],
+   "cibles_non_criblees": [],
+   "listes_consultees": [
+    {
+     "liste": "fr",
+     "libelle": "Registre national des gels (DG Trésor)",
+     "entrees": 6609,
+     "publication": "2026-10-02",
+     "precision_publication": "publication_officielle"
+    },
+    {
+     "liste": "ofac",
+     "libelle": "OFAC SDN (États-Unis)",
+     "entrees": 19488,
+     "publication": "2026-10-05",
+     "precision_publication": "ingestion"
+    },
+    {
+     "liste": "onu",
+     "libelle": "Liste consolidée du Conseil de sécurité de l'ONU",
+     "entrees": 1011,
+     "publication": "2026-10-03",
+     "precision_publication": "publication_officielle"
+    },
+    {
+     "liste": "seco",
+     "libelle": "Liste de sanctions suisse (SECO)",
+     "entrees": 7108,
+     "publication": "2026-09-28",
+     "precision_publication": "publication_officielle"
+    },
+    {
+     "liste": "ue",
+     "libelle": "Liste consolidée des sanctions financières de l'UE (FSF)",
+     "entrees": 6241,
+     "publication": "2026-09-22",
+     "precision_publication": "publication_officielle"
+    },
+    {
+     "liste": "uk",
+     "libelle": "UK Sanctions List (FCDO)",
+     "entrees": 6368,
+     "publication": "2026-10-02",
+     "precision_publication": "publication_officielle"
+    }
+   ],
+   "listes_absentes": [],
+   "perimetre": "Personnes et entités des listes officielles. Les navires et aéronefs inscrits sont exclus : un bâtiment homonyme n'indique pas qu'une entreprise est sanctionnée. / Persons and entities only; listed vessels and aircraft are excluded."
+  },
+  "denomination_exposable": true,
+  "score_completude": 100,
+  "blocs_manquants": [],
+  "data_freshness": "identité : stock Sirene mensuel (2026-10-01)",
+  "source": "INSEE Sirene / INPI RNE, BODACC (DILA), Judilibre (Cour de cassation, décisions des tribunaux de commerce), ratios INPI/Banque de France, listes de sanctions officielles (Liste consolidée du Conseil de sécurité de l'ONU, Liste consolidée des sanctions financières de l'UE (FSF), OFAC SDN (États-Unis), UK Sanctions List (FCDO), Registre national des gels (DG Trésor), Liste de sanctions suisse (SECO))",
+  "provenance": [
+   {
+    "bloc": "identite",
+    "source_code": "insee_sirene",
+    "registre": "Répertoire Sirene des entreprises et de leurs établissements (INSEE)",
+    "mode": "stock",
+    "licence": "etalab-2.0",
+    "version": "2026-10-01",
+    "as_of": "2026-10-01",
+    "precision_as_of": "publication_officielle",
+    "age_jours": 4,
+    "etat": "servi",
+    "couverture": {
+     "etat": "complete",
+     "mesure": "diffusion totale au répertoire Sirene / full public disclosure in the Sirene register"
+    },
+    "confiance": "forte"
+   },
+   {
+    "bloc": "identite.dirigeants",
+    "source_code": "inpi_rne",
+    "registre": "Registre national des entreprises (INPI)",
+    "mode": "temps_reel",
+    "licence": "etalab-2.0",
+    "as_of": "2026-10-05T23:23:31.549Z",
+    "precision_as_of": "consultation",
+    "etat": "servi"
+   },
+   {
+    "bloc": "tva_intracommunautaire",
+    "source_code": "calcul_sirenic",
+    "registre": "Numéro calculé par Sirenic (clé de contrôle) — non vérifié auprès de VIES",
+    "mode": "calcul",
+    "etat": "servi"
+   },
+   {
+    "bloc": "alertes_bodacc",
+    "source_code": "bodacc_dila",
+    "registre": "Bulletin officiel des annonces civiles et commerciales (BODACC)",
+    "mode": "temps_reel",
+    "licence": "etalab-2.0",
+    "as_of": "2026-10-05T23:23:43.691Z",
+    "precision_as_of": "consultation",
+    "etat": "servi",
+    "couverture": {
+     "etat": "complete",
+     "mesure": "53/53 annonces BODACC lues / BODACC announcements read",
+     "detail": {
+      "annonces_total": 53,
+      "annonces_lues": 53
+     }
+    }
+   },
+   {
+    "bloc": "contentieux",
+    "source_code": "judilibre_cour_de_cassation",
+    "registre": "Judilibre — décisions des tribunaux de commerce et des tribunaux des activités économiques (open data de la Cour de cassation, source juritcom)",
+    "mode": "stock",
+    "licence": "etalab-2.0",
+    "version": "2026-10-05",
+    "as_of": "2026-10-05",
+    "precision_as_of": "ingestion",
+    "age_jours": 0,
+    "etat": "absence_non_conclusive",
+    "couverture": {
+     "etat": "partielle",
+     "mesure": "décisions de tribunaux de commerce portant un identifiant RCS/SIREN de personne morale diffusible (61,8 % mesuré le 09/09/2026), délai légal de mise à disposition de six mois / commercial-court decisions carrying a usable legal-entity identifier (61.8% measured on 2026-09-09), six-month legal publication window"
+    }
+   },
+   {
+    "bloc": "finances",
+    "source_code": "inpi_ratios_bce",
+    "registre": "Ratios financiers des comptes annuels déposés (INPI / Banque de France)",
+    "mode": "stock",
+    "licence": "etalab-2.0",
+    "version": "2026-09-15",
+    "as_of": "2026-09-15",
+    "precision_as_of": "publication_officielle",
+    "age_jours": 20,
+    "etat": "servi",
+    "couverture": {
+     "etat": "non_mesurable",
+     "mesure": "comptes déposés et publiés, y compris la partie bilan des dépôts à compte de résultat confidentiel (art. L. 232-25 C. com.) ; confidentialité totale possible, aucun dénominateur amont / filed and published accounts, including the balance-sheet part of filings with a confidential income statement (art. L. 232-25); full confidentiality possible, no upstream denominator",
+     "detail": {
+      "exercices_servis": 9,
+      "exercices_ecartes": 0
+     }
+    }
+   },
+   {
+    "bloc": "criblage_sanctions",
+    "source_code": "sanctions_listes_officielles",
+    "registre": "Listes de sanctions officielles (ONU, UE FSF, OFAC SDN, UK Sanctions List, gels DG Trésor, SECO)",
+    "mode": "stock",
+    "licence": "conditions_source",
+    "version": "2026-10-05",
+    "empreinte_sha256": "f9bf9179a95949a8b55b3dc28e0cecb939cb57aa62fd2af5c91c738a4e47ea52",
+    "as_of": "2026-10-05",
+    "precision_as_of": "ingestion",
+    "age_jours": 0,
+    "etat": "partiel",
+    "couverture": {
+     "etat": "complete",
+     "mesure": "6/6 listes officielles consultées / official lists consulted",
+     "detail": {
+      "listes_consultees": 6,
+      "listes_absentes": 0
+     }
+    },
+    "confiance": "moyenne"
+   }
+  ],
+  "disclaimer": "Dossier d'aide à la connaissance client constitué à partir de sources officielles ; le criblage sanctions est un rapprochement flou de noms, pas un avis de conformité ; les blocs indisponibles sont signalés et réduisent le score de complétude. / KYB aid from official sources; sanctions screening is fuzzy name matching, not a compliance opinion; unavailable blocks are flagged and lower the completeness score."
+ }
+}
