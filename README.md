@@ -4,7 +4,7 @@
 
 [![Listed on x402-list](https://x402-list.com/badge/sirenic.svg)](https://x402-list.com/services/sirenic?utm_source=badge&utm_medium=referral&utm_campaign=embed)
 
-Working examples for [Sirenic](https://api.sirenic.eu), official French and
+Working examples for [Sirenic](https://api.sirenic.eu/en?utm_source=vitrine&utm_campaign=readme), official French and
 European company data for AI agents: company lookup by name or SIREN, full
 company profiles, KYB verification and due-diligence files, AML sanctions
 screening, annual accounts and financial statements, default-risk scoring and
@@ -37,18 +37,18 @@ key, inside the signed bytes: one ready-to-paste line derived from
 agent reports a result, it should cite `citation` verbatim; the MCP tools,
 the A2A card, the OpenAPI and `llms.txt` say so.
 
-- Landing & pricing: https://api.sirenic.eu
-- Use cases, step by step: [KYB verification with provenance on every block](https://api.sirenic.eu/en/use-cases/kyb-automated-business-verification-with-per-block),
-  [verify a supplier before payment](https://api.sirenic.eu/en/use-cases/verify-supplier-before-payment-identity-vat-iban),
-  [get your supplier master data ready for French e-invoicing](https://api.sirenic.eu/en/use-cases/french-e-invoicing-get-your-supplier-master-data-ready),
-  and [all use cases](https://api.sirenic.eu/en/use-cases)
-- About the service and how every answer describes itself: https://api.sirenic.eu/en/about
+- [Landing page](https://api.sirenic.eu/en?utm_source=vitrine&utm_campaign=readme) and [pricing, route by route](https://api.sirenic.eu/en/offres?utm_source=vitrine&utm_campaign=readme)
+- Use cases, step by step: [KYB verification with provenance on every block](https://api.sirenic.eu/en/use-cases/kyb-automated-business-verification-with-per-block?utm_source=vitrine&utm_campaign=readme),
+  [verify a supplier before payment](https://api.sirenic.eu/en/use-cases/verify-supplier-before-payment-identity-vat-iban?utm_source=vitrine&utm_campaign=readme),
+  [get your supplier master data ready for French e-invoicing](https://api.sirenic.eu/en/use-cases/french-e-invoicing-get-your-supplier-master-data-ready?utm_source=vitrine&utm_campaign=readme),
+  and [all use cases](https://api.sirenic.eu/en/use-cases?utm_source=vitrine&utm_campaign=readme)
+- [About the service and how every answer describes itself](https://api.sirenic.eu/en/about?utm_source=vitrine&utm_campaign=readme)
 - OpenAPI: https://api.sirenic.eu/openapi.json
 - For LLMs: https://api.sirenic.eu/llms.txt
 - MCP server: `https://api.sirenic.eu/mcp` (streamable HTTP)
 - A2A agent: `POST https://api.sirenic.eu/a2a` (JSON-RPC, a2a-x402 payment
   extension), card at `https://api.sirenic.eu/.well-known/agent-card.json`
-- No-code, ready-made n8n and Make workflows: https://api.sirenic.eu/en/workflows
+- [No-code, ready-made n8n and Make workflows](https://api.sirenic.eu/en/workflows?utm_source=vitrine&utm_campaign=readme)
   ([how to import them](#no-code-ready-made-n8n-and-make-workflows))
 
 Data sources: INSEE Sirene / INPI RNE and other official registers, open
@@ -152,7 +152,7 @@ Cursor / any MCP client (`mcpServers` config):
 ```
 
 The server publishes its own tool list: any MCP client reads it with
-`tools/list`, and the [connectors page](https://api.sirenic.eu/en/connectors)
+`tools/list`, and the [connectors page](https://api.sirenic.eu/en/connectors?utm_source=vitrine&utm_campaign=readme)
 shows how many tools are served today. To count them from a terminal:
 
 ```bash
@@ -213,7 +213,7 @@ CrewAI can also use Sirenic's MCP server directly, no SDK:
 ## No-code: ready-made n8n and Make workflows
 
 Ready-made workflows for n8n and Make are served for free on the
-[Workflows page](https://api.sirenic.eu/en/workflows): each one says what it
+[Workflows page](https://api.sirenic.eu/en/workflows?utm_source=vitrine&utm_campaign=readme): each one says what it
 calls and what it costs per run. Download a file, import it, plug in your key.
 
 The same catalogue is machine-readable at `GET https://api.sirenic.eu/workflows`
@@ -227,7 +227,7 @@ curl -s https://api.sirenic.eu/workflows | jq -r '.workflows[] | "\(.id)  \(.tit
 ```
 
 These workflows authenticate with an API key: sign in at
-[api.sirenic.eu/compte](https://api.sirenic.eu/compte?lang=en), create a
+[api.sirenic.eu/compte](https://api.sirenic.eu/compte?lang=en&utm_source=vitrine&utm_campaign=readme), create a
 `srn_live_…` key, and the workflows send it in the `X-Api-Key` header.
 
 - **n8n**: download the `.json` file, then in n8n choose Workflows, Import from
@@ -254,7 +254,7 @@ Ready to import, not yet in the gallery:
 (in n8n: Import from URL).
 
 Each setup, step by step, with the MCP clients too:
-[api.sirenic.eu/en/connectors](https://api.sirenic.eu/en/connectors).
+[api.sirenic.eu/en/connectors](https://api.sirenic.eu/en/connectors?utm_source=vitrine&utm_campaign=readme).
 
 ## Verify a supplier before you pay · the 2026 e-invoicing window
 
