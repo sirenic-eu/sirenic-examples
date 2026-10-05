@@ -210,6 +210,10 @@ tools = build_crewai_tools(SirenicClient(wallet_key=key, max_price_usd=0.25))
 CrewAI can also use Sirenic's MCP server directly, no SDK:
 `Agent(..., mcps=["https://api.sirenic.eu/mcp"])`.
 
+Plain Python client of the REST API, which `sirenic-agents` builds on: [sdk/python-sirenic](sdk/python-sirenic)
+(`pip install sirenic`; API key or x402, typed errors, per-block provenance; prices in the
+[API reference](https://api.sirenic.eu/en/api?utm_source=vitrine&utm_campaign=readme)).
+
 ## No-code: ready-made n8n and Make workflows
 
 Ready-made workflows for n8n and Make are served for free on the
