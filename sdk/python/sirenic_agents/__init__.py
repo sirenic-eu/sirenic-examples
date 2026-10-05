@@ -1,93 +1,116 @@
 """Sirenic for Python agents (LangChain, CrewAI).
 
-Official French & European company data, paid per call via x402 (USDC or
-EURC on Base). No account, no API key: bring a wallet key and a price cap.
-Without a wallet the client still works and returns the x402 quote (handy
-for discovery and dry runs). The server never sees your key: payments are
-EIP-3009 authorizations signed locally (official ``x402`` package).
+Company data from the official French and European registers, as agent
+tools. Three ways to call a paid route: an API key (prepaid credits:
+``api_key=`` or the ``SIRENIC_API_KEY`` environment variable), a wallet that
+pays each call in x402 (USDC or EURC on Base: ``wallet_key=`` and a hard
+price cap), or neither: every tool then returns the x402 quote (handy for
+discovery and dry runs). Built on the ``sirenic`` client; x402 payments are
+EIP-3009 authorizations signed locally by the official ``x402`` package, and
+the server never sees your wallet key.
 """
 
 from __future__ import annotations
 
 import json
 import re
-from typing import Any, Optional
+from typing import Optional
 
 import requests
 from urllib.parse import urlencode
 
-__all__ = ["SirenicClient", "build_langchain_tools", "build_crewai_tools"]
+import sirenic
 
-_USDC_DECIMALS = 6
+__all__ = ["SirenicClient", "build_langchain_tools", "build_crewai_tools", "__version__"]
+__version__ = "0.3.0"
+
 _CHEMIN_AUTORISE = re.compile(r"^/(v1|preview)/")
 
 
 class SirenicClient:
-    """Paying HTTP client for api.sirenic.eu.
+    """Agent-facing client of api.sirenic.eu: every call returns a JSON string.
 
-    :param wallet_key: EVM private key (``0x...``) of YOUR paying wallet.
-        Omit for quote-only mode (every call returns the x402 quote).
-    :param max_price_usd: hard per-call cap (default 1.0 — the most
-        expensive Sirenic call). Quotes above the cap are never signed.
+    :param wallet_key: EVM private key (``0x...``) of YOUR paying wallet, to
+        pay each call in x402 (``pip install "sirenic-agents[pay]"``).
+    :param max_price_usd: hard per-call cap of the wallet rail (default 1.0,
+        the most expensive single Sirenic call). Quotes above the cap are never
+        signed: the tool returns the quote instead.
     :param base_url: default ``https://api.sirenic.eu``.
+    :param api_key: Sirenic API key (``srn_live_...``), paid with prepaid
+        credits. When neither ``api_key`` nor ``wallet_key`` is given,
+        ``SIRENIC_API_KEY`` is read from the environment. Without either, every
+        paid tool returns the x402 quote.
+    :param timeout: seconds per HTTP request (default 120).
+    :param session: an existing ``requests.Session`` (proxies, adapters).
     """
 
     def __init__(
         self,
         wallet_key: Optional[str] = None,
         max_price_usd: float = 1.0,
-        base_url: str = "https://api.sirenic.eu",
+        base_url: str = sirenic.DEFAULT_BASE_URL,
+        *,
+        api_key: Optional[str] = None,
+        timeout: float = 120.0,
+        session: Optional[requests.Session] = None,
     ) -> None:
-        self.base_url = base_url.rstrip("/")
-        if wallet_key:
-            # Official x402 Foundation client: 402 -> select <= cap -> sign
-            # EIP-3009 -> retry, all automatic. Import here so quote-only
-            # users do not need the payment extras.
-            from eth_account import Account
-            from x402 import max_amount, x402ClientSync
-            from x402.http.clients.requests import x402_requests
-            from x402.mechanisms.evm import EthAccountSigner
-            from x402.mechanisms.evm.exact import ExactEvmScheme
+        self._client = sirenic.Client(
+            api_key=api_key,
+            wallet_key=wallet_key,
+            max_price_usd=max_price_usd,
+            base_url=base_url,
+            timeout=timeout,
+            session=session,
+        )
+        self.base_url = self._client.base_url
 
-            client = x402ClientSync()
-            client.register("eip155:*", ExactEvmScheme(signer=EthAccountSigner(Account.from_key(wallet_key))))
-            client.register_policy(max_amount(int(round(max_price_usd * 10**_USDC_DECIMALS))))
-            self._session: requests.Session = x402_requests(client)
-        else:
-            self._session = requests.Session()
+    @property
+    def rail(self) -> str:
+        """``"api_key"``, ``"x402"`` or ``"quote"`` (quote-only mode)."""
+        return self._client.rail
 
     def get(self, path: str) -> str:
         """GET a Sirenic path (e.g. ``/v1/recherche?q=danone``), paying if
         needed. Always returns a JSON string (data, quote, or error)."""
-        if not _CHEMIN_AUTORISE.match(path):
+        if not isinstance(path, str) or not _CHEMIN_AUTORISE.match(path):
             return json.dumps({"error": "invalid_path", "message": "Only /v1/... and /preview/... paths are served."})
         try:
-            reponse = self._session.get(
-                f"{self.base_url}{path}", headers={"Accept": "application/json"}, timeout=120
-            )
-        except Exception as erreur:  # panne réseau OU refus de plafond
-            return json.dumps(
-                {
-                    "error": "payment_refused_or_network",
-                    "message": str(erreur)[:300],
-                    "hint": "If this is a price-cap refusal, raise max_price_usd or call a cheaper endpoint.",
-                }
-            )
-        try:
-            corps: Any = reponse.json()
-        except ValueError:
-            corps = {}
-        if reponse.status_code == 402:
+            reponse = self._client.get(path)
+        except ValueError as erreur:
+            return json.dumps({"error": "invalid_path", "message": str(erreur)})
+        except sirenic.PriceCapExceeded as erreur:
             return json.dumps(
                 {
                     "payment_required": True,
-                    "hint": "No wallet configured (or quote above your price cap). Provide wallet_key to pay automatically.",
-                    "quote": corps,
+                    "price_cap_exceeded": True,
+                    "max_price_usd": float(erreur.max_price_usd),
+                    "hint": "The quote is above max_price_usd: nothing was signed. Raise the cap or call a cheaper endpoint.",
+                    "quote": erreur.quote,
                 }
             )
-        if not reponse.ok:
-            return json.dumps({"error": "http_error", "status": reponse.status_code, "body": corps})
-        return json.dumps(corps)
+        except sirenic.PaymentRequired as erreur:
+            return json.dumps(
+                {
+                    "payment_required": True,
+                    "hint": "No API key or wallet configured. Provide api_key (prepaid credits) or wallet_key (x402) to pay.",
+                    "quote": erreur.quote,
+                }
+            )
+        except sirenic.PaymentFailed as erreur:
+            return json.dumps({"error": "payment_failed", "status": erreur.status, "message": erreur.message})
+        except sirenic.NetworkError as erreur:
+            return json.dumps({"error": "network", "message": str(erreur)[:300]})
+        except sirenic.SirenicError as erreur:
+            return json.dumps({"error": "http_error", "status": erreur.status, "code": erreur.code, "body": erreur.body})
+        if reponse.data is None:
+            return json.dumps(
+                {
+                    "content_type": reponse.headers.get("content-type"),
+                    "size_bytes": len(reponse.content),
+                    "hint": "Binary response (for example a PDF): fetch it with the sirenic client to get the bytes.",
+                }
+            )
+        return json.dumps(reponse.data)
 
 
 def build_langchain_tools(client: SirenicClient) -> list:
@@ -110,12 +133,12 @@ def build_langchain_tools(client: SirenicClient) -> list:
 
     class Facturation(BaseModel):
         siren: str = Field(description="9-digit SIREN of the company you want to invoice")
-        iban: Optional[str] = Field(default=None, description="Payee IBAN — optional, adds the bank check")
+        iban: Optional[str] = Field(default=None, description="Payee IBAN (optional): adds the bank check")
 
     class FacturationEu(BaseModel):
         pays: str = Field(description="BE (Belgium) or PL (Poland)")
         id: str = Field(description="Belgian enterprise number or Polish NIP (10 digits)")
-        iban: Optional[str] = Field(default=None, description="Payee IBAN — unlocks the Polish account check")
+        iban: Optional[str] = Field(default=None, description="Payee IBAN (optional): unlocks the Polish account check")
 
     class Watch(BaseModel):
         cibles: str = Field(description="Comma-separated targets: SIRENs and/or dirigeant:Name (1-100)")
@@ -157,7 +180,7 @@ def build_langchain_tools(client: SirenicClient) -> list:
         StructuredTool.from_function(
             func=lambda q: client.get("/v1/recherche?" + urlencode([("q", q)])),
             name="sirenic_search_companies",
-            description="French company search and company lookup by name or SIREN in the official French company registry (INSEE/INPI, 30M companies), top 10 with confidence scores. Price: $0.001.",
+            description="French company search and company lookup by name or SIREN in the official French company registry (INSEE/INPI, 30M companies), top 10 with confidence scores. Price: $0.002.",
             args_schema=Recherche,
         ),
         StructuredTool.from_function(
@@ -199,19 +222,19 @@ def build_langchain_tools(client: SirenicClient) -> list:
         StructuredTool.from_function(
             func=_facturation_eu,
             name="sirenic_invoice_file_europe",
-            description="Same check for BELGIUM (mandate live since 1 Jan 2026, adds Peppol reachability) or POLAND — where it also answers a question with legal weight: is this IBAN actually DECLARED by that taxpayer in the official White List? Paying above 15,000 PLN into an undeclared account costs the buyer the VAT deduction. Price: $0.03.",
+            description="Same check for BELGIUM (mandate live since 1 Jan 2026, adds Peppol reachability) or POLAND, where it also answers a question with legal weight: is this IBAN actually DECLARED by that taxpayer in the official White List? Paying above 15,000 PLN into an undeclared account costs the buyer the VAT deduction. Price: $0.03.",
             args_schema=FacturationEu,
         ),
         StructuredTool.from_function(
             func=lambda siren: client.get(f"/v1/entreprise/{siren}/agrements"),
             name="sirenic_company_licences",
-            description="Is this French company actually authorised, and for what? Payment institution, e-money, account information, payment agent or exempt entity (EBA PSD2 register, daily), insurer (EIOPA), telecom operator (ARCEP) — dates, licensed services, EEA passporting, withdrawals. Price: $0.02.",
+            description="Is this French company actually authorised, and for what? Payment institution, e-money, account information, payment agent or exempt entity (EBA PSD2 register, daily), insurer (EIOPA), telecom operator (ARCEP): dates, licensed services, EEA passporting, withdrawals. Price: $0.02.",
             args_schema=Siren,
         ),
         StructuredTool.from_function(
             func=lambda path: client.get(path),
             name="sirenic_get",
-            description="Call ANY other Sirenic endpoint by path — catalog and prices: https://api.sirenic.eu/llms.txt. Free sample: /preview/entreprise/55203253400646.",
+            description="Call ANY other Sirenic endpoint by path (catalog and prices: https://api.sirenic.eu/llms.txt). Free sample: /preview/entreprise/55203253400646.",
             args_schema=Chemin,
         ),
     ]
@@ -220,9 +243,9 @@ def build_langchain_tools(client: SirenicClient) -> list:
 def build_crewai_tools(client: SirenicClient) -> list:
     """CrewAI tools (crewai >= 1.15). ``pip install sirenic-agents[crewai]``.
 
-    Tip: CrewAI also speaks MCP natively — ``Agent(..., mcps=["https://api.sirenic.eu/mcp"])``
-    exposes all 38 Sirenic tools in one line; these curated tools add the
-    automatic x402 payment with a price cap.
+    Tip: CrewAI also speaks MCP natively: ``Agent(..., mcps=["https://api.sirenic.eu/mcp"])``
+    exposes every Sirenic MCP tool in one line (109 on 2026-10-05); these
+    curated tools add the API key or the automatic x402 payment with a price cap.
     """
     from typing import Type
 
@@ -240,7 +263,7 @@ def build_crewai_tools(client: SirenicClient) -> list:
 
     class OutilRecherche(BaseTool):
         name: str = "Sirenic company search"
-        description: str = "Search 30M French companies by name or SIREN (official data), scored matches. Price: $0.001."
+        description: str = "Search 30M French companies by name or SIREN (official data), scored matches. Price: $0.002."
         args_schema: Type[BaseModel] = Recherche
 
         def _run(self, q: str) -> str:
@@ -264,7 +287,7 @@ def build_crewai_tools(client: SirenicClient) -> list:
 
     class OutilGenerique(BaseTool):
         name: str = "Sirenic API call"
-        description: str = "Call ANY Sirenic endpoint by path — catalog and prices: https://api.sirenic.eu/llms.txt."
+        description: str = "Call ANY Sirenic endpoint by path (catalog and prices: https://api.sirenic.eu/llms.txt)."
         args_schema: Type[BaseModel] = Chemin
 
         def _run(self, path: str) -> str:

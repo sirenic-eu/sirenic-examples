@@ -1,0 +1,67 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://api.sirenic.eu/openapi.json",
+  "auth": "none"
+ },
+ "status": 200,
+ "recorded_at": "2026-10-05T23:13:55Z",
+ "origin": "recorded from the live service, no key, no payment",
+ "removed": [
+  "every path except the nine routes called by the curated tools",
+  "every field of those routes except x-price",
+  "every other top-level key"
+ ],
+ "headers": {
+  "content-type": "application/json; charset=utf-8"
+ },
+ "body": {
+  "paths": {
+   "/v1/recherche": {
+    "get": {
+     "x-price": "$0.002"
+    }
+   },
+   "/v1/entreprise/{siren}": {
+    "get": {
+     "x-price": "$0.005"
+    }
+   },
+   "/v1/kyb/{siren}": {
+    "get": {
+     "x-price": "$0.15"
+    }
+   },
+   "/v1/sanctions/check": {
+    "get": {
+     "x-price": "$0.02"
+    }
+   },
+   "/v1/intelligence/{siren}": {
+    "get": {
+     "x-price": "$1.00"
+    }
+   },
+   "/v1/surveillance/creer": {
+    "get": {
+     "x-price": "$0.05 per target for 30 days, $0.135 per target for 90 days, $0.50 per target for 365 days (billed = that unit price × number of targets, 1-100) — A full-size request quotes up to $50.00, above the $1.00 single-payment cap that x402 clients apply BY DEFAULT since @x402/core 2.23 (spendControls): raise spendControls.maxAmountPerPayment, or set spendControls: false, before signing — otherwise your own client rejects the quote without ever calling us."
+    }
+   },
+   "/v1/facturation/dossier": {
+    "get": {
+     "x-price": "$0.03"
+    }
+   },
+   "/v1/eu/facturation/dossier": {
+    "get": {
+     "x-price": "$0.03"
+    }
+   },
+   "/v1/entreprise/{siren}/agrements": {
+    "get": {
+     "x-price": "$0.02"
+    }
+   }
+  }
+ }
+}
