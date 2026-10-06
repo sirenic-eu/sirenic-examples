@@ -67,10 +67,12 @@ _DECIMALES = 6  # USDC and EURC on Base
 # USDC (an x402 default asset) or EURC (allowed explicitly: x402 pays only its default assets otherwise).
 _BASE_MAINNET = "eip155:8453"
 _EURC_BASE = "0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42"
-_ACTIFS_PAYES = {
-    (_BASE_MAINNET, "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"): "USDC",
-    (_BASE_MAINNET, _EURC_BASE.lower()): "EURC",
-}
+_ACTIFS_PAYES = frozenset(
+    {
+        (_BASE_MAINNET, "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"),  # USDC
+        (_BASE_MAINNET, _EURC_BASE.lower()),  # EURC
+    }
+)
 # First x402 release whose handle_402_response takes the request URL: older ones build no payment.
 X402_MIN = (2, 20)
 

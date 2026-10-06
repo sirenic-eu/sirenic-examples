@@ -5,9 +5,9 @@ tools. Three ways to call a paid route: an API key (prepaid credits:
 ``api_key=`` or the ``SIRENIC_API_KEY`` environment variable, with a per-call
 cap in credits), a wallet that pays each call in x402 (USDC or EURC on Base:
 ``wallet_key=`` and a hard price cap), or neither: every tool then returns the
-x402 quote (handy for discovery and dry runs). Built on the ``sirenic`` client; x402 payments are
-EIP-3009 authorizations signed locally by the official ``x402`` package, and
-the server never sees your wallet key.
+x402 quote (handy for discovery and dry runs). Built on the ``sirenic`` client;
+x402 payments are EIP-3009 authorizations signed locally by the official
+``x402`` package, and the server never sees your wallet key.
 """
 
 from __future__ import annotations
