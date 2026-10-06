@@ -12,7 +12,7 @@ Three ways to call a paid route, one per client:
 
 Free routes (``suggestions``) need nothing. The client stores nothing, embeds
 no key, and sends the key to ``base_url`` only: :meth:`Client.get` takes a path,
-never a full URL.
+never a full URL, and a redirect is followed only on the host of ``base_url``.
 """
 
 from __future__ import annotations
@@ -21,7 +21,8 @@ import os
 import re
 from decimal import ROUND_FLOOR, Decimal
 from importlib import metadata
-from typing import Any, Dict, Iterable, Mapping, Optional, Union
+from typing import Any, Dict, Iterable, Mapping, Optional, Tuple, Union
+from urllib.parse import urljoin, urlsplit
 
 import requests
 
@@ -52,7 +53,11 @@ USER_AGENT = f"sirenic-python/{__version__}"
 
 _SIREN = re.compile(r"\d{9}")
 _CHEMIN = re.compile(r"/(?:v1|preview)/\S*")
-_BASE = re.compile(r"https?://[^/\s?#]+(?:/[^\s?#]*)?")
+# https, or plain http on the loopback for tests.
+_BASE = re.compile(r"(?:https://[^/\s?#]+|http://(?:localhost|127\.0\.0\.1)(?::\d+)?)(?:/[^\s?#]*)?")
+_REDIRECTIONS = frozenset({301, 302, 303, 307, 308})
+_MAX_REDIRECTIONS = 5
+_PORTS = {"https": 443, "http": 80}
 _DECIMALES = 6  # USDC and EURC on Base
 # First x402 release whose handle_402_response takes the request URL: older ones build no payment.
 X402_MIN = (2, 20)
@@ -100,6 +105,17 @@ def _client_x402(wallet_key: str, max_price_usd: Union[float, Decimal]) -> Any:
         # Recent x402 releases cap every payment at $1 by default: the cap becomes ours.
         client.set_spend_controls({"max_amount_per_payment": "$" + format(Decimal(str(max_price_usd)), "f")})
     return x402HTTPClientSync(client)
+
+
+def _origine(url: str) -> Tuple[str, Optional[str], Optional[int]]:
+    """Scheme, host and port of an address: a redirect is followed only within the origin of ``base_url``."""
+    morceaux = urlsplit(url)
+    schema = morceaux.scheme.lower()
+    try:
+        port = morceaux.port
+    except ValueError:
+        port = -1
+    return schema, morceaux.hostname, port or _PORTS.get(schema)
 
 
 def _erreur(reponse: requests.Response) -> SirenicError:
@@ -176,8 +192,11 @@ class Client:
             raise ValueError("api_key must not contain whitespace")
         if isinstance(max_price_usd, bool) or not isinstance(max_price_usd, (int, float, Decimal)) or max_price_usd <= 0:
             raise ValueError("max_price_usd must be a positive number")
-        if not _BASE.fullmatch(base_url.rstrip("/")):
-            raise ValueError("base_url must be an http(s) URL without query, e.g. https://api.sirenic.eu")
+        if not isinstance(base_url, str) or not _BASE.fullmatch(base_url.rstrip("/")):
+            raise ValueError(
+                "base_url must be an https URL without query, e.g. https://api.sirenic.eu"
+                " (plain http only on localhost or 127.0.0.1, for tests)"
+            )
         self._api_key = api_key
         self.base_url = base_url.rstrip("/")
         self.timeout = timeout
@@ -258,10 +277,29 @@ class Client:
         return entetes
 
     def _envoyer(self, url: str, params: Optional[Dict[str, Any]], entetes: Mapping[str, str]) -> requests.Response:
+        """One GET. Redirects are followed here, not by ``requests``, and only within the origin of
+        ``base_url``: the API key and an x402 payment header are never sent to another host."""
         try:
-            return self._session.get(url, params=params, headers=dict(entetes), timeout=self.timeout)
+            reponse = self._session.get(url, params=params, headers=dict(entetes), timeout=self.timeout, allow_redirects=False)
+            for _ in range(_MAX_REDIRECTIONS):
+                cible = reponse.headers.get("location") if reponse.status_code in _REDIRECTIONS else None
+                if not cible:
+                    break
+                suivante = urljoin(reponse.url, cible)
+                if _origine(suivante) != _origine(self.base_url):
+                    raise SirenicError(
+                        f"Redirect to another host not followed: {suivante} (the API key and payment headers"
+                        f" are only sent to {self.base_url}).",
+                        status=reponse.status_code,
+                        headers=reponse.headers,
+                        url=reponse.url,
+                    )
+                _ = reponse.content  # read the body, so that the connection is released
+                reponse.close()
+                reponse = self._session.get(suivante, headers=dict(entetes), timeout=self.timeout, allow_redirects=False)
         except requests.RequestException as erreur:
             raise NetworkError(f"{type(erreur).__name__} while calling {url}", url=url) from erreur
+        return reponse
 
     def _appeler(self, url: str, params: Optional[Dict[str, Any]]) -> Response:
         entetes = self._entetes()

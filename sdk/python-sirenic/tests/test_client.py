@@ -144,6 +144,52 @@ def test_base_url_is_checked(base):
         sirenic.Client(base_url=base)
 
 
+@pytest.mark.parametrize(
+    "base", ["http://api.sirenic.eu", "http://localhost.example.org", "http://127.0.0.1.example.org", "http://localhost@example.org"]
+)
+def test_base_url_must_be_https(base):
+    with pytest.raises(ValueError, match="https"):
+        sirenic.Client(base_url=base)
+
+
+@pytest.mark.parametrize("base", ["http://localhost", "http://localhost:8080", "http://127.0.0.1:3000/", "https://api.sirenic.eu/"])
+def test_plain_http_only_on_localhost(base):
+    assert sirenic.Client(base_url=base).base_url == base.rstrip("/")
+
+
+@pytest.mark.parametrize(
+    "ailleurs",
+    ["https://elsewhere.example/collect", "http://api.sirenic.eu/v1/entreprise/490586708", "https://api.sirenic.eu:8443/v1/x"],
+)
+def test_the_key_never_follows_a_redirect_to_another_host(servir, ailleurs):
+    """A 302 towards another host, another scheme or another port is not followed: the key stays with base_url."""
+    depart = f"https://api.sirenic.eu/v1/entreprise/{AIRVANCE}"
+    redirection = {"request": {"method": "GET", "url": depart, "auth": "api_key"}, "status": 302,
+                   "headers": {"location": ailleurs}, "body": ""}
+    piege = {"request": {"method": "GET", "url": ailleurs, "auth": "api_key"}, "status": 200,
+             "headers": {"content-type": "application/json"}, "body": {"siren": AIRVANCE}}
+    session, adaptateur = servir(redirection, piege)
+    refus = None
+    try:
+        sirenic.Client(api_key=CLE_FACTICE, session=session).entreprise(AIRVANCE)
+    except sirenic.SirenicError as erreur:
+        refus = erreur
+    assert [v.url for v in adaptateur.vues if v.url != depart and "X-Api-Key" in v.headers] == []
+    assert [v.url for v in adaptateur.vues] == [depart]
+    assert refus is not None and refus.status == 302 and ailleurs in str(refus)
+
+
+def test_a_redirect_on_the_same_host_is_followed(servir):
+    depart = f"https://api.sirenic.eu/v1/kyb/{AIRVANCE}"
+    redirection = {"request": {"method": "GET", "url": depart, "auth": "api_key"}, "status": 308,
+                   "headers": {"location": f"/v1/entreprise/{AIRVANCE}"}, "body": ""}
+    session, adaptateur = servir(redirection, "entreprise-200-cle")
+    r = sirenic.Client(api_key=CLE_FACTICE, session=session).kyb(AIRVANCE)
+    assert r["denomination"] == "AIRVANCE GROUP"
+    assert [v.url for v in adaptateur.vues] == [depart, f"https://api.sirenic.eu/v1/entreprise/{AIRVANCE}"]
+    assert all(v.headers["X-Api-Key"] == CLE_FACTICE for v in adaptateur.vues)
+
+
 def test_max_price_must_be_positive():
     with pytest.raises(ValueError):
         sirenic.Client(max_price_usd=0)

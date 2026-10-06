@@ -10,8 +10,9 @@ state from a closed list.
   optional `[pay]` extra and a hard price cap. With neither, a paid route raises `PaymentRequired` carrying
   the quote: a free dry run.
 - Typed errors, read from the responses the service serves.
-- Nothing stored, no key embedded; your key is sent to `base_url` only (default `https://api.sirenic.eu`):
-  `get()` takes a path, never a URL.
+- Nothing stored, no key embedded; your key is sent to `base_url` only (default `https://api.sirenic.eu`, https
+  required except on `localhost`): `get()` takes a path, never a URL, and a redirect to another host is not
+  followed.
 
 ## Install
 

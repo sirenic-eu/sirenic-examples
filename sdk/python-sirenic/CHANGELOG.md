@@ -10,6 +10,8 @@ First release of `sirenic`, the Python client of the Sirenic API.
 - The `[pay]` extra needs `x402` 2.20 or later, the first release whose `handle_402_response` takes the
   request URL; a wallet client refuses an older `x402` with an `ImportError` that names the installed version.
 - Methods `suggestions`, `entreprise`, `dossier`, `kyb`, `facturation_dossier` and `get` for any other path.
+- The key and an x402 payment header go to `base_url` only: `base_url` must be https (plain http only on
+  `localhost` or `127.0.0.1`), and a redirect to another host, scheme or port raises `SirenicError`.
 - `sirenic.Response`: parsed data, per-block `provenance` (`Provenance`), `listes_bornees` at any depth,
   credits charged and remaining.
 - Typed errors read from the service's responses: `PaymentRequired`, `PriceCapExceeded`, `PaymentFailed`,
