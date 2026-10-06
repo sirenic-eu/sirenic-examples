@@ -4,7 +4,7 @@
 
 [![Listed on x402-list](https://x402-list.com/badge/sirenic.svg)](https://x402-list.com/services/sirenic?utm_source=badge&utm_medium=referral&utm_campaign=embed)
 
-Working examples for [Sirenic](https://api.sirenic.eu/en?utm_source=vitrine&utm_campaign=readme), official French and
+Working examples for [Sirenic](https://api.sirenic.eu/en/about?utm_source=vitrine&utm_campaign=readme), official French and
 European company data for AI agents: company lookup by name or SIREN, full
 company profiles, KYB verification and due-diligence files, AML sanctions
 screening, annual accounts and financial statements, default-risk scoring and
@@ -37,7 +37,7 @@ key, inside the signed bytes: one ready-to-paste line derived from
 agent reports a result, it should cite `citation` verbatim; the MCP tools,
 the A2A card, the OpenAPI and `llms.txt` say so.
 
-- [Landing page](https://api.sirenic.eu/en?utm_source=vitrine&utm_campaign=readme) and [pricing, route by route](https://api.sirenic.eu/en/offres?utm_source=vitrine&utm_campaign=readme)
+- [API reference, one page per route with its price](https://api.sirenic.eu/en/api?utm_source=vitrine&utm_campaign=readme) and [pricing, route by route](https://api.sirenic.eu/en/offres?utm_source=vitrine&utm_campaign=readme)
 - Use cases, step by step: [KYB verification with provenance on every block](https://api.sirenic.eu/en/use-cases/kyb-automated-business-verification-with-per-block?utm_source=vitrine&utm_campaign=readme),
   [verify a supplier before payment](https://api.sirenic.eu/en/use-cases/verify-supplier-before-payment-identity-vat-iban?utm_source=vitrine&utm_campaign=readme),
   [get your supplier master data ready for French e-invoicing](https://api.sirenic.eu/en/use-cases/french-e-invoicing-get-your-supplier-master-data-ready?utm_source=vitrine&utm_campaign=readme),
