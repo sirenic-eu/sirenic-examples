@@ -116,6 +116,22 @@ def test_crewai_tools_on_both_rails(servir, crewai_minimal):
     assert kyb["siren"] == AIRVANCE
 
 
+def test_generic_tools_encode_a_space_like_0_2_0(servir, crewai_minimal):
+    """A path written with a space (common from an LLM) is sent encoded, as 0.2.0 did, never refused."""
+    pytest.importorskip("langchain_core")
+    enregistre = charger("suggestions-nom-200")
+    encodee = "https://api.sirenic.eu/v1/suggestions?q=airvance%20group"
+    session, adaptateur = servir(dict(enregistre, request=dict(enregistre["request"], url=encodee)))
+    client = SirenicClient(session=session)
+    chemin = "/v1/suggestions?q=airvance group"
+    langchain = json.loads(_outil(build_langchain_tools(client), "sirenic_get").invoke({"path": chemin}))
+    crewai = json.loads(build_crewai_tools(client)[3]._run(path=chemin))
+    for sortie in (langchain, crewai):
+        assert "error" not in sortie, sortie
+        assert sortie["suggestions"][0]["siren"] == AIRVANCE
+    assert [v.url for v in adaptateur.vues] == [encodee, encodee]
+
+
 def test_errors_are_returned_as_json(servir):
     session, _ = servir("surveillance-404")
     client = SirenicClient(session=session)

@@ -17,6 +17,7 @@ import re
 from typing import Optional
 
 import requests
+from requests.utils import requote_uri
 from urllib.parse import urlencode
 
 import sirenic
@@ -71,11 +72,13 @@ class SirenicClient:
 
     def get(self, path: str) -> str:
         """GET a Sirenic path (e.g. ``/v1/recherche?q=danone``), paying if
-        needed. Always returns a JSON string (data, quote, or error)."""
+        needed. Always returns a JSON string (data, quote, or error). A space,
+        or any character a URL cannot carry, is percent-encoded first, as
+        ``requests`` does (``q=danone sa`` is sent as ``q=danone%20sa``)."""
         if not isinstance(path, str) or not _CHEMIN_AUTORISE.match(path):
             return json.dumps({"error": "invalid_path", "message": "Only /v1/... and /preview/... paths are served."})
         try:
-            reponse = self._client.get(path)
+            reponse = self._client.get(requote_uri(path))
         except ValueError as erreur:
             return json.dumps({"error": "invalid_path", "message": str(erreur)})
         except sirenic.PriceCapExceeded as erreur:

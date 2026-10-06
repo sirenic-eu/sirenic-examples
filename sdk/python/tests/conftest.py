@@ -98,8 +98,8 @@ def sans_cle_dans_l_environnement(monkeypatch: pytest.MonkeyPatch) -> None:
 
 @pytest.fixture
 def servir():
-    def fabrique(*noms: str, paiement: Optional[str] = None) -> Tuple[requests.Session, FixtureAdapter]:
-        adaptateur = FixtureAdapter([charger(n) for n in noms], paiement=paiement)
+    def fabrique(*noms: Any, paiement: Optional[str] = None) -> Tuple[requests.Session, FixtureAdapter]:
+        adaptateur = FixtureAdapter([charger(n) if isinstance(n, str) else n for n in noms], paiement=paiement)
         session = requests.Session()
         session.mount("https://", adaptateur)
         session.mount("http://", adaptateur)
