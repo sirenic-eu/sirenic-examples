@@ -217,7 +217,12 @@ class Client:
         request, without the key); above the cap it raises
         :class:`sirenic.CreditCapExceeded` and the paid call is not made. A call
         whose price is not quoted without a key (filed deeds answer 401
-        ``compte_requis``) is not made under a cap either.
+        ``compte_requis``) is not made under a cap either. The quote request
+        is sent without the key, so it counts against the service's per-IP
+        rate limit for calls without a key (120 requests per minute): heavy
+        use behind one IP address can get :class:`sirenic.RateLimited` (429)
+        before the paid call, which is then not made; for heavy traffic or a
+        shared IP address, leave ``max_credits`` unset.
     :param base_url: default ``https://api.sirenic.eu``.
     :param timeout: seconds per HTTP request (default 120).
     :param session: an existing ``requests.Session`` (proxies, adapters).

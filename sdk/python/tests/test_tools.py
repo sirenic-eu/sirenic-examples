@@ -202,6 +202,20 @@ def test_generic_tools_encode_a_space_like_0_2_0(servir, crewai_minimal):
     assert [v.url for v in adaptateur.vues] == [encodee, encodee]
 
 
+@pytest.mark.parametrize(
+    "requete",
+    ["q=airvance%20group", "q=airvance%2520group", "q=soci%C3%A9t%C3%A9", "q=a%2Bb", "q=a+b"],
+)
+def test_an_encoded_path_is_not_encoded_twice(servir, requete):
+    """A path already percent-encoded is sent as written: requote_uri keeps every %XX and each +."""
+    url = f"https://api.sirenic.eu/v1/suggestions?{requete}"
+    enregistre = charger("suggestions-nom-200")
+    session, adaptateur = servir(dict(enregistre, request=dict(enregistre["request"], url=url)))
+    sortie = json.loads(SirenicClient(session=session).get(f"/v1/suggestions?{requete}"))
+    assert "error" not in sortie, sortie
+    assert [v.url for v in adaptateur.vues] == [url]
+
+
 def test_errors_are_returned_as_json(servir):
     session, _ = servir("surveillance-404")
     client = SirenicClient(session=session)

@@ -53,7 +53,11 @@ class SirenicClient:
         as ``max_price_usd``). Each call first asks the free quote of the same
         request; above the cap the call is not made and the tool returns the
         price and the quote. ``None`` removes the cap and that extra request:
-        your balance then bounds the spend.
+        your balance then bounds the spend. The quote request is sent without
+        the key, so it counts against the service's per-IP rate limit for
+        calls without a key (120 requests per minute): heavy use behind one IP
+        address can get a 429 error before the paid call, which is then not
+        made; for heavy traffic or a shared IP address, pass ``None``.
     :param timeout: seconds per HTTP request (default 120).
     :param session: an existing ``requests.Session`` (proxies, adapters).
     """

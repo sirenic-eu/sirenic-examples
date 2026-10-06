@@ -57,7 +57,10 @@ Safety model: with a wallet, payments are EIP-3009 authorizations signed locally
 (`max_price_usd`, default 1.0) filters every quote before signing, and your wallet key never leaves the process.
 With an API key, each call has its cap too, in credits (`max_credits`, default 1.0): the price is read in the
 free quote of the same request, and a call above the cap is not made (`max_credits=None` removes the cap and
-that extra request). Paid responses are Ed25519-signed by the server
+that extra request). The quote request is sent without the key, so it counts against the service's per-IP rate
+limit for calls without a key (120 requests per minute): heavy use behind one IP address can get a 429 error
+before the paid call, which is then not made; for heavy traffic or a shared IP address, pass
+`max_credits=None`. Paid responses are Ed25519-signed by the server
 ([verify](https://api.sirenic.eu/.well-known/sirenic-signing-key)).
 
 ## Links

@@ -43,7 +43,10 @@ print(profil["denomination"], profil.credits_charged)
 Each call is paid from your prepaid balance at the price of its route. To cap a single call, pass
 `max_credits` (for example `sirenic.Client(max_credits=0.5)`): the client first asks the free quote of the
 same request, one more request without the key, and above the cap raises `CreditCapExceeded` without making
-the paid call.
+the paid call. The quote request is sent without the key, so it counts against the service's per-IP rate limit
+for calls without a key (120 requests per minute): heavy use behind one IP address can get a 429
+(`RateLimited`) before the paid call, which is then not made; for heavy traffic or a shared IP address, leave
+`max_credits` unset.
 
 ## Example
 
