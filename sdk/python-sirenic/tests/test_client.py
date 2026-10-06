@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from decimal import Decimal
 
 import pytest
@@ -190,9 +191,10 @@ def test_a_redirect_on_the_same_host_is_followed(servir):
     assert all(v.headers["X-Api-Key"] == CLE_FACTICE for v in adaptateur.vues)
 
 
-def test_max_price_must_be_positive():
+@pytest.mark.parametrize("plafond", [0, -1, math.inf, math.nan, Decimal("NaN"), Decimal("Infinity"), True, "1"])
+def test_max_price_must_be_a_positive_finite_number(plafond):
     with pytest.raises(ValueError):
-        sirenic.Client(max_price_usd=0)
+        sirenic.Client(max_price_usd=plafond)
 
 
 def test_context_manager_closes_its_own_session():

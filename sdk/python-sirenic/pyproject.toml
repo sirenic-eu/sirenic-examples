@@ -35,7 +35,7 @@ test = ["pytest>=8"]
 [project.urls]
 Homepage = "https://api.sirenic.eu/en/about?utm_source=forge&utm_campaign=sirenic"
 Documentation = "https://api.sirenic.eu/en/api?utm_source=forge&utm_campaign=sirenic"
-Repository = "https://github.com/sirenic-eu/sirenic-examples"
+Repository = "https://github.com/sirenic-eu/sirenic-examples?utm_source=forge&utm_campaign=sirenic"
 Changelog = "https://github.com/sirenic-eu/sirenic-examples/blob/main/sdk/python-sirenic/CHANGELOG.md"
 
 [tool.setuptools.packages.find]

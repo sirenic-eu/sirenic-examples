@@ -13,7 +13,6 @@ the server never sees your wallet key.
 from __future__ import annotations
 
 import json
-import re
 from typing import Optional
 
 import requests
@@ -25,7 +24,12 @@ import sirenic
 __all__ = ["SirenicClient", "build_langchain_tools", "build_crewai_tools", "__version__"]
 __version__ = "0.3.0"
 
-_CHEMIN_AUTORISE = re.compile(r"^/(v1|preview)/")
+# What a 402 quote means, by rail: the hint returned with it.
+_INDICES = {
+    "quote": "No API key or wallet configured. Provide api_key (prepaid credits) or wallet_key (x402) to pay.",
+    "x402": "The quote offers no option the wallet can read: nothing was signed.",
+    "api_key": "The service asked for an x402 payment although an API key is set: nothing was charged. Check the key.",
+}
 
 
 class SirenicClient:
@@ -62,7 +66,7 @@ class SirenicClient:
         *,
         api_key: Optional[str] = None,
         max_credits: Optional[float] = 1.0,
-        timeout: float = 120.0,
+        timeout: float = sirenic.DEFAULT_TIMEOUT,
         session: Optional[requests.Session] = None,
     ) -> None:
         self._client = sirenic.Client(
@@ -86,7 +90,7 @@ class SirenicClient:
         needed. Always returns a JSON string (data, quote, or error). A space,
         or any character a URL cannot carry, is percent-encoded first, as
         ``requests`` does (``q=danone sa`` is sent as ``q=danone%20sa``)."""
-        if not isinstance(path, str) or not _CHEMIN_AUTORISE.match(path):
+        if not isinstance(path, str):
             return json.dumps({"error": "invalid_path", "message": "Only /v1/... and /preview/... paths are served."})
         try:
             reponse = self._client.get(requote_uri(path))
@@ -128,7 +132,7 @@ class SirenicClient:
             return json.dumps(
                 {
                     "payment_required": True,
-                    "hint": "No API key or wallet configured. Provide api_key (prepaid credits) or wallet_key (x402) to pay.",
+                    "hint": _INDICES[self.rail],
                     "quote": erreur.quote,
                 }
             )

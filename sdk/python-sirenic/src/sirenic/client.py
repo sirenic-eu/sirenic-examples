@@ -240,8 +240,7 @@ class Client:
             api_key = (os.environ.get(ENV_API_KEY) or "").strip() or None
         if api_key is not None and any(c.isspace() for c in api_key):
             raise ValueError("api_key must not contain whitespace")
-        if isinstance(max_price_usd, bool) or not isinstance(max_price_usd, (int, float, Decimal)) or max_price_usd <= 0:
-            raise ValueError("max_price_usd must be a positive number")
+        _plafond_valide("max_price_usd", max_price_usd)
         if max_credits is not None:
             _plafond_valide("max_credits", max_credits)
         if not isinstance(base_url, str) or not _BASE.fullmatch(base_url.rstrip("/")):

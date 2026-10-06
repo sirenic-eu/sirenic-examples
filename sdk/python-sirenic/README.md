@@ -73,7 +73,7 @@ for liste in dossier.listes_bornees:
 | `dossier(siren, blocs)` | `GET /v1/entreprise/{siren}/dossier` |
 | `kyb(siren)` | `GET /v1/kyb/{siren}` |
 | `facturation_dossier(siren, iban=None)` | `GET /v1/facturation/dossier` |
-| `get(chemin, params=None)` | any other path under `/v1/` |
+| `get(chemin, params=None)` | any other path under `/v1/` or `/preview/` |
 
 Each returns a `sirenic.Response`: `data` (the parsed JSON), `response["field"]`, `provenance` (a list of
 `sirenic.Provenance`), `bloc(name)`, `listes_bornees`, `credits_charged`, `credits_remaining` and

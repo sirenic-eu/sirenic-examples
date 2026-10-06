@@ -149,6 +149,27 @@ def test_wallet_rail_names_an_asset_it_cannot_pay(servir):
     assert len(adaptateur.vues) == 1
 
 
+def test_the_hint_of_a_quote_follows_the_rail(servir):
+    """A 402 quote without any option, with a wallet: the hint never says that no wallet is configured."""
+    pytest.importorskip("x402")
+    from eth_account import Account
+
+    f = copy.deepcopy(charger("entreprise-402"))
+    entete = json.loads(base64.b64decode(f["headers"]["payment-required"]))
+    for devis in (f["body"], entete):
+        devis["accepts"] = []
+    f["headers"]["payment-required"] = base64.b64encode(json.dumps(entete).encode()).decode()
+    session, adaptateur = servir(f)
+    client = SirenicClient(wallet_key=Account.create().key.hex(), session=session)
+    sortie = json.loads(client.get(f"/v1/entreprise/{AIRVANCE}"))
+    assert sortie["payment_required"] is True
+    assert "No API key or wallet configured" not in sortie["hint"] and "nothing was signed" in sortie["hint"]
+    assert len(adaptateur.vues) == 1
+    session, _ = servir("entreprise-402")
+    sans_rail = json.loads(SirenicClient(session=session).get(f"/v1/entreprise/{AIRVANCE}"))
+    assert sans_rail["hint"].startswith("No API key or wallet configured")
+
+
 def test_crewai_tools_on_both_rails(servir, crewai_minimal):
     session, _ = servir("entreprise-402", "kyb-200-cle")
     outils = build_crewai_tools(SirenicClient(session=session))
