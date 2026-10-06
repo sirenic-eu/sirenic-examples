@@ -6,6 +6,8 @@ from __future__ import annotations
 
 import base64
 import json
+import re
+from pathlib import Path
 
 import pytest
 
@@ -75,6 +77,27 @@ def test_cap_above_one_dollar_is_passed_to_x402():
     interne = client._x402._client
     if hasattr(interne, "set_spend_controls"):
         assert interne._spend_controls == {"max_amount_per_payment": "$2.5"}
+
+
+def test_x402_older_than_2_20_is_refused_with_a_clear_message(monkeypatch):
+    """x402 2.16 to 2.19 build no payment (their handle_402_response takes no request URL):
+    the wallet rail refuses them when it loads x402, with the installed version in the message."""
+    monkeypatch.setattr(sirenic.client, "_version_x402", lambda: "2.19.0")
+    with pytest.raises(ImportError, match=r"x402 2\.20 or later \(installed: 2\.19\.0\)"):
+        sirenic.Client(wallet_key=_portefeuille(), max_price_usd=0.01)
+    monkeypatch.setattr(sirenic.client, "_version_x402", lambda: "2.9.4")  # compared as numbers, not text
+    with pytest.raises(ImportError):
+        sirenic.Client(wallet_key=_portefeuille(), max_price_usd=0.01)
+    for version in ("2.20.0", "2.20.0rc1", "2.25.0"):
+        monkeypatch.setattr(sirenic.client, "_version_x402", lambda v=version: v)
+        assert sirenic.Client(wallet_key=_portefeuille(), max_price_usd=0.01).rail == "x402"
+
+
+def test_pay_extra_floor_is_the_checked_version():
+    """The floor declared for the pay extra is the version the client checks."""
+    pyproject = (Path(__file__).resolve().parents[1] / "pyproject.toml").read_text(encoding="utf-8")
+    plancher = re.search(r'"x402\[requests,evm\]>=(\d+)\.(\d+),<3"', pyproject)
+    assert plancher and (int(plancher[1]), int(plancher[2])) == sirenic.client.X402_MIN == (2, 20)
 
 
 def test_atomic_cap_is_rounded_down():

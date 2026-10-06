@@ -20,6 +20,7 @@ from __future__ import annotations
 import os
 import re
 from decimal import ROUND_FLOOR, Decimal
+from importlib import metadata
 from typing import Any, Dict, Iterable, Mapping, Optional, Union
 
 import requests
@@ -53,6 +54,8 @@ _SIREN = re.compile(r"\d{9}")
 _CHEMIN = re.compile(r"/(?:v1|preview)/\S*")
 _BASE = re.compile(r"https?://[^/\s?#]+(?:/[^\s?#]*)?")
 _DECIMALES = 6  # USDC and EURC on Base
+# First x402 release whose handle_402_response takes the request URL: older ones build no payment.
+X402_MIN = (2, 20)
 
 
 def _siren(valeur: Any) -> str:
@@ -67,6 +70,14 @@ def _atomique(max_price_usd: Union[float, Decimal]) -> int:
     return int((Decimal(str(max_price_usd)) * (10**_DECIMALES)).to_integral_value(rounding=ROUND_FLOOR))
 
 
+def _version_x402() -> str:
+    """Version of the installed x402 distribution ("" when its metadata cannot be read)."""
+    try:
+        return metadata.version("x402")
+    except metadata.PackageNotFoundError:
+        return ""
+
+
 def _client_x402(wallet_key: str, max_price_usd: Union[float, Decimal]) -> Any:
     try:
         from eth_account import Account
@@ -76,6 +87,12 @@ def _client_x402(wallet_key: str, max_price_usd: Union[float, Decimal]) -> Any:
         from x402.mechanisms.evm.exact import ExactEvmScheme
     except ImportError as erreur:
         raise ImportError('Paying per call with a wallet needs the payment extra: pip install "sirenic[pay]"') from erreur
+    installee = _version_x402()
+    lue = re.match(r"(\d+)\.(\d+)", installee)
+    if lue and (int(lue[1]), int(lue[2])) < X402_MIN:
+        raise ImportError(
+            f'Paying per call with a wallet needs x402 2.20 or later (installed: {installee}): pip install -U "sirenic[pay]"'
+        )
     client = x402ClientSync()
     client.register("eip155:*", ExactEvmScheme(signer=EthAccountSigner(Account.from_key(wallet_key))))
     client.register_policy(max_amount(_atomique(max_price_usd)))

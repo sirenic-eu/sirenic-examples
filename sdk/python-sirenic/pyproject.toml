@@ -27,8 +27,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-# Per-call x402 payment with your own wallet (official x402 Foundation package).
-pay = ["x402[requests,evm]>=2.16,<3"]
+# Per-call x402 payment with your own wallet (official x402 Foundation package). 2.20 is the first
+# release whose handle_402_response takes the request URL, which the client passes.
+pay = ["x402[requests,evm]>=2.20,<3"]
 test = ["pytest>=8"]
 
 [project.urls]

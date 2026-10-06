@@ -27,8 +27,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-# Per-call x402 payment (an API key or the quote-only mode work without it).
-pay = ["sirenic[pay]>=0.1,<0.2"]
+# Per-call x402 payment (an API key or the quote-only mode work without it). x402 2.20 or later,
+# as sirenic[pay] requires: older releases cannot build a payment.
+pay = ["sirenic[pay]>=0.1,<0.2", "x402[requests,evm]>=2.20,<3"]
 langchain = ["langchain-core>=1,<2"]
 crewai = ["crewai>=1.15"]
 test = ["pytest>=8"]

@@ -8,7 +8,8 @@
   given; calls are paid with prepaid credits.
 - A quote above `max_price_usd` now returns the quote with `price_cap_exceeded: true` (it was a
   `payment_refused_or_network` error); errors carry the service's `code`.
-- The `pay` extra is now `sirenic[pay]` (same official `x402` package).
+- The `pay` extra is now `sirenic[pay]` (same official `x402` package), with `x402` 2.20 or later: 2.16 to
+  2.19, allowed by 0.1.0, cannot build a payment. `pip install -U "sirenic-agents[pay]"` upgrades it.
 - Search tool description: price corrected to $0.002, the price served for `GET /v1/recherche`.
 - README: the API key rail, the MCP tool count measured on 2026-10-05 (109), tagged links.
 - Tests of the tool construction on the key, wallet and quote-only rails, without network.
