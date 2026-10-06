@@ -5,7 +5,9 @@
 - Built on [`sirenic`](https://pypi.org/project/sirenic/) 0.1 (new dependency `sirenic>=0.1,<0.2`): the HTTP
   calls, the x402 payment and the errors now come from the Python client of the API.
 - API key rail: `SirenicClient(api_key=...)`, or the `SIRENIC_API_KEY` environment variable when no wallet is
-  given; calls are paid with prepaid credits.
+  given; calls are paid with prepaid credits, under a per-call cap `max_credits` (default 1.0, in credits): the
+  price is read in the free quote of the same request, and a call above the cap is not made (the tool returns
+  `price_cap_exceeded: true`, the price and the quote). `max_credits=None` removes the cap.
 - A quote above `max_price_usd` now returns the quote with `price_cap_exceeded: true` (it was a
   `payment_refused_or_network` error); errors carry the service's `code`.
 - The wallet pays in USDC or EURC on Base; a quote in no such asset returns the quote with

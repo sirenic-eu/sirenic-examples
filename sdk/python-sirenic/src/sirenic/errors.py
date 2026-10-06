@@ -23,6 +23,7 @@ __all__ = [
     "PaymentRequired",
     "PaymentOption",
     "PriceCapExceeded",
+    "CreditCapExceeded",
     "UnsupportedAsset",
     "PaymentFailed",
     "InsufficientCredits",
@@ -187,11 +188,29 @@ class PaymentRequired(SirenicError):
 class PriceCapExceeded(PaymentRequired):
     """x402 rail: the quote is above ``max_price_usd``; nothing was signed.
 
-    Same attributes as :class:`PaymentRequired`, plus ``max_price_usd``.
+    Same attributes as :class:`PaymentRequired`, plus ``max_price_usd``. Its subclass
+    :class:`CreditCapExceeded` is the same refusal on the API key rail.
     """
 
     def __init__(self, message: Optional[str] = None, *, max_price_usd: Optional[float] = None, **kwargs: Any) -> None:
         self.max_price_usd = max_price_usd
+        super().__init__(message, **kwargs)
+
+
+class CreditCapExceeded(PriceCapExceeded):
+    """API key rail: the price of the call, read in the free quote of the same request, is above
+    ``max_credits``; the paid call was not made and nothing was charged.
+
+    ``credits`` is that price in credits (1 credit = 1 EUR, the figure of the quote) and
+    ``max_credits`` the cap. ``credits`` is None when no price is quoted without a key (filed deeds
+    answer 401 ``compte_requis``): such a call is not made under a cap either.
+    """
+
+    def __init__(
+        self, message: Optional[str] = None, *, max_credits: Any = None, credits: Any = None, **kwargs: Any
+    ) -> None:
+        self.max_credits = max_credits
+        self.credits = credits
         super().__init__(message, **kwargs)
 
 

@@ -3,7 +3,8 @@
 Three ways to call a paid route, one per client:
 
 * an API key (``api_key=`` or the ``SIRENIC_API_KEY`` environment variable),
-  sent in the ``X-Api-Key`` header and paid with the account's prepaid credits;
+  sent in the ``X-Api-Key`` header and paid with the account's prepaid credits,
+  never above ``max_credits`` when it is set;
 * a wallet (``wallet_key=``, extra ``sirenic[pay]``): each call is paid in
   x402 by the official ``x402`` package, which signs locally, never above
   ``max_price_usd``, in USDC or EURC on Base;
@@ -30,6 +31,7 @@ from ._version import __version__
 from .errors import (
     AccountRequired,
     AuthenticationError,
+    CreditCapExceeded,
     InsufficientCredits,
     InvalidRequest,
     NetworkError,
@@ -88,6 +90,14 @@ def _payable(scheme: Any, network: Any, asset: Any) -> bool:
 def _seulement_payables(version: int, exigences: list) -> list:
     """x402 policy: keep the options in an asset this client pays."""
     return [e for e in exigences if _payable(e.scheme, e.network, e.asset)]
+
+
+def _plafond_valide(nom: str, valeur: Any) -> None:
+    """A cap is a positive, finite number (int, float or Decimal)."""
+    if isinstance(valeur, bool) or not isinstance(valeur, (int, float, Decimal)):
+        raise ValueError(f"{nom} must be a positive finite number")
+    if not Decimal(str(valeur)).is_finite() or valeur <= 0:
+        raise ValueError(f"{nom} must be a positive finite number")
 
 
 def _atomique(max_price_usd: Union[float, Decimal]) -> int:
@@ -198,6 +208,14 @@ class Client:
         and nothing is signed. The wallet pays the x402 ``exact`` scheme on
         Base, in USDC (the first option of every Sirenic quote) or EURC; a
         quote in no such asset raises :class:`sirenic.UnsupportedAsset`.
+    :param max_credits: hard per-call cap of the API key rail, in credits
+        (1 credit = 1 EUR; a call costs the figure of its x402 quote). Off by
+        default (``None``): your prepaid balance bounds the spend. When set,
+        each call first asks the free quote of the same request (one more
+        request, without the key); above the cap it raises
+        :class:`sirenic.CreditCapExceeded` and the paid call is not made. A call
+        whose price is not quoted without a key (filed deeds answer 401
+        ``compte_requis``) is not made under a cap either.
     :param base_url: default ``https://api.sirenic.eu``.
     :param timeout: seconds per HTTP request (default 120).
     :param session: an existing ``requests.Session`` (proxies, adapters).
@@ -209,6 +227,7 @@ class Client:
         *,
         wallet_key: Optional[str] = None,
         max_price_usd: Union[float, Decimal] = 1.0,
+        max_credits: Optional[Union[float, Decimal]] = None,
         base_url: str = DEFAULT_BASE_URL,
         timeout: float = DEFAULT_TIMEOUT,
         session: Optional[requests.Session] = None,
@@ -223,6 +242,8 @@ class Client:
             raise ValueError("api_key must not contain whitespace")
         if isinstance(max_price_usd, bool) or not isinstance(max_price_usd, (int, float, Decimal)) or max_price_usd <= 0:
             raise ValueError("max_price_usd must be a positive number")
+        if max_credits is not None:
+            _plafond_valide("max_credits", max_credits)
         if not isinstance(base_url, str) or not _BASE.fullmatch(base_url.rstrip("/")):
             raise ValueError(
                 "base_url must be an https URL without query, e.g. https://api.sirenic.eu"
@@ -232,6 +253,7 @@ class Client:
         self.base_url = base_url.rstrip("/")
         self.timeout = timeout
         self.max_price_usd = max_price_usd
+        self.max_credits = max_credits
         self._propre_session = session is None
         self._session = session if session is not None else requests.Session()
         self._x402 = _client_x402(wallet_key, max_price_usd) if wallet_key else None
@@ -338,6 +360,10 @@ class Client:
 
     def _appeler(self, url: str, params: Optional[Dict[str, Any]]) -> Response:
         entetes = self._entetes()
+        if self._api_key and self.max_credits is not None:
+            gratuite = self._sous_le_plafond(url, params)
+            if gratuite is not None:
+                return gratuite
         reponse = self._envoyer(url, params, entetes)
         if reponse.status_code == 402 and self._x402 is not None:
             devis = _erreur(reponse)
@@ -346,6 +372,47 @@ class Client:
         if 200 <= reponse.status_code < 300:
             return Response(reponse.status_code, reponse.headers, reponse.content, reponse.url)
         raise _erreur(reponse)
+
+    def _sous_le_plafond(self, url: str, params: Optional[Dict[str, Any]]) -> Optional[Response]:
+        """API key rail under ``max_credits``: the same request without the key returns its free quote,
+        and the service debits the key the amount it quotes. Returns None when the paid call may be made,
+        the response itself when the route is free (nothing to pay), or raises."""
+        sans_cle = {nom: valeur for nom, valeur in self._entetes().items() if nom != "X-Api-Key"}
+        reponse = self._envoyer(url, params, sans_cle)
+        if 200 <= reponse.status_code < 300:
+            return Response(reponse.status_code, reponse.headers, reponse.content, reponse.url)
+        devis = _erreur(reponse)
+        contexte: Dict[str, Any] = {
+            "max_credits": self.max_credits,
+            "status": devis.status,
+            "code": devis.code,
+            "body": devis.body,
+            "headers": devis.headers,
+            "url": devis.url,
+        }
+        if isinstance(devis, PaymentRequired):
+            montants = [o.amount for o in devis.accepts if o.amount is not None]
+            if not montants:
+                raise CreditCapExceeded(
+                    "The quote of this call states no amount: it cannot be checked against max_credits,"
+                    " so the call was not made.",
+                    **contexte,
+                )
+            prix = Decimal(max(montants)) / (10**_DECIMALES)
+            if prix <= Decimal(str(self.max_credits)):
+                return None
+            raise CreditCapExceeded(
+                f"Price {prix} credits is above max_credits={self.max_credits}: the call was not made.",
+                credits=prix,
+                **contexte,
+            )
+        if devis.code == "compte_requis":
+            raise CreditCapExceeded(
+                "The price of this call is not quoted without an API key (401 compte_requis): it cannot be"
+                " checked against max_credits, so the call was not made. Pass max_credits=None to make it.",
+                **contexte,
+            )
+        raise devis
 
     def _payer(
         self,

@@ -40,6 +40,11 @@ profil = client.entreprise("552032534")
 print(profil["denomination"], profil.credits_charged)
 ```
 
+Each call is paid from your prepaid balance at the price of its route. To cap a single call, pass
+`max_credits` (for example `sirenic.Client(max_credits=0.5)`): the client first asks the free quote of the
+same request, one more request without the key, and above the cap raises `CreditCapExceeded` without making
+the paid call.
+
 ## Example
 
 ```python
@@ -108,6 +113,7 @@ with no option in these two assets raises `UnsupportedAsset`, which names the of
 |---|---|
 | `PaymentRequired` | 402 with an x402 quote: `price`, `accepts` (`asset`, `asset_name`, `network`, `pay_to`, `amount`), `quote` |
 | `PriceCapExceeded` | x402 rail, quote above `max_price_usd`; a subclass of `PaymentRequired` |
+| `CreditCapExceeded` | API key rail, price above `max_credits` (`credits`, `max_credits`): the call was not made; a subclass of `PriceCapExceeded` |
 | `UnsupportedAsset` | x402 rail, no option of the quote in USDC or EURC on Base (`assets` names the offered ones); a subclass of `PaymentRequired` |
 | `PaymentFailed` | x402 rail, the signed payment was not accepted |
 | `InsufficientCredits` | 402 `credits_insuffisants` on the key rail: `solde`, `prix`, `recharge_url` |

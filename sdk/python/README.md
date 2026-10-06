@@ -4,7 +4,8 @@ Company data from the official French and European registers in your agent: sear
 screening, licences, invoicing checks (France, Belgium, Poland), intelligence report and watchlists. Three ways
 to pay a call:
 
-- an **API key** (prepaid credits, 1 credit = 1 EUR): `api_key=` or the `SIRENIC_API_KEY` environment variable;
+- an **API key** (prepaid credits, 1 credit = 1 EUR): `api_key=` or the `SIRENIC_API_KEY` environment variable,
+  with a per-call cap in credits;
 - a **wallet** paying each call via [x402](https://x402.org) (USDC or EURC on Base), with a hard price cap;
 - **neither**: every tool still works and returns the payment quote (discovery and dry runs).
 
@@ -48,12 +49,15 @@ agent = Agent(role="KYB analyst", mcps=["https://api.sirenic.eu/mcp"], ...)
 return quotes that your agent settles itself, or pass your API key.)
 
 Every tool returns a JSON string: the data, the quote (`payment_required: true`, with
-`price_cap_exceeded: true` when the quote is above your cap) or the error. Responses with a status of 400 or
-above are not charged.
+`price_cap_exceeded: true` when the price is above your cap, or `unsupported_asset: true` when the wallet cannot
+pay any offered asset) or the error. Responses with a status of 400 or above are not charged.
 
 Safety model: with a wallet, payments are EIP-3009 authorizations signed locally by the official
-[`x402`](https://pypi.org/project/x402/) package (x402 Foundation); the price cap filters every quote before
-signing, and your wallet key never leaves the process. Paid responses are Ed25519-signed by the server
+[`x402`](https://pypi.org/project/x402/) package (x402 Foundation), in USDC or EURC on Base; the price cap
+(`max_price_usd`, default 1.0) filters every quote before signing, and your wallet key never leaves the process.
+With an API key, each call has its cap too, in credits (`max_credits`, default 1.0): the price is read in the
+free quote of the same request, and a call above the cap is not made (`max_credits=None` removes the cap and
+that extra request). Paid responses are Ed25519-signed by the server
 ([verify](https://api.sirenic.eu/.well-known/sirenic-signing-key)).
 
 ## Links

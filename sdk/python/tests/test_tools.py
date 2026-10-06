@@ -66,7 +66,7 @@ def test_langchain_quote_only_rail(servir):
 
 def test_langchain_api_key_rail(servir):
     pytest.importorskip("langchain_core")
-    session, adaptateur = servir("entreprise-200-cle", "facturation-200-cle")
+    session, adaptateur = servir("entreprise-402", "entreprise-200-cle", "facturation-402", "facturation-200-cle")
     client = SirenicClient(api_key=CLE_FACTICE, session=session)
     assert client.rail == "api_key"
     tools = build_langchain_tools(client)
@@ -74,7 +74,30 @@ def test_langchain_api_key_rail(servir):
     assert profil["siren"] == AIRVANCE and profil["denomination"] == "AIRVANCE GROUP"
     facture = json.loads(_outil(tools, "sirenic_invoice_file_france").invoke({"siren": AIRVANCE}))
     assert facture["verdict"]["pret_a_facturer"] is True
-    assert all(v.headers["X-Api-Key"] == CLE_FACTICE for v in adaptateur.vues)
+    # Under the default cap of 1.0 credit, each call is preceded by its free quote, sent without the key.
+    assert [v.headers.get("X-Api-Key") for v in adaptateur.vues] == [None, CLE_FACTICE, None, CLE_FACTICE]
+
+
+def test_api_key_rail_has_a_per_call_cap(servir):
+    """Same sense as the wallet cap: with an API key, a call priced above max_credits (default 1.0) is not
+    made, and the tool returns the price, the cap and the quote."""
+    pytest.importorskip("langchain_core")
+    cles = lambda adaptateur: [v.headers.get("X-Api-Key") for v in adaptateur.vues]  # noqa: E731
+    session, adaptateur = servir("kyb-402", "kyb-200-cle")
+    client = SirenicClient(api_key=CLE_FACTICE, max_credits=0.10, session=session)
+    sortie = json.loads(_outil(build_langchain_tools(client), "sirenic_kyb_file").invoke({"siren": AIRVANCE}))
+    assert sortie["payment_required"] is True and sortie["price_cap_exceeded"] is True
+    assert sortie["max_credits"] == 0.10 and sortie["credits"] == 0.15 and sortie["quote"]["price"] == "$0.15"
+    assert cles(adaptateur) == [None]  # the free quote only
+    # Within the default cap of 1.0 credit: the free quote, then the call with the key.
+    session, adaptateur = servir("kyb-402", "kyb-200-cle")
+    outils = build_langchain_tools(SirenicClient(api_key=CLE_FACTICE, session=session))
+    assert json.loads(_outil(outils, "sirenic_kyb_file").invoke({"siren": AIRVANCE}))["siren"] == AIRVANCE
+    assert cles(adaptateur) == [None, CLE_FACTICE]
+    # max_credits=None: no cap, one request.
+    session, adaptateur = servir("kyb-200-cle")
+    assert json.loads(SirenicClient(api_key=CLE_FACTICE, max_credits=None, session=session).get(f"/v1/kyb/{AIRVANCE}"))
+    assert cles(adaptateur) == [CLE_FACTICE]
 
 
 def test_api_key_from_environment(monkeypatch):
@@ -137,7 +160,7 @@ def test_crewai_tools_on_both_rails(servir, crewai_minimal):
     ]
     devis = json.loads(outils[3]._run(path=f"/v1/entreprise/{AIRVANCE}"))
     assert devis["payment_required"] is True
-    session2, _ = servir("kyb-200-cle")
+    session2, _ = servir("kyb-402", "kyb-200-cle")
     kyb = json.loads(build_crewai_tools(SirenicClient(api_key=CLE_FACTICE, session=session2))[1]._run(siren=AIRVANCE))
     assert kyb["siren"] == AIRVANCE
 

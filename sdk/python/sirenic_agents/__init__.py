@@ -2,10 +2,10 @@
 
 Company data from the official French and European registers, as agent
 tools. Three ways to call a paid route: an API key (prepaid credits:
-``api_key=`` or the ``SIRENIC_API_KEY`` environment variable), a wallet that
-pays each call in x402 (USDC or EURC on Base: ``wallet_key=`` and a hard
-price cap), or neither: every tool then returns the x402 quote (handy for
-discovery and dry runs). Built on the ``sirenic`` client; x402 payments are
+``api_key=`` or the ``SIRENIC_API_KEY`` environment variable, with a per-call
+cap in credits), a wallet that pays each call in x402 (USDC or EURC on Base:
+``wallet_key=`` and a hard price cap), or neither: every tool then returns the
+x402 quote (handy for discovery and dry runs). Built on the ``sirenic`` client; x402 payments are
 EIP-3009 authorizations signed locally by the official ``x402`` package, and
 the server never sees your wallet key.
 """
@@ -32,15 +32,24 @@ class SirenicClient:
     """Agent-facing client of api.sirenic.eu: every call returns a JSON string.
 
     :param wallet_key: EVM private key (``0x...``) of YOUR paying wallet, to
-        pay each call in x402 (``pip install "sirenic-agents[pay]"``).
-    :param max_price_usd: hard per-call cap of the wallet rail (default 1.0,
-        the most expensive single Sirenic call). Quotes above the cap are never
-        signed: the tool returns the quote instead.
+        pay each call in x402, in USDC or EURC on Base
+        (``pip install "sirenic-agents[pay]"``).
+    :param max_price_usd: hard per-call cap of the wallet rail (default 1.0),
+        compared with the quoted amount. Quotes above the cap are never signed:
+        the tool returns the quote instead. Calls priced per target or per
+        entity (watchlists, batches) can cost more than 1.0: raise the cap for
+        them.
     :param base_url: default ``https://api.sirenic.eu``.
     :param api_key: Sirenic API key (``srn_live_...``), paid with prepaid
         credits. When neither ``api_key`` nor ``wallet_key`` is given,
         ``SIRENIC_API_KEY`` is read from the environment. Without either, every
         paid tool returns the x402 quote.
+    :param max_credits: hard per-call cap of the API key rail, in credits
+        (1 credit = 1 EUR, the figure of the quote; default 1.0, the same sense
+        as ``max_price_usd``). Each call first asks the free quote of the same
+        request; above the cap the call is not made and the tool returns the
+        price and the quote. ``None`` removes the cap and that extra request:
+        your balance then bounds the spend.
     :param timeout: seconds per HTTP request (default 120).
     :param session: an existing ``requests.Session`` (proxies, adapters).
     """
@@ -52,6 +61,7 @@ class SirenicClient:
         base_url: str = sirenic.DEFAULT_BASE_URL,
         *,
         api_key: Optional[str] = None,
+        max_credits: Optional[float] = 1.0,
         timeout: float = 120.0,
         session: Optional[requests.Session] = None,
     ) -> None:
@@ -59,6 +69,7 @@ class SirenicClient:
             api_key=api_key,
             wallet_key=wallet_key,
             max_price_usd=max_price_usd,
+            max_credits=max_credits,
             base_url=base_url,
             timeout=timeout,
             session=session,
@@ -81,6 +92,18 @@ class SirenicClient:
             reponse = self._client.get(requote_uri(path))
         except ValueError as erreur:
             return json.dumps({"error": "invalid_path", "message": str(erreur)})
+        except sirenic.CreditCapExceeded as erreur:
+            conseil = " Raise max_credits or call a cheaper endpoint." if erreur.credits is not None else ""
+            return json.dumps(
+                {
+                    "payment_required": True,
+                    "price_cap_exceeded": True,
+                    "max_credits": float(erreur.max_credits),
+                    "credits": None if erreur.credits is None else float(erreur.credits),
+                    "hint": f"{erreur.message}{conseil}",
+                    "quote": erreur.quote,
+                }
+            )
         except sirenic.PriceCapExceeded as erreur:
             return json.dumps(
                 {
