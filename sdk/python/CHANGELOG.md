@@ -8,6 +8,8 @@
   given; calls are paid with prepaid credits.
 - A quote above `max_price_usd` now returns the quote with `price_cap_exceeded: true` (it was a
   `payment_refused_or_network` error); errors carry the service's `code`.
+- The wallet pays in USDC or EURC on Base; a quote in no such asset returns the quote with
+  `unsupported_asset: true` and the offered `assets`, nothing signed.
 - The `pay` extra is now `sirenic[pay]` (same official `x402` package), with `x402` 2.20 or later: 2.16 to
   2.19, allowed by 0.1.0, cannot build a payment. `pip install -U "sirenic-agents[pay]"` upgrades it.
 - Search tool description: price corrected to $0.002, the price served for `GET /v1/recherche`.

@@ -14,7 +14,9 @@ First release of `sirenic`, the Python client of the Sirenic API.
   `localhost` or `127.0.0.1`), and a redirect to another host, scheme or port raises `SirenicError`.
 - `sirenic.Response`: parsed data, per-block `provenance` (`Provenance`), `listes_bornees` at any depth,
   credits charged and remaining.
-- Typed errors read from the service's responses: `PaymentRequired`, `PriceCapExceeded`, `PaymentFailed`,
-  `InsufficientCredits`, `AccountRequired`, `AuthenticationError`, `InvalidRequest`, `NotFound`, `RateLimited`,
-  `UpstreamUnavailable`, `ServiceUnavailable`, `NetworkError`.
+- The wallet rail pays the x402 `exact` scheme on Base, in USDC or EURC (EURC allowed explicitly, under the same
+  cap); a quote in no such asset raises `UnsupportedAsset`, never `PriceCapExceeded`.
+- Typed errors read from the service's responses: `PaymentRequired`, `PriceCapExceeded`, `UnsupportedAsset`,
+  `PaymentFailed`, `InsufficientCredits`, `AccountRequired`, `AuthenticationError`, `InvalidRequest`,
+  `NotFound`, `RateLimited`, `UpstreamUnavailable`, `ServiceUnavailable`, `NetworkError`.
 - Tests on responses recorded from the live service on 2026-10-05, without network.

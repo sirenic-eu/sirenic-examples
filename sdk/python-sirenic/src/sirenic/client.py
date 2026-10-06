@@ -6,7 +6,7 @@ Three ways to call a paid route, one per client:
   sent in the ``X-Api-Key`` header and paid with the account's prepaid credits;
 * a wallet (``wallet_key=``, extra ``sirenic[pay]``): each call is paid in
   x402 by the official ``x402`` package, which signs locally, never above
-  ``max_price_usd``;
+  ``max_price_usd``, in USDC or EURC on Base;
 * neither: a paid route raises :class:`sirenic.PaymentRequired`, carrying the
   quote (a free dry run).
 
@@ -40,7 +40,9 @@ from .errors import (
     RateLimited,
     ServiceUnavailable,
     SirenicError,
+    UnsupportedAsset,
     UpstreamUnavailable,
+    _libelle,
 )
 from .response import Response
 
@@ -59,6 +61,14 @@ _REDIRECTIONS = frozenset({301, 302, 303, 307, 308})
 _MAX_REDIRECTIONS = 5
 _PORTS = {"https": 443, "http": 80}
 _DECIMALES = 6  # USDC and EURC on Base
+# What the wallet rail pays: the x402 "exact" scheme (an EIP-3009 authorization) on Base mainnet, in
+# USDC (an x402 default asset) or EURC (allowed explicitly: x402 pays only its default assets otherwise).
+_BASE_MAINNET = "eip155:8453"
+_EURC_BASE = "0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42"
+_ACTIFS_PAYES = {
+    (_BASE_MAINNET, "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"): "USDC",
+    (_BASE_MAINNET, _EURC_BASE.lower()): "EURC",
+}
 # First x402 release whose handle_402_response takes the request URL: older ones build no payment.
 X402_MIN = (2, 20)
 
@@ -68,6 +78,16 @@ def _siren(valeur: Any) -> str:
     if not _SIREN.fullmatch(texte):
         raise ValueError(f"siren must be 9 digits, got {valeur!r}")
     return texte
+
+
+def _payable(scheme: Any, network: Any, asset: Any) -> bool:
+    """An option this client pays: the exact scheme, in USDC or EURC on Base."""
+    return scheme == "exact" and (str(network), str(asset).lower()) in _ACTIFS_PAYES
+
+
+def _seulement_payables(version: int, exigences: list) -> list:
+    """x402 policy: keep the options in an asset this client pays."""
+    return [e for e in exigences if _payable(e.scheme, e.network, e.asset)]
 
 
 def _atomique(max_price_usd: Union[float, Decimal]) -> int:
@@ -96,14 +116,22 @@ def _client_x402(wallet_key: str, max_price_usd: Union[float, Decimal]) -> Any:
     lue = re.match(r"(\d+)\.(\d+)", installee)
     if lue and (int(lue[1]), int(lue[2])) < X402_MIN:
         raise ImportError(
-            f'Paying per call with a wallet needs x402 2.20 or later (installed: {installee}): pip install -U "sirenic[pay]"'
+            f"Paying per call with a wallet needs x402 2.20 or later (installed: {installee}):"
+            ' pip install -U "sirenic[pay]"'
         )
+    plafond = _atomique(max_price_usd)
     client = x402ClientSync()
-    client.register("eip155:*", ExactEvmScheme(signer=EthAccountSigner(Account.from_key(wallet_key))))
-    client.register_policy(max_amount(_atomique(max_price_usd)))
-    if hasattr(client, "set_spend_controls"):
-        # Recent x402 releases cap every payment at $1 by default: the cap becomes ours.
-        client.set_spend_controls({"max_amount_per_payment": "$" + format(Decimal(str(max_price_usd)), "f")})
+    client.register(_BASE_MAINNET, ExactEvmScheme(signer=EthAccountSigner(Account.from_key(wallet_key))))
+    client.register_policy(_seulement_payables)
+    client.register_policy(max_amount(plafond))
+    # x402 caps every payment at $1 by default and pays its default assets only (USDC on Base):
+    # the cap becomes ours, and EURC on Base is allowed under the same cap in atomic units.
+    client.set_spend_controls(
+        {
+            "max_amount_per_payment": "$" + format(Decimal(str(max_price_usd)), "f"),
+            "allowed_assets": [{"network": _BASE_MAINNET, "asset": _EURC_BASE, "max_amount_per_payment": str(plafond)}],
+        }
+    )
     return x402HTTPClientSync(client)
 
 
@@ -164,9 +192,12 @@ class Client:
     :param wallet_key: EVM private key of YOUR paying wallet, to pay each call
         in x402 (needs ``pip install "sirenic[pay]"``). It never leaves this
         process: payments are EIP-3009 authorizations signed locally.
-    :param max_price_usd: hard per-call cap of the wallet rail (default 1.0).
-        A quote above it raises :class:`sirenic.PriceCapExceeded` and nothing
-        is signed.
+    :param max_price_usd: hard per-call cap of the wallet rail (default 1.0),
+        compared with the quoted amount (Sirenic quotes the same figure in USDC
+        and EURC). A quote above it raises :class:`sirenic.PriceCapExceeded`
+        and nothing is signed. The wallet pays the x402 ``exact`` scheme on
+        Base, in USDC (the first option of every Sirenic quote) or EURC; a
+        quote in no such asset raises :class:`sirenic.UnsupportedAsset`.
     :param base_url: default ``https://api.sirenic.eu``.
     :param timeout: seconds per HTTP request (default 120).
     :param session: an existing ``requests.Session`` (proxies, adapters).
@@ -280,7 +311,9 @@ class Client:
         """One GET. Redirects are followed here, not by ``requests``, and only within the origin of
         ``base_url``: the API key and an x402 payment header are never sent to another host."""
         try:
-            reponse = self._session.get(url, params=params, headers=dict(entetes), timeout=self.timeout, allow_redirects=False)
+            reponse = self._session.get(
+                url, params=params, headers=dict(entetes), timeout=self.timeout, allow_redirects=False
+            )
             for _ in range(_MAX_REDIRECTIONS):
                 cible = reponse.headers.get("location") if reponse.status_code in _REDIRECTIONS else None
                 if not cible:
@@ -296,7 +329,9 @@ class Client:
                     )
                 _ = reponse.content  # read the body, so that the connection is released
                 reponse.close()
-                reponse = self._session.get(suivante, headers=dict(entetes), timeout=self.timeout, allow_redirects=False)
+                reponse = self._session.get(
+                    suivante, headers=dict(entetes), timeout=self.timeout, allow_redirects=False
+                )
         except requests.RequestException as erreur:
             raise NetworkError(f"{type(erreur).__name__} while calling {url}", url=url) from erreur
         return reponse
@@ -321,25 +356,32 @@ class Client:
         devis: PaymentRequired,
     ) -> requests.Response:
         contexte: Dict[str, Any] = {
-            "max_price_usd": self.max_price_usd,
             "status": 402,
             "code": devis.code,
             "body": devis.body,
             "headers": devis.headers,
             "url": devis.url,
         }
-        montant = devis.min_amount
-        if montant is None or montant > _atomique(self.max_price_usd):
+        payables = [o for o in devis.accepts if _payable(o.scheme, o.network, o.asset)]
+        if not payables:
+            offerts = ", ".join(map(_libelle, devis.accepts))
+            raise UnsupportedAsset(
+                f"No option of the quote is in an asset this client pays (offered: {offerts};"
+                " paid: USDC or EURC on Base): nothing was signed.",
+                **contexte,
+            )
+        montants = [o.amount for o in payables if o.amount is not None]
+        if not montants:
+            raise PaymentFailed("The quote states no amount in atomic units: nothing was signed.", **contexte)
+        if min(montants) > _atomique(self.max_price_usd):
             raise PriceCapExceeded(
-                f"Quote {devis.price} is above max_price_usd={self.max_price_usd}: nothing was signed.", **contexte
+                f"Quote {devis.price} is above max_price_usd={self.max_price_usd}: nothing was signed.",
+                max_price_usd=self.max_price_usd,
+                **contexte,
             )
         try:
             entetes_paiement, _ = self._x402.handle_402_response(dict(reponse.headers), reponse.content, reponse.url)
         except Exception as erreur:
-            if type(erreur).__name__ == "NoMatchingRequirementsError":
-                raise PriceCapExceeded(
-                    f"The x402 client refused every option of the quote ({erreur}): nothing was signed.", **contexte
-                ) from erreur
             raise PaymentFailed(f"The x402 payment could not be built: {type(erreur).__name__}", url=url) from erreur
         payee = self._envoyer(url, params, {**entetes, **entetes_paiement})
         if payee.status_code == 402:

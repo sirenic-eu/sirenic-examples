@@ -23,6 +23,7 @@ __all__ = [
     "PaymentRequired",
     "PaymentOption",
     "PriceCapExceeded",
+    "UnsupportedAsset",
     "PaymentFailed",
     "InsufficientCredits",
     "NotFound",
@@ -128,6 +129,11 @@ class PaymentOption:
         )
 
 
+def _libelle(option: PaymentOption) -> str:
+    """An offered asset and its network, e.g. ``"EURC on eip155:8453"``."""
+    return f"{option.asset_name or option.asset or 'unnamed asset'} on {option.network or 'no network'}"
+
+
 def _devis_depuis_entete(entetes: Mapping[str, str]) -> Optional[Mapping[str, Any]]:
     valeur = None
     for nom, contenu in entetes.items():
@@ -187,6 +193,19 @@ class PriceCapExceeded(PaymentRequired):
     def __init__(self, message: Optional[str] = None, *, max_price_usd: Optional[float] = None, **kwargs: Any) -> None:
         self.max_price_usd = max_price_usd
         super().__init__(message, **kwargs)
+
+
+class UnsupportedAsset(PaymentRequired):
+    """x402 rail: no option of the quote is in an asset this client pays (the ``exact`` scheme on
+    Base, in USDC or EURC); nothing was signed.
+
+    Same attributes as :class:`PaymentRequired`, plus ``assets``: the offered assets, each named
+    with its network, e.g. ``["EURC on eip155:1"]``.
+    """
+
+    def __init__(self, message: Optional[str] = None, **kwargs: Any) -> None:
+        super().__init__(message, **kwargs)
+        self.assets: List[str] = [_libelle(o) for o in self.accepts]
 
 
 class PaymentFailed(SirenicError):

@@ -5,6 +5,7 @@ payment is ever made and nothing leaves the process."""
 from __future__ import annotations
 
 import base64
+import copy
 import json
 import re
 from pathlib import Path
@@ -18,10 +19,23 @@ pytest.importorskip("x402")
 from eth_account import Account  # noqa: E402  (installed with x402[evm])
 
 AIRVANCE = "490586708"
+EURC_BASE = "0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42"
+EURC_ETHEREUM = "0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c"  # EURC on Ethereum mainnet: not paid by this client
 
 
 def _portefeuille() -> str:
     return Account.create().key.hex()
+
+
+def _devis(garder, **changer) -> dict:
+    """The quote recorded for /v1/entreprise/490586708, reduced to the options ``garder`` keeps and
+    changed by ``changer``, in the body and in the PAYMENT-REQUIRED header alike (x402 reads the header)."""
+    f = copy.deepcopy(charger("entreprise-402"))
+    entete = json.loads(base64.b64decode(f["headers"]["payment-required"]))
+    for devis in (f["body"], entete):
+        devis["accepts"] = [dict(a, **changer) for a in devis["accepts"] if garder(a)]
+    f["headers"]["payment-required"] = base64.b64encode(json.dumps(entete).encode()).decode()
+    return f
 
 
 def test_signed_retry_within_the_cap(servir):
@@ -44,6 +58,43 @@ def test_signed_retry_within_the_cap(servir):
     for vue in adaptateur.vues:  # the wallet key is never sent, and no API key either
         assert "X-Api-Key" not in vue.headers
         assert cle not in json.dumps(dict(vue.headers)) and cle not in (vue.url or "")
+
+
+def test_a_quote_in_eurc_only_is_paid_in_eurc(servir):
+    """EURC on Base is paid like USDC (EIP-3009): a quote in EURC alone is signed, never called above the cap."""
+    eurc = _devis(lambda a: a["extra"]["name"] == "EURC")
+    session, adaptateur = servir(eurc, "entreprise-200-cle", paiement="accepte")
+    client = sirenic.Client(wallet_key=_portefeuille(), max_price_usd=1.0, session=session)
+    assert client.entreprise(AIRVANCE)["siren"] == AIRVANCE
+    paiement = json.loads(base64.b64decode(adaptateur.vues[1].headers["PAYMENT-SIGNATURE"]))
+    assert paiement["accepted"]["asset"] == eurc["body"]["accepts"][0]["asset"] == EURC_BASE
+    assert paiement["accepted"]["network"] == "eip155:8453" and paiement["accepted"]["amount"] == "5000"
+
+
+def test_a_quote_without_a_payable_asset_names_it_and_signs_nothing(servir):
+    """Only EURC on Ethereum: not an asset of this client (USDC or EURC on Base). A dedicated error names it."""
+    ailleurs = _devis(lambda a: a["extra"]["name"] == "EURC", network="eip155:1", asset=EURC_ETHEREUM)
+    session, adaptateur = servir(ailleurs)
+    client = sirenic.Client(wallet_key=_portefeuille(), max_price_usd=1.0, session=session)
+    with pytest.raises(sirenic.UnsupportedAsset) as e:
+        client.entreprise(AIRVANCE)
+    assert not isinstance(e.value, sirenic.PriceCapExceeded)
+    assert isinstance(e.value, sirenic.PaymentRequired) and e.value.price == "$0.005"
+    assert e.value.assets == ["EURC on eip155:1"]
+    assert "EURC on eip155:1" in str(e.value) and "nothing was signed" in str(e.value)
+    assert len(adaptateur.vues) == 1
+
+
+def test_a_quote_without_an_atomic_amount_is_not_called_above_the_cap(servir):
+    """An amount that is not an integer of atomic units cannot be paid: PaymentFailed says so, nothing signed."""
+    sans_montant = _devis(lambda a: True, amount="0.005", maxAmountRequired="0.005")
+    session, adaptateur = servir(sans_montant)
+    client = sirenic.Client(wallet_key=_portefeuille(), max_price_usd=1.0, session=session)
+    with pytest.raises(sirenic.PaymentFailed) as e:
+        client.entreprise(AIRVANCE)
+    assert "amount" in str(e.value) and "nothing was signed" in str(e.value)
+    assert e.value.status == 402
+    assert len(adaptateur.vues) == 1
 
 
 def test_price_cap_exceeded_signs_nothing(servir):
@@ -72,11 +123,12 @@ def test_payment_failed_when_the_signed_payment_is_refused(servir):
     assert "PAYMENT-SIGNATURE" in adaptateur.vues[1].headers
 
 
-def test_cap_above_one_dollar_is_passed_to_x402():
+def test_cap_above_one_dollar_and_eurc_are_passed_to_x402():
     client = sirenic.Client(wallet_key=_portefeuille(), max_price_usd=2.5)
-    interne = client._x402._client
-    if hasattr(interne, "set_spend_controls"):
-        assert interne._spend_controls == {"max_amount_per_payment": "$2.5"}
+    assert client._x402._client._spend_controls == {
+        "max_amount_per_payment": "$2.5",
+        "allowed_assets": [{"network": "eip155:8453", "asset": EURC_BASE, "max_amount_per_payment": "2500000"}],
+    }
 
 
 def test_x402_older_than_2_20_is_refused_with_a_clear_message(monkeypatch):

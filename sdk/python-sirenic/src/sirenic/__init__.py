@@ -28,6 +28,7 @@ from .errors import (
     RateLimited,
     ServiceUnavailable,
     SirenicError,
+    UnsupportedAsset,
     UpstreamUnavailable,
 )
 from .response import Couverture, ListeBornee, Provenance, Response
@@ -51,6 +52,7 @@ __all__ = [
     "AccountRequired",
     "PaymentRequired",
     "PriceCapExceeded",
+    "UnsupportedAsset",
     "PaymentFailed",
     "InsufficientCredits",
     "NotFound",

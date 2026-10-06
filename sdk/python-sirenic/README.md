@@ -96,9 +96,11 @@ client = sirenic.Client(wallet_key=os.environ["WALLET_KEY"], max_price_usd=0.25)
 kyb = client.kyb("552032534")
 ```
 
-The official [`x402`](https://pypi.org/project/x402/) package signs an EIP-3009 authorization locally: your
-wallet key never leaves the process. A quote above `max_price_usd` raises `PriceCapExceeded` and nothing is
-signed.
+The official [`x402`](https://pypi.org/project/x402/) package (2.20 or later) signs an EIP-3009 authorization
+locally: your wallet key never leaves the process. The client pays on Base, in USDC (the first option of every
+Sirenic quote) or in EURC when a quote offers only EURC. A quote above `max_price_usd` raises `PriceCapExceeded`
+and nothing is signed; the cap is compared with the quoted amount, the same figure in USDC and EURC. A quote
+with no option in these two assets raises `UnsupportedAsset`, which names the offered ones.
 
 ## Errors
 
@@ -106,6 +108,7 @@ signed.
 |---|---|
 | `PaymentRequired` | 402 with an x402 quote: `price`, `accepts` (`asset`, `asset_name`, `network`, `pay_to`, `amount`), `quote` |
 | `PriceCapExceeded` | x402 rail, quote above `max_price_usd`; a subclass of `PaymentRequired` |
+| `UnsupportedAsset` | x402 rail, no option of the quote in USDC or EURC on Base (`assets` names the offered ones); a subclass of `PaymentRequired` |
 | `PaymentFailed` | x402 rail, the signed payment was not accepted |
 | `InsufficientCredits` | 402 `credits_insuffisants` on the key rail: `solde`, `prix`, `recharge_url` |
 | `AccountRequired` | 401 `compte_requis`: a route reserved to identified accounts (filed deeds) |

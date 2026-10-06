@@ -91,6 +91,16 @@ class SirenicClient:
                     "quote": erreur.quote,
                 }
             )
+        except sirenic.UnsupportedAsset as erreur:
+            return json.dumps(
+                {
+                    "payment_required": True,
+                    "unsupported_asset": True,
+                    "assets": erreur.assets,
+                    "hint": "No option of the quote is in USDC or EURC on Base, the assets this client pays: nothing was signed.",
+                    "quote": erreur.quote,
+                }
+            )
         except sirenic.PaymentRequired as erreur:
             return json.dumps(
                 {

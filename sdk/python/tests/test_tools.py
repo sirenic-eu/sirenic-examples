@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import base64
+import copy
 import json
 import re
 from importlib import metadata
@@ -38,6 +40,7 @@ ROUTES = {
     "sirenic_company_licences": "/v1/entreprise/{siren}/agrements",
 }
 DOLLARS = re.compile(r"\$\d+(?:\.\d+)?")
+EURC_ETHEREUM = "0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c"  # EURC on Ethereum mainnet: not paid by the client
 
 
 def _outil(tools, nom):
@@ -98,6 +101,29 @@ def test_langchain_wallet_rail(servir):
     assert sortie["payment_required"] is True and sortie["price_cap_exceeded"] is True
     assert sortie["quote"]["price"] == "$0.005"
     assert len(adaptateur2.vues) == 1
+
+
+def test_wallet_rail_names_an_asset_it_cannot_pay(servir):
+    """A quote in no asset the client pays (here EURC on Ethereum alone) returns the quote and names the
+    asset; it is never reported as above the price cap."""
+    pytest.importorskip("langchain_core")
+    pytest.importorskip("x402")
+    from eth_account import Account
+
+    f = copy.deepcopy(charger("entreprise-402"))
+    entete = json.loads(base64.b64decode(f["headers"]["payment-required"]))
+    for devis in (f["body"], entete):
+        devis["accepts"] = [
+            dict(a, network="eip155:1", asset=EURC_ETHEREUM) for a in devis["accepts"] if a["extra"]["name"] == "EURC"
+        ]
+    f["headers"]["payment-required"] = base64.b64encode(json.dumps(entete).encode()).decode()
+    session, adaptateur = servir(f)
+    client = SirenicClient(wallet_key=Account.create().key.hex(), max_price_usd=1.0, session=session)
+    sortie = json.loads(_outil(build_langchain_tools(client), "sirenic_company_profile").invoke({"siren": AIRVANCE}))
+    assert sortie["payment_required"] is True and sortie["unsupported_asset"] is True
+    assert sortie["assets"] == ["EURC on eip155:1"] and "price_cap_exceeded" not in sortie
+    assert sortie["quote"]["price"] == "$0.005"
+    assert len(adaptateur.vues) == 1
 
 
 def test_crewai_tools_on_both_rails(servir, crewai_minimal):
