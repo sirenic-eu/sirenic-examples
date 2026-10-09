@@ -34,7 +34,7 @@
  * Card top-up of credits is not open yet: until it is, a call outside the free calls is paid per call over x402
  * (examples/pay-and-call.ts).
  *
- *   SIRENIC_KEY=srn_live_... npx tsx examples/customer-file-identity-batch.ts            # the five built-in lines, $0.015
+ *   SIRENIC_KEY=srn_live_... npx tsx examples/customer-file-identity-batch.ts            # the five built-in lines: one of the free calls of the month ($0.015 once they are used)
  *   SIRENIC_KEY=srn_live_... npx tsx examples/customer-file-identity-batch.ts clients.csv
  *
  * Env: SIRENIC_URL (default https://api.sirenic.eu), MAX_USD (default 0.90: a file that would cost more, counted at $0.003
