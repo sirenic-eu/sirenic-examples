@@ -6,11 +6,18 @@
  *   - before your first French e-invoice: "Here is my customer export: complete and correct SIREN, SIRET and VAT."
  *   - before a sales campaign: "Enrich and clean my CRM: SIREN, VAT, address, ceased companies and duplicates."
  *
- * Input: a CSV file with a header row and the columns ref, siren, siret, tva, nom, code_postal. Any of them may be empty:
- * the first one filled, in that order, makes the line sent (a SIREN, a SIRET, a French VAT number, or name|postcode).
- * Without a file, the script runs on its five built-in neutral lines: companies of Sirenic's reference set, one
- * line per input form, and one invented name. Output: the same rows, plus what the route says of each, written to
- * <input>.enrichi.csv (or customer-file-example.enrichi.csv for the built-in lines).
+ * Input: a CSV file with a header row and the columns ref, siren, siret, tva, nom, code_postal. Any column may be empty: the
+ * first READABLE one, in that order, makes the line sent (a SIREN, a SIRET, a French VAT number, or name|postcode). A cell the
+ * route would refuse (N/A, a town in code_postal) would make it refuse the whole batch: it is left out, named in the row's
+ * note, and a row without any readable cell is not sent; a line the route still refuses (400 lignes_invalides, which names
+ * its rank) is marked the same way, and the rest of its batch sent once more. Without a file, the script runs on its five
+ * built-in neutral lines: companies of Sirenic's reference set, one line per input form, and one invented name. Output: the
+ * same rows, plus what the route says of each, written to <input>.enrichi.csv (or customer-file-example.enrichi.csv for the
+ * built-in lines).
+ *
+ * If a batch fails (402: no credits left; 503: a register or VIES is down; never billed), the script stops there and still
+ * writes the CSV: the rows of the batches already done, the others marked "not sent". Every row not sent is also written to
+ * <input>.not-sent.csv, to run again alone, without paying twice for the rows already done.
  *
  * Nothing is chosen for you: an ambiguous name comes back `a_confirmer` with up to 5 ranked candidates, an unknown one
  * `introuvable`. A VAT check that could not start in time says `non_verifie` with `budget_vies_epuise`: run those lines
@@ -114,23 +121,43 @@ interface Line {
 }
 interface Batch { nombre_lignes: number; comptes: { resolution: Record<string, number>; doublons: number }; lignes: Line[]; citation?: string }
 
-/** The line sent for one row, or why the row cannot be sent. */
-function lineOf(row: Record<string, string>): string | { error: string } {
-  const [siren, siret, tva, nom, cp] = [row.siren, row.siret, row.tva, row.nom, row.code_postal].map((v) => (v ?? "").trim());
-  const line = siren || siret || tva || (nom && cp ? `${nom}|${cp}` : "");
-  if (!line) return { error: "no SIREN, SIRET, VAT number, nor name and postcode" };
-  if (line.includes(";")) return { error: "a ';' separates the lines of a batch: remove it from the row" };
-  return line;
+/** An identifier cell as the route reads it: 9 digits (SIREN), 14 (SIRET) or FR and 11 digits (VAT), spaces, dots and hyphens
+ *  between groups allowed. */
+const readableId = (cell: string): boolean => /^(?:\d{9}|\d{14}|FR\d{11})$/i.test(cell.replace(/[\s.\-]/gu, ""));
+
+/** A name and postcode as the route reads them: a postcode of 5 digits (4 when a spreadsheet dropped the leading zero), a name
+ *  of at most 100 characters with a letter or a digit, and no ";" (it separates the lines of a batch). */
+const readableName = (nom: string, cp: string): boolean => /^\d{4,5}$/.test(cp) && /[\p{L}\p{N}]/u.test(nom) && !nom.includes(";") && [...nom].length <= 100;
+
+/** The line sent for one row (the first readable cell among siren, siret, tva, then nom with code_postal), or none; and the
+ *  cells left out, for the row's note. */
+function lineOf(row: Record<string, string>): { line: string | null; unreadable: string[] } {
+  const unreadable: string[] = [];
+  for (const column of ["siren", "siret", "tva"] as const) {
+    const cell = (row[column] ?? "").trim();
+    if (!cell) continue;
+    if (readableId(cell)) return { line: cell, unreadable };
+    unreadable.push(`${column} "${cell}" unreadable`);
+  }
+  const [nom, cp] = [(row.nom ?? "").trim(), (row.code_postal ?? "").trim()];
+  if (nom || cp) {
+    if (readableName(nom, cp)) return { line: `${nom}|${cp}`, unreadable };
+    unreadable.push(`nom and code_postal "${nom}|${cp}" unreadable`);
+  }
+  if (unreadable.length === 0) unreadable.push("no SIREN, SIRET, VAT number, nor name and postcode");
+  return { line: null, unreadable };
 }
 
 const requestPath = (lines: string[]) => `/v1/identite/lot?${new URLSearchParams({ lignes: lines.join(";") }).toString()}`;
 
+interface Sent { row: number; line: string }
+
 /** Batches of 2 to 300 lines whose request line stays under the route's bound. */
-function batches(lines: string[]): string[][] {
-  const out: string[][] = [];
-  let current: string[] = [];
+function batches(lines: Sent[]): Sent[][] {
+  const out: Sent[][] = [];
+  let current: Sent[] = [];
   for (const l of lines) {
-    if (current.length > 0 && (current.length === MAX_LINES || `GET ${requestPath([...current, l])} HTTP/1.1`.length > MAX_REQUEST_LINE)) {
+    if (current.length > 0 && (current.length === MAX_LINES || `GET ${requestPath([...current, l].map((s) => s.line))} HTTP/1.1`.length > MAX_REQUEST_LINE)) {
       out.push(current);
       current = [];
     }
@@ -140,6 +167,15 @@ function batches(lines: string[]): string[][] {
   const last = out[out.length - 1]!;
   if (last.length < MIN_LINES && out.length > 1) last.unshift(out[out.length - 2]!.pop()!);
   return out;
+}
+
+/** One call of the route; the body read as JSON when it is JSON. */
+async function call(batch: Sent[]): Promise<{ status: number; text: string; json: Record<string, unknown> | null; charged: string | null }> {
+  const res = await fetch(`${API}${requestPath(batch.map((s) => s.line))}`, { headers: { "X-Api-Key": KEY } });
+  const text = await res.text();
+  let json: Record<string, unknown> | null = null;
+  try { json = JSON.parse(text) as Record<string, unknown>; } catch { json = null; }
+  return { status: res.status, text, json, charged: res.headers.get("x-credits-charged") };
 }
 
 async function main(): Promise<void> {
@@ -153,13 +189,15 @@ async function main(): Promise<void> {
   if (missing.length > 0) throw new Error(`missing columns: ${missing.join(", ")} (expected: ${COLUMNS.join(", ")})`);
   const rows = body.map((cells) => Object.fromEntries(names.map((n, i) => [n, cells[i] ?? ""])) as Record<string, string>);
 
-  const sent: Array<{ row: number; line: string }> = [];
+  const sent: Sent[] = [];
+  const unreadable = new Map<number, string[]>(); // file row -> cells left out
   rows.forEach((r, i) => {
-    const l = lineOf(r);
-    if (typeof l === "string") sent.push({ row: i, line: l });
-    else console.error(`row ${i + 2}: not sent, ${l.error}`);
+    const { line, unreadable: left } = lineOf(r);
+    if (left.length > 0) unreadable.set(i, left);
+    if (line !== null) sent.push({ row: i, line });
+    else console.error(`row ${i + 2}: not sent, ${left.join("; ")}`);
   });
-  if (sent.length < MIN_LINES) throw new Error(`a batch needs at least ${MIN_LINES} lines, the file has ${sent.length}`);
+  if (sent.length < MIN_LINES) throw new Error(`a batch needs at least ${MIN_LINES} readable lines, the file has ${sent.length}`);
   const costThousandths = sent.length * PRICE_THOUSANDTHS;
   if (costThousandths > Math.round(cap * 1000)) {
     throw new Error(`${sent.length} lines cost $${(costThousandths / 1000).toFixed(3)}, over MAX_USD=${cap}: raise it to go on`);
@@ -167,23 +205,44 @@ async function main(): Promise<void> {
   console.log(`${sent.length} lines, $${(costThousandths / 1000).toFixed(3)} at most`);
 
   const results = new Map<number, Line>(); // file row -> the route's line
+  const notSent = new Map<number, string>(); // file row -> why it was not sent
   const firstRowOf = new Map<string, number>(); // SIREN -> first file row that resolved it, across batches
-  let offset = 0;
-  for (const batch of batches(sent.map((s) => s.line))) {
-    const res = await fetch(`${API}${requestPath(batch)}`, { headers: { "X-Api-Key": KEY } });
-    const text = await res.text();
-    if (res.status !== 200) {
-      // 400 (lot_invalide, lignes_invalides with the refused ranks, requete_trop_large), 402 (no credits left),
-      // 503 (a register or VIES is down: nothing billed, run again later). Never billed.
-      throw new Error(`HTTP ${res.status}, not billed: ${text.slice(0, 600)}`);
+  let failure: string | null = null;
+  for (const batch of batches(sent)) {
+    if (failure !== null) {
+      for (const s of batch) notSent.set(s.row, failure);
+      continue;
     }
-    const answer = JSON.parse(text) as Batch;
-    console.log(`batch of ${batch.length}: billed ${res.headers.get("x-credits-charged") ?? "?"} credits; ${JSON.stringify(answer.comptes.resolution)}`);
+    let lines = batch;
+    let res = await call(lines);
+    // A cell read differently from the route: the refused ranks, named in the body, are left out and the rest sent once more.
+    const refused = res.status === 400 && res.json?.error === "lignes_invalides" ? (res.json.lignes_refusees as Array<{ rang: number; motif: string }> | undefined) ?? [] : null;
+    if (refused !== null && refused.length > 0 && refused.length === res.json?.nombre_lignes_refusees) {
+      for (const r of refused) notSent.set(lines[r.rang - 1]!.row, `refused by the route: ${r.motif}`);
+      const ranks = new Set(refused.map((r) => r.rang));
+      lines = lines.filter((_, i) => !ranks.has(i + 1));
+      if (lines.length < MIN_LINES) {
+        for (const s of lines) notSent.set(s.row, `fewer than ${MIN_LINES} readable lines left in its batch`);
+        continue;
+      }
+      res = await call(lines);
+    }
+    if (res.status !== 200) {
+      // 400 (lot_invalide, lignes_invalides, requete_trop_large), 402 (no credits left), 503 (a register or VIES is down: run
+      // these rows again later). Never billed. The batches already done are kept and written below.
+      const error = typeof res.json?.error === "string" ? ` ${res.json.error}` : "";
+      failure = `HTTP ${res.status}${error}, not billed`;
+      console.error(`batch of ${lines.length}: ${failure}: ${res.text.slice(0, 600)}`);
+      for (const s of lines) notSent.set(s.row, failure);
+      continue;
+    }
+    const answer = res.json as unknown as Batch;
+    console.log(`batch of ${lines.length}: billed ${res.charged ?? "?"} credits; ${JSON.stringify(answer.comptes.resolution)}`);
     if (answer.citation) console.log(`source: ${answer.citation}`);
-    for (const l of answer.lignes) {
-      const row = sent[offset + l.rang - 1]!.row;
+    for (const l of [...answer.lignes].sort((a, b) => a.rang - b.rang)) {
+      const row = lines[l.rang - 1]!.row;
       const line: Line = { ...l };
-      if (l.doublon_de !== undefined) line.doublon_de = sent[offset + l.doublon_de - 1]!.row;
+      if (l.doublon_de !== undefined) line.doublon_de = lines[l.doublon_de - 1]!.row;
       else if (l.siren && l.resolution === "resolu") {
         const first = firstRowOf.get(l.siren);
         if (first !== undefined) line.doublon_de = first; // same company in an earlier batch
@@ -191,20 +250,22 @@ async function main(): Promise<void> {
       }
       results.set(row, line);
     }
-    offset += batch.length;
   }
 
   const added = ["resolution", "siren_resolu", "siret_siege", "denomination", "etat", "date_cessation", "adresse",
     "tva_numero", "tva_vies", "tva_motif", "doublon_de_ligne", "candidats", "note"];
   const out: string[][] = [[...header, ...added]];
+  const rest: string[][] = [header];
   rows.forEach((r, i) => {
     const l = results.get(i);
     const note = [
+      ...(unreadable.get(i) ?? []),
       l?.etages_abandonnes?.length ? `index stages not read: ${l.etages_abandonnes.join(" ")}` : "",
       l?.motif_omission ?? "",
       l?.motif_date_cessation ? `cessation date: ${l.motif_date_cessation}` : "",
-      l ? "" : "not sent",
+      l ? "" : `not sent${notSent.has(i) ? `: ${notSent.get(i)}` : ""}`,
     ].filter(Boolean).join("; ");
+    if (!l) rest.push(names.map((n) => r[n] ?? ""));
     out.push([
       ...names.map((n) => r[n] ?? ""),
       l?.resolution ?? "",
@@ -222,9 +283,14 @@ async function main(): Promise<void> {
       note,
     ]);
   });
-  const target = input ? input.replace(/\.csv$/i, "") + ".enrichi.csv" : "customer-file-example.enrichi.csv";
-  writeFileSync(target, toCsv(out));
-  console.log(`written: ${target}`);
+  const base = input ? input.replace(/\.csv$/i, "") : "customer-file-example";
+  writeFileSync(`${base}.enrichi.csv`, toCsv(out));
+  console.log(`written: ${base}.enrichi.csv`);
+  if (rest.length > 1) {
+    writeFileSync(`${base}.not-sent.csv`, toCsv(rest));
+    console.log(`${rest.length - 1} rows not sent, written to ${base}.not-sent.csv: fix the unreadable ones, then run that file alone (the rows already done are not billed twice)`);
+  }
+  if (failure !== null) throw new Error(`stopped at a failed batch (${failure}); the batches already done are written`);
 }
 
 main().catch((e: unknown) => {
