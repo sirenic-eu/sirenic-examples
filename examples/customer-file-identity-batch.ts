@@ -17,9 +17,10 @@
  * same rows, plus what the route says of each, written to <input>.enrichi.csv (or customer-file-example.enrichi.csv for the
  * built-in lines). A duplicate points to the spreadsheet row of the first line of the same company, across batches.
  *
- * If a batch fails (402: no free call left this month and no credits; 503: a register or VIES is down; never billed), the
- * script stops there and still writes the CSV: the rows of the batches already done, the others marked "not sent". Every
- * row not sent is also written to <input>.not-sent.csv, to run again alone, without paying twice for the rows already done.
+ * If a batch fails (402: no free call left this month and no credits; 503: a register or VIES is down; never billed; or no
+ * answer at all), the script stops there and still writes the CSV: the rows of the batches already done, the others marked
+ * "not sent". Every row not sent is also written to <input>.not-sent.csv, to run again alone, without paying twice for the
+ * rows already done.
  *
  * Nothing is chosen for you: an ambiguous name comes back `a_confirmer` with up to 5 ranked candidates, an unknown one
  * `introuvable`. A VAT check that could not start in time says `non_verifie` with `budget_vies_epuise`: run those lines
@@ -192,13 +193,18 @@ function batches(lines: Sent[], perCall: number): Sent[][] {
   return out;
 }
 
-/** One call of the route; the body read as JSON when it is JSON. */
+/** One call of the route; the body read as JSON when it is JSON. Never throws: no answer (network down, connection cut)
+ *  comes back as status 0, so that the batches already done are still written. */
 async function call(batch: Sent[]): Promise<{ status: number; text: string; json: Record<string, unknown> | null; charged: string | null }> {
-  const res = await fetch(`${API}${requestPath(batch.map((s) => s.line))}`, { headers: { "X-Api-Key": KEY } });
-  const text = await res.text();
-  let json: Record<string, unknown> | null = null;
-  try { json = JSON.parse(text) as Record<string, unknown>; } catch { json = null; }
-  return { status: res.status, text, json, charged: res.headers.get("x-credits-charged") };
+  try {
+    const res = await fetch(`${API}${requestPath(batch.map((s) => s.line))}`, { headers: { "X-Api-Key": KEY } });
+    const text = await res.text();
+    let json: Record<string, unknown> | null = null;
+    try { json = JSON.parse(text) as Record<string, unknown>; } catch { json = null; }
+    return { status: res.status, text, json, charged: res.headers.get("x-credits-charged") };
+  } catch (e: unknown) {
+    return { status: 0, text: e instanceof Error ? e.message : String(e), json: null, charged: null };
+  }
 }
 
 async function main(): Promise<void> {
@@ -260,7 +266,8 @@ async function main(): Promise<void> {
       // 400 (lot_invalide, lignes_invalides, requete_trop_large), 402 (no free call nor credits left), 503 (a register or VIES is down: run
       // these rows again later). Never billed. The batches already done are kept and written below.
       const error = typeof res.json?.error === "string" ? ` ${res.json.error}` : "";
-      failure = `HTTP ${res.status}${error}, not billed`;
+      // No answer at all: the batch may have been served and billed before the connection broke; the account says.
+      failure = res.status === 0 ? `no answer (${res.text}), check the credits charged before sending these rows again` : `HTTP ${res.status}${error}, not billed`;
       console.error(`batch of ${lines.length}: ${failure}: ${res.text.slice(0, 600)}`);
       for (const s of lines) notSent.set(s.row, failure);
       continue;
