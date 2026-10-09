@@ -1,6 +1,7 @@
 /**
  * Complete and clean a French customer file in one call: SIREN, head-office SIRET, VAT number with its VIES status,
- * active or ceased, duplicates flagged. One route, `GET /v1/identite/lot`, $0.003 per line, 2 to 300 lines per call.
+ * active or ceased, duplicates flagged. One route, `GET /v1/identite/lot`, $0.003 per line, 2 to 300 lines per call; a call
+ * of up to 50 lines is one of the free monthly calls of a verified account's API key.
  *
  * Two questions, one answer:
  *   - before your first French e-invoice: "Here is my customer export: complete and correct SIREN, SIRET and VAT."
@@ -16,24 +17,29 @@
  * same rows, plus what the route says of each, written to <input>.enrichi.csv (or customer-file-example.enrichi.csv for the
  * built-in lines). A duplicate points to the spreadsheet row of the first line of the same company, across batches.
  *
- * If a batch fails (402: no credits left; 503: a register or VIES is down; never billed), the script stops there and still
- * writes the CSV: the rows of the batches already done, the others marked "not sent". Every row not sent is also written to
- * <input>.not-sent.csv, to run again alone, without paying twice for the rows already done.
+ * If a batch fails (402: no free call left this month and no credits; 503: a register or VIES is down; never billed), the
+ * script stops there and still writes the CSV: the rows of the batches already done, the others marked "not sent". Every
+ * row not sent is also written to <input>.not-sent.csv, to run again alone, without paying twice for the rows already done.
  *
  * Nothing is chosen for you: an ambiguous name comes back `a_confirmer` with up to 5 ranked candidates, an unknown one
  * `introuvable`. A VAT check that could not start in time says `non_verifie` with `budget_vies_epuise`: run those lines
  * again later, outside French business hours if you can. A refused or unavailable batch is never billed.
  * Sirenic is not an accredited e-invoicing platform: this prepares your file, it sends no invoice.
  *
- * Run with an API key (prepaid credits; this route is not part of the free monthly calls). Create one at
- * https://api.sirenic.eu/compte?lang=en&utm_source=vitrine&utm_campaign=identite-lot
- * Card top-up of credits is not open yet: until it is, the same route is paid per call over x402 (examples/pay-and-call.ts).
+ * Run with the API key of a verified account. A call of up to 50 lines is one of its 150 free calls a month, nothing
+ * debited; a larger call, or any call once the month's free calls are used, is paid from prepaid credits. The script sends
+ * 50 lines per call by default (BATCH_LINES), so that a file of up to 7,500 lines can go through the free calls of a month.
+ * Create a key at https://api.sirenic.eu/compte?lang=en&utm_source=vitrine&utm_campaign=identite-lot
+ * Card top-up of credits is not open yet: until it is, a call outside the free calls is paid per call over x402
+ * (examples/pay-and-call.ts).
  *
  *   SIRENIC_KEY=srn_live_... npx tsx examples/customer-file-identity-batch.ts            # the five built-in lines, $0.015
  *   SIRENIC_KEY=srn_live_... npx tsx examples/customer-file-identity-batch.ts clients.csv
  *
- * Env: SIRENIC_URL (default https://api.sirenic.eu), MAX_USD (default 0.90: a file that would cost more is refused
- * before any call; a number with a dot, anything else is refused before any call too).
+ * Env: SIRENIC_URL (default https://api.sirenic.eu), MAX_USD (default 0.90: a file that would cost more, counted at $0.003
+ * per line as if no call were free, is refused before any call; a number with a dot, anything else is refused before any
+ * call too), BATCH_LINES (lines per call, 2 to 300, default 50: the largest call in the free monthly quota; anything else
+ * is refused before any call).
  */
 import { readFileSync, writeFileSync } from "node:fs";
 
@@ -42,6 +48,7 @@ const KEY = process.env.SIRENIC_KEY ?? "";
 const PRICE_THOUSANDTHS = 3; // $0.003 per line, duplicates included (the route's price list: /en/offres)
 const MIN_LINES = 2;
 const MAX_LINES = 300;
+const FREE_QUOTA_LINES = 50; // a call of up to 50 lines is one of a verified account's free monthly calls
 const MAX_REQUEST_LINE = 10_900; // the route refuses a request line over 11,000 bytes (400 requete_trop_large)
 
 const COLUMNS = ["ref", "siren", "siret", "tva", "nom", "code_postal"] as const;
@@ -52,6 +59,15 @@ function maxUsd(): number {
   const raw = (process.env.MAX_USD ?? "0.90").trim();
   if (!/^\d+(\.\d+)?$/.test(raw)) throw new Error(`MAX_USD must be a number with a dot, e.g. 0.90 (got "${raw}"): nothing sent`);
   return Number(raw);
+}
+
+/** BATCH_LINES, the lines sent per call: 50 by default (each call is then free while the month's free calls last), up to 300.
+ *  Anything else refuses the run before any call. */
+function batchLines(): number {
+  const raw = (process.env.BATCH_LINES ?? String(FREE_QUOTA_LINES)).trim();
+  const n = /^\d+$/.test(raw) ? Number(raw) : Number.NaN;
+  if (!(n >= MIN_LINES && n <= MAX_LINES)) throw new Error(`BATCH_LINES must be a whole number from ${MIN_LINES} to ${MAX_LINES} (got "${raw}"): nothing sent`);
+  return n;
 }
 
 /** Five neutral lines: SIREN, SIRET of a second site of the same company (a duplicate), VAT number of a ceased company,
@@ -159,12 +175,12 @@ const requestPath = (lines: string[]) => `/v1/identite/lot?${new URLSearchParams
 
 interface Sent { row: number; line: string }
 
-/** Batches of 2 to 300 lines whose request line stays under the route's bound. */
-function batches(lines: Sent[]): Sent[][] {
+/** Batches of 2 to `perCall` lines whose request line stays under the route's bound. */
+function batches(lines: Sent[], perCall: number): Sent[][] {
   const out: Sent[][] = [];
   let current: Sent[] = [];
   for (const l of lines) {
-    if (current.length > 0 && (current.length === MAX_LINES || `GET ${requestPath([...current, l].map((s) => s.line))} HTTP/1.1`.length > MAX_REQUEST_LINE)) {
+    if (current.length > 0 && (current.length === perCall || `GET ${requestPath([...current, l].map((s) => s.line))} HTTP/1.1`.length > MAX_REQUEST_LINE)) {
       out.push(current);
       current = [];
     }
@@ -187,7 +203,8 @@ async function call(batch: Sent[]): Promise<{ status: number; text: string; json
 
 async function main(): Promise<void> {
   const cap = maxUsd();
-  if (!KEY) throw new Error("set SIRENIC_KEY (an API key with prepaid credits): https://api.sirenic.eu/compte?lang=en&utm_source=vitrine&utm_campaign=identite-lot");
+  const perCall = batchLines();
+  if (!KEY) throw new Error("set SIRENIC_KEY (the API key of a verified account: a call of up to 50 lines is one of its free monthly calls): https://api.sirenic.eu/compte?lang=en&utm_source=vitrine&utm_campaign=identite-lot");
   const input = process.argv[2];
   const text = input ? readFileSync(input, "utf8") : EXAMPLE;
   const separator = separatorOf(text);
@@ -211,13 +228,16 @@ async function main(): Promise<void> {
   if (costThousandths > Math.round(cap * 1000)) {
     throw new Error(`${sent.length} lines cost $${(costThousandths / 1000).toFixed(3)}, over MAX_USD=${cap}: raise it to go on`);
   }
-  console.log(`${sent.length} lines, $${(costThousandths / 1000).toFixed(3)} at most`);
+  const plan = batches(sent, perCall);
+  const calls = `${plan.length} call${plan.length > 1 ? "s" : ""}`;
+  const free = plan.every((b) => b.length <= FREE_QUOTA_LINES) ? ", nothing for the calls that are free calls of a verified account this month" : "";
+  console.log(`${sent.length} lines in ${calls} of up to ${perCall} lines: $${(costThousandths / 1000).toFixed(3)} at most${free}`);
 
   const results = new Map<number, Line>(); // file row -> the route's line
   const notSent = new Map<number, string>(); // file row -> why it was not sent
   const firstRowOf = new Map<string, number>(); // SIREN -> first file row that identified it, across batches
   let failure: string | null = null;
-  for (const batch of batches(sent)) {
+  for (const batch of plan) {
     if (failure !== null) {
       for (const s of batch) notSent.set(s.row, failure);
       continue;
@@ -237,7 +257,7 @@ async function main(): Promise<void> {
       res = await call(lines);
     }
     if (res.status !== 200) {
-      // 400 (lot_invalide, lignes_invalides, requete_trop_large), 402 (no credits left), 503 (a register or VIES is down: run
+      // 400 (lot_invalide, lignes_invalides, requete_trop_large), 402 (no free call nor credits left), 503 (a register or VIES is down: run
       // these rows again later). Never billed. The batches already done are kept and written below.
       const error = typeof res.json?.error === "string" ? ` ${res.json.error}` : "";
       failure = `HTTP ${res.status}${error}, not billed`;
