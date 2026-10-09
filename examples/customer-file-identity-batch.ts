@@ -25,19 +25,26 @@
  *   SIRENIC_KEY=srn_live_... npx tsx examples/customer-file-identity-batch.ts clients.csv
  *
  * Env: SIRENIC_URL (default https://api.sirenic.eu), MAX_USD (default 0.90: a file that would cost more is refused
- * before any call).
+ * before any call; a number with a dot, anything else is refused before any call too).
  */
 import { readFileSync, writeFileSync } from "node:fs";
 
 const API = (process.env.SIRENIC_URL ?? "https://api.sirenic.eu").replace(/\/+$/, "");
 const KEY = process.env.SIRENIC_KEY ?? "";
-const MAX_USD = Number(process.env.MAX_USD ?? "0.90");
 const PRICE_THOUSANDTHS = 3; // $0.003 per line, duplicates included (the route's price list: /en/offres)
 const MIN_LINES = 2;
 const MAX_LINES = 300;
 const MAX_REQUEST_LINE = 10_900; // the route refuses a request line over 11,000 bytes (400 requete_trop_large)
 
 const COLUMNS = ["ref", "siren", "siret", "tva", "nom", "code_postal"] as const;
+
+/** MAX_USD, a plain number with a dot. Anything else (0,90 or a word) refuses the run before any call: never NaN, which no
+ *  cost exceeds, so that the cap would be skipped. */
+function maxUsd(): number {
+  const raw = (process.env.MAX_USD ?? "0.90").trim();
+  if (!/^\d+(\.\d+)?$/.test(raw)) throw new Error(`MAX_USD must be a number with a dot, e.g. 0.90 (got "${raw}"): nothing sent`);
+  return Number(raw);
+}
 
 /** Five neutral lines: SIREN, SIRET of a second site of the same company (a duplicate), VAT number of a ceased company,
  *  name and postcode, and an invented name. Legal entities only, no customer data. */
@@ -136,6 +143,7 @@ function batches(lines: string[]): string[][] {
 }
 
 async function main(): Promise<void> {
+  const cap = maxUsd();
   if (!KEY) throw new Error("set SIRENIC_KEY (an API key with prepaid credits): https://api.sirenic.eu/compte?lang=en&utm_source=vitrine&utm_campaign=identite-lot");
   const input = process.argv[2];
   const [header, ...body] = parseCsv(input ? readFileSync(input, "utf8") : EXAMPLE);
@@ -153,8 +161,8 @@ async function main(): Promise<void> {
   });
   if (sent.length < MIN_LINES) throw new Error(`a batch needs at least ${MIN_LINES} lines, the file has ${sent.length}`);
   const costThousandths = sent.length * PRICE_THOUSANDTHS;
-  if (costThousandths > Math.round(MAX_USD * 1000)) {
-    throw new Error(`${sent.length} lines cost $${(costThousandths / 1000).toFixed(3)}, over MAX_USD=${MAX_USD}: raise it to go on`);
+  if (costThousandths > Math.round(cap * 1000)) {
+    throw new Error(`${sent.length} lines cost $${(costThousandths / 1000).toFixed(3)}, over MAX_USD=${cap}: raise it to go on`);
   }
   console.log(`${sent.length} lines, $${(costThousandths / 1000).toFixed(3)} at most`);
 
