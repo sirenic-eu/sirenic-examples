@@ -6,14 +6,15 @@
  *   - before your first French e-invoice: "Here is my customer export: complete and correct SIREN, SIRET and VAT."
  *   - before a sales campaign: "Enrich and clean my CRM: SIREN, VAT, address, ceased companies and duplicates."
  *
- * Input: a CSV file with a header row and the columns ref, siren, siret, tva, nom, code_postal. Any column may be empty: the
+ * Input: a CSV file with a header row and the columns ref, siren, siret, tva, nom, code_postal, separated by commas or by
+ * semicolons (a French spreadsheet export; the output keeps the separator of the header row). Any column may be empty: the
  * first READABLE one, in that order, makes the line sent (a SIREN, a SIRET, a French VAT number, or name|postcode). A cell the
  * route would refuse (N/A, a town in code_postal) would make it refuse the whole batch: it is left out, named in the row's
  * note, and a row without any readable cell is not sent; a line the route still refuses (400 lignes_invalides, which names
  * its rank) is marked the same way, and the rest of its batch sent once more. Without a file, the script runs on its five
  * built-in neutral lines: companies of Sirenic's reference set, one line per input form, and one invented name. Output: the
  * same rows, plus what the route says of each, written to <input>.enrichi.csv (or customer-file-example.enrichi.csv for the
- * built-in lines).
+ * built-in lines). A duplicate points to the spreadsheet row of the first line of the same company, across batches.
  *
  * If a batch fails (402: no credits left; 503: a register or VIES is down; never billed), the script stops there and still
  * writes the CSV: the rows of the batches already done, the others marked "not sent". Every row not sent is also written to
@@ -64,10 +65,16 @@ C-005,,,,QXZJW VKPRT,33000
 `;
 
 // ---------------------------------------------------------------------------------------------------------------------
-// CSV, the RFC 4180 subset a spreadsheet export uses: commas, double quotes, CRLF or LF
+// CSV, the RFC 4180 subset a spreadsheet export uses: commas (or semicolons), double quotes, CRLF or LF
 // ---------------------------------------------------------------------------------------------------------------------
 
-function parseCsv(text: string): string[][] {
+/** The separator of the header row: a semicolon when it has more semicolons than commas (a French export), else a comma. */
+function separatorOf(text: string): "," | ";" {
+  const header = text.split(/\r?\n/, 1)[0] ?? "";
+  return (header.match(/;/g)?.length ?? 0) > (header.match(/,/g)?.length ?? 0) ? ";" : ",";
+}
+
+function parseCsv(text: string, separator: string): string[][] {
   const rows: string[][] = [];
   let row: string[] = [];
   let field = "";
@@ -79,7 +86,7 @@ function parseCsv(text: string): string[][] {
       else if (c === '"') quoted = false;
       else field += c;
     } else if (c === '"') quoted = true;
-    else if (c === ",") { row.push(field); field = ""; }
+    else if (c === separator) { row.push(field); field = ""; }
     else if (c === "\n" || c === "\r") {
       if (c === "\r" && text[i + 1] === "\n") i++;
       row.push(field); field = "";
@@ -92,9 +99,9 @@ function parseCsv(text: string): string[][] {
   return rows;
 }
 
-function toCsv(rows: string[][]): string {
-  const cell = (v: string) => (/[",\r\n]/.test(v) ? `"${v.replaceAll('"', '""')}"` : v);
-  return rows.map((r) => r.map(cell).join(",")).join("\n") + "\n";
+function toCsv(rows: string[][], separator: string): string {
+  const cell = (v: string) => (v.includes('"') || v.includes(separator) || /[\r\n]/.test(v) ? `"${v.replaceAll('"', '""')}"` : v);
+  return rows.map((r) => r.map(cell).join(separator)).join("\n") + "\n";
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -182,11 +189,13 @@ async function main(): Promise<void> {
   const cap = maxUsd();
   if (!KEY) throw new Error("set SIRENIC_KEY (an API key with prepaid credits): https://api.sirenic.eu/compte?lang=en&utm_source=vitrine&utm_campaign=identite-lot");
   const input = process.argv[2];
-  const [header, ...body] = parseCsv(input ? readFileSync(input, "utf8") : EXAMPLE);
+  const text = input ? readFileSync(input, "utf8") : EXAMPLE;
+  const separator = separatorOf(text);
+  const [header, ...body] = parseCsv(text, separator);
   if (!header) throw new Error("empty file");
   const names = header.map((h) => h.trim().toLowerCase());
   const missing = COLUMNS.filter((c) => !names.includes(c));
-  if (missing.length > 0) throw new Error(`missing columns: ${missing.join(", ")} (expected: ${COLUMNS.join(", ")})`);
+  if (missing.length > 0) throw new Error(`missing columns: ${missing.join(", ")} (expected: ${COLUMNS.join(", ")}, separated by commas or semicolons)`);
   const rows = body.map((cells) => Object.fromEntries(names.map((n, i) => [n, cells[i] ?? ""])) as Record<string, string>);
 
   const sent: Sent[] = [];
@@ -206,7 +215,7 @@ async function main(): Promise<void> {
 
   const results = new Map<number, Line>(); // file row -> the route's line
   const notSent = new Map<number, string>(); // file row -> why it was not sent
-  const firstRowOf = new Map<string, number>(); // SIREN -> first file row that resolved it, across batches
+  const firstRowOf = new Map<string, number>(); // SIREN -> first file row that identified it, across batches
   let failure: string | null = null;
   for (const batch of batches(sent)) {
     if (failure !== null) {
@@ -242,10 +251,13 @@ async function main(): Promise<void> {
     for (const l of [...answer.lignes].sort((a, b) => a.rang - b.rang)) {
       const row = lines[l.rang - 1]!.row;
       const line: Line = { ...l };
-      if (l.doublon_de !== undefined) line.doublon_de = lines[l.doublon_de - 1]!.row;
-      else if (l.siren && l.resolution === "resolu") {
+      // The route's doublon_de is a rank in this batch. A line that identifies a company (resolu or non_diffusible: the route
+      // names its SIREN, duplicates included) points instead to the first row of that SIREN in the whole file, in this batch
+      // or an earlier one.
+      delete line.doublon_de;
+      if (l.siren && (l.resolution === "resolu" || l.resolution === "non_diffusible")) {
         const first = firstRowOf.get(l.siren);
-        if (first !== undefined) line.doublon_de = first; // same company in an earlier batch
+        if (first !== undefined) line.doublon_de = first;
         else firstRowOf.set(l.siren, row);
       }
       results.set(row, line);
@@ -284,10 +296,10 @@ async function main(): Promise<void> {
     ]);
   });
   const base = input ? input.replace(/\.csv$/i, "") : "customer-file-example";
-  writeFileSync(`${base}.enrichi.csv`, toCsv(out));
+  writeFileSync(`${base}.enrichi.csv`, toCsv(out, separator));
   console.log(`written: ${base}.enrichi.csv`);
   if (rest.length > 1) {
-    writeFileSync(`${base}.not-sent.csv`, toCsv(rest));
+    writeFileSync(`${base}.not-sent.csv`, toCsv(rest, separator));
     console.log(`${rest.length - 1} rows not sent, written to ${base}.not-sent.csv: fix the unreadable ones, then run that file alone (the rows already done are not billed twice)`);
   }
   if (failure !== null) throw new Error(`stopped at a failed batch (${failure}); the batches already done are written`);
