@@ -1,0 +1,4 @@
+# Faux positifs qualifies le 10/10/2026 (kopko13/sirenic ticket 166, revue) : deux cles privees EVM de test publiques
+# (compte 0 d Anvil et cle d exemple de la doc ethers) dans un test retire de main le 29/07/2026.
+61842a6410c6d7fda1a4adb2e27e80a871885810:n8n-nodes-sirenic/tests/signer.test.ts:generic-api-key:29
+61842a6410c6d7fda1a4adb2e27e80a871885810:n8n-nodes-sirenic/tests/signer.test.ts:generic-api-key:31

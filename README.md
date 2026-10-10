@@ -456,7 +456,7 @@ returned at creation is the capability, no account).
 
 Sirenic settles on Base mainnet.
 
-To check content without on-chain payments, set `SIRENIC_API_KEY` (an API key from your Sirenic account) instead: the smoke test and `payer-un-endpoint` then send `X-Api-Key` and are debited in credits. A 402 under the key is reported as a failure, never paid. Keep x402 for checking the payment path itself.
+To check content without on-chain payments, set `SIRENIC_API_KEY` (an API key from your Sirenic account) instead: the smoke test and `payer-un-endpoint` then send `X-Api-Key` and are debited in credits. A 402 under the key is reported as a failure, never paid, and `payer-un-endpoint` also exits 1 on a 401 or a 403. Keep x402 for checking the payment path itself.
 
 ## Badge
 

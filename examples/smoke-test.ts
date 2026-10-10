@@ -292,7 +292,7 @@ async function call(
     const cout = compter(r, Number(price.slice(1)));
     const enveloppe = enveloppeOk(body);
     if (!enveloppe) sansEnveloppe++;
-    console.log(`${expect in body ? "✓" : "?"} [${rail}] ${path} → ${cout} (${ms} ms)${enveloppe ? "" : " — ⚠ sans enveloppe provenance[].etat"}`);
+    console.log(`${expect in body ? "✓" : "?"} [${rail}] ${path} → ${cout} (${ms} ms)${enveloppe ? "" : " ⚠ sans enveloppe provenance[].etat"}`);
     return body;
   } catch (error) {
     failed++;
@@ -493,7 +493,7 @@ writeFileSync(
   ),
 );
 if (rail.type === "x402") {
-  console.log(`\nTotal paid: ~$${paid.toFixed(3)} — failures: ${failed} — paid JSON bodies without the provenance envelope: ${sansEnveloppe}`);
+  console.log(`\nTotal paid: ~$${paid.toFixed(3)}, failures: ${failed}, paid JSON bodies without the provenance envelope: ${sansEnveloppe}`);
 } else {
   console.log(`\nTotal debited: $${debited.toFixed(3)} in credits (${sansDebit} response(s) without x-credits-charged); failures: ${failed}; JSON bodies without the provenance envelope: ${sansEnveloppe}`);
 }

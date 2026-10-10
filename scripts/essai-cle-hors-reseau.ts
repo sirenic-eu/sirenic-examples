@@ -17,7 +17,8 @@
  *   B. key and wallet both set: the key wins, and the output says so;
  *   C. neither key nor wallet: refused before any request;
  *   D. wallet rail: every request carries x-sirenic-motif: smoke-paye and no X-Api-Key, recap.json says "x402";
- *   E. to G. the same for payer-un-endpoint (key, 402 under the key, debit above the cap, wallet, neither).
+ *   E. to G. the same for payer-un-endpoint (key, 402, 401 and 403 under the key, debit above the cap, wallet,
+ *      neither).
  * Exit code 0 when every check passes, 1 otherwise.
  */
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
@@ -54,7 +55,7 @@ const PRECHARGE = `--import=data:text/javascript;base64,${Buffer.from(GARDE).toS
 // -- Fake server --------------------------------------------------------------------------------------
 interface Requete { url: string; entetes: IncomingMessage["headers"] }
 let journal: Requete[] = [];
-let mode: { repondre402: boolean; credits: string } = { repondre402: false, credits: "0.010" };
+let mode: { repondre402: boolean; credits: string; refus?: 401 | 403 } = { repondre402: false, credits: "0.010" };
 
 function repondre(req: IncomingMessage, res: ServerResponse): void {
   const url = req.url ?? "/";
@@ -68,6 +69,7 @@ function repondre(req: IncomingMessage, res: ServerResponse): void {
   };
   const provenance = [{ etat: "servi" }];
   if (mode.repondre402 && chemin === CHEMIN_402) return json(402, { error: "payment_required" }, null);
+  if (mode.refus && chemin === CHEMIN_402) return json(mode.refus, { error: mode.refus === 401 ? "cle_invalide" : "acces_refuse" }, null);
   if (chemin.startsWith("/v1/documents/") || chemin.startsWith("/v1/rapport/")) {
     res.writeHead(200, { "content-type": "application/pdf", "x-credits-charged": mode.credits });
     res.end("%PDF-1.4 essai");
@@ -203,6 +205,17 @@ journal = [];
 const e2 = await lancer(PAYER, [CHEMIN_402, "0.20"], { SIRENIC_API_KEY: FAUSSE_CLE });
 executions.push(e2);
 verifier("E 402 under the key: failure, code 1, one request", e2.code === 1 && /402/.test(e2.sortie + e2.erreurs) && journal.length === 1);
+for (const refus of [401, 403] as const) {
+  journal = [];
+  mode = { repondre402: false, credits: "0.010", refus };
+  const er = await lancer(PAYER, [CHEMIN_402, "0.20"], { SIRENIC_API_KEY: FAUSSE_CLE });
+  executions.push(er);
+  verifier(
+    `E ${refus} under the key: failure, code 1, one request, no payment header`,
+    er.code === 1 && new RegExp(`HTTP ${refus}`).test(er.sortie + er.erreurs) && journal.length === 1 && ENTETES_PAIEMENT.every((h) => entete(journal[0]!, h) === undefined),
+    `code ${er.code}, ${journal.length} requests`,
+  );
+}
 journal = [];
 mode = { repondre402: false, credits: "0.500" };
 const e3 = await lancer(PAYER, ["/v1/entreprise/552032534", "0.05"], { SIRENIC_API_KEY: FAUSSE_CLE });
