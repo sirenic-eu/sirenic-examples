@@ -440,7 +440,8 @@ returned at creation is the capability, no account).
   samples are served by the API itself, in the OpenAPI spec, in the x402 payment
   quote and in `llms.txt`, so the contract you read is the contract you get.
 - [`examples/smoke-surveillance-durees-2026-08-11.ts`](examples/smoke-surveillance-durees-2026-08-11.ts): buy a **90-day** and a **365-day** watchlist for real (~$0.685), renew one at a different duration, and check that an out-of-range duration and an over-long renewal are both refused **without a debit**.
-- [`examples/smoke-test.ts`](examples/smoke-test.ts): pay and call the core paid endpoints once (USDC and/or EURC; the calls are listed in the script, and the watchlist it creates is stopped again for free). Country deep-dive sub-routes have their own dedicated smokes in this folder.
+- [`examples/smoke-test.ts`](examples/smoke-test.ts): pay and call the core paid endpoints once (USDC and/or EURC; the calls are listed in the script, and the watchlist it creates is stopped again for free). Country deep-dive sub-routes have their own dedicated smokes in this folder. Set `SIRENIC_API_KEY` instead of a wallet to make the same calls with an API key (header `X-Api-Key`, debited in credits, no on-chain settlement): same report, same saved files, and `recap.json` names the rail.
+- [`scripts/payer-un-endpoint.ts`](scripts/payer-un-endpoint.ts): call one paid endpoint under a price cap, with the test wallet or with `SIRENIC_API_KEY` (the key wins when both are set). [`examples/rail.ts`](examples/rail.ts) holds the rule both scripts share, and [`scripts/essai-cle-hors-reseau.ts`](scripts/essai-cle-hors-reseau.ts) checks it offline against a fake local server (no network, no purchase).
 - [`examples/agent-demo.ts`](examples/agent-demo.ts): a small autonomous agent that searches, pays and reads profiles.
 - [`examples/mcp-setup.md`](examples/mcp-setup.md): MCP configuration for Claude, Cursor and generic clients.
 - [`examples/a2a.ts`](examples/a2a.ts): call Sirenic as an **A2A agent** (quote for free, then pay on the same task via the a2a-x402 extension).
@@ -454,6 +455,8 @@ returned at creation is the capability, no account).
 3. `export TEST_WALLET_KEY=0x...`; never commit it anywhere.
 
 Sirenic settles on Base mainnet.
+
+To check content without on-chain payments, set `SIRENIC_API_KEY` (an API key from your Sirenic account) instead: the smoke test and `payer-un-endpoint` then send `X-Api-Key` and are debited in credits. A 402 under the key is reported as a failure, never paid. Keep x402 for checking the payment path itself.
 
 ## Badge
 

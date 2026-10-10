@@ -12,7 +12,12 @@
  *   # Exhaustive: every endpoint in BOTH assets (≈ 2× the cost):
  *   ASSET=both TEST_WALLET_KEY=0x... npx tsx examples/smoke-test.ts
  *
+ *   # Same calls through an API key: content check, debited in credits, no
+ *   # on-chain settlement (the key wins when both are set; ASSET is ignored):
+ *   SIRENIC_API_KEY=... npx tsx examples/smoke-test.ts
+ *
  * Env:
+ *   SIRENIC_API_KEY  an API key (header X-Api-Key). See examples/rail.ts.
  *   TEST_WALLET_KEY  private key of a DEDICATED throwaway wallet (cleartext).
  *   ASSET            usdc (default) | eurc | both.
  *   MAX_PRICE        skip endpoints above this price (e.g. 0.05). Default: no cap.
@@ -41,13 +46,17 @@ import { privateKeyToAccount } from "viem/accounts";
 import { wrapFetchWithPayment } from "@x402/fetch";
 import { x402Client } from "@x402/core/client";
 import { registerExactEvmScheme } from "@x402/evm/exact/client";
+import { choisirRail, creditsDebites, fetchAvecRail, ligneRail } from "./rail.js";
 
 const apiUrl = process.env.SIRENIC_URL ?? "https://api.sirenic.eu";
-const key = process.env.TEST_WALLET_KEY;
-if (!key?.startsWith("0x")) {
-  console.error("Set TEST_WALLET_KEY=0x<private key of a DEDICATED test wallet>");
+const choix = choisirRail();
+if ("erreur" in choix) {
+  console.error(choix.erreur);
   process.exit(2);
 }
+const rail = choix;
+/** Base fetch of this rail: API key header, or the motif header under x402 (wrapped below for payment). */
+const fetchRail = fetchAvecRail(rail);
 const asset = (process.env.ASSET ?? "usdc").toLowerCase();
 if (!["usdc", "eurc", "both"].includes(asset)) {
   console.error("ASSET must be one of: usdc | eurc | both");
@@ -55,7 +64,7 @@ if (!["usdc", "eurc", "both"].includes(asset)) {
 }
 const maxPrice = process.env.MAX_PRICE ? Number(process.env.MAX_PRICE) : Infinity;
 
-const account = privateKeyToAccount(key as `0x${string}`);
+const account = rail.type === "x402" ? privateKeyToAccount(rail.cleWallet) : null;
 
 // Chaque passage CONSERVE tout ce qu'il a payé : corps JSON et PDF, un fichier
 // par appel, sous resultats/<horodatage>/ (gitignoré). On a perdu une réponse
@@ -75,21 +84,25 @@ const EURC = new Set([
   "0x60a3e35cc302bfa44cb288bc5a4f316fdb1adb42", // Base mainnet
   "0x808456652fdb597867f38412077a9182bf77359f", // Base Sepolia
 ]);
-const usdcClient = new x402Client();
-registerExactEvmScheme(usdcClient, { signer: account });
-const eurcClient = new x402Client((_v, requirements) => {
-  const e = requirements.find((r) => EURC.has(r.asset.toLowerCase()));
-  if (!e) throw new Error("no EURC option offered in the 402 quote");
-  return e;
-});
-registerExactEvmScheme(eurcClient, { signer: account });
-
-const RAILS: Array<[string, ReturnType<typeof wrapFetchWithPayment>]> =
-  asset === "both"
-    ? [["USDC", wrapFetchWithPayment(fetch, usdcClient)], ["EURC", wrapFetchWithPayment(fetch, eurcClient)]]
+type FetchPaye = typeof fetch;
+function railsX402(signer: NonNullable<typeof account>): Array<[string, FetchPaye]> {
+  const usdcClient = new x402Client();
+  registerExactEvmScheme(usdcClient, { signer });
+  const eurcClient = new x402Client((_v, requirements) => {
+    const e = requirements.find((r) => EURC.has(r.asset.toLowerCase()));
+    if (!e) throw new Error("no EURC option offered in the 402 quote");
+    return e;
+  });
+  registerExactEvmScheme(eurcClient, { signer });
+  // The rail headers sit UNDER the payment wrapper: the paid retry carries them too.
+  return asset === "both"
+    ? [["USDC", wrapFetchWithPayment(fetchRail, usdcClient)], ["EURC", wrapFetchWithPayment(fetchRail, eurcClient)]]
     : asset === "eurc"
-      ? [["EURC", wrapFetchWithPayment(fetch, eurcClient)]]
-      : [["USDC", wrapFetchWithPayment(fetch, usdcClient)]];
+      ? [["EURC", wrapFetchWithPayment(fetchRail, eurcClient)]]
+      : [["USDC", wrapFetchWithPayment(fetchRail, usdcClient)]];
+}
+// Under the API key: one pass, same calls, same files (rail segment `key`), never a payment.
+const RAILS: Array<[string, FetchPaye]> = account ? railsX402(account) : [["KEY", fetchRail]];
 
 // Every paid endpoint, cheapest sample parameters (Danone = SIREN 552032534).
 const CALLS: Array<{ path: string; expect: string; price: string }> = [
@@ -205,6 +218,25 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
 
 let paid = 0;
 let failed = 0;
+let calls = 0;
+/** API key rail: credits read from x-credits-charged, and responses that did not say it. */
+let debited = 0;
+let sansDebit = 0;
+/** Counts what one 200 cost: the table price on x402 (the quote is capped by MAX_PRICE before the call),
+ *  the debit the server reports under the key (checked AFTER the call: no quote is asked with a key). */
+function compter(r: Response, price: number): string {
+  if (rail.type === "x402") {
+    paid += price;
+    return `$${price}`;
+  }
+  const d = creditsDebites(r);
+  if (d === null) {
+    sansDebit++;
+    return "debit not stated";
+  }
+  debited += d;
+  return `$${d} in credits${d > price ? ` ⚠ above the table price $${price}` : ""}`;
+}
 /** Since 2026-09-06 every paid JSON response carries `provenance[]` with a closed-list
  *  `etat` per block (the common envelope). A paid JSON body without it is a defect,
  *  not a style choice — counted, and reported in the final summary. */
@@ -228,7 +260,7 @@ function enveloppeOk(body: Record<string, unknown>): boolean {
 /** Pays via one rail, prints a report line, returns the JSON body (null for PDF/error/skip). */
 async function call(
   rail: string,
-  paidFetch: ReturnType<typeof wrapFetchWithPayment>,
+  paidFetch: FetchPaye,
   path: string,
   expect: string,
   price: string,
@@ -238,6 +270,7 @@ async function call(
     return null;
   }
   const started = Date.now();
+  calls++;
   try {
     const r = await paidFetch(`${apiUrl}${path}`, { signal: AbortSignal.timeout(210_000) });
     const ms = Date.now() - started;
@@ -250,16 +283,16 @@ async function call(
     if (type.includes("pdf")) {
       const octets = Buffer.from(await r.arrayBuffer());
       conserver(rail, path, "pdf", octets);
-      paid += Number(price.slice(1));
-      console.log(`✓ [${rail}] ${path} → PDF ${(octets.byteLength / 1024).toFixed(0)} KB, ${price} (${ms} ms)`);
+      const cout = compter(r, Number(price.slice(1)));
+      console.log(`✓ [${rail}] ${path} → PDF ${(octets.byteLength / 1024).toFixed(0)} KB, ${cout} (${ms} ms)`);
       return null;
     }
     const body = (await r.json()) as Record<string, unknown>;
     conserver(rail, path, "json", JSON.stringify(body, null, 1));
-    paid += Number(price.slice(1));
+    const cout = compter(r, Number(price.slice(1)));
     const enveloppe = enveloppeOk(body);
     if (!enveloppe) sansEnveloppe++;
-    console.log(`${expect in body ? "✓" : "?"} [${rail}] ${path} → ${price} (${ms} ms)${enveloppe ? "" : " — ⚠ sans enveloppe provenance[].etat"}`);
+    console.log(`${expect in body ? "✓" : "?"} [${rail}] ${path} → ${cout} (${ms} ms)${enveloppe ? "" : " — ⚠ sans enveloppe provenance[].etat"}`);
     return body;
   } catch (error) {
     failed++;
@@ -279,10 +312,11 @@ async function call(
  */
 async function verifierFormatJson(
   rail: string,
-  paidFetch: ReturnType<typeof wrapFetchWithPayment>,
+  paidFetch: FetchPaye,
   path: string,
 ): Promise<void> {
   const started = Date.now();
+  calls++;
   try {
     const r = await paidFetch(`${apiUrl}${path}`, { signal: AbortSignal.timeout(210_000) });
     const ms = Date.now() - started;
@@ -312,8 +346,7 @@ async function verifierFormatJson(
       return;
     }
     conserver(rail, path, "json", JSON.stringify(body, null, 1));
-    paid += 0.15;
-    console.log(`✓ [${rail}] ${path} → JSON structuré, $0.15 (${ms} ms)`);
+    console.log(`✓ [${rail}] ${path} → JSON structuré, ${compter(r, 0.15)} (${ms} ms)`);
   } catch (error) {
     failed++;
     console.log(`✗ [${rail}] ${path} → ${String(error).slice(0, 120)}`);
@@ -343,10 +376,11 @@ const PLAFOND_EXPIRATIONS_MS = 20_000;
 
 async function verifierExpirations(
   rail: string,
-  paidFetch: ReturnType<typeof wrapFetchWithPayment>,
+  paidFetch: FetchPaye,
   path: string,
 ): Promise<void> {
   const started = Date.now();
+  calls++;
   try {
     const r = await paidFetch(`${apiUrl}${path}`, { signal: AbortSignal.timeout(210_000) });
     const ms = Date.now() - started;
@@ -357,7 +391,7 @@ async function verifierExpirations(
     }
     const body = (await r.json()) as Record<string, unknown>;
     conserver(rail, path, "json", JSON.stringify(body, null, 1));
-    paid += 0.05;
+    const cout = compter(r, 0.05);
     const marches = body.marches as unknown[] | undefined;
     // La réponse doit être COMPLÈTE, sinon un plafond de latence se satisferait
     // d'une page vide servie vite.
@@ -371,14 +405,15 @@ async function verifierExpirations(
       console.log(`✗ [${rail}] ${path} → ${ms} ms > ${PLAFOND_EXPIRATIONS_MS} ms : un client Make aurait été coupé APRÈS avoir payé`);
       return;
     }
-    console.log(`✓ [${rail}] ${path} → ${marches.length} marchés sur ${body.total_marches}, $0.05 (${ms} ms)`);
+    console.log(`✓ [${rail}] ${path} → ${marches.length} marchés sur ${body.total_marches}, ${cout} (${ms} ms)`);
   } catch (error) {
     failed++;
     console.log(`✗ [${rail}] ${path} → ${String(error).slice(0, 120)}`);
   }
 }
 
-console.log(`Wallet: ${account.address}\nAPI: ${apiUrl}\nAssets: ${RAILS.map((r) => r[0]).join(" + ")}\n`);
+console.log(ligneRail(rail));
+console.log(account ? `Wallet: ${account.address}\nAPI: ${apiUrl}\nAssets: ${RAILS.map((r) => r[0]).join(" + ")}\n` : `API: ${apiUrl}\n`);
 // Colruyt : société belge dont les comptes déposés sont nombreux et stables.
 const BE_ENTREPRISE = "0400378485";
 let documentId: { type: string; id: string } | null = null;
@@ -431,13 +466,40 @@ for (const [rail, paidFetch] of RAILS) {
     if (jeton) {
       await call(rail, paidFetch, `/v1/surveillance/${jeton}/renouveler?cibles=${cibles}`, "expire_le", "$0.10");
       // Arrêt GRATUIT : ne laisse pas tourner une surveillance de 30 jours.
-      const arret = await fetch(`${apiUrl}/v1/surveillance/${jeton}/arreter`, { signal: AbortSignal.timeout(30_000) });
+      const arret = await fetchRail(`${apiUrl}/v1/surveillance/${jeton}/arreter`, { signal: AbortSignal.timeout(30_000) });
       console.log(`${arret.ok ? "✓" : "✗"} [${rail}] watchlist stopped (free) → HTTP ${arret.status}`);
     } else {
       console.log(`– [${rail}] watchlist renewal skipped (no token returned)`);
     }
   }
 }
-console.log(`\nTotal paid: ~$${paid.toFixed(3)} — failures: ${failed} — paid JSON bodies without the provenance envelope: ${sansEnveloppe}`);
+// recap.json (conservation rule): the rail, what was called, what it cost, what failed.
+writeFileSync(
+  join(dossierResultats, "recap.json"),
+  JSON.stringify(
+    {
+      rail: rail.type,
+      api: apiUrl,
+      actifs: account ? RAILS.map((r) => r[0]) : [],
+      appels: calls,
+      echecs: failed,
+      sans_enveloppe: sansEnveloppe,
+      ...(rail.type === "x402"
+        ? { depense_estimee_usd: Number(paid.toFixed(3)) }
+        : { credits_debites_usd: Number(debited.toFixed(3)), reponses_sans_debit_dit: sansDebit }),
+    },
+    null,
+    1,
+  ),
+);
+if (rail.type === "x402") {
+  console.log(`\nTotal paid: ~$${paid.toFixed(3)} — failures: ${failed} — paid JSON bodies without the provenance envelope: ${sansEnveloppe}`);
+} else {
+  console.log(`\nTotal debited: $${debited.toFixed(3)} in credits (${sansDebit} response(s) without x-credits-charged); failures: ${failed}; JSON bodies without the provenance envelope: ${sansEnveloppe}`);
+}
 console.log(`Every paid response was saved under ${dossierResultats}/`);
-console.log("Every 200 response above was settled on-chain via x402 before being released.");
+console.log(
+  rail.type === "x402"
+    ? "Every 200 response above was settled on-chain via x402 before being released."
+    : "Every 200 response above was debited in credits through the API key; nothing was settled on-chain.",
+);
