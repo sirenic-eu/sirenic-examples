@@ -431,6 +431,12 @@ returned at creation is the capability, no account).
 
 Sirenic settles on Base mainnet.
 
+## Star this repo
+
+If these examples saved you some setup, a star helps other developers find them.
+
+[![Star History Chart](https://api.star-history.com/svg?repos=sirenic-eu/sirenic-examples&type=Date)](https://star-history.com/#sirenic-eu/sirenic-examples&Date)
+
 ## Disclaimer
 
 Sirenic redistributes official open data as published (Etalab 2.0 and other
