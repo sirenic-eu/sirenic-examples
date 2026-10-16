@@ -5,8 +5,8 @@
  *   # Core endpoints once in USDC (data check, a few $):
  *   TEST_WALLET_KEY=0x... npx tsx examples/smoke-test.ts
  *
- *   # Validate the EURC rail cheaply (only endpoints ≤ $0.005 — search, profile,
- *   # VAT, IBAN — in EURC):
+ *   # Validate the EURC rail cheaply (only endpoints ≤ $0.005: search, profile,
+ *   # VAT, IBAN, in EURC):
  *   ASSET=eurc MAX_PRICE=0.005 TEST_WALLET_KEY=0x... npx tsx examples/smoke-test.ts
  *
  *   # Exhaustive: every endpoint in BOTH assets (≈ 2× the cost):
@@ -23,12 +23,12 @@
  *   MAX_PRICE        skip endpoints above this price (e.g. 0.05). Default: no cap.
  *   SIRENIC_URL      defaults to https://api.sirenic.eu.
  *
- * Prerequisites: fund the wallet on **Base mainnet** with a few USDC AND — to
- * test EURC — a little EURC (Circle's euro stablecoin; buy on Coinbase or swap
+ * Prerequisites: fund the wallet on **Base mainnet** with a few USDC AND, to
+ * test EURC, a little EURC (Circle's euro stablecoin; buy on Coinbase or swap
  * on a Base DEX). No ETH needed: the x402 `exact` scheme is gasless for the payer
  * (signed EIP-3009 authorization; the facilitator submits the tx).
  *
- * Note: USDC vs EURC only differs in the settlement layer — it is identical for
+ * Note: USDC vs EURC only differs in the settlement layer: it is identical for
  * every route. One EURC settlement proves the EURC path works for all of them.
  *
  * Two routes are STATEFUL and are therefore exercised once, on the first rail
@@ -68,7 +68,7 @@ const account = rail.type === "x402" ? privateKeyToAccount(rail.cleWallet) : nul
 
 // Chaque passage CONSERVE tout ce qu'il a payé : corps JSON et PDF, un fichier
 // par appel, sous resultats/<horodatage>/ (gitignoré). On a perdu une réponse
-// à 1 $ faute de ça le 24/07 — plus jamais.
+// à 1 $ faute de ça le 24/07 : plus jamais.
 const dossierResultats = join("resultats", new Date().toISOString().replace(/[:.]/g, "-"));
 mkdirSync(dossierResultats, { recursive: true });
 let ordre = 0;
@@ -78,7 +78,7 @@ function conserver(rail: string, path: string, extension: string, contenu: strin
   writeFileSync(join(dossierResultats, nom), contenu);
 }
 
-// EURC contracts (Circle) on Base — used by the selector to force the EURC
+// EURC contracts (Circle) on Base, used by the selector to force the EURC
 // option of the 402 quote. USDC is the default option, so no selector needed.
 const EURC = new Set([
   "0x60a3e35cc302bfa44cb288bc5a4f316fdb1adb42", // Base mainnet
@@ -110,24 +110,24 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/entreprise/552032534", expect: "denomination", price: "$0.005" },
   { path: "/v1/entreprise/552032534/etablissements", expect: "etablissements", price: "$0.003" },
   { path: "/v1/entreprise/552032534/alertes", expect: "total_annonces", price: "$0.01" },
-  // 06/09/2026 : `interpretabilite` — les ratios d'activité d'une holding sont calculables, pas interprétables.
+  // 06/09/2026 : `interpretabilite` : les ratios d'activité d'une holding sont calculables, pas interprétables.
   { path: "/v1/entreprise/552032534/finances", expect: "interpretabilite", price: "$0.01" },
   { path: "/v1/entreprise/552032534/marches-publics", expect: "nombre_marches_dedoublonne", price: "$0.01" },
   { path: "/v1/entreprise/552032534/changements?depuis=2020-01-01", expect: "siren", price: "$0.01" },
   { path: "/v1/entreprise/552032534/pi", expect: "marques", price: "$0.03" },
   { path: "/v1/entreprise/552032534/marches-publics-ue", expect: "nombre_avis", price: "$0.02" },
-  { path: "/v1/entreprise/319632790/financements-ue", expect: "nombre_projets", price: "$0.02" }, // ARKEMA FRANCE SA — CORDIS H2020 + Horizon Europe (17/09/2026)
+  { path: "/v1/entreprise/319632790/financements-ue", expect: "nombre_projets", price: "$0.02" }, // ARKEMA FRANCE SA, CORDIS H2020 + Horizon Europe (17/09/2026)
   { path: "/v1/entreprise/552032534/risques-industriels", expect: "synthese", price: "$0.01" },
   { path: "/v1/entreprise/095580841/emploi", expect: "signaux_recrutement", price: "$0.02" },
   { path: "/v1/entreprise/450776968/contentieux", expect: "synthese", price: "$0.01" },
   { path: "/v1/entreprise/552032534/lobbying", expect: "inscrit", price: "$0.01" },
   // Circle Internet Financial Europe : établissement de monnaie électronique
-  // agréé par l'ACPR — l'émetteur de l'USDC avec lequel on nous paie.
+  // agréé par l'ACPR, l'émetteur de l'USDC avec lequel on nous paie.
   { path: "/v1/entreprise/953990934/agrements", expect: "resume", price: "$0.02" },
-  // IBA (Ion Beam Applications), societe belge cotee — agregat sans aucun nom.
+  // IBA (Ion Beam Applications), societe belge cotee : agregat sans aucun nom.
   { path: "/v1/eu/entreprise/BE/0428750985/transactions-dirigeants", expect: "synthese", price: "$0.02" },
   // Zalando SE, societe allemande cotee, interrogee par LEI : la BaFin ne publie
-  // aucun numero de registre. Ajoutee le 03/09/2026 apres un achat REEL — la
+  // aucun numero de registre. Ajoutee le 03/09/2026 apres un achat REEL : la
   // tranche allemande etait en production depuis le 15/08 sans avoir jamais ete
   // eprouvee par ce smoke (voir examples/smoke-dirigeants-de-2026-09-03.ts).
   { path: "/v1/eu/entreprise/DE/529900YRFFGH5AXU4S86/transactions-dirigeants", expect: "synthese", price: "$0.02" },
@@ -136,7 +136,7 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/iban/verifier/FR1420041010050500013M02606", expect: "iban_normalise", price: "$0.005" },
   { path: "/v1/facturation/dossier?siren=552032534&iban=FR1420041010050500013M02606", expect: "verdict", price: "$0.03" },
   // Colruyt : mandat B2B belge en vigueur depuis le 01/01/2026. L'IBAN d'exemple
-  // public suffit — le pack valide sa structure et identifie la banque, il ne
+  // public suffit : le pack valide sa structure et identifie la banque, il ne
   // vérifie jamais qu'il appartient bien à cette société.
   { path: "/v1/eu/facturation/dossier?pays=BE&id=0400378485&iban=BE68539007547034", expect: "verdict", price: "$0.03" },
   { path: "/v1/regulateurs/fr/alertes?siren=552032534", expect: "source", price: "$0.01" },
@@ -145,7 +145,7 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/kyb/batch?sirens=552032534,542065479", expect: "nombre_demande", price: "$0.21" },
   // 08/09/2026 : chaque classement porte un statut dans `eligibilite_classements`
   // (`autorise` / `interdit` avec ses raisons, `evaluatif` / `descriptif`) ; le classement
-  // risque n'est servi qu'entre scores calculés sur les MÊMES axes, dans un lot comparable —
+  // risque n'est servi qu'entre scores calculés sur les MÊMES axes, dans un lot comparable :
   // ce lot (secteurs différents, holding) le sert `interdit`, sans `risque_le_plus_faible`.
   { path: "/v1/comparer?sirens=552032534,542065479", expect: "eligibilite_classements", price: "$0.24" },
   { path: "/v1/sanctions/check?name=Danone", expect: "correspondances", price: "$0.02" },
@@ -154,12 +154,12 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   // Un appel par pays : chaque pays a sa carte Bazaar dédiée depuis le 29/07,
   // et une carte n'est indexée/rafraîchie qu'au premier paiement réglé dessus.
   { path: "/v1/eu/entreprise/NO/923609016", expect: "denomination", price: "$0.01" }, // Equinor
-  // Norway depth (16/09/2026): roles and local units from the daily national Brreg bulks — legal persons only.
-  { path: "/v1/eu/entreprise/NO/923609016/dirigeants", expect: "mandats", price: "$0.01" }, // Equinor — officers and board
-  { path: "/v1/eu/entreprise/NO/923609016/etablissements", expect: "unites_locales", price: "$0.01" }, // Equinor — local units (SIRET-like)
-  // United Kingdom (16/09/2026): The Gazette corporate insolvency notices (official journal, category 24) — partial coverage, said so.
-  { path: "/v1/eu/entreprise/GB/SC540982/annonces", expect: "annonces", price: "$0.02" }, // PRIME PSYCHOLOGY LTD — CVL notices of 16/09/2026
-  { path: "/v1/eu/entreprise/GB/10868035/marches-publics", expect: "nombre_attributions", price: "$0.02" }, // CHANGEMAKER ASSOCIATES LIMITED — FTS award of 16/09/2026
+  // Norway depth (16/09/2026): roles and local units from the daily national Brreg bulks, legal persons only.
+  { path: "/v1/eu/entreprise/NO/923609016/dirigeants", expect: "mandats", price: "$0.01" }, // Equinor: officers and board
+  { path: "/v1/eu/entreprise/NO/923609016/etablissements", expect: "unites_locales", price: "$0.01" }, // Equinor: local units (SIRET-like)
+  // United Kingdom (16/09/2026): The Gazette corporate insolvency notices (official journal, category 24), partial coverage, said so.
+  { path: "/v1/eu/entreprise/GB/SC540982/annonces", expect: "annonces", price: "$0.02" }, // PRIME PSYCHOLOGY LTD: CVL notices of 16/09/2026
+  { path: "/v1/eu/entreprise/GB/10868035/marches-publics", expect: "nombre_attributions", price: "$0.02" }, // CHANGEMAKER ASSOCIATES LIMITED: FTS award of 16/09/2026
   { path: "/v1/eu/entreprise/CZ/45274649", expect: "denomination", price: "$0.01" }, // ČEZ
   { path: "/v1/eu/entreprise/CH/CHE-107.480.920", expect: "denomination", price: "$0.01" }, // Logitech (Zefix)
   { path: "/v1/eu/entreprise/SK/35763469", expect: "denomination", price: "$0.01" }, // Slovak Telekom
@@ -169,16 +169,16 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/eu/entreprise/PL/0000034143/insolvabilite", expect: "procedures", price: "$0.02" },
   { path: "/v1/eu/entreprise/PL/0000006865/comptes", expect: "nombre_depots", price: "$0.01" }, // CD Projekt
   { path: "/v1/eu/entreprise/EE/12417834", expect: "denomination", price: "$0.01" }, // Bolt Technology
-  // 17/09/2026 : tranche 5 Europe — dirigeants et associés estoniens (e-äriregister, RIK, CC BY 4.0, photo quotidienne).
+  // 17/09/2026 : tranche 5 Europe : dirigeants et associés estoniens (e-äriregister, RIK, CC BY 4.0, photo quotidienne).
   { path: "/v1/eu/entreprise/EE/10060701/dirigeants", expect: "mandats", price: "$0.01" }, // Swedbank AS
   { path: "/v1/eu/entreprise/EE/14532901/associes", expect: "associes", price: "$0.02" }, // Bolt Operations OÜ
-  // 17/09/2026 : tranche 6 Europe — Lituanie, pays neuf (data.gov.lt / API Spinta, CC BY 4.0, cinq photos quotidiennes).
+  // 17/09/2026 : tranche 6 Europe : Lituanie, pays neuf (data.gov.lt / API Spinta, CC BY 4.0, cinq photos quotidiennes).
   { path: "/v1/eu/entreprise/LT/304500803", expect: "registre_lt", price: "$0.01" }, // UAB Autotitanas
   { path: "/v1/eu/entreprise/LT/304500803/comptes", expect: "exercices", price: "$0.02" },
   { path: "/v1/eu/entreprise/LT/110518825/insolvabilite", expect: "procedures", price: "$0.02" }, // IS FASHION BALTIC, liquidation pour cause de faillite
-  // 18/09/2026 : tranche 7 Europe — avis du registre du commerce finlandais (PRH, en direct).
+  // 18/09/2026 : tranche 7 Europe : avis du registre du commerce finlandais (PRH, en direct).
   { path: "/v1/eu/entreprise/FI/0112038-9/evenements", expect: "evenements", price: "$0.02" }, // Nokia Oyj
-  // 18/09/2026 : tranche 8 Europe — publications FOSC/SHAB suisses (SECO, API publique, en direct).
+  // 18/09/2026 : tranche 8 Europe : publications FOSC/SHAB suisses (SECO, API publique, en direct).
   { path: "/v1/eu/entreprise/CH/CHE-102.732.681/evenements", expect: "publications", price: "$0.02" }, // A.S. Consulta AG
   { path: "/v1/eu/entreprise/CH/CHE-138.657.350/insolvabilite", expect: "procedures", price: "$0.02" }, // Skytender Group Holding AG
   { path: "/v1/eu/entreprise/CY/HE165", expect: "registre_cy", price: "$0.01" }, // Bank of Cyprus Public Company Limited (tranche 9, after the first monthly ingestion)
@@ -189,17 +189,17 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/eu/entreprise/ES/A28582013/marches-publics", expect: "attributions", price: "$0.02" }, // CHM OBRAS E INFRAESTRUCTURAS SA (tranche 11 PLACSP, after the archive backfill)
   { path: "/v1/eu/entreprise/PL/6040248554/marches-publics", expect: "attributions", price: "$0.02" }, // M&M JOB CONNECT Sp. z o.o. (tranche 12 BZP, after the 2021→ backfill)
   { path: "/v1/eu/entreprise/LV/40003245752", expect: "denomination", price: "$0.01" }, // airBaltic
-  // 10/09/2026 : tranche 1 Europe — événements de vie et associés lettons (Uzņēmumu reģistrs, CC0).
+  // 10/09/2026 : tranche 1 Europe : événements de vie et associés lettons (Uzņēmumu reģistrs, CC0).
   { path: "/v1/eu/entreprise/LV/40103637844/evenements", expect: "evenements", price: "$0.02" },
   { path: "/v1/eu/entreprise/LV/40103774127/associes", expect: "associes", price: "$0.02" },
-  { path: "/v1/eu/entreprise/LV/40003242737/marches-publics", expect: "nombre_attributions", price: "$0.02" }, // VIRŠI-A — IUB awards (17/09/2026)
-  { path: "/v1/eu/entreprise/LV/40003242722/marches-publics-ue", expect: "nombre_avis", price: "$0.02" }, // SIA NORDE — TED award notices matched by national identifier, nine countries (17/09/2026)
-  // Croatia (17/09/2026): Sudski registar daily snapshot — profile by OIB, insolvency, court-register entries, filings.
+  { path: "/v1/eu/entreprise/LV/40003242737/marches-publics", expect: "nombre_attributions", price: "$0.02" }, // VIRŠI-A: IUB awards (17/09/2026)
+  { path: "/v1/eu/entreprise/LV/40003242722/marches-publics-ue", expect: "nombre_avis", price: "$0.02" }, // SIA NORDE: TED award notices matched by national identifier, nine countries (17/09/2026)
+  // Croatia (17/09/2026): Sudski registar daily snapshot: profile by OIB, insolvency, court-register entries, filings.
   { path: "/v1/eu/entreprise/HR/92803032010", expect: "registre_hr", price: "$0.01" }, // KOESTLIN d.d.
-  { path: "/v1/eu/entreprise/HR/39620744214/insolvabilite", expect: "procedure", price: "$0.02" }, // TIM-PUTEVI — bankruptcy (stečaj)
+  { path: "/v1/eu/entreprise/HR/39620744214/insolvabilite", expect: "procedure", price: "$0.02" }, // TIM-PUTEVI: bankruptcy (stečaj)
   { path: "/v1/prospection?naf=62.01Z&departement=75", expect: "resultats", price: "$0.02" },
   { path: "/v1/secteur/62.01Z/benchmarks", expect: "code_naf", price: "$0.05" },
-  // 06/09/2026 : `couverture_axes` — les axes évalués et les axes muets, avec leur motif.
+  // 06/09/2026 : `couverture_axes` : les axes évalués et les axes muets, avec leur motif.
   { path: "/v1/score/defaillance/552032534", expect: "couverture_axes", price: "$0.10" },
   { path: "/v1/entreprise/552032534/documents", expect: "actes", price: "$0.02" },
   { path: "/v1/kyb/552032534", expect: "score_completude", price: "$0.15" },
@@ -239,7 +239,7 @@ function compter(r: Response, price: number): string {
 }
 /** Since 2026-09-06 every paid JSON response carries `provenance[]` with a closed-list
  *  `etat` per block (the common envelope). A paid JSON body without it is a defect,
- *  not a style choice — counted, and reported in the final summary. */
+ *  not a style choice: counted, and reported in the final summary. */
 let sansEnveloppe = 0;
 const ETATS = new Set(["servi", "absence_mesuree", "absence_non_conclusive", "partiel", "perime", "indisponible", "sans_objet"]);
 function enveloppeOk(body: Record<string, unknown>): boolean {
@@ -302,7 +302,7 @@ async function call(
 }
 
 /**
- * `?format=json` doit rendre SOIT un objet, SOIT 406 non facturé — jamais un
+ * `?format=json` doit rendre SOIT un objet, SOIT 406 non facturé, jamais un
  * PDF. C'est la garantie sur laquelle reposent les clients typés : un module
  * Make, par exemple, ne branche son analyse de réponse que sur le CODE HTTP,
  * jamais sur le Content-Type, et un PDF servi sur un 200 le casse net
@@ -354,22 +354,22 @@ async function verifierFormatJson(
 }
 
 /**
- * `/v1/marches/expirations` — et pourquoi elle a sa propre vérification.
+ * `/v1/marches/expirations`, et pourquoi elle a sa propre vérification.
  *
  * Cette route a coûté de l'argent pour rien le 03/09/2026 : 67 SECONDES à
  * froid, alors qu'un module Make coupe à ~40 s. Le journal du service porte la
- * trace exacte — `responseTime: 39910` avec `x-credits-charged: 0.05` : le
+ * trace exacte, `responseTime: 39910` avec `x-credits-charged: 0.05` : le
  * client avait abandonné, notre API a terminé et FACTURÉ. Personne ne doit
  * payer une réponse qu'il n'a pas reçue.
  *
  * Cause : la requête touchait 129 180 pages (≈ 1 Go) pour servir 50 lignes.
  * Corrigée par le lot fdc5792 (pagination sur les seules colonnes indexées,
- * index couvrant + VACUUM) — mesure après correctif : 2 620 pages, 1,2 s.
+ * index couvrant + VACUUM) ; mesure après correctif : 2 620 pages, 1,2 s.
  *
  * ⚠️ `call()` NE CONVIENT PAS pour l'éprouver : il journalise la durée mais
  * n'asserte JAMAIS dessus. La route reviendrait à 67 s qu'il l'afficherait en
  * VERT. Or ici le défaut EST la durée. D'où ce contrôle dédié, avec un plafond
- * franc — et le plafond n'est pas décoratif : au-delà, un client Make ne reçoit
+ * franc, et le plafond n'est pas décoratif : au-delà, un client Make ne reçoit
  * rien tout en payant.
  */
 const PLAFOND_EXPIRATIONS_MS = 20_000;
@@ -437,7 +437,7 @@ for (const [rail, paidFetch] of RAILS) {
 
   // -- Belgian filings: list, then fetch one deposit by its reference --------
   const comptes = await call(rail, paidFetch, `/v1/eu/entreprise/BE/${BE_ENTREPRISE}/comptes`, "nombre_depots", "$0.01");
-  // Dépôt le plus RÉCENT — tri explicite sur la référence (AAAA-NNNNNNNN) :
+  // Dépôt le plus RÉCENT : tri explicite sur la référence (AAAA-NNNNNNNN) :
   // l'API liste du plus récent au plus ancien, et les dépôts très anciens
   // (ex. 1981) ne sont plus servis par la NBB → .at(-1) piochait un 404
   // (constaté au smoke du 29/07, appel non facturé).
@@ -452,12 +452,12 @@ for (const [rail, paidFetch] of RAILS) {
   }
 
   // Deux appels : la fenêtre par défaut, puis une fenêtre + filtre CPV qu'aucun
-  // appel précédent n'a réchauffée — c'est le cas FROID qui avait coûté 67 s.
+  // appel précédent n'a réchauffée : c'est le cas FROID qui avait coûté 67 s.
   await verifierExpirations(rail, paidFetch, "/v1/marches/expirations");
   await verifierExpirations(rail, paidFetch, "/v1/marches/expirations?fenetre_mois=18&cpv=45");
 
   // -- Watchlist: create → renew → stop (only once; stopping is free) --------
-  // No `duree` on purpose — see the header: this is the compatibility check.
+  // No `duree` on purpose: see the header: this is the compatibility check.
   if (!surveillanceFaite) {
     surveillanceFaite = true;
     const cibles = "552032534,542065479";
