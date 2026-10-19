@@ -1,0 +1,92 @@
+{
+  "_endpoint": "/v1/prospection/sosies",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/prospection/sosies?exemples=000000018%2C000000026",
+  "_sample_of": "2026-10-08",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/prospection-sosies.json, in its OpenAPI spec and in its x402 quote. Rendered by the route on test data (fictitious companies), with no purchase, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "profil": {
+      "exemples_retenus": 2,
+      "criteres": [
+        {
+          "champ": "identite.naf",
+          "op": "in",
+          "valeur": [
+            "25.62B"
+          ]
+        },
+        {
+          "champ": "identite.tranche_effectifs",
+          "op": "in",
+          "valeur": [
+            "11",
+            "12"
+          ]
+        },
+        {
+          "champ": "identite.forme",
+          "op": "in",
+          "valeur": [
+            "5710"
+          ]
+        },
+        {
+          "champ": "identite.date_creation",
+          "op": "entre",
+          "valeur": [
+            "2010-05-10",
+            "2018-09-20"
+          ]
+        },
+        {
+          "champ": "siege.departement",
+          "op": "=",
+          "valeur": "38"
+        },
+        {
+          "champ": "identite.siren",
+          "op": "hors",
+          "valeur": [
+            "000000018",
+            "000000026"
+          ]
+        }
+      ],
+      "ecarts": [],
+      "elargissements": []
+    },
+    "page": 1,
+    "page_suivante": true,
+    "nombre_resultats": 100,
+    "resultats": [
+      {
+        "identite": {
+          "siren": "000000034",
+          "denomination": "SOCIETE FICTIVE SOSIE 3",
+          "forme": "5710",
+          "naf": "25.62B",
+          "tranche_effectifs": "11",
+          "etat": "A",
+          "date_creation": "2011-04-04"
+        },
+        "siege": {
+          "code_postal": "38000",
+          "commune": "COMMUNE FICTIVE 38185",
+          "departement": "38"
+        },
+        "finances": {
+          "date_cloture": null,
+          "ca": null,
+          "resultat_net": null
+        }
+      }
+    ],
+    "listes_bornees": {
+      "resultats": {
+        "nombre_total": 102,
+        "tronque": true
+      }
+    },
+    "disclaimer": "Profil déduit des exemples, relu par /v1/entreprises/requete/lister pour les pages suivantes ; élargi d'un cran à la fois sous 50 résultats, chaque cran dit ; exemples exclus ; sans classement par ressemblance. / Profile deduced from the examples, read again by /v1/entreprises/requete/lister for the next pages; widened one step at a time under 50 results, each step stated; examples excluded; no ranking by likeness."
+  }
+}

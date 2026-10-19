@@ -51,8 +51,6 @@
       "tendance CA calculée : volatil_sans_tendance -> croissance_forte"
     ],
     "modele": "claude-sonnet-5",
-    "version_prompt": "sante-v2",
-    "version_gabarit": "g-8806003c",
     "genere_le": "2026-09-25T21:50:25.245Z",
     "donnees": {
       "score_completude": 100,

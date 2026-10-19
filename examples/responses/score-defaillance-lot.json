@@ -1,0 +1,97 @@
+{
+  "_endpoint": "/v1/score/defaillance/lot",
+  "_price": "$0.07",
+  "_request": "GET https://api.sirenic.eu/v1/score/defaillance/lot?sirens=552032534%2C775672272",
+  "_sample_of": "2026-10-08",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/score-defaillance-lot.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "nombre_demande": 2,
+    "nombre_trouve": 2,
+    "paniers": {
+      "expose": 0,
+      "a_surveiller": 0,
+      "sain": 1,
+      "non_evaluable": 1,
+      "cessee": 0
+    },
+    "groupes": {
+      "sain": [
+        {
+          "jeu_axes": 0,
+          "effectif": 1
+        }
+      ],
+      "non_evaluable": [
+        {
+          "jeu_axes": 1,
+          "effectif": 1
+        }
+      ]
+    },
+    "jeux_axes": [
+      [
+        "structure",
+        "rentabilite",
+        "liquidite",
+        "dette",
+        "anciennete",
+        "etat",
+        "bodacc",
+        "contentieux"
+      ],
+      [
+        "anciennete",
+        "etat",
+        "bodacc",
+        "contentieux"
+      ]
+    ],
+    "lignes": [
+      {
+        "trouve": true,
+        "siren": "552032534",
+        "denomination": "DANONE",
+        "panier": "sain",
+        "classe": "sain",
+        "score_risque": 22,
+        "confiance": "moyenne",
+        "jeu_axes": 0,
+        "axes_calcules": 8,
+        "motifs_principaux": [
+          "liquidite",
+          "dette"
+        ],
+        "signaux_bodacc": {
+          "procedure_collective": false,
+          "liquidation_judiciaire": false,
+          "cloture_insuffisance_actif": false
+        },
+        "version_modele": "defaillance-v1.9"
+      },
+      {
+        "trouve": true,
+        "siren": "775672272",
+        "denomination": "CROIX ROUGE FRANCAISE",
+        "panier": "non_evaluable",
+        "classe": "indetermine",
+        "score_risque": 0,
+        "confiance": "faible",
+        "jeu_axes": 1,
+        "axes_calcules": 4,
+        "motifs_principaux": [],
+        "cause": "aucun_exercice"
+      }
+    ],
+    "chainage": {
+      "surveillance": {
+        "route": "GET /v1/surveillance/creer",
+        "parametres": null,
+        "nombre_cibles": 0,
+        "devis_30_jours": null,
+        "prix_unitaire_30_jours": "$0.05",
+        "au_dela_du_plafond_client": false,
+        "motif": "aucune_cible_exposee"
+      }
+    }
+  }
+}

@@ -2,11 +2,11 @@
   "_endpoint": "/v1/entreprise/{siren}/finances",
   "_price": "$0.01",
   "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/finances",
-  "_sample_of": "2026-09-04",
+  "_sample_of": "2026-10-08",
   "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-finances.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "siren": "552032534",
-    "nombre_exercices": 8,
+    "nombre_exercices": 9,
     "exercices": [
       {
         "date_cloture": "2017-12-31",
@@ -48,7 +48,7 @@
     ],
     "comptes_consolides": {
       "perimetre": "consolide",
-      "nombre_exercices": 8,
+      "nombre_exercices": 9,
       "exercices": [
         {
           "date_cloture": "2024-12-31",
@@ -57,6 +57,7 @@
           "qualite": {
             "fiabilite": "exploitable",
             "anomalies": [
+              "chiffre_affaires_identique",
               "resultat_net_non_calcule",
               "ratio_non_calcule"
             ],
@@ -70,6 +71,6 @@
       ]
     },
     "source": "Ratios financiers INPI / Banque de France (comptes annuels déposés) via data.economie.gouv.fr, licence ouverte 2.0",
-    "data_freshness": "jeu ratios_inpi_bce du 2026-06-01"
+    "data_freshness": "jeu ratios_inpi_bce du 2026-09-15"
   }
 }

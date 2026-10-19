@@ -2,39 +2,75 @@
   "_endpoint": "/v1/eu/entreprise/{pays}/{id}/transactions-dirigeants",
   "_price": "$0.02",
   "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/BE/0428750985/transactions-dirigeants",
-  "_sample_of": "2026-08-16",
+  "_sample_of": "2026-10-01",
   "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-pays-id-transactions-dirigeants.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "BE",
-    "denomination": "UMICORE",
+    "denomination": "IBA",
+    "periode": {
+      "depuis": "2025-10-01",
+      "jusqu_a": "2026-10-01"
+    },
     "synthese": {
-      "nb_notifications": 2,
-      "nb_achats": 2,
-      "nb_ventes": 0,
+      "nb_notifications": 45,
+      "nb_achats": 37,
+      "nb_ventes": 8,
       "nb_autres": 0,
-      "montant_achats_eur": 9765,
-      "montant_ventes_eur": 0,
-      "montant_net_eur": 9765,
+      "montant_achats_eur": 2103553.5,
+      "montant_ventes_eur": 2397272.16,
+      "montant_net_eur": -293718.66,
       "nb_notifications_montant_hors_eur": 0,
-      "nb_declarants_distincts": 2,
-      "date_derniere_notification": "2026-08-06"
+      "nb_declarants_distincts": 26,
+      "date_derniere_notification": "2026-09-09"
     },
     "note_montants": null,
-    "par_categorie_declarant": null,
-    "ventilation_masquee": "Moins de 3 déclarants distincts sur la période : la ventilation par catégorie est masquée (y compris dans le détail des notifications), elle désignerait une personne identifiable. Les transactions et leurs montants restent servis.",
-    "notifications": [
+    "par_categorie_declarant": [
       {
-        "reference_source": "621888",
-        "date_publication": "2026-08-06",
-        "date_transaction": "2026-08-05",
-        "type_transaction": "acquisition",
-        "lieu": "Off exchange",
-        "quantite": 12500,
-        "montant": 0,
-        "devise": "EUR",
-        "categorie_declarant": null
+        "categorie": "cadre_superieur",
+        "nb": 35,
+        "nb_achats": 28,
+        "nb_ventes": 7,
+        "nb_autres": 0,
+        "montant_net_eur": -29752.16
+      },
+      {
+        "categorie": "organe_administration",
+        "nb": 5,
+        "nb_achats": 4,
+        "nb_ventes": 1,
+        "nb_autres": 0,
+        "montant_net_eur": -282816.5
+      },
+      {
+        "categorie": "personne_liee_cadre",
+        "nb": 4,
+        "nb_achats": 4,
+        "nb_ventes": 0,
+        "nb_autres": 0,
+        "montant_net_eur": 18850
       }
     ],
+    "ventilation_masquee": null,
+    "notifications": [
+      {
+        "reference_source": "631931",
+        "date_publication": "2026-09-09",
+        "date_transaction": "2026-07-14",
+        "type_transaction": "cession",
+        "lieu": "Euronext Brussels",
+        "quantite": 3967,
+        "montant": 67005.21,
+        "devise": "EUR",
+        "categorie_declarant": "cadre_superieur"
+      }
+    ],
+    "collecte_incomplete": {
+      "jours": [
+        "2026-03-04"
+      ],
+      "motif": "listing_sature",
+      "comptes": "bornes_basses"
+    },
     "source": "FSMA — Transactions de dirigeants (art. 19 MAR), licence CC BY 4.0 ; identifiants d'entreprise résolus via GLEIF."
   }
 }

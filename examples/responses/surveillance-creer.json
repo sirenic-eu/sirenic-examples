@@ -5,8 +5,8 @@
   "_sample_of": "2026-07-29",
   "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/surveillance-creer.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
-    "surveillance_id": "sw_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.<horodatage_base64url>.<signature_ed25519_base64url>",
-    "jeton": "sw_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.<horodatage_base64url>.<signature_ed25519_base64url>",
+    "surveillance_id": "sw_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.<horodatage_base64url>.<signature_ed25519_base64url>.<kid>",
+    "jeton": "sw_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.<horodatage_base64url>.<signature_ed25519_base64url>.<kid>",
     "cibles": 2,
     "duree_jours": 30,
     "expire_le": "2026-08-28T07:36:32.134Z",

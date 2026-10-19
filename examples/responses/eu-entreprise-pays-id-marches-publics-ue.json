@@ -35,9 +35,11 @@
         "co_titulaires": [
           "Sabiedrība ar ierobežotu atbildību \"NORDE\""
         ],
+        "co_titulaires_omis": {},
         "identifiants_gagnants": [
           "40003242722"
         ],
+        "identifiants_omis": {},
         "lien_ted": "https://ted.europa.eu/en/notice/547293-2026/pdf",
         "correspondance": {
           "methode": "identifiant",

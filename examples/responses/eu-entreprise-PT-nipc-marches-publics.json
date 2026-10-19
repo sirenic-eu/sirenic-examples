@@ -2,58 +2,50 @@
   "_endpoint": "/v1/eu/entreprise/PT/{nipc}/marches-publics",
   "_price": "$0.02",
   "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/PT/504904493/marches-publics",
-  "_sample_of": "2026-09-18",
+  "_sample_of": "2026-10-01",
   "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-PT-nipc-marches-publics.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "PT",
     "nipc": "504904493",
     "attributions": [
       {
-        "id": "12491739",
+        "id": "15625138",
         "ano": 2026,
-        "procedimento": "appel d'offres ouvert",
-        "procedimento_source": "Concurso público",
+        "procedimento": "consultation préalable",
+        "procedimento_source": "Consulta Prévia",
         "tipo_contrato": [
-          "fournitures"
+          "services"
         ],
-        "objeto": "Aquisição de equipamento informático",
+        "objeto": "229CNS26 - Aquisição de Licenciamento VMWare (servidores)",
         "adjudicante": {
-          "nif": "501413197",
-          "nom": "Universidade do Porto"
+          "nif": "507718666",
+          "nom": "Águas e Energia do Porto E.M"
         },
         "adjudicatarios": [
           {
             "nif": "504904493",
-            "nom": "RIS 2048 - Sistemas Informáticos e Comunicações, S.A.",
+            "nom": "RIS 2048 - Sistemas Informáticos e Comunicações S.A.",
             "pme": true
           }
         ],
         "adjudicatarios_sans_nif": 0,
-        "publie_le": "2026-01-09",
-        "celebre_le": "2026-01-07",
-        "preco_contratual_eur": 215012,
-        "preco_base_eur": 220729,
-        "prazo_dias": 365,
+        "publie_le": "2026-09-16",
+        "celebre_le": "2026-08-27",
+        "preco_contratual_eur": 34944,
+        "preco_base_eur": 36300,
+        "prazo_dias": 1095,
         "cpv": [
-          "30213100-6"
+          "72212218-0"
         ],
-        "lotes": [
-          "Portáteis, computadores e outro equipamento informático"
-        ],
-        "concorrentes": 2,
+        "lotes": [],
+        "concorrentes": 1,
         "concorrentes_sans_nif": 0,
-        "modificacoes": [
-          {
-            "data": "2026-06-01",
-            "tipo_ato": "Acordo entre as partes",
-            "preco_alterado_eur": 215012
-          }
-        ]
+        "modificacoes": []
       }
     ],
-    "nombre_attributions": 1,
-    "valeur_totale_eur": 215012,
-    "tronque_attributions": false,
+    "nombre_attributions": 1074,
+    "valeur_totale_eur": 37930529.65,
+    "tronque_attributions": true,
     "aucune_attribution": false,
     "contrats_emis": [],
     "nombre_contrats_emis": 0,
@@ -66,7 +58,18 @@
       "annees_chargees": [
         2026
       ],
-      "fichiers_du": "2026-09-13"
+      "fichiers_du": "2026-09-20",
+      "flux": {
+        "contratos": {
+          "dernier_mis_a_jour": "2026-09-19"
+        },
+        "modificacoes": {
+          "dernier_mis_a_jour": "2026-09-19"
+        },
+        "anuncios": {
+          "dernier_mis_a_jour": "2026-09-18"
+        }
+      }
     }
   }
 }

@@ -2,52 +2,57 @@
   "_endpoint": "/v1/eu/entreprise/LV/{regnr}/marches-publics",
   "_price": "$0.02",
   "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/LV/40003242737/marches-publics",
-  "_sample_of": "2026-09-17",
+  "_sample_of": "2026-10-01",
   "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-LV-regnr-marches-publics.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "LV",
     "id_national": "40003242737",
     "attributions": [
       {
-        "avis_id": "d5267a7f-3473-4ab0-8fc0-9272d7b9bb8a",
-        "type_avis": "contract-execution",
-        "forme": "execution",
-        "forme_source": "execution",
-        "publie_le": "2026-09-16",
-        "objet": "Degvielas iegāde Aizkraukles novada pašvaldības iestādēm",
-        "cpv": "09000000-3",
-        "nature": null,
+        "avis_id": "e0957b71-c23e-4ef7-a019-13ad3cd45ddf",
+        "type_avis": "pil-concluded-contract",
+        "forme": "resultat",
+        "forme_source": "result",
+        "publie_le": "2026-09-28",
+        "objet": "Marķētās dīzeļdegvielas piegāde apkures vajadzībām Rencēnu pagasta kultūras namam",
+        "cpv": "09134200-9",
+        "nature": "supplies",
         "acheteur": {
-          "regnr": "90000074812",
-          "nom": "Aizkraukles novada pašvaldība",
+          "regnr": "90000043403",
+          "nom": "Valmieras novada pašvaldība",
           "type": "la-main"
         },
         "contrat": {
-          "reference": "6.2/2024/64",
-          "titre": "Līgums",
-          "valeur_eur": 10061.17,
-          "conclusion_le": "2024-05-02",
-          "decision_le": null,
+          "reference": "Nr.08.521/7.4.3/26/112",
+          "titre": "Marķētās dīzeļdegvielas piegāde apkures vajadzībām Rencēnu pagasta kultūras namam",
+          "valeur_eur": 29720,
+          "conclusion_le": "2026-09-15",
+          "decision_le": "2026-09-08",
           "debut_le": null,
-          "fin_le": "2026-01-01",
-          "statut": null
+          "fin_le": "2027-09-14",
+          "statut": "active"
         },
         "gagnant": {
           "nom_publie": "Akciju sabiedrība \"VIRŠI-A\"",
-          "taille": null
+          "taille": "large"
         }
       }
     ],
-    "nombre_attributions": 1,
-    "valeur_totale_eur": 10061.17,
-    "tronque_attributions": false,
+    "nombre_attributions": 534,
+    "valeur_totale_eur": 50746301.8,
+    "tronque_attributions": true,
     "aucune_attribution": false,
     "avis_emis": [],
     "nombre_avis_emis": 0,
     "tronque_avis_emis": false,
     "stock": {
       "depuis": "2023-10-25",
-      "dernier_jour_collecte": "2026-09-16"
+      "dernier_jour_collecte": "2026-09-30",
+      "flux": {
+        "avis": {
+          "dernier_mis_a_jour": "2026-09-30"
+        }
+      }
     }
   }
 }
