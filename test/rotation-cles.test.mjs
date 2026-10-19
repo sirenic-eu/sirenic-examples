@@ -39,6 +39,7 @@ const FICHIERS = [
   "examples/verify-signature.ts",
   "examples/verify-invoice-file.ts",
   "examples/verifier-livraison-webhook.mjs",
+  "examples/controle-rotation-cles-2026-10-19.mjs",
   "test/faux-sirenic.mjs",
   "test/rotation-cles.test.mjs",
 ];
@@ -403,7 +404,7 @@ describe("examples/verifier-livraison-webhook.mjs : rotation simulée", () => {
 });
 
 // --- Aucun tiret long dans les fichiers publiés de ce chantier ----------------
-test("aucun tiret long dans les trois exemples et leur test", () => {
+test("aucun tiret long dans les exemples de la recette, leur contrôle et leur test", () => {
   for (const fichier of FICHIERS) {
     const chemin = join(RACINE, fichier);
     if (!existsSync(chemin)) continue;
