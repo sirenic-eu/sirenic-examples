@@ -3,7 +3,7 @@
   "_price": "$0.01",
   "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/LT/304500803",
   "_sample_of": "2026-09-23",
-  "_note": "Real paid response of 2026-09-23 (settled on-chain), trimmed by removal: the generic EU profile fields shown by the other profiles (lei, activite, lien_registre, identifiants, statut_detail, groupe_lei, financements_ue), four fields of registre_lt (forme, inscrit_le, radie_le, associes_par_categorie) and, in fiscalite_lt, par_mois and 2 of 3 yearly totals; source, disclaimer, data_freshness and provenance, present in every live response, are left out. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-LT-kodas.json, in its OpenAPI spec and in its x402 quote. Reconstructed example, not a paid response: composed by hand or read from the code, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "LT",
     "registre": "Juridinių asmenų registras (Registrų centras)",
@@ -16,24 +16,22 @@
     "statut": "actif",
     "date_creation": "2017-04-11",
     "adresse_siege": {
-      "adresse": null,
-      "code_postal": null,
-      "ville": "Vilniaus miesto savivaldybė",
+      "adresse": "<gatvė> g. <n>",
+      "code_postal": "LT-<nnnnn>",
+      "ville": "Vilnius",
       "pays": "LT"
     },
     "registre_lt": {
       "statut": "servi",
       "photo": "2026-09-23",
-      "etat": {
-        "code": 0,
-        "libelle": "Teisinis statusas neįregistruotas",
-        "libelle_en": "No legal proceedings",
-        "famille": "aucun",
-        "fr": "aucun statut juridique particulier",
-        "depuis": "2017-04-11"
-      },
       "denomination_anonymisee": false,
-      "adresse_non_publiee_sous_licence_ouverte": true,
+      "adresse_non_publiee_sous_licence_ouverte": false,
+      "adresse_registre": {
+        "statut": "servi",
+        "motif": null,
+        "dernier_mis_a_jour": "2026-10-01",
+        "photo": "2026-10-02"
+      },
       "capital": {
         "montant": 2500,
         "devise": "Eur",

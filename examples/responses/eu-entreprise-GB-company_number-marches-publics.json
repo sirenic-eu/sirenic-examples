@@ -2,7 +2,7 @@
   "_endpoint": "/v1/eu/entreprise/GB/{company_number}/marches-publics",
   "_price": "$0.02",
   "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/GB/10868035/marches-publics",
-  "_sample_of": "2026-09-17",
+  "_sample_of": "2026-10-01",
   "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-GB-company_number-marches-publics.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "GB",
@@ -45,11 +45,19 @@
     "stock": {
       "fts": {
         "depuis": "2021-01-01",
-        "dernier_jour_collecte": "2026-09-16"
+        "dernier_jour_collecte": "2026-09-30"
       },
       "cf": {
         "depuis": "2023-01-01",
-        "dernier_jour_collecte": "2026-09-16"
+        "dernier_jour_collecte": "2026-09-30"
+      },
+      "flux": {
+        "fts": {
+          "dernier_mis_a_jour": "2026-09-30"
+        },
+        "cf": {
+          "dernier_mis_a_jour": "2026-09-30"
+        }
       }
     }
   }

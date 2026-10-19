@@ -19,7 +19,7 @@
       }
     ],
     "tronque": true,
-    "source": "INSEE Sirene / INPI RNE via recherche-entreprises.api.gouv.fr, licence ouverte Etalab 2.0",
+    "source": "INSEE Sirene (Etalab 2.0) / INPI RNE (conditions propres à la source) via l'API recherche-entreprises",
     "disclaimer": "Données issues de l'open data, fournies en l'état sans garantie. / Open data, provided as is without warranty.",
     "etages_abandonnes": [],
     "data_freshness": "stock Sirene mensuel (2026-09-01), dirigeants temps réel"

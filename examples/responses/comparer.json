@@ -2,7 +2,7 @@
   "_endpoint": "/v1/comparer",
   "_price": "$0.12",
   "_request": "GET https://api.sirenic.eu/v1/comparer?sirens=552032534%2C542065479",
-  "_sample_of": "2026-09-25",
+  "_sample_of": "2026-10-08",
   "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/comparer.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "nombre_demande": 2,
@@ -21,11 +21,11 @@
           "score_risque": 22,
           "classe": "sain",
           "confiance": "moyenne",
-          "exercice_reference": "2024-12-31",
+          "exercice_reference": "2025-12-31",
           "version_modele": "defaillance-v1.9"
         },
         "finances": {
-          "exercice": "2024-12-31",
+          "exercice": "2025-12-31",
           "perimetre": "social",
           "chiffre_affaires": 1030000000,
           "resultat_net": 592000000
@@ -43,17 +43,9 @@
       }
     ],
     "classements": {
-      "chiffre_affaires": [
-        "542065479",
-        "552032534"
-      ],
       "anciennete": [
         "542065479",
         "552032534"
-      ],
-      "resultat_net": [
-        "552032534",
-        "542065479"
       ]
     },
     "eligibilite_classements": {
@@ -62,15 +54,17 @@
         "statut": "interdit",
         "raison": [
           "secteurs_differents",
-          "holding_dans_le_lot"
+          "holding_dans_le_lot",
+          "axes_differents"
         ]
       }
     },
     "ecarts": [
       {
-        "code": "ecart_taille_ca",
-        "min": 1030000000,
-        "max": 62589489000
+        "code": "resultat_net_negatif",
+        "cibles": [
+          "542065479"
+        ]
       }
     ],
     "comparabilite": {
@@ -80,6 +74,13 @@
           "code": "secteurs_differents",
           "portee": "bloquante",
           "lecture": "Les entreprises comparées n'ont pas le même code NAF : les scores et les ratios ne se comparent pas d'un secteur à l'autre. / The companies have different NAF activity codes: scores and ratios are not comparable across sectors."
+        },
+        {
+          "code": "exercice_duplique",
+          "portee": "bloquante",
+          "cibles": [
+            "552032534"
+          ]
         }
       ]
     }

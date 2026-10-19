@@ -1,0 +1,21 @@
+{
+  "_endpoint": "/v1/eu/entreprise/PL/{krs}/comptes",
+  "_price": "$0.01",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/PL/0000006865/comptes",
+  "_sample_of": "2026-07-31",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-PL-krs-comptes.json, in its OpenAPI spec and in its x402 quote. Reconstructed example, not a paid response: composed by hand or read from the code, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "pays": "PL",
+    "krs": "0000006865",
+    "nombre_depots": 172,
+    "depots": [
+      {
+        "type": "comptes_annuels",
+        "consolide": false,
+        "exercice_du": "2025-01-01",
+        "exercice_au": "2025-12-31",
+        "depose_le": "2026-06-30"
+      }
+    ]
+  }
+}

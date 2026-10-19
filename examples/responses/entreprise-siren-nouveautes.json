@@ -1,0 +1,79 @@
+{
+  "_endpoint": "/v1/entreprise/{siren}/nouveautes",
+  "_price": "$0.05",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/nouveautes?depuis=2026-07-01",
+  "_sample_of": "2026-10-07",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-nouveautes.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "siren": "552032534",
+    "denomination": "DANONE",
+    "depuis": "2026-07-01",
+    "verdict": "nouveautes",
+    "nouveautes": [
+      {
+        "type": "modification",
+        "date": "2026-09-02",
+        "date_nature": "parution_bodacc",
+        "date_evenement": null,
+        "bloc": "bodacc",
+        "source": "bodacc_dila",
+        "reference": "B202601671193",
+        "detail": {
+          "famille": "modification",
+          "type_avis": "Avis initial",
+          "tribunal": "Greffe du Tribunal des Activités Economiques de Paris",
+          "bulletin": "B",
+          "role": "sujet"
+        }
+      }
+    ],
+    "totaux_par_type": {
+      "modification": 1
+    },
+    "listes_bornees": {
+      "nouveautes": {
+        "nombre_total": 1,
+        "tronque": false
+      }
+    },
+    "dates_futures_ecartees": 0,
+    "blocs": [
+      {
+        "bloc": "bodacc",
+        "source_code": "bodacc_dila",
+        "etat": "servi",
+        "datation": "datee",
+        "date_photo": "2026-10-07",
+        "couverture_jusqu_au": "2026-10-07",
+        "couverture": {
+          "etat": "complete",
+          "mesure": "toutes les annonces BODACC qui citent le SIREN, publiées depuis la date demandée / all BODACC notices citing the SIREN published since the requested date"
+        },
+        "consulte_le": "2026-10-07T22:28:16.157Z",
+        "nombre_total": 1,
+        "nombre_servi": 1,
+        "lecture_complete": true,
+        "dates_futures_ecartees": 0,
+        "faits_non_dates": [],
+        "route": "/v1/entreprise/{siren}/changements"
+      }
+    ],
+    "hors_moteur": [
+      {
+        "bloc": "recrutement",
+        "motif": "photo_sans_historique",
+        "route": "/v1/entreprise/{siren}/emploi"
+      },
+      {
+        "bloc": "dirigeants",
+        "motif": "aucun_historique_conserve",
+        "route": "/v1/entreprise/{siren}"
+      },
+      {
+        "bloc": "tranche_effectif",
+        "motif": "aucun_historique_conserve",
+        "route": "/v1/entreprise/{siren}"
+      }
+    ]
+  }
+}

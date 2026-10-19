@@ -3,7 +3,7 @@
   "_price": "$0.02",
   "_request": "GET https://api.sirenic.eu/v1/entreprise/428634356/marches-publics-ue",
   "_sample_of": "2026-07-29",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-marches-publics-ue.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "siren": "428634356",
     "nombre_avis": 1,
@@ -30,9 +30,11 @@
         "co_titulaires": [
           "CABINET MERLIN"
         ],
+        "co_titulaires_omis": {},
         "identifiants_gagnants": [
           "42863435600532"
         ],
+        "identifiants_omis": {},
         "lien_ted": "https://ted.europa.eu/fr/notice/425760-2026/pdf",
         "correspondance": {
           "methode": "identifiant",

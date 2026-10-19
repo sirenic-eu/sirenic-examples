@@ -28,24 +28,6 @@
           "famille": "Extrait de jugement"
         },
         "url_bodacc": "https://www.bodacc.fr/pages/annonces-commerciales-detail/?q.id=id:A202601513770"
-      },
-      {
-        "id": "A202601503905",
-        "date_parution": "2026-08-09",
-        "famille": "Procédures collectives",
-        "type_avis": "Avis initial",
-        "tribunal": "Greffe du Tribunal de Commerce de Douai",
-        "ville": "Hornaing",
-        "code_postal": "59171",
-        "departement": "59",
-        "departement_nom": "Nord",
-        "siren": "907941801",
-        "jugement": {
-          "nature": "Jugement d'ouverture d'une procédure de redressement judiciaire",
-          "date": "2026-08-04",
-          "famille": "Jugement d'ouverture"
-        },
-        "url_bodacc": "https://www.bodacc.fr/pages/annonces-commerciales-detail/?q.id=id:A202601503905"
       }
     ],
     "total_servi": 56,

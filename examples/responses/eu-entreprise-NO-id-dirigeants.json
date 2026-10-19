@@ -15,27 +15,6 @@
     "aucun_mandat_inscrit": false,
     "mandats": [
       {
-        "organe": "direction",
-        "organe_source": "DAGL",
-        "organe_libelle": "Daglig leder",
-        "organe_modifie_le": "2020-11-02",
-        "role": "directeur_general",
-        "role_source": "DAGL",
-        "role_libelle": "Daglig leder",
-        "rang": 0,
-        "titulaire": {
-          "type": "personne",
-          "prenom": "<prénom>",
-          "nom": "<nom>",
-          "decede": false
-        },
-        "en_cours": true,
-        "desinscrit": false,
-        "elu_par": null,
-        "elu_par_source": null,
-        "part_responsabilite": null
-      },
-      {
         "organe": "reviseur",
         "organe_source": "REVI",
         "organe_libelle": "Revisor",

@@ -1,0 +1,23 @@
+{
+  "_endpoint": "/v1/entreprises/requete/compter",
+  "_price": "$0.002",
+  "_request": "GET https://api.sirenic.eu/v1/entreprises/requete/compter?criteres=%5B%7B%22champ%22%3A%22siege.departement%22%2C%22op%22%3A%22%3D%22%2C%22valeur%22%3A%2269%22%7D%2C%7B%22champ%22%3A%22finances.ca%22%2C%22op%22%3A%22%3E%22%2C%22valeur%22%3A1000000%7D%5D",
+  "_sample_of": "2026-10-03",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprises-requete-compter.json, in its OpenAPI spec and in its x402 quote. Rendered by the route on test data (fictitious companies), with no purchase, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "nombre_total": 23,
+    "perimetre": "personnes morales diffusibles du stock Sirene, actives (identite.etat = A) sauf critère sur identite.etat ; entrepreneurs individuels et unités en diffusion partielle jamais comptés ni listés ; un critère ne retient jamais une valeur absente ; un critère sur identite.naf ne retient que les codes de la NAF rév. 2 / public legal persons of the Sirene stock, active (identite.etat = A) unless a criterion sets identite.etat; sole traders and partially public units never counted or listed; a criterion never retains a missing value; a criterion on identite.naf only retains NAF rev. 2 codes",
+    "stock": {
+      "construit_le": "2026-10-02",
+      "age_jours": 1,
+      "seuil_jours": 45,
+      "flux": {
+        "sirene-stock-unites-legales": {
+          "dernier_mis_a_jour": "2026-10-01"
+        }
+      }
+    },
+    "source": "INSEE Sirene, INPI et Banque de France (comptes), Signaux Faibles (liasses), ADEME (RGE), ministère du Travail (égapro), Géorisques (ICPE), DECP, EBA, EIOPA et ARCEP (agréments), table pré-croisée par Sirenic ; licence de chaque source : GET /v1/provenance/registres",
+    "disclaimer": "Compte exact ; chaque source datée dans stock.flux, table fermée au-delà de 45 jours ; géographie du siège ; finances du dernier exercice social qualifié. / Exact count; each source dated in stock.flux, table closed beyond 45 days; head-office geography; finances of the last qualified annual accounts."
+  }
+}

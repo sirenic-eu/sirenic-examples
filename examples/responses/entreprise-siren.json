@@ -3,7 +3,7 @@
   "_price": "$0.005",
   "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534?geo=true",
   "_sample_of": "2026-07-29",
-  "_note": "Real paid response, truncated to one item per array. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "siren": "552032534",
     "denomination": "DANONE",
@@ -35,7 +35,7 @@
         "note": 86
       }
     ],
-    "source": "INSEE Sirene / INPI RNE via recherche-entreprises.api.gouv.fr, licence ouverte Etalab 2.0 ; index Egapro (ministère du Travail) et annuaire RGE (ADEME), licence ouverte Etalab 2.0",
+    "source": "INSEE Sirene (Etalab 2.0) / INPI RNE (conditions propres à la source) via l'API recherche-entreprises ; index Egapro (ministère du Travail) et annuaire RGE (ADEME), Etalab 2.0",
     "data_freshness": "stock Sirene mensuel (2026-07-01), dirigeants temps réel"
   }
 }

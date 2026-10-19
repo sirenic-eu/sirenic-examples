@@ -1,0 +1,80 @@
+{
+  "_endpoint": "/v1/identite/lot",
+  "_price": "$0.003",
+  "_request": "GET https://api.sirenic.eu/v1/identite/lot?lignes=552032534%3BHERMES+INTERNATIONAL%7C75008",
+  "_sample_of": "2026-10-08",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/identite-lot.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "nombre_lignes": 2,
+    "comptes": {
+      "resolution": {
+        "resolu": 1,
+        "a_confirmer": 1,
+        "introuvable": 0,
+        "siren_invalide": 0,
+        "siren_inconnu": 0,
+        "non_diffusible": 0
+      },
+      "etat": {
+        "actif": 1,
+        "cesse": 0
+      },
+      "tva_vies": {
+        "valide": 1,
+        "invalide": 0,
+        "indisponible": 0,
+        "non_verifie": 0
+      },
+      "doublons": 0,
+      "lignes_a_etages_abandonnes": 0
+    },
+    "lignes": [
+      {
+        "rang": 1,
+        "identifiant_lu": "siren",
+        "resolution": "resolu",
+        "siren": "552032534",
+        "siret_siege": "55203253400703",
+        "denomination": "DANONE",
+        "etat": "actif",
+        "adresse": "59 RUE LA FAYETTE 75009 PARIS",
+        "tva": {
+          "numero": "FR27552032534",
+          "vies": "valide"
+        }
+      },
+      {
+        "rang": 2,
+        "identifiant_lu": "nom_cp",
+        "resolution": "a_confirmer",
+        "candidats": [
+          {
+            "siren": "352476329",
+            "denomination": "HERMES INTERNATIONAL",
+            "etat": "cesse",
+            "score_confiance": 1
+          },
+          {
+            "siren": "572076396",
+            "denomination": "HERMES INTERNATIONAL",
+            "etat": "actif",
+            "score_confiance": 1
+          },
+          {
+            "siren": "377788997",
+            "denomination": "HERMES CONSULTANTS INTERNATIONAL ASSOCIE",
+            "etat": "cesse",
+            "score_confiance": 0.98
+          }
+        ],
+        "candidats_non_servis": {},
+        "listes_bornees": {
+          "candidats": {
+            "nombre_total": 3,
+            "tronque": false
+          }
+        }
+      }
+    ]
+  }
+}
