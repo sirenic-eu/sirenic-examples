@@ -24,7 +24,7 @@ import { x402Client } from "@x402/core/client";
 import { registerExactEvmScheme } from "@x402/evm/exact/client";
 import { createHash, createPublicKey, verify } from "node:crypto";
 
-const BASE = "https://api.sirenic.eu";
+const BASE = process.env.SIRENIC_URL ?? "https://api.sirenic.eu";
 
 // 1. Pay one request. We use sanctions screening ($0.02): the cheapest
 //    endpoint that carries a `provenance` block, so we can demo both halves
