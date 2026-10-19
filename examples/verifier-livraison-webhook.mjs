@@ -11,7 +11,8 @@
  *
  * Tant qu'il n'y a rien : il se tait (sortie 0, « rien à signaler »).
  * Dès qu'une livraison arrive, il fait les trois choses qui ferment la preuve :
- *   1. VÉRIFIE la signature Ed25519 contre la clé publique servie par l'API —
+ *   1. VÉRIFIE la signature Ed25519 avec la clé de son kid, prise dans `keys`
+ *      du document servi par l'API (jamais la clé de la racine, celle du jour),
  *      recette `sirenic-v1:{kid}:{timestamp}:{sha256(corps) en base64}` ;
  *   2. ARRÊTE la watch (le jeton a transité chez un tiers : il est brûlé) ;
  *   3. ÉCRIT la trace, à committer sur le dépôt privé.
@@ -34,16 +35,20 @@ const dire = (m) => {
   journal.push(m);
 };
 
+/** La forme exacte de l'horodatage que Sirenic signe : ISO 8601 en UTC, à la milliseconde au plus. */
+const FORME_HORODATAGE = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,3})?Z$/;
+
 /**
- * Vérifie UNE livraison avec la clé publique servie par l'API (`cle`, le document
- * de /.well-known/sirenic-signing-key). Exportée pour le test ; aucun appel réseau.
+ * Vérifie UNE livraison avec le document des clés publiées (`documentCles`, celui
+ * de /.well-known/sirenic-signing-key) : l'entrée de `keys` dont le kid est celui
+ * de la livraison, et le jour UTC de son horodatage dans [valid_from, valid_until]
+ * (bornes incluses ; valid_until nulle : clé toujours en service). Jamais la clé
+ * de la racine : c'est la clé du jour, elle ne vérifie pas une livraison signée
+ * avant un changement de clé. Un document sans `keys` (archivé avant le
+ * 02/10/2026) : sa racine, si et seulement si son kid est celui de la livraison.
+ * Rend `{ kid, ok, motif }`. Exportée pour le test ; aucun appel réseau.
  */
-export function verifierLivraison(req, cle) {
-  const publique = createPublicKey({
-    key: Buffer.from(cle.public_key, "base64"),
-    format: "der",
-    type: "spki",
-  });
+export function verifierLivraison(req, documentCles) {
   const entetes = Object.fromEntries(
     Object.entries(req.headers ?? {}).map(([k, v]) => [k.toLowerCase(), Array.isArray(v) ? v[0] : v]),
   );
@@ -52,13 +57,38 @@ export function verifierLivraison(req, cle) {
   const sig = entetes["x-sirenic-signature"];
   const corps = Buffer.from(req.content ?? "", "utf8");
 
-  let ok = false;
-  if (kid && ts && sig) {
-    const condensat = createHash("sha256").update(corps).digest("base64");
-    const message = Buffer.from(`sirenic-v1:${kid}:${ts}:${condensat}`, "utf8");
-    ok = verifierSignature(null, message, publique, Buffer.from(sig, "base64"));
+  if (!kid || !ts || !sig) return { kid, ok: false, motif: "en-têtes de signature absents" };
+  // Le jour se lit sur la chaîne signée : `new Date()` lirait en heure locale un horodatage sans Z.
+  if (!FORME_HORODATAGE.test(ts)) return { kid, ok: false, motif: `horodatage mal formé (${ts})` };
+  const jour = ts.slice(0, 10);
+
+  let clePublique;
+  let motif;
+  if (Array.isArray(documentCles.keys)) {
+    const entree = documentCles.keys.find((e) => e.kid === kid);
+    if (!entree) return { kid, ok: false, motif: "kid non publié dans keys" };
+    const fin = entree.valid_until ?? "aujourd'hui";
+    if (jour < entree.valid_from || (entree.valid_until !== null && jour > entree.valid_until)) {
+      return { kid, ok: false, motif: `hors de la fenêtre de sa clé (${entree.valid_from} au ${fin})` };
+    }
+    clePublique = entree.public_key;
+    motif = `clé de son kid, en usage du ${entree.valid_from} au ${fin}`;
+  } else {
+    if (documentCles.kid !== kid) return { kid, ok: false, motif: "document sans keys, dont la racine porte un autre kid" };
+    clePublique = documentCles.public_key;
+    motif = "racine d'un document sans keys, aucune fenêtre à contrôler";
   }
-  return { kid, ok };
+
+  const publique = createPublicKey({
+    key: Buffer.from(clePublique, "base64"),
+    format: "der",
+    type: "spki",
+  });
+  const condensat = createHash("sha256").update(corps).digest("base64");
+  const message = Buffer.from(`sirenic-v1:${kid}:${ts}:${condensat}`, "utf8");
+  return verifierSignature(null, message, publique, Buffer.from(sig, "base64"))
+    ? { kid, ok: true, motif }
+    : { kid, ok: false, motif: "signature invalide" };
 }
 
 async function principal() {
@@ -75,18 +105,18 @@ async function principal() {
   })();
 
   if (requetes === null) {
-    dire("bac injoignable — rien de concluant, on retentera demain");
+    dire("bac injoignable : rien de concluant, on retentera demain");
     process.exit(0);
   }
 
   const recues = Array.isArray(requetes.data) ? requetes.data : [];
   if (recues.length === 0) {
-    dire(`aucune livraison à ce jour (bac ${BAC}) — la watch attend un événement réel`);
+    dire(`aucune livraison à ce jour (bac ${BAC}) : la watch attend un événement réel`);
     process.exit(0);
   }
 
   // --- Une livraison est arrivée : on ferme la preuve -----------------------
-  dire(`${recues.length} livraison(s) reçue(s) — vérification de la signature`);
+  dire(`${recues.length} livraison(s) reçue(s) : vérification de la signature`);
 
   const cle = await (await fetch(`${API}/.well-known/sirenic-signing-key`)).json();
 
@@ -96,15 +126,15 @@ async function principal() {
 
   let signaturesValides = 0;
   for (const [i, req] of recues.entries()) {
-    const { kid, ok } = verifierLivraison(req, cle);
+    const { kid, ok, motif } = verifierLivraison(req, cle);
     if (ok) signaturesValides += 1;
-    dire(`  livraison ${i + 1} : kid=${kid ?? "(absent)"} signature=${ok ? "VALIDE" : "INVALIDE OU ABSENTE"}`);
+    dire(`  livraison ${i + 1} : kid=${kid ?? "(absent)"} signature=${ok ? "VALIDE" : "INVALIDE"} (${motif})`);
     // Le corps porte le jeton porteur : conservé en trace PRIVÉE uniquement.
     writeFileSync(`${dossier}/livraison-${i + 1}.json`, JSON.stringify(req, null, 2));
   }
 
   dire(`signatures valides : ${signaturesValides}/${recues.length}`);
-  dire(`kid attendu : ${cle.kid}`);
+  dire(`clés publiées : ${(cle.keys ?? [cle]).map((e) => e.kid).join(", ")}`);
 
   // --- Arrêt de la watch : le jeton a transité chez un tiers ----------------
   if (existsSync(FICHIER_JETON)) {
@@ -112,14 +142,14 @@ async function principal() {
     const r = await fetch(`${API}/v1/surveillance/${encodeURIComponent(jeton)}/arreter`);
     dire(`arrêt de la watch (jeton brûlé) → HTTP ${r.status}`);
   } else {
-    dire("fichier de jeton introuvable — arrêter la watch à la main");
+    dire("fichier de jeton introuvable : arrêter la watch à la main");
   }
 
   writeFileSync(`${dossier}/verdict.txt`, journal.join("\n") + "\n");
 
   // --- Trace sur le dépôt PRIVÉ (règle CDU du 11/08) ------------------------
   // Le corps d'une livraison porte un jeton porteur : ce dépôt ne devient JAMAIS
-  // public. Commit fait ici pour que le contrôle soit autonome — personne n'a à
+  // public. Commit fait ici pour que le contrôle soit autonome : personne n'a à
   // se souvenir de le faire le jour où la livraison tombe.
   try {
     const depot = "/home/ubuntu/sirenic-resultats";
@@ -132,7 +162,7 @@ async function principal() {
     );
     dire("trace commitée sur le dépôt privé de traces");
   } catch (e) {
-    dire(`commit de la trace ÉCHOUÉ (${String(e).slice(0, 120)}) — dossier conservé : ${dossier}`);
+    dire(`commit de la trace ÉCHOUÉ (${String(e).slice(0, 120)}), dossier conservé : ${dossier}`);
   }
 
   dire(`\ntraces : ${dossier}`);

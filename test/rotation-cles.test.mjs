@@ -218,7 +218,9 @@ describe("examples/verify-signature.ts : le reçu public", { concurrency: 4 }, (
   const NUMERO = "0f1e2d3c4b5a6978";
   const entetes = { ...signer(NEUVE, CORPS_SANCTIONS, HORODATAGE), "X-Sirenic-Verification-Id": NUMERO };
   const condensat = createHash("sha256").update(CORPS_SANCTIONS).digest("base64");
-  const recuValide = (corps_sha256) => ({
+  const AUTRE_CONDENSAT = createHash("sha256").update("autre").digest("base64");
+  /** Un reçu `valide` ; `ecarts` remplace un seul champ de sa signature, pour juger chaque comparaison seule. */
+  const recuValide = (ecarts = {}) => ({
     verdict: "valide",
     numero: NUMERO,
     emise_le: HORODATAGE,
@@ -226,15 +228,19 @@ describe("examples/verify-signature.ts : le reçu public", { concurrency: 4 }, (
     sujet: null,
     signature: {
       kid: NEUVE.kid,
-      corps_sha256,
+      corps_sha256: condensat,
       valeur: entetes["X-Sirenic-Signature"],
-      message_signe: `sirenic-v1:${NEUVE.kid}:${HORODATAGE}:${corps_sha256}`,
+      message_signe: `sirenic-v1:${NEUVE.kid}:${HORODATAGE}:${condensat}`,
       cle: { kid: NEUVE.kid, etat: "en_service", valid_from: "2026-10-03", valid_until: null },
+      ...ecarts,
     },
   });
   const RECUS = [
-    { nom: "reçu valide, même empreinte, même kid, même message : sortie 0", entetes, recus: { [NUMERO]: { corps: recuValide(condensat) } }, code: 0, motif: /receipt verdict: valide/ },
-    { nom: "reçu valide d'une autre réponse (empreinte différente) : sortie 1, la signature reste valide", entetes, recus: { [NUMERO]: { corps: recuValide(createHash("sha256").update("autre").digest("base64")) } }, code: 1, motif: /describes another response/ },
+    { nom: "reçu valide, même empreinte, même kid, même message : sortie 0", entetes, recus: { [NUMERO]: { corps: recuValide() } }, code: 0, motif: /receipt verdict: valide/ },
+    { nom: "reçu valide d'une autre réponse (empreinte et message différents) : sortie 1, la signature reste valide", entetes, recus: { [NUMERO]: { corps: recuValide({ corps_sha256: AUTRE_CONDENSAT, message_signe: `sirenic-v1:${NEUVE.kid}:${HORODATAGE}:${AUTRE_CONDENSAT}` }) } }, code: 1, motif: /describes another response/ },
+    { nom: "reçu valide dont seule l'empreinte diffère : sortie 1", entetes, recus: { [NUMERO]: { corps: recuValide({ corps_sha256: AUTRE_CONDENSAT }) } }, code: 1, motif: /describes another response/ },
+    { nom: "reçu valide dont seul le kid diffère : sortie 1", entetes, recus: { [NUMERO]: { corps: recuValide({ kid: ANCIENNE.kid }) } }, code: 1, motif: /describes another response/ },
+    { nom: "reçu valide dont seul le message signé diffère : sortie 1", entetes, recus: { [NUMERO]: { corps: recuValide({ message_signe: `sirenic-v1:${NEUVE.kid}:2026-10-19T10:00:00.001Z:${condensat}` }) } }, code: 1, motif: /describes another response/ },
     { nom: "reçu inconnu (404) : dit, sortie 0", entetes, recus: {}, code: 0, motif: /inconnue/ },
     { nom: "reçu en panne (500, corps illisible) : dit, sortie 0", entetes, recus: { [NUMERO]: { statut: 500, type: "text/plain", corps: "boom" } }, code: 0, motif: /receipt not readable|HTTP 500/ },
     { nom: "aucun numéro de vérification : dit, sortie 0", entetes: signer(NEUVE, CORPS_SANCTIONS, HORODATAGE), recus: {}, code: 0, motif: /No X-Sirenic-Verification-Id/ },
@@ -338,6 +344,23 @@ describe("examples/verify-invoice-file.ts : rotation simulée", { concurrency: 4
     if (opensslPresent) {
       const parOpenssl = await executerBash(recetteOpenssl, dossier);
       assert.match(parOpenssl.sortie, /Signature Verified Successfully/, parOpenssl.sortie);
+    }
+
+    // La recette node refuse aussi : la clé de l'achat close la veille (2026-09-04), ou absente du document.
+    writeFileSync(
+      join(dossier, "cle-publique.json"),
+      documentDesCles({ racine: NEUVE, keys: [entree(ANCIENNE, "2026-07-20", "2026-09-04"), entree(NEUVE, "2026-09-04", null)] }),
+    );
+    const horsFenetre = await executerBash(recetteNode, dossier);
+    assert.match(horsFenetre.sortie, /signature INVALIDE : jour 2026-09-05 hors de la fenêtre/, horsFenetre.sortie);
+    assert.notEqual(horsFenetre.code, 0, horsFenetre.sortie);
+    writeFileSync(join(dossier, "cle-publique.json"), documentDesCles({ racine: NEUVE, keys: [entree(NEUVE, "2026-10-03", null)] }));
+    const absente = await executerBash(recetteNode, dossier);
+    assert.match(absente.sortie, /signature INVALIDE : kid [0-9a-f]{16} absent de keys/, absente.sortie);
+    assert.notEqual(absente.code, 0, absente.sortie);
+    if (opensslPresent) {
+      const parOpensslAbsente = await executerBash(recetteOpenssl, dossier);
+      assert.doesNotMatch(parOpensslAbsente.sortie, /Signature Verified Successfully/, parOpensslAbsente.sortie);
     }
   });
 });
