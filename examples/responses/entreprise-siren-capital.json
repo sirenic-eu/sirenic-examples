@@ -2,11 +2,11 @@
   "_endpoint": "/v1/entreprise/{siren}/capital",
   "_price": "$0.35",
   "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/capital",
-  "_sample_of": "2026-09-25",
+  "_sample_of": "2026-10-01",
   "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-capital.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "siren": "552032534",
-    "modele": "claude-sonnet-5",
+    "modele": "claude-sonnet-5-5",
     "capital": {
       "montant_capital_eur": 170834294.25,
       "forme_juridique": "Société anonyme",
@@ -17,7 +17,7 @@
       "clauses_notables": [
         "droit_de_vote_double"
       ],
-      "confiance": "faible"
+      "confiance": "forte"
     },
     "version_prompt": "capital-v5",
     "document_source": {
@@ -26,7 +26,7 @@
       "type": "actes",
       "date_depot": "2026-08-13"
     },
-    "depuis_cache": true,
+    "depuis_cache": false,
     "source": "INPI — actes/statuts publics déposés au registre national des entreprises (RNE)"
   }
 }

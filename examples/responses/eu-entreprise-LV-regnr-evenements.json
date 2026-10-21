@@ -1,44 +1,46 @@
 {
   "_endpoint": "/v1/eu/entreprise/LV/{regnr}/evenements",
   "_price": "$0.02",
-  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/LV/50203219311/evenements",
-  "_sample_of": "2026-09-09",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/LV/40103637844/evenements",
+  "_sample_of": "2026-10-20",
   "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-LV-regnr-evenements.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "LV",
-    "id_national": "50203219311",
-    "nombre_evenements": 2,
+    "id_national": "40103637844",
+    "statut": "actif",
+    "statut_detail": null,
+    "nombre_evenements": 4,
     "aucun_evenement": false,
     "evenements": [
-      {
-        "famille": "liquidation",
-        "type": "cessation_activite",
-        "type_source": "ACTIVITY_TERMINATED",
-        "libelle_source": "Darbības izbeigšana",
-        "date": "2026-08-31",
-        "fondement": "Latvijas Republikas Uzņēmumu reģistra valsts notāra 03.07.2026. lēmums Nr.6-12/53992",
-        "role": "objet",
-        "societe_liee": null,
-        "numero_affaire": null,
-        "institution": null,
-        "inscrit_le": "2026-08-31T11:37:11Z"
-      },
       {
         "famille": "surete",
         "type": "interdiction",
         "type_source": "PROHIBITION",
         "libelle_source": "Aizliegums",
-        "date": "2025-07-28",
-        "fondement": "Piemērots aizliegums reorganizācijai un dalībnieku maiņai",
+        "date": "2026-09-22",
+        "fondement": null,
         "role": "objet",
         "societe_liee": null,
-        "numero_affaire": "32.1/17.22.1/25774",
+        "numero_affaire": "30.4/17.20.3/90545",
         "institution": {
           "type": "administration_fiscale",
-          "nom": "Valsts ieņēmumu dienests",
-          "regnr": "90000069281"
+          "nom": "VID Nodokļu nomaksas veicināšanas pārvalde",
+          "regnr": null
         },
         "inscrit_le": null
+      },
+      {
+        "famille": "liquidation",
+        "type": "liquidation",
+        "type_source": "LIQUIDATION",
+        "libelle_source": "Likvidācijas process",
+        "date": "2015-04-13",
+        "fondement": "23.03.2015. Dalībnieku sapulces protokols Nr.1/2015",
+        "role": "objet",
+        "societe_liee": null,
+        "numero_affaire": null,
+        "institution": null,
+        "inscrit_le": "2015-04-13T13:01:40Z"
       }
     ],
     "licence": "Uzņēmumu reģistrs / VID, data.gov.lv, CC0 1.0"
