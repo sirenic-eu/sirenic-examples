@@ -2,7 +2,7 @@
   "_endpoint": "/v1/eu/entreprise/NO/{id}/dirigeants",
   "_price": "$0.01",
   "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/NO/923609016/dirigeants?inclure_anciens=true",
-  "_sample_of": "2026-09-16",
+  "_sample_of": "2026-10-13",
   "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-NO-id-dirigeants.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "NO",
@@ -11,7 +11,7 @@
     "forme_juridique": "ASA",
     "nombre_mandats_en_cours": 14,
     "nombre_anciens_mandats": 1,
-    "inclure_anciens": false,
+    "inclure_anciens": true,
     "aucun_mandat_inscrit": false,
     "mandats": [
       {

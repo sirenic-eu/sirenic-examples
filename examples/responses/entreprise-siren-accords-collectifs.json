@@ -2,7 +2,7 @@
   "_endpoint": "/v1/entreprise/{siren}/accords-collectifs",
   "_price": "$0.02",
   "_request": "GET https://api.sirenic.eu/v1/entreprise/335146965/accords-collectifs",
-  "_sample_of": "2026-09-13",
+  "_sample_of": "2026-10-01",
   "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-accords-collectifs.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "siren": "335146965",
@@ -22,6 +22,7 @@
         "date_signature": "2025-12-30",
         "url_legifrance": "https://www.legifrance.gouv.fr/acco/id/ACCOTEXT000053386910"
       }
-    ]
+    ],
+    "tronque": false
   }
 }

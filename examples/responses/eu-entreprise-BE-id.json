@@ -2,7 +2,7 @@
   "_endpoint": "/v1/eu/entreprise/BE/{id}",
   "_price": "$0.01",
   "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/BE/0403170701",
-  "_sample_of": "2026-07-29",
+  "_sample_of": "2026-10-01",
   "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-BE-id.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "BE",
@@ -15,29 +15,28 @@
     },
     "statut": "actif",
     "adresse_siege": {
-      "ville": "BRUXELLES",
+      "ville": "Bruxelles",
       "pays": "BE"
     },
     "activite": {
       "nomenclature": "NACEBEL 2025",
-      "code": "35111",
-      "libelle": "Production d'électricité"
+      "code": "35110",
+      "libelle": "Production d’électricité à partir de sources non renouvelables"
     },
     "activites": [
       {
         "nomenclature": "NACEBEL 2025",
-        "code": "35111",
-        "libelle": "Production d'électricité",
+        "code": "35110",
+        "libelle": "Production d’électricité à partir de sources non renouvelables",
         "classification": "MAIN"
       }
     ],
-    "nombre_etablissements": 2,
+    "nombre_etablissements": 25,
     "identifiants": {
       "tva": "BE0403170701",
-      "lei": null
+      "lei": "T0YOOBZO4L6YAD6SAV65"
     },
     "lien_registre": "https://kbopub.economie.fgov.be/kbopub/zoeknummerform.html?nummer=0403170701",
-    "data_freshness": "stock Banque-Carrefour des Entreprises (KBO/BCE) (2026-07)",
-    "disclaimer": "Données rediffusées telles que publiées par les registres officiels, dans un schéma unifié ; `statut` est une normalisation en 3 valeurs, le libellé source est conservé dans `statut_detail`. / Official register data as published, unified schema; `statut` is a 3-value normalization."
+    "data_freshness": "stock Banque-Carrefour des Entreprises (KBO/BCE) (2026-09)"
   }
 }

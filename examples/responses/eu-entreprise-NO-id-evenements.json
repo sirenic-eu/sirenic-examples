@@ -2,7 +2,7 @@
   "_endpoint": "/v1/eu/entreprise/NO/{id}/evenements",
   "_price": "$0.02",
   "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/NO/926455249/evenements",
-  "_sample_of": "2026-07-29",
+  "_sample_of": "2026-10-13",
   "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-NO-id-evenements.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "NO",
@@ -10,19 +10,24 @@
     "denomination": "123 HOLDING AS",
     "forme_juridique": "AS",
     "etat_courant": {
-      "faillite": true,
-      "faillite_date": "2026-02-27",
-      "radie_le": null,
+      "faillite": null,
+      "faillite_date": null,
+      "radie_le": "2026-08-08",
       "verifie_en_direct": true,
       "lecture_directe": "verifiee"
     },
+    "journal": {
+      "derniere_collecte": "2026-10-12T12:15:36Z",
+      "frais": true
+    },
     "evenements": [
       {
-        "type": "faillite",
-        "libelle": "Bankruptcy opened (konkurs)",
-        "date": "2026-02-27",
+        "type": "radiation",
+        "libelle": "Struck off the register (slettet)",
+        "date": "2026-08-08",
         "origine_date": "registre",
-        "date_au_plus_tard": false
+        "date_au_plus_tard": false,
+        "constate_le": "2026-08-16"
       }
     ],
     "nombre_evenements": 1,

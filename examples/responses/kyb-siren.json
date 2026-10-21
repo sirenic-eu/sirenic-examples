@@ -2,7 +2,7 @@
   "_endpoint": "/v1/kyb/{siren}",
   "_price": "$0.15",
   "_request": "GET https://api.sirenic.eu/v1/kyb/552032534",
-  "_sample_of": "2026-09-25",
+  "_sample_of": "2026-10-20",
   "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/kyb-siren.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "siren": "552032534",
@@ -36,15 +36,21 @@
       },
       "decisions_recentes": [],
       "tronque_dans_le_rapport": false,
-      "consulte_le": "2026-09-25T03:30:03Z"
+      "consulte_le": "2026-10-20T03:30:02Z"
     },
     "finances": {
-      "nombre_exercices": 8,
+      "nombre_exercices": 9,
       "exercices": [
         {
-          "date_cloture": "2024-12-31",
+          "date_cloture": "2025-12-31",
           "chiffre_affaires": 1030000000,
-          "resultat_net": 592000000
+          "resultat_net": 592000000,
+          "qualite": {
+            "fiabilite": "a_verifier",
+            "anomalies": [
+              "exercice_duplique"
+            ]
+          }
         }
       ]
     },
@@ -62,6 +68,21 @@
     },
     "score_completude": 100,
     "blocs_manquants": [],
-    "data_freshness": "identité : stock Sirene mensuel (2026-09-01)"
+    "blocs_a_verifier": [
+      {
+        "bloc": "finances",
+        "fiabilite": "a_verifier",
+        "anomalies": [
+          "exercice_duplique"
+        ]
+      }
+    ],
+    "data_freshness": "identité : stock Sirene mensuel (2026-10-01)",
+    "verification": {
+      "numero": "84054665e9376069",
+      "url": "https://api.sirenic.eu/verifier/84054665e9376069",
+      "mention": "Document émis par Sirenic le 20/10/2026 à partir des registres officiels cités, chacun à sa date. Vérifier ce document : https://api.sirenic.eu/verifier/84054665e9376069",
+      "mention_en": "Document issued by Sirenic on 2026-10-20 from the official registers cited, each at its own date. Verify this document: https://api.sirenic.eu/verifier/84054665e9376069"
+    }
   }
 }

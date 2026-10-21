@@ -174,7 +174,7 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/eu/entreprise/PL/6040248554/marches-publics", expect: "attributions", price: "$0.02" }, // M&M JOB CONNECT Sp. z o.o. (tranche 12 BZP, after the 2021→ backfill)
   { path: "/v1/eu/entreprise/LV/40003245752", expect: "denomination", price: "$0.01" }, // airBaltic
   // 10/09/2026 : tranche 1 Europe — événements de vie et associés lettons (Uzņēmumu reģistrs, CC0).
-  { path: "/v1/eu/entreprise/LV/50203219311/evenements", expect: "evenements", price: "$0.02" },
+  { path: "/v1/eu/entreprise/LV/40103637844/evenements", expect: "evenements", price: "$0.02" },
   { path: "/v1/eu/entreprise/LV/40103774127/associes", expect: "associes", price: "$0.02" },
   { path: "/v1/eu/entreprise/LV/40003242737/marches-publics", expect: "nombre_attributions", price: "$0.02" }, // VIRŠI-A — IUB awards (17/09/2026)
   { path: "/v1/eu/entreprise/LV/40003242722/marches-publics-ue", expect: "nombre_avis", price: "$0.02" }, // SIA NORDE — TED award notices matched by national identifier, nine countries (17/09/2026)

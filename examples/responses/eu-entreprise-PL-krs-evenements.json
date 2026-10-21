@@ -2,22 +2,27 @@
   "_endpoint": "/v1/eu/entreprise/PL/{krs}/evenements",
   "_price": "$0.02",
   "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/PL/0000006865/evenements",
-  "_sample_of": "2026-07-29",
+  "_sample_of": "2026-10-13",
   "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-PL-krs-evenements.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "PL",
     "krs": "0000006865",
     "observation": {
-      "depuis": "2026-07-01",
-      "jusqu_au": "2026-07-28"
+      "depuis": "2026-08-16",
+      "jusqu_au": "2026-10-12"
     },
     "aucun_evenement": true,
     "nombre_evenements": 0,
     "evenements": [],
-    "derniere_observation": null,
+    "derniere_observation": {
+      "le": "2026-08-10",
+      "denomination": "CD PROJEKT RED SPÓŁKA AKCYJNA",
+      "radie_le": null,
+      "numero_dernier_wpis": 175
+    },
     "existence": {
       "verifiee": false,
-      "explication": "Existence NON vérifiée : cette route ne lit que les journées du Biuletyn, et ce numéro n'y a jamais figuré pendant la fenêtre. `aucun_evenement: true` signifie « aucun changement publié pendant la fenêtre » — PAS « société existante restée calme » : un numéro inexistant donne exactement la même réponse. Pour trancher l'existence, appeler la fiche d'identité LIVE (elle rend 404 si le KRS n'existe pas). / Existence NOT verified: this route only reads the daily bulletin and this number never appeared in it during the window; an unknown number yields the very same answer. Use the live identity endpoint to settle existence (it returns 404 when the KRS does not exist).",
+      "explication": "Existence CONFIRMÉE, mais HORS fenêtre : l'extrait KRS de cette société a été lu le 2026-08-10, en dehors de la fenêtre d'observation servie — pas pendant elle. « aucun_evenement: true » ne vaut donc que pour la fenêtre servie. / Existence CONFIRMED but OUTSIDE the window: this company's KRS extract was read on 2026-08-10, not during the served observation window.",
       "route_identite": "/v1/eu/entreprise/PL/0000006865"
     },
     "retard_jours": 1,
