@@ -2,7 +2,7 @@
   "_endpoint": "/v1/score/defaillance/lot",
   "_price": "$0.07",
   "_request": "GET https://api.sirenic.eu/v1/score/defaillance/lot?sirens=552032534%2C775672272",
-  "_sample_of": "2026-10-08",
+  "_sample_of": "2026-10-20",
   "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/score-defaillance-lot.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "nombre_demande": 2,
@@ -13,6 +13,12 @@
       "sain": 1,
       "non_evaluable": 1,
       "cessee": 0
+    },
+    "non_evaluable_par_cause": {
+      "aucun_exercice": 1,
+      "ratios_absents": 0,
+      "siren_inconnu": 0,
+      "identite_incomplete": 0
     },
     "groupes": {
       "sain": [
@@ -61,6 +67,12 @@
           "liquidite",
           "dette"
         ],
+        "qualite_exercice_reference": {
+          "fiabilite": "a_verifier",
+          "anomalies": [
+            "exercice_duplique"
+          ]
+        },
         "signaux_bodacc": {
           "procedure_collective": false,
           "liquidation_judiciaire": false,

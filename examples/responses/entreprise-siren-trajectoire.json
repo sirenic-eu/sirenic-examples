@@ -1,0 +1,92 @@
+{
+  "_endpoint": "/v1/entreprise/{siren}/trajectoire",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/000000158/trajectoire",
+  "_sample_of": "2026-10-21",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-trajectoire.json, in its OpenAPI spec and in its x402 quote. Rendered by the route on test data (fictitious companies), with no purchase, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "siren": "000000158",
+    "trajectoire": "croissance_forte",
+    "cause_non_evaluable": null,
+    "fenetre": {
+      "exercices_max": 4,
+      "age_max_mois": 24,
+      "exercices_retenus": 4,
+      "derniere_cloture": "2025-12-01",
+      "age_derniere_cloture_mois": 10
+    },
+    "comptes": {
+      "serie": [
+        {
+          "date_cloture": "2022-12-01",
+          "chiffre_affaires": 1000000,
+          "motif_hors_tendance": null
+        },
+        {
+          "date_cloture": "2025-12-01",
+          "chiffre_affaires": 1800000,
+          "motif_hors_tendance": null
+        }
+      ],
+      "variation_premier_dernier_pct": 80,
+      "annee_pic": 2025,
+      "chiffre_affaires_pic": 1800000,
+      "repli_depuis_le_pic_pct": 0,
+      "regularite": "reguliere",
+      "source": {
+        "flux": "ratios-financiers-inpi-bce",
+        "date": "2026-09-15"
+      }
+    },
+    "signaux_hors_comptes": {
+      "lecture": "faits_sans_verdict",
+      "etablissements": {
+        "ouverts": 3,
+        "fermes": 0,
+        "solde": 3,
+        "du": "2024-10-22",
+        "au": "2026-10-21",
+        "code": null,
+        "source": {
+          "flux": "sirene-stock-etablissements",
+          "date": "2026-10-01"
+        }
+      },
+      "marches": {
+        "derniers_12_mois": {
+          "nombre": 4,
+          "du": "2025-10-22",
+          "au": "2026-10-21"
+        },
+        "precedents_12_mois": {
+          "nombre": 1,
+          "du": "2024-10-22",
+          "au": "2025-10-21"
+        },
+        "repere_source": null,
+        "motif_repere": "pas_encore_calcule",
+        "code": "volume_source_variable",
+        "source": {
+          "flux": "decp-marches-valides",
+          "date": "2026-09-30"
+        }
+      },
+      "effectif": {
+        "tranche": "12",
+        "annee": 2023,
+        "code": "niveau_sans_historique",
+        "source": {
+          "flux": "sirene-stock-unites-legales",
+          "date": "2026-10-01"
+        }
+      }
+    },
+    "critere_de_liste": {
+      "champ": "tendances.trajectoire",
+      "valeur": null,
+      "cause": null,
+      "photo_du": null,
+      "motif": "pas_encore_calcule"
+    }
+  }
+}
