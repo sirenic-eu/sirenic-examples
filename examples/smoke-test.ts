@@ -152,6 +152,9 @@ const CALLS: Array<{ path: string; expect: string; price: string }> = [
   { path: "/v1/eu/entreprise/SK/35763469", expect: "denomination", price: "$0.01" }, // Slovak Telekom
   { path: "/v1/eu/entreprise/FI/0112038-9", expect: "denomination", price: "$0.01" }, // Nokia (PRH)
   { path: "/v1/eu/entreprise/PL/0000006865", expect: "denomination", price: "$0.01" }, // CD Projekt (KRS)
+  // Poland (KRS extract, read live): insolvency proceedings and annual-accounts filings, metadata only.
+  { path: "/v1/eu/entreprise/PL/0000034143/insolvabilite", expect: "procedures", price: "$0.02" },
+  { path: "/v1/eu/entreprise/PL/0000006865/comptes", expect: "nombre_depots", price: "$0.01" }, // CD Projekt
   { path: "/v1/eu/entreprise/EE/12417834", expect: "denomination", price: "$0.01" }, // Bolt Technology
   // 17/09/2026 : tranche 5 Europe — dirigeants et associés estoniens (e-äriregister, RIK, CC BY 4.0, photo quotidienne).
   { path: "/v1/eu/entreprise/EE/10060701/dirigeants", expect: "mandats", price: "$0.01" }, // Swedbank AS
