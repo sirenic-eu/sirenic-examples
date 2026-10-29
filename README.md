@@ -237,12 +237,15 @@ These workflows authenticate with an API key: sign in at
   review at Make (2026-10-03).
 
 Also in the official n8n template gallery, published by
-[Sirenic](https://n8n.io/creators/sirenic/) (read on 2026-10-03); from a
+[Sirenic](https://n8n.io/creators/sirenic/) (read on 2026-10-29); from a
 template page, "Use workflow" opens it in your n8n:
 
 - [Verify French suppliers before payment with Google Sheets, Sirenic, and Slack](https://n8n.io/workflows/17756)
 - [Route French KYB onboarding checks with Sirenic, Slack, and Google Sheets](https://n8n.io/workflows/18271)
-- [Generate official French company PDF reports with Sirenic, Google Drive and Slack](https://n8n.io/workflows/19752)
+
+Ready to import, not yet in the gallery:
+[Re-screen French suppliers weekly with Sirenic KYB, Google Sheets, and Slack](https://api.sirenic.eu/workflows/W13-supplier-rescreening-sheets-slack.json)
+(in n8n: Import from URL).
 
 Each setup, step by step, with the MCP clients too:
 [api.sirenic.eu/en/connectors](https://api.sirenic.eu/en/connectors).
@@ -382,6 +385,12 @@ Two things this is **not**:
 | `GET /v1/eu/entreprise/RO/{cui}/insolvabilite` | $0.02 | Romanian company insolvency from the ONRC register: status codes of the bankruptcy, insolvency (Laws 85/2014, 85/2006, 64/1995, judicial reorganisation, recovery), liquidation and dissolution families with their published Romanian labels, plus the published insolvency practitioners (judicial liquidator, judicial administrator, special or concordat administrator, liquidator); `aucune_procedure` measured on the complete snapshot; statuses are undated and court decisions are not published (`autres_statuts` carries the other entries). |
 | `GET /v1/eu/entreprise/RO/{cui}/comptes` | $0.02 | Romanian company annual accounts from the Ministry of Finance open data (data.gov.ro, CC BY 4.0, financial years 2019-2024), every published year in one call: balance sheet (fixed and current assets, inventories, receivables, cash, liabilities, provisions, equity, paid-up capital), income statement (net turnover, total income and expenses, gross and net result), average headcount, CAEN Rev. 2 class and filing format (abridged or full). RON as published; null = not published. Legal persons only. |
 | _…plus the other dedicated country sub-routes_ | | GB (directors, PSC limited to corporate controllers with natural persons counted, insolvency, accounts, The Gazette insolvency notices (official journal, coverage partial and said so), public procurement from Find a Tender and Contracts Finder: contracts won matched by company number and notices issued, 17/09/2026), DK/SE/SK/LV/EE (filings), LV/NO/BE/DK/FI/SE/CZ/SK/EE (`/marches-publics-ue`: TED award notices matched by national identifier in every form TED publishes it; 40 to 86% of notices carry one depending on the country, measured and said so, 17/09/2026), LV (legal events, members & shareholders (corporate holders named, natural persons counted), public procurement from the IUB daily notices: contracts won and notices issued, never a natural-person winner, 17/09/2026), NO (accounts, legal events, officers & board with who elected them, local units with published headcount; natural persons never with a birth date), CZ (insolvency), PL (KRS events), ES (PLACSP public procurement by NIF, BORME deeds), PL (BZP public procurement by NIP: winners served only when proven legal persons), PT (Portal BASE public contracts by NIPC, with contract modifications), IE (CRO register file and insolvency by company number); all in `/openapi.json` and the MCP tools |
+
+**Sole traders are refused on the computed indicators.** Since 2026-10-27, the failure score (single and batch), the
+health summary, the KYB file (single and batch), the PDF report, the intelligence report, the comparison and the score
+block of the à-la-carte file answer `400 entreprise_individuelle_non_couverte` for a sole trader's SIREN, or a legal
+person its legal category does not prove: these indicators are never linked to a natural person, and the refusal is
+never charged.
 
 **Don't clean up the query yourself.** Search parameters (`?q=`, `?nom=`) accept
 what an agent naturally produces: quotes, punctuation and unsupported characters
