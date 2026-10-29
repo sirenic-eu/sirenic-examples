@@ -7,9 +7,13 @@
  *   1. `GET /v1/kyb/450776968` (LOXAM) : 283 décisions rattachées au stock Judilibre (smoke du 10/09), le
  *      bloc en sert 20, la coupe est DITE (`tronque_dans_le_rapport`, `voir_aussi`), l'enveloppe la qualifie
  *      `partiel`, le score de complétude compte 6 blocs.
- *   2. `GET /v1/kyb/321613812` (entrepreneur individuel) : le bloc est `{ couvert: false, motif:
+ *   2. `GET /v1/kyb/<SIREN d'un entrepreneur individuel>` : le bloc est `{ couvert: false, motif:
  *      "entreprise_individuelle" }`, hors des blocs manquants, l'enveloppe le dit `sans_objet`, le score
  *      de complétude compte 5 blocs (décision CDU 2C : un bloc sans objet n'entre pas au dénominateur).
+ *      Depuis le 27/10/2026 (ticket #660 de kopko13/sirenic), le dossier KYB d'un entrepreneur individuel n'est plus
+ *      servi : `GET /v1/kyb/{siren}` rend 400 `entreprise_individuelle_non_couverte`, sans débit. Ce smoke décrit la réponse
+ *      du 24/09 ; le SIREN de l'entrepreneur se passe par SMOKE_SIREN_EI et ne s'écrit jamais ici (c'est celui d'une
+ *      personne physique).
  * Gratuit : le devis 402 (150 000 unités = 0,15 $), HEAD (405), `/openapi.json` (la note de version), `/v1/lecture`
  * (la règle « zéro décision n'est pas absence de contentieux » étendue au KYB), `/healthz` (le commit servi).
  *
@@ -30,7 +34,13 @@ const horsLigne = Boolean(process.env.SMOKE_CORPS_DIR);
 const seulementGratuit = process.env.SMOKE_SEULEMENT_GRATUIT === "1";
 const api = process.env.SIRENIC_URL ?? "https://api.sirenic.eu";
 const LOXAM = "450776968";
-const EI = "321613812";
+// Le SIREN d'un entrepreneur individuel est celui d'une personne physique : passé à l'appel, jamais écrit dans ce dépôt
+// public (#660 de kopko13/sirenic, 29/10/2026).
+const EI = process.env.SMOKE_SIREN_EI ?? "";
+if (!seulementGratuit && !/^\d{9}$/.test(EI)) {
+  console.error("SMOKE_SIREN_EI absent : le SIREN d'un entrepreneur individuel se passe à l'appel (9 chiffres), jamais écrit ici.");
+  process.exit(2);
+}
 const PRIX_KYB_UNITES = 150_000; // 0,15 $ en unités atomiques USDC (6 décimales)
 const DECISIONS_DANS_LE_BLOC = 20;
 const NATURES = new Set([
