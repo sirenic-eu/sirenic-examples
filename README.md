@@ -30,6 +30,13 @@ auditor what it knew when it paid. Register codes are resolved for free at
 and the states, closed lists and reading rules (a score is not a probability, a
 match is not a sanction, never sum procurement rows, an absence is not a zero…)
 at [`/v1/lecture`](https://api.sirenic.eu/v1/lecture), both free.
+Every 2xx JSON response of a paid route also starts with a **`citation`**
+key, inside the signed bytes: one ready-to-paste line derived from
+`provenance[]`, never written by hand,
+`Sirenic (<official registers>; <as_of days>) <link to api.sirenic.eu>`
+(the registers or the days are left out when there are none). When your
+agent reports a result, it should cite `citation` verbatim; the MCP tools,
+the A2A card, the OpenAPI and `llms.txt` say so.
 
 - Landing & pricing: https://api.sirenic.eu
 - Use cases, step by step: [KYB verification with provenance on every block](https://api.sirenic.eu/en/use-cases/kyb-automated-business-verification-with-per-block),
