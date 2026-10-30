@@ -1,46 +1,44 @@
 {
   "_endpoint": "/v1/entreprise/{siren}/encours",
   "_price": "$0.12",
-  "_request": "GET https://api.sirenic.eu/v1/entreprise/000000042/encours?montant=20000&delai_jours=60",
-  "_sample_of": "2026-10-20",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-encours.json, in its OpenAPI spec and in its x402 quote. Rendered by the route on test data (fictitious companies), with no purchase, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/encours?montant=20000&delai_jours=60",
+  "_sample_of": "2026-10-29",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-encours.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
-    "siren": "000000042",
-    "denomination": "SOCIETE FICTIVE SAIN 1 9",
+    "siren": "552032534",
+    "denomination": "DANONE",
     "verdict": "indication_servie",
     "classe": "sain",
     "conditions": "45_jours",
-    "encours_indicatif": 10000,
+    "encours_indicatif": 300000,
     "devise": "EUR",
     "motifs": [],
     "demande": {
       "montant": 20000,
       "delai_jours": 60
     },
-    "comparaison_demande": "montant_et_delai_au_dela",
+    "comparaison_demande": "delai_au_dela",
     "entrees": {
       "classe": "sain",
-      "score_risque": 0,
-      "confiance": "forte",
-      "version_modele": "defaillance-v1.9",
-      "exercice_reference": "2025-12-01",
-      "age_exercice_mois": 10,
-      "age_exercice_calcule_le": "2026-10-20",
-      "chiffre_affaires": 1000000,
-      "autonomie_financiere": 55,
-      "tranche_effectif_salarie": "03",
-      "annee_tranche_effectif_salarie": "2023",
-      "colonne_effectif": "de_1_a_9",
+      "score_risque": 22,
+      "confiance": "moyenne",
+      "exercice_reference": "2025-12-31",
+      "age_exercice_mois": 9,
+      "age_exercice_calcule_le": "2026-10-29",
+      "chiffre_affaires": 1030000000,
+      "autonomie_financiere": 36.418,
+      "tranche_effectif_salarie": "42",
+      "annee_tranche_effectif_salarie": "2024",
+      "colonne_effectif": "de_250_et_plus",
       "etat_administratif": "actif",
-      "date_creation": "1990-01-01",
-      "perimetre_comptable": "indetermine"
+      "date_creation": "1955-01-01",
+      "perimetre_comptable": "social"
     },
     "formule": {
-      "nom": "paliers_classe_effectif",
-      "version": "encours-b-v1"
+      "nom": "paliers_classe_effectif"
     },
     "perimetre": "entite_seule",
     "disclaimer": "Indication tirée des données publiques par une formule publiée, pas une décision de crédit ; elle vaut pour cette seule personne morale, l'exposition au groupe n'est pas lue. Indicateur statistique sur la société, pas une décision ni une appréciation d'une personne. / Indication drawn from public data by a published formula, not a credit decision; it covers this legal entity only, group exposure is not read. Statistical indicator about the company, not a decision or an assessment about a person.",
-    "calcule_le": "2026-10-20"
+    "calcule_le": "2026-10-29"
   }
 }
