@@ -3,7 +3,7 @@
   "_price": "$0.003",
   "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/etablissements?geo=true",
   "_sample_of": "2026-07-29",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-etablissements.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-etablissements.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, truncated to one item per array (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "siren": "552032534",
     "denomination": "DANONE",
@@ -17,6 +17,9 @@
         "commune": "PARIS",
         "etat_administratif": "actif",
         "activite_principale": "70.10Z",
+        "activite_principale_nomenclature": "NAFRev2",
+        "activite_principale_naf25": "70.10Y",
+        "activite_principale_naf25_statut": "code",
         "date_creation": "2025-08-19",
         "date_fermeture": null,
         "enseignes": [],

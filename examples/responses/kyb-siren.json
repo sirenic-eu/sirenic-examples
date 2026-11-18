@@ -2,16 +2,19 @@
   "_endpoint": "/v1/kyb/{siren}",
   "_price": "$0.15",
   "_request": "GET https://api.sirenic.eu/v1/kyb/552032534",
-  "_sample_of": "2026-10-20",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/kyb-siren.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_sample_of": "2026-11-14",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/kyb-siren.json, in its OpenAPI spec and in its x402 quote. Captured from a real response read within the API key's free quota, not charged, truncated to one item per array (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "siren": "552032534",
     "identite": {
       "denomination": "DANONE",
       "nature_juridique": "5599",
       "activite_principale": "70.10Z",
-      "etat_administratif": "actif",
+      "activite_principale_nomenclature": "NAFRev2",
+      "activite_principale_naf25": "70.10Y",
+      "activite_principale_naf25_statut": "code",
       "date_creation": "1955-01-01",
+      "etat_administratif": "actif",
       "siege": {
         "siret": "55203253400703",
         "code_postal": "75009",
@@ -29,26 +32,38 @@
       "couvert": true,
       "exhaustivite": "partielle",
       "couverture": {
-        "taux_rattachement_mesure": 0.618
+        "taux_rattachement_mesure": 0.506
       },
       "synthese": {
         "nombre_decisions": 0
       },
       "decisions_recentes": [],
       "tronque_dans_le_rapport": false,
-      "consulte_le": "2026-10-20T03:30:02Z"
+      "consulte_le": "2026-11-13T03:48:57Z"
     },
     "finances": {
-      "nombre_exercices": 9,
+      "nombre_exercices": 7,
       "exercices": [
+        {
+          "date_cloture": "2024-12-31",
+          "chiffre_affaires": 1030000000,
+          "resultat_net": 592000000,
+          "qualite": {
+            "fiabilite": "exploitable",
+            "anomalies": []
+          }
+        }
+      ],
+      "exercices_ecartes": [
         {
           "date_cloture": "2025-12-31",
           "chiffre_affaires": 1030000000,
           "resultat_net": 592000000,
+          "motif_ecart": "non_exploitable",
           "qualite": {
-            "fiabilite": "a_verifier",
+            "fiabilite": "non_exploitable",
             "anomalies": [
-              "exercice_duplique"
+              "exercice_recopie"
             ]
           }
         }
@@ -68,21 +83,12 @@
     },
     "score_completude": 100,
     "blocs_manquants": [],
-    "blocs_a_verifier": [
-      {
-        "bloc": "finances",
-        "fiabilite": "a_verifier",
-        "anomalies": [
-          "exercice_duplique"
-        ]
-      }
-    ],
-    "data_freshness": "identité : stock Sirene mensuel (2026-10-01)",
+    "data_freshness": "identité : stock Sirene mensuel (2026-11-01)",
     "verification": {
-      "numero": "84054665e9376069",
-      "url": "https://api.sirenic.eu/verifier/84054665e9376069",
-      "mention": "Document émis par Sirenic le 20/10/2026 à partir des registres officiels cités, chacun à sa date. Vérifier ce document : https://api.sirenic.eu/verifier/84054665e9376069",
-      "mention_en": "Document issued by Sirenic on 2026-10-20 from the official registers cited, each at its own date. Verify this document: https://api.sirenic.eu/verifier/84054665e9376069"
+      "numero": "51c95466a135c216",
+      "url": "https://api.sirenic.eu/verifier/51c95466a135c216",
+      "mention": "Document émis par Sirenic le 14/11/2026 à partir des registres officiels cités, chacun à sa date. Vérifier ce document : https://api.sirenic.eu/verifier/51c95466a135c216",
+      "mention_en": "Document issued by Sirenic on 2026-11-14 from the official registers cited, each at its own date. Verify this document: https://api.sirenic.eu/verifier/51c95466a135c216"
     }
   }
 }

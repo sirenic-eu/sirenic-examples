@@ -3,7 +3,7 @@
   "_price": "$0.02",
   "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/PL/0000006865/evenements",
   "_sample_of": "2026-10-13",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-PL-krs-evenements.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-PL-krs-evenements.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, truncated to one item per array (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "PL",
     "krs": "0000006865",
@@ -11,6 +11,7 @@
       "depuis": "2026-08-16",
       "jusqu_au": "2026-10-12"
     },
+    "jours_non_lus": [],
     "aucun_evenement": true,
     "nombre_evenements": 0,
     "evenements": [],
@@ -22,11 +23,11 @@
     },
     "existence": {
       "verifiee": false,
-      "explication": "Existence CONFIRMÉE, mais HORS fenêtre : l'extrait KRS de cette société a été lu le 2026-08-10, en dehors de la fenêtre d'observation servie — pas pendant elle. « aucun_evenement: true » ne vaut donc que pour la fenêtre servie. / Existence CONFIRMED but OUTSIDE the window: this company's KRS extract was read on 2026-08-10, not during the served observation window.",
+      "explication": "Existence CONFIRMÉE, mais HORS fenêtre : l'extrait KRS de cette société a été lu le 2026-08-10, en dehors de la fenêtre d'observation servie, pas pendant elle. « aucun_evenement: true » ne vaut donc que pour la fenêtre servie. / Existence CONFIRMED but OUTSIDE the window: this company's KRS extract was read on 2026-08-10, not during the served observation window.",
       "route_identite": "/v1/eu/entreprise/PL/0000006865"
     },
     "retard_jours": 1,
-    "source": "Krajowy Rejestr Sądowy (KRS) — Ministerstwo Sprawiedliwości, API ouverte api-krs.ms.gov.pl (Biuletyn quotidien + OdpisAktualny)",
+    "source": "Krajowy Rejestr Sądowy (KRS), Ministerstwo Sprawiedliwości, API ouverte api-krs.ms.gov.pl (Biuletyn quotidien + OdpisAktualny)",
     "licence": "Données publiques du Krajowy Rejestr Sądowy (Ministerstwo Sprawiedliwości, api-krs.ms.gov.pl), réutilisation libre"
   }
 }

@@ -2,8 +2,8 @@
   "_endpoint": "/v1/association/{rna}",
   "_price": "$0.005",
   "_request": "GET https://api.sirenic.eu/v1/association/W751004076",
-  "_sample_of": "2026-09-06",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/association-rna.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_sample_of": "2026-11-01",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/association-rna.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, truncated by removal, some arrays keeping several items (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "rna": "W751004076",
     "titre": "CROIX ROUGE FRANCAISE",
@@ -41,14 +41,16 @@
     "publication_web_autorisee": false,
     "rup_mi": "75.000.0001",
     "prefecture_gestionnaire": "759S",
+    "siren": null,
+    "siren_origine": null,
     "siret_declare": null,
     "fichier_source": "waldec",
     "fraicheur": {
       "qualite": "declaree",
       "derniere_mise_a_jour": "2026-03-28T19:00:02.000Z",
-      "millesime_export": "2026-09-01"
+      "millesime_export": "2026-10-01"
     },
     "anomalies": [],
-    "data_freshness": "export RNA 2026-09-01 (photo mensuelle, 5 j)"
+    "data_freshness": "export RNA 2026-10-01 (photo mensuelle, 30 j)"
   }
 }

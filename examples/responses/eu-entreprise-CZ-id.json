@@ -3,10 +3,10 @@
   "_price": "$0.01",
   "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/CZ/45274649",
   "_sample_of": "2026-07-29",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-CZ-id.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-CZ-id.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, truncated to one item per array (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "CZ",
-    "registre": "ARES — Registr ekonomických subjektů (MF ČR)",
+    "registre": "ARES, Registr ekonomických subjektů (MF ČR)",
     "id_national": "45274649",
     "denomination": "ČEZ, a. s.",
     "forme_juridique": {
@@ -24,7 +24,7 @@
     },
     "identifiants": {
       "tva": "CZ45274649",
-      "lei": null
+      "lei": "529900S5R9YHJHYKKG94"
     },
     "lien_registre": "https://ares.gov.cz/ekonomicke-subjekty?ico=45274649",
     "data_freshness": "ARES temps réel (cache 24 h)",

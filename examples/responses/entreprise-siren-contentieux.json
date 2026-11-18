@@ -3,12 +3,12 @@
   "_price": "$0.01",
   "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/contentieux",
   "_sample_of": "2026-10-01",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-contentieux.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-contentieux.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, truncated to one item per array (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "siren": "552032534",
     "denomination": "DANONE",
     "exhaustivite": "partielle",
-    "avertissement": "Deux causes d'absence, indiscernables : aucun identifiant exploitable dans la décision (environ 38 % des décisions), ou décision non encore mise à disposition (délai légal de six mois, art. R. 111-10 COJ ; latence observée d'un à deux mois). L'absence de résultat ne vaut pas absence de contentieux. Les procédures collectives sont déjà servies par /alertes (BODACC) : ici, leur valeur est le lien vers le jugement. / Two indistinguishable causes of absence: no usable identifier in the decision (about 38% of decisions), or decision not yet published (six-month legal window). No result never means no litigation. Insolvency judgments are already served by /alertes; here they carry the link to the judgment itself.",
+    "avertissement": "Deux causes d'absence, indiscernables : décision rattachée à personne (aucun identifiant exploitable, ou une partie que la collecte ne rattache pas : environ 49 % des décisions), ou décision non encore mise à disposition (délai légal de six mois, art. R. 111-10 COJ ; latence observée d'un à deux mois). L'absence de résultat ne vaut pas absence de contentieux. Les procédures collectives sont déjà servies par /alertes (BODACC) : ici, leur valeur est le lien vers le jugement. / Two indistinguishable causes of absence: decision linked to no one (no usable identifier, or a party the collection does not link: about 49% of decisions), or decision not yet published (six-month legal window). No result never means no litigation. Insolvency judgments are already served by /alertes; here they carry the link to the judgment itself.",
     "synthese": {
       "nombre_decisions": 0,
       "par_nature": {}
@@ -23,7 +23,6 @@
           "dernier_mis_a_jour": "2026-10-01"
         }
       }
-    },
-    "data_freshness": "stock Judilibre tcom collecté quotidiennement (dernier passage réussi : 2026-10-01) ; identité Sirene ; route fermée au-delà de 7 jours sans passage réussi ou sans mise à jour Judilibre plus récente (stock.flux)"
+    }
   }
 }

@@ -3,7 +3,7 @@
   "_price": "$0.105",
   "_request": "GET https://api.sirenic.eu/v1/kyb/batch?sirens=552032534%2C542065479",
   "_sample_of": "2026-09-25",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/kyb-batch.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/kyb-batch.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, truncated to one item per array (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "nombre_demande": 2,
     "nombre_trouve": 2,
@@ -30,5 +30,88 @@
       }
     ],
     "tarification": "Facturé par SIREN demandé (prix unitaire de lot). Un SIREN sans entreprise diffusible est restitué `trouve: false` et compté comme une consultation. / Billed per requested SIREN; a not-found SIREN counts as one lookup."
+  },
+  "vues": {
+    "synthese": {
+      "_request": "GET https://api.sirenic.eu/v1/kyb/batch?sirens=000000612%2C000000620%2C000000661%2C000000653&vue=synthese",
+      "_sample_of": "2026-10-23",
+      "_note": "The synthese view of the same route, as the API serves it at https://api.sirenic.eu/exemples/kyb-batch.json under vues.synthese. Rendered by the route on test data (fictitious companies), with no purchase, truncated by removing fields, every line of the call served (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+      "response": {
+        "vue": "synthese",
+        "nombre_demande": 4,
+        "nombre_trouve": 2,
+        "repartition": {
+          "etat": {
+            "actif": 1,
+            "cessé": 1
+          },
+          "procedure": {
+            "aucune_en_cours": 1,
+            "liquidation_en_cours": 1
+          },
+          "sanctions": {
+            "correspondances_a_verifier": 1,
+            "aucune_correspondance": 1
+          },
+          "reserves": {
+            "avec": 2
+          }
+        },
+        "lignes": [
+          {
+            "siren": "000000612",
+            "trouve": true,
+            "denomination": "ATELIER FICTIF SYNTHESE",
+            "etat": "actif",
+            "procedure": "aucune_en_cours",
+            "radiations": 0,
+            "sanctions": "correspondances_a_verifier",
+            "rapprochements": 1,
+            "decisions": 0,
+            "exercice": "2025-12-31",
+            "completude": 100,
+            "reserves": {
+              "contentieux": "absence_non_conclusive"
+            },
+            "nb_reserves": 1
+          },
+          {
+            "siren": "000000620",
+            "trouve": true,
+            "denomination": "ATELIER FICTIF CESSE",
+            "etat": "cessé",
+            "cesse_le": "2024-06-30",
+            "procedure": "liquidation_en_cours",
+            "procedures": 1,
+            "procedure_le": "2026-04-01",
+            "radiations": 0,
+            "sanctions": "aucune_correspondance",
+            "rapprochements": 0,
+            "decisions": 0,
+            "exercice": null,
+            "completude": 67,
+            "reserves": {
+              "contentieux": "absence_non_conclusive",
+              "finances": "absence_non_conclusive"
+            },
+            "nb_reserves": 2
+          },
+          {
+            "siren": "000000661",
+            "trouve": false,
+            "motif": "identite_incomplete",
+            "champs_absents": [
+              "nature_juridique",
+              "siege"
+            ],
+            "fiche": "/v1/entreprise/000000661"
+          },
+          {
+            "siren": "000000653",
+            "trouve": false
+          }
+        ]
+      }
+    }
   }
 }

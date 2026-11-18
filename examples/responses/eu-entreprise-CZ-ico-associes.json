@@ -1,0 +1,54 @@
+{
+  "_endpoint": "/v1/eu/entreprise/CZ/{ico}/associes",
+  "_price": "$0.02",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/CZ/03458890/associes",
+  "_sample_of": "2026-10-14",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-CZ-ico-associes.json, in its OpenAPI spec and in its x402 quote. Rendered by the route on test data (fictitious companies), with no purchase, truncated to one item per array (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "response": {
+    "pays": "CZ",
+    "id_national": "03458890",
+    "denomination": "Radlická ATA s.r.o.",
+    "forme_juridique": {
+      "code_isvr": "sro",
+      "code_ares": "112"
+    },
+    "couverture": "complete",
+    "aucun_associe_inscrit": false,
+    "capital": {
+      "montant": 1000000,
+      "devise": "CZK",
+      "libere_pct": null
+    },
+    "associes_personnes_morales": [
+      {
+        "nom": "Skanska Commercial Development Czech Republic s.r.o.",
+        "ico": "08100501",
+        "id_etranger": null,
+        "pays": null,
+        "role": "associe",
+        "type_part": "individuelle",
+        "apport": {
+          "montant": 1000000,
+          "devise": "CZK"
+        },
+        "libere_pct": 100,
+        "part": {
+          "pct": 100
+        },
+        "part_non_numerique": false,
+        "inscrit_le": "2019-06-11"
+      }
+    ],
+    "personnes_physiques_ecartees": {
+      "total": 0,
+      "par_role": {}
+    },
+    "doutes_ecartes": 0,
+    "parts_communes": 0,
+    "parts_liberees": 0,
+    "gages_sur_parts": 0,
+    "photo_le": "2026-10-14",
+    "ingere_le": "2026-10-14",
+    "derniere_inscription": "2026-10-14"
+  }
+}

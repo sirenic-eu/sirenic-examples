@@ -3,15 +3,18 @@
   "_price": "$1.00",
   "_request": "GET https://api.sirenic.eu/v1/intelligence/552032534",
   "_sample_of": "2026-09-25",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/intelligence-siren.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/intelligence-siren.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, truncated by removal, some arrays keeping several items (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "siren": "552032534",
     "type_rapport": "intelligence",
-    "version_rapport": "1.15",
+    "version_rapport": "1.19",
     "identite": {
       "denomination": "DANONE",
       "categorie_entreprise": "GE",
       "activite_principale": "70.10Z",
+      "activite_principale_nomenclature": "NAFRev2",
+      "activite_principale_naf25": "70.10Y",
+      "activite_principale_naf25_statut": "code",
       "etat_administratif": "actif"
     },
     "tva_vies": {

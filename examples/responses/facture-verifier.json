@@ -3,7 +3,7 @@
   "_price": "$0.02",
   "_request": "GET https://api.sirenic.eu/v1/facture/verifier?siren=552032534&tva=FR27552032534&iban=FR1420041010050500013M02606",
   "_sample_of": "2026-08-16",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/facture-verifier.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/facture-verifier.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, truncated by removal, some arrays keeping several items (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "siren": "552032534",
     "etat_administratif": "actif",
@@ -29,7 +29,7 @@
       {
         "code": "iban_exemple_documentation",
         "niveau": "information",
-        "source": "IBAN publié comme EXEMPLE de documentation — bien formé ; existence du compte non contrôlée."
+        "source": "IBAN publié comme EXEMPLE de documentation : bien formé ; existence du compte non contrôlée."
       }
     ],
     "non_verifie": [
@@ -37,6 +37,6 @@
       "nom_du_titulaire"
     ],
     "source": "Composition Sirenic : INSEE Sirene (état, live), croisement TVA calculée (clé FR déterministe), VIES (Commission européenne, live), contrôle de forme IBAN + registres bancaires officiels",
-    "disclaimer": "Croisement déterministe des identifiants affichés par une facture (raisons en liste fermée, tracées à leur source) — ni un avis de conformité fiscale, ni une Verification of Payee : le volet bancaire contrôle la FORME et identifie la banque, sans vérifier l'existence du compte ni le nom du titulaire — un IBAN valide mais substitué n'est pas détectable ici. / Deterministic cross-check of the identifiers printed on an invoice — neither tax advice nor a Verification of Payee: the bank leg checks FORM and identifies the bank; a valid-but-swapped IBAN cannot be detected here."
+    "disclaimer": "Croisement déterministe des identifiants affichés par une facture (raisons en liste fermée, tracées à leur source), ni un avis de conformité fiscale, ni une Verification of Payee : le volet bancaire contrôle la FORME et identifie la banque, sans vérifier l'existence du compte ni le nom du titulaire ; un IBAN valide mais substitué n'est pas détectable ici. / Deterministic cross-check of the identifiers printed on an invoice, neither tax advice nor a Verification of Payee: the bank leg checks FORM and identifies the bank; a valid-but-swapped IBAN cannot be detected here."
   }
 }

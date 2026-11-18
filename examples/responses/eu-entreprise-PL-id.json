@@ -3,7 +3,7 @@
   "_price": "$0.01",
   "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/PL/0000006865",
   "_sample_of": "2026-07-29",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-PL-id.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-PL-id.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, truncated to one item per array (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "PL",
     "registre": "Krajowy Rejestr Sądowy (Ministerstwo Sprawiedliwości)",
@@ -24,7 +24,7 @@
     },
     "identifiants": {
       "tva": "PL7342867148",
-      "lei": null
+      "lei": "259400TYO5Q8SH8TL437"
     },
     "lien_registre": "https://wyszukiwarka-krs.ms.gov.pl",
     "data_freshness": "KRS temps réel (cache 24 h)",

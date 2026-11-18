@@ -3,7 +3,7 @@
   "_price": "$0.01",
   "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/IE/600161",
   "_sample_of": "2026-09-18",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-IE-numero.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-IE-numero.json, in its OpenAPI spec and in its x402 quote. Reconstructed example, not a paid response: composed by hand or read from the code, truncated by removal, some arrays keeping several items (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "IE",
     "registre": "Companies Registration Office (CRO)",
@@ -20,7 +20,7 @@
     "adresse_siege": {
       "adresse": "74 SOUTH MALL, CO. CORK,CORK, CO. CORK, CORK, IRELAND",
       "code_postal": "T12 F3FD",
-      "ville": "CORK",
+      "ville": null,
       "pays": "IE"
     },
     "registre_ie": {

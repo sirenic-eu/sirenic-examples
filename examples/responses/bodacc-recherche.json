@@ -3,7 +3,7 @@
   "_price": "$0.03",
   "_request": "GET https://api.sirenic.eu/v1/bodacc/recherche?famille=collective&depuis=2026-08-04&jusqu_a=2026-08-11&departement=59",
   "_sample_of": "2026-08-11",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/bodacc-recherche.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/bodacc-recherche.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, truncated to one item per array (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "criteres": {
       "famille": "collective",
@@ -36,6 +36,6 @@
     "tronque": false,
     "limite": 100,
     "consulte_le": "2026-08-11T22:19:24.289Z",
-    "source": "BODACC (Bulletin officiel des annonces civiles et commerciales), DILA — via l'API Opendatasoft officielle, Licence Ouverte 2.0"
+    "source": "BODACC (Bulletin officiel des annonces civiles et commerciales), DILA, via l'API Opendatasoft officielle, Licence Ouverte 1.0 (Etalab)"
   }
 }

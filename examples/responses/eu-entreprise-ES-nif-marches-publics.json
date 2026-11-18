@@ -1,74 +1,99 @@
 {
   "_endpoint": "/v1/eu/entreprise/ES/{nif}/marches-publics",
   "_price": "$0.02",
-  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/ES/A28582013/marches-publics",
-  "_sample_of": "2026-10-02",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-ES-nif-marches-publics.json, in its OpenAPI spec and in its x402 quote. Reconstructed example, not a paid response: composed by hand or read from the code, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/ES/A26019992/marches-publics",
+  "_sample_of": "2026-10-23",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-ES-nif-marches-publics.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, truncated to one item per array (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "ES",
-    "nif": "A28582013",
+    "nif": "A26019992",
     "attributions": [
       {
-        "id": "19724487",
+        "id": "20329407",
         "flux": "licitaciones",
         "statut": "attribuée",
-        "objet": "Ejecución de las obras del \"Proyecto de construcción para la prolongación de los andenes de las estaciones de la Línea 3 de Metrovalencia\"",
-        "type_contrat": "travaux",
+        "objet": "Mantenimiento y explotación transitoria de las instalaciones de abastecimiento alternativo al embalse de El Tejo para garantizar la disponibilidad de recurso al municipio de El Espinar y a la Mancomunidad de La Mujer Muerta",
+        "type_contrat": "services",
         "procedure": "ouvert",
         "acheteur": {
-          "nom": "Gerencia de Ferrocarrils de la Generalitat Valenciana",
-          "nif": "Q9650001B"
+          "nom": "Confederación Hidrográfica del Duero, O.A.",
+          "nif": "Q4717001D"
         },
         "resultat": "attribué",
-        "date_attribution": "2026-09-16",
-        "montant_ht_eur": 2576254.67,
+        "date_attribution": "2026-10-15",
+        "montant_ht_eur": 845793.68,
         "gagnant": {
-          "nif": "A28582013",
-          "nom_publie": "CHM OBRAS E INFRAESTRUCTURAS SA"
+          "nif": "A26019992",
+          "nom_publie": "FCC AQUALIA S.A."
         }
       }
     ],
-    "nombre_attributions": 1,
-    "valeur_totale_ht_eur": 2576254.67,
-    "tronque_attributions": false,
+    "nombre_attributions": 714,
+    "valeur_totale_ht_eur": 991263089.93,
+    "tronque_attributions": true,
     "aucune_attribution": false,
     "avis_emis": [],
     "nombre_avis_emis": 0,
     "tronque_avis_emis": false,
-    "contrats_mineurs": [],
-    "valeur_contrats_mineurs_ht_eur": 0,
+    "contrats_mineurs": [
+      {
+        "id": "20685501",
+        "flux": "menores",
+        "statut": "résolue",
+        "objet": "Obras de reparación y canalización de aguas en la carretera de la CA 131 a Rioturbio",
+        "type_contrat": "travaux",
+        "procedure": "contrat mineur",
+        "acheteur": {
+          "nom": "Junta de Gobierno del Ayuntamiento de Comillas",
+          "nif": "P3902400E"
+        },
+        "resultat": "attribué",
+        "date_attribution": "2026-10-08",
+        "montant_ht_eur": 39151,
+        "gagnant": {
+          "nif": "A26019992",
+          "nom_publie": "FCC AQUALIA SA"
+        }
+      }
+    ],
+    "valeur_contrats_mineurs_ht_eur": 12399267.84,
     "contrats_mineurs_passes": [],
     "listes_bornees": {
       "attributions": {
-        "nombre_total": 1,
-        "tronque": false
+        "nombre_total": 714,
+        "tronque": true
       },
       "avis_emis": {
         "nombre_total": 0,
         "tronque": false
       },
       "contrats_mineurs": {
-        "nombre_total": 0,
-        "tronque": false
+        "nombre_total": 1756,
+        "tronque": true
       },
       "contrats_mineurs_passes": {
         "nombre_total": 0,
         "tronque": false
       }
     },
+    "reserves_lignes": {
+      "contrats_mineurs": {
+        "date_hors_bornes": 2
+      }
+    },
     "blocs_absents": [],
     "stock": {
       "depuis": "2012",
-      "dernier_mis_a_jour": "2026-10-02T02:03:00.763+02:00",
+      "dernier_mis_a_jour": "2026-10-22T03:01:53.711+02:00",
       "flux": {
         "licitaciones": {
-          "dernier_mis_a_jour": "2026-09-17T20:10:24.692+02:00"
+          "dernier_mis_a_jour": "2026-10-21T20:15:47.693+02:00"
         },
         "agregadas": {
-          "dernier_mis_a_jour": "2026-09-17T22:00:08.085+02:00"
+          "dernier_mis_a_jour": "2026-10-22T02:00:08.361+02:00"
         },
         "menores": {
-          "dernier_mis_a_jour": "2026-10-02T02:03:00.763+02:00",
+          "dernier_mis_a_jour": "2026-10-22T03:01:53.711+02:00",
           "depuis": "2018"
         }
       }

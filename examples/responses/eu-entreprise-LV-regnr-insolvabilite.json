@@ -2,11 +2,13 @@
   "_endpoint": "/v1/eu/entreprise/LV/{regnr}/insolvabilite",
   "_price": "$0.02",
   "_request": "GET https://api.sirenic.eu/v1/eu/entreprise/LV/40103144555/insolvabilite",
-  "_sample_of": "2026-07-29",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-LV-regnr-insolvabilite.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_sample_of": "2026-11-01",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-entreprise-LV-regnr-insolvabilite.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, truncated to one item per array (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "pays": "LV",
     "id_national": "40103144555",
+    "statut": "actif",
+    "statut_detail": null,
     "aucune_procedure": false,
     "procedures": [
       {
@@ -21,7 +23,7 @@
         "tribunal": "Rīgas pilsētas tiesa"
       }
     ],
-    "source": "Uzņēmumu reģistrs / VID — open data data.gov.lv (Gada pārskatu finanšu dati, Maksātnespējas procesi, Amatpersonas, Patiesie labuma guvēji), licence CC0 1.0",
+    "source": "Uzņēmumu reģistrs / VID : open data data.gov.lv (Gada pārskatu finanšu dati, Maksātnespējas procesi, Amatpersonas, Patiesie labuma guvēji), licence CC0 1.0",
     "data_freshness": "photo quotidienne data.gov.lv pré-ingérée (MAJ amont ~20:25 UTC)"
   }
 }

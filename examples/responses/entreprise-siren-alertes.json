@@ -1,22 +1,40 @@
 {
   "_endpoint": "/v1/entreprise/{siren}/alertes",
   "_price": "$0.01",
-  "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/alertes",
-  "_sample_of": "2026-07-29",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-alertes.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/841936560/alertes",
+  "_sample_of": "2026-10-16",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-alertes.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, truncated to one item per array (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
-    "siren": "552032534",
-    "denomination": "DANONE",
-    "procedures_collectives": [],
-    "radiations": [],
-    "ventes_cessions": [],
-    "autres_annonces": {
-      "Modifications diverses": 63,
-      "Dépôts des comptes": 37
-    },
-    "total_annonces": 106,
-    "consulte_le": "2026-07-29T07:28:49.560Z",
-    "source": "BODACC (DILA) via bodacc-datadila.opendatasoft.com, licence ouverte Etalab 2.0",
-    "data_freshness": "BODACC temps réel (API DILA), cache 24 h"
+    "siren": "841936560",
+    "denomination": "KD SOCCER CONSULTING",
+    "denomination_source": "sirene",
+    "procedures_collectives": [
+      {
+        "id": "A202601971788",
+        "date_parution": "2026-10-14",
+        "tribunal": "Greffe du Tribunal de Commerce de Meaux",
+        "jugement": {
+          "nature": "Jugement d'ouverture de liquidation judiciaire",
+          "famille": "Jugement d'ouverture",
+          "date": "2026-09-28",
+          "categorie": "ouverture_liquidation",
+          "mandataires": [
+            {
+              "role": "liquidateur",
+              "forme": "personne_morale"
+            }
+          ],
+          "date_cessation_paiements": "2025-03-28"
+        },
+        "libelle_annonce": "KD Soccer Consulting"
+      }
+    ],
+    "total_annonces": 2,
+    "omissions": {
+      "libelle_personne_physique": 0,
+      "libelle_type_indetermine": 0,
+      "denomination_repli": 0,
+      "nature_non_classee": 0
+    }
   }
 }

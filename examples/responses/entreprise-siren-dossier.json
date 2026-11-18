@@ -3,7 +3,7 @@
   "_price": "$0.005",
   "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/dossier?blocs=finances%2Cpi%2Cscore",
   "_sample_of": "2026-08-11",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-dossier.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-dossier.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, truncated by removal, some arrays keeping several items (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "citation": "Sirenic (API recherche-entreprises, INPI ratios, INPI marques et brevets; 2026-10-01) https://api.sirenic.eu/?utm_source=citation",
     "siren": "552032534",
@@ -12,6 +12,9 @@
       "denomination": "DANONE",
       "nature_juridique": "5599",
       "activite_principale": "70.10Z",
+      "activite_principale_nomenclature": "NAFRev2",
+      "activite_principale_naf25": "70.10Y",
+      "activite_principale_naf25_statut": "code",
       "categorie_entreprise": "GE",
       "etat_administratif": "actif"
     },
@@ -60,7 +63,7 @@
         "classe": "sain",
         "risque_12m": "faible",
         "confiance": "moyenne",
-        "version_modele": "defaillance-v1.9"
+        "version_modele": "defaillance-v1.10"
       }
     },
     "blocs_absents": [],
@@ -68,7 +71,9 @@
       "demandes": 3,
       "servis": 3,
       "absents": 0,
-      "dont_panne_amont": 0
+      "dont_panne_amont": 0,
+      "dont_stock_perime": 0,
+      "dont_collecte_en_cours": 0
     },
     "provenance": [
       {
@@ -81,11 +86,31 @@
         "etat": "servi"
       },
       {
+        "bloc": "blocs.finances",
+        "source_code": "inpi_ratios_bce",
+        "registre": "Ratios financiers des comptes annuels déposés (INPI / Banque de France)",
+        "mode": "stock",
+        "licence": "etalab-2.0",
+        "version": "2026-10-01",
+        "as_of": "2026-10-01",
+        "precision_as_of": "publication_officielle",
+        "age_jours": 10,
+        "etat": "servi",
+        "couverture": {
+          "etat": "non_mesurable",
+          "mesure": "comptes déposés et publiés, y compris la partie bilan des dépôts à compte de résultat confidentiel (art. L. 232-25 C. com.) ; confidentialité totale possible, aucun dénominateur amont / filed and published accounts, including the balance-sheet part of filings with a confidential income statement (art. L. 232-25); full confidentiality possible, no upstream denominator",
+          "detail": {
+            "exercices_servis": 1,
+            "exercices_ecartes": 0
+          }
+        }
+      },
+      {
         "bloc": "blocs.pi",
         "source_code": "inpi_pi",
         "registre": "Bases marques, brevets et dessins & modèles (INPI)",
         "mode": "temps_reel",
-        "licence": "etalab-2.0",
+        "licence": "conditions_source",
         "precision_as_of": "indisponible",
         "etat": "servi",
         "couverture": {

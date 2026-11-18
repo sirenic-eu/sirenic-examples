@@ -1,26 +1,26 @@
 {
   "_endpoint": "/v1/dirigeant/recherche",
   "_price": "$0.02",
-  "_request": "GET https://api.sirenic.eu/v1/dirigeant/recherche?nom=Arnault",
-  "_sample_of": "2026-08-13",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/dirigeant-recherche.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_request": "GET https://api.sirenic.eu/v1/dirigeant/recherche?nom=Fictifon",
+  "_sample_of": "2026-11-02",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/dirigeant-recherche.json, in its OpenAPI spec and in its x402 quote. Rendered by the route on test data (fictitious companies), with no purchase, truncated to one item per array (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "nombre_resultats": 1,
     "tronque": false,
     "resultats": [
       {
-        "siren": "314685454",
-        "denomination": "AGACHE",
+        "siren": "000062919",
+        "denomination": "SOCIETE FICTIVE",
         "etat_administratif": "actif",
         "statut_diffusion": "totale",
         "correspondance_locale": true,
         "mandats": [
           {
             "type": "personne_physique",
-            "nom": "ARNAULT",
-            "prenoms": "BERNARD",
+            "nom": "FICTIFON",
+            "prenoms": "JEAN",
             "fonction": "Autre",
-            "annee_de_naissance": "1949"
+            "annee_de_naissance": "1970"
           }
         ]
       }

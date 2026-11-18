@@ -3,7 +3,7 @@
   "_price": "$0.003",
   "_request": "GET https://api.sirenic.eu/v1/identite/lot?lignes=552032534%3BHERMES+INTERNATIONAL%7C75008",
   "_sample_of": "2026-10-08",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/identite-lot.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/identite-lot.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, truncated by removing fields, every line of the call served (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "nombre_lignes": 2,
     "comptes": {
@@ -76,5 +76,232 @@
         }
       }
     ]
+  },
+  "vues": {
+    "identite_et_changements": {
+      "_request": "GET https://api.sirenic.eu/v1/identite/lot?lignes=000000018%3BATELIER+FICTIF%7C75008%3B000000042&depuis=2026-07-13",
+      "_sample_of": "2026-10-11",
+      "_note": "The identite_et_changements view of the same route, as the API serves it at https://api.sirenic.eu/exemples/identite-lot.json under vues.identite_et_changements. Rendered by the route on test data (fictitious companies), with no purchase, truncated by removing fields, every line of the call served (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+      "response": {
+        "nombre_lignes": 3,
+        "changements": {
+          "depuis": "2026-07-13",
+          "blocs": [
+            {
+              "bloc": "bodacc",
+              "date_photo": "2026-10-11",
+              "couverture_jusqu_au": "2026-10-11"
+            },
+            {
+              "bloc": "decisions_tribunaux_commerce",
+              "date_photo": "2026-10-10",
+              "couverture_jusqu_au": "2026-10-10"
+            },
+            {
+              "bloc": "marches_publics",
+              "date_photo": "2026-10-11",
+              "couverture_jusqu_au": "2026-10-06"
+            },
+            {
+              "bloc": "etablissements",
+              "date_photo": "2026-10-07",
+              "couverture_jusqu_au": "2026-10-07"
+            },
+            {
+              "bloc": "cessation",
+              "date_photo": "2026-10-07",
+              "couverture_jusqu_au": "2026-10-07"
+            },
+            {
+              "bloc": "agrements_arcep",
+              "date_photo": "2026-10-11",
+              "couverture_jusqu_au": "2026-10-08"
+            },
+            {
+              "bloc": "agrements_eiopa",
+              "date_photo": "2026-10-11",
+              "couverture_jusqu_au": "2026-10-08"
+            },
+            {
+              "bloc": "agrements_eba",
+              "date_photo": "2026-10-08",
+              "couverture_jusqu_au": "2026-10-08"
+            },
+            {
+              "bloc": "sanctions",
+              "date_photo": "2026-10-11",
+              "couverture_jusqu_au": "2026-10-08"
+            },
+            {
+              "bloc": "sanctions_listes_non_datees",
+              "date_photo": "2026-10-11",
+              "couverture_jusqu_au": "2026-10-08"
+            },
+            {
+              "bloc": "certifications_rge",
+              "date_photo": "2026-10-08",
+              "couverture_jusqu_au": "2026-10-08"
+            },
+            {
+              "bloc": "representants_interets",
+              "date_photo": "2026-10-11",
+              "couverture_jusqu_au": "2026-10-04"
+            }
+          ],
+          "stocks_perimes": [],
+          "hors_lot": [
+            {
+              "bloc": "marches_publics_europeens",
+              "route": "/v1/entreprise/{siren}/nouveautes"
+            },
+            {
+              "bloc": "propriete_industrielle",
+              "route": "/v1/entreprise/{siren}/nouveautes"
+            }
+          ],
+          "hors_moteur": [
+            {
+              "bloc": "recrutement",
+              "motif": "photo_sans_historique",
+              "route": "/v1/entreprise/{siren}/emploi"
+            },
+            {
+              "bloc": "dirigeants",
+              "motif": "aucun_historique_conserve",
+              "route": "/v1/entreprise/{siren}"
+            },
+            {
+              "bloc": "tranche_effectif",
+              "motif": "aucun_historique_conserve",
+              "route": "/v1/entreprise/{siren}"
+            }
+          ]
+        },
+        "comptes": {
+          "resolution": {
+            "resolu": 2,
+            "a_confirmer": 1,
+            "introuvable": 0,
+            "siren_invalide": 0,
+            "siren_inconnu": 0,
+            "non_diffusible": 0
+          },
+          "etat": {
+            "actif": 2,
+            "cesse": 0
+          },
+          "tva_vies": {
+            "valide": 2,
+            "invalide": 0,
+            "indisponible": 0,
+            "non_verifie": 0
+          },
+          "doublons": 0,
+          "lignes_a_etages_abandonnes": 0,
+          "changements": {
+            "nouveautes": 1,
+            "rien_de_nouveau": 1,
+            "lecture_incomplete": 0,
+            "sans_changements": 1
+          }
+        },
+        "lignes": [
+          {
+            "rang": 1,
+            "identifiant_lu": "siren",
+            "resolution": "resolu",
+            "siren": "000000018",
+            "siret_siege": "00000001800017",
+            "denomination": "SOCIETE FICTIVE UN",
+            "etat": "actif",
+            "adresse": "1 RUE FICTIVE 75008 PARIS 8",
+            "tva": {
+              "numero": "FR66000000018",
+              "vies": "valide"
+            },
+            "changements": {
+              "verdict": "nouveautes",
+              "totaux_par_type": {
+                "modification": 1,
+                "vente_cession": 1
+              },
+              "nombre_total": 2,
+              "dernieres": [
+                {
+                  "type": "modification",
+                  "date": "2026-10-01",
+                  "bloc": "bodacc",
+                  "reference": "A-MOD-1"
+                },
+                {
+                  "type": "vente_cession",
+                  "date": "2026-09-01",
+                  "bloc": "bodacc",
+                  "reference": "A-VTE-1"
+                }
+              ],
+              "fenetre": {
+                "depuis": "2026-07-13",
+                "jusqu_au": "2026-10-04"
+              },
+              "lecture_complete": true
+            }
+          },
+          {
+            "rang": 2,
+            "identifiant_lu": "nom_cp",
+            "resolution": "a_confirmer",
+            "candidats": [
+              {
+                "siren": "000000026",
+                "denomination": "ATELIER FICTIF",
+                "etat": "actif",
+                "score_confiance": 1
+              },
+              {
+                "siren": "000000034",
+                "denomination": "ATELIER FICTIF ET ASSOCIES",
+                "etat": "actif",
+                "score_confiance": 0.99
+              }
+            ],
+            "candidats_non_servis": {},
+            "listes_bornees": {
+              "candidats": {
+                "nombre_total": 2,
+                "tronque": false
+              }
+            },
+            "motif_sans_changements": "ligne_non_resolue"
+          },
+          {
+            "rang": 3,
+            "identifiant_lu": "siren",
+            "resolution": "resolu",
+            "siren": "000000042",
+            "siret_siege": "00000004200017",
+            "denomination": "BOULANGERIE IMAGINAIRE",
+            "etat": "actif",
+            "adresse": "1 RUE FICTIVE 69001 LYON 1",
+            "tva": {
+              "numero": "FR41000000042",
+              "vies": "valide"
+            },
+            "changements": {
+              "verdict": "rien_de_nouveau",
+              "totaux_par_type": {},
+              "nombre_total": 0,
+              "dernieres": [],
+              "fenetre": {
+                "depuis": "2026-07-13",
+                "jusqu_au": "2026-10-04"
+              },
+              "lecture_complete": true
+            }
+          }
+        ],
+        "stock_sirene": "2026-10-07"
+      }
+    }
   }
 }

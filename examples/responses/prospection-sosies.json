@@ -3,7 +3,7 @@
   "_price": "$0.02",
   "_request": "GET https://api.sirenic.eu/v1/prospection/sosies?exemples=817393812%2C799083373%2C838455525%2C805161726%2C798221859&region=84",
   "_sample_of": "2026-10-17",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/prospection-sosies.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/prospection-sosies.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, truncated by removal, some arrays keeping several items (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "profil": {
       "exemples_retenus": 5,

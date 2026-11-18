@@ -1,34 +1,45 @@
 {
   "_endpoint": "/v1/entreprise/{siren}/changements",
   "_price": "$0.01",
-  "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/changements?depuis=2020-01-01",
-  "_sample_of": "2026-07-29",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-changements.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_request": "GET https://api.sirenic.eu/v1/entreprise/841936560/changements?depuis=2026-09-27",
+  "_sample_of": "2026-10-16",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-changements.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, truncated to one item per array (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
-    "siren": "552032534",
-    "denomination": "DANONE",
-    "depuis": "2020-01-01",
+    "siren": "841936560",
+    "denomination": "KD SOCCER CONSULTING",
+    "denomination_source": "sirene",
+    "depuis": "2026-09-27",
     "nouveaux_evenements_bodacc": {
-      "nombre": 41,
-      "nombre_total": 41,
+      "nombre": 1,
+      "nombre_total": 1,
       "tronque": false,
       "annonces": [
         {
-          "id": "B202601212014",
-          "date_parution": "2026-06-28",
-          "type_avis": "Avis initial",
-          "tribunal": "Greffe du Tribunal des Activités Economiques de Paris",
-          "jugement": null,
-          "publication": "B",
-          "famille": "Modifications diverses"
+          "id": "A202601971788",
+          "date_parution": "2026-10-14",
+          "tribunal": "Greffe du Tribunal de Commerce de Meaux",
+          "jugement": {
+            "nature": "Jugement d'ouverture de liquidation judiciaire",
+            "famille": "Jugement d'ouverture",
+            "date": "2026-09-28",
+            "categorie": "ouverture_liquidation",
+            "mandataires": [
+              {
+                "role": "liquidateur",
+                "forme": "personne_morale"
+              }
+            ],
+            "date_cessation_paiements": "2025-03-28"
+          },
+          "famille": "Procédures collectives"
         }
       ]
     },
-    "changements_fiche": {
-      "disponible": false,
-      "version_stock_courant": "2026-07-01"
-    },
-    "source": "BODACC (DILA) via bodacc-datadila.opendatasoft.com, licence ouverte Etalab 2.0",
-    "data_freshness": "BODACC (bulletin quotidien DILA), cache court ≤ 1 h par (siren, depuis)"
+    "omissions": {
+      "libelle_personne_physique": 0,
+      "libelle_type_indetermine": 0,
+      "denomination_repli": 0,
+      "nature_non_classee": 0
+    }
   }
 }

@@ -3,7 +3,7 @@
   "_price": "$0.005",
   "_request": "GET https://api.sirenic.eu/v1/iban/verifier/FR1420041010050500013M02606",
   "_sample_of": "2026-10-08",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/iban-verifier-iban.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/iban-verifier-iban.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, truncated by removal, some arrays keeping several items (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "iban_normalise": "FR1420041010050500013M02606",
     "valide": true,
@@ -27,6 +27,6 @@
       "siren": "421100645"
     },
     "verification_titulaire": "non_disponible",
-    "disclaimer": "Contrôle de FORME (structure ISO 13616 + clé mod 97-10) et registres publics uniquement — ceci n'est PAS une Verification of Payee au sens du règlement (UE) 2024/886 (le schéma VoP est réservé aux prestataires de services de paiement) : le nom du TITULAIRE du compte n'est jamais vérifié. L'existence du compte n'est pas contrôlée. / Format check (ISO 13616 structure + mod 97-10 check digits) and public registers only — NOT a Verification of Payee: the account holder's name is never checked and the account's existence is not tested."
+    "disclaimer": "Contrôle de FORME (structure ISO 13616 + clé mod 97-10) et registres publics uniquement ; ceci n'est PAS une Verification of Payee au sens du règlement (UE) 2024/886 (le schéma VoP est réservé aux prestataires de services de paiement) : le nom du TITULAIRE du compte n'est jamais vérifié. L'existence du compte n'est pas contrôlée. / Format check (ISO 13616 structure + mod 97-10 check digits) and public registers only, NOT a Verification of Payee: the account holder's name is never checked and the account's existence is not tested."
   }
 }

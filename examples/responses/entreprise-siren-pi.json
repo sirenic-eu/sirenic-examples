@@ -3,7 +3,7 @@
   "_price": "$0.03",
   "_request": "GET https://api.sirenic.eu/v1/entreprise/552032534/pi",
   "_sample_of": "2026-09-02",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-pi.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/entreprise-siren-pi.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, truncated to one item per array (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "siren": "552032534",
     "marques": {
@@ -54,7 +54,7 @@
       "nombre_unite": "depots",
       "liste_ordre": "date_decroissante"
     },
-    "source": "INPI — bases ouvertes de propriété industrielle (marques, brevets, dessins & modèles)",
+    "source": "INPI : bases ouvertes de propriété industrielle (marques, brevets, dessins & modèles)",
     "data_freshness": "INPI PI open data (marques/brevets hebdo, D&M bimensuel), cache 24 h"
   }
 }

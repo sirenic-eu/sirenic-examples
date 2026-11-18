@@ -78,7 +78,6 @@ Two endpoints return a **PDF** and therefore have no JSON sample:
 | `GET /v1/eu/entreprise/SE/:orgnr/evenements` | $0.02 | [`eu-entreprise-SE-orgnr-evenements.json`](eu-entreprise-SE-orgnr-evenements.json) |
 | `GET /v1/eu/entreprise/SE/:orgnr/comptes` | $0.02 | [`eu-entreprise-SE-orgnr-comptes.json`](eu-entreprise-SE-orgnr-comptes.json), real purchase 2026-08-17, first since the route reopened (Swedish iXBRL stock rebuilt: 1.82M filings) |
 | `GET /v1/eu/entreprise/SE/:id` | $0.01 | [`eu-entreprise-SE-id.json`](eu-entreprise-SE-id.json) |
-| `GET /v1/eu/entreprise/CZ/:ico/insolvabilite` | $0.02 | [`eu-entreprise-CZ-ico-insolvabilite.json`](eu-entreprise-CZ-ico-insolvabilite.json) |
 | `GET /v1/eu/entreprise/PL/:krs/evenements` | $0.02 | [`eu-entreprise-PL-krs-evenements.json`](eu-entreprise-PL-krs-evenements.json) |
 | `GET /v1/eu/entreprise/:pays/:id` | $0.01 | [`eu-entreprise-pays-id.json`](eu-entreprise-pays-id.json) |
 | `GET /v1/eu/facturation/dossier` | $0.03 | [`eu-facturation-dossier.json`](eu-facturation-dossier.json) |

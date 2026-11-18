@@ -2,8 +2,8 @@
   "_endpoint": "/v1/associations/recherche",
   "_price": "$0.002",
   "_request": "GET https://api.sirenic.eu/v1/associations/recherche?q=croix+rouge&code_postal=75",
-  "_sample_of": "2026-09-06",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/associations-recherche.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_sample_of": "2026-11-01",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/associations-recherche.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, truncated to one item per array (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "q": "croix rouge",
     "filtres": {
@@ -11,7 +11,7 @@
       "departement": null,
       "position": null
     },
-    "total_results": 2,
+    "total_results": 7,
     "resultats": [
       {
         "rna": "W751004076",
@@ -20,13 +20,15 @@
         "code_postal": "75694",
         "commune": "Paris 14e",
         "date_creation": "1964-12-30",
-        "siren": "775672272",
+        "siren": null,
         "fichier_source": "waldec",
         "correspondance": "debut_du_titre",
         "score_confiance": 0.55
       }
     ],
-    "etages_abandonnes": [],
-    "data_freshness": "export RNA 2026-09-01 (photo mensuelle, 5 j)"
+    "etages_abandonnes": [
+      "mots_similaires"
+    ],
+    "data_freshness": "export RNA 2026-10-01 (photo mensuelle, 30 j)"
   }
 }

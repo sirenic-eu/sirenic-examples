@@ -3,7 +3,7 @@
   "_price": "$0.002",
   "_request": "GET https://api.sirenic.eu/v1/recherche?q=danone",
   "_sample_of": "2026-09-25",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/recherche.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/recherche.json, in its OpenAPI spec and in its x402 quote. Reconstructed example, not a paid response: composed by hand or read from the code, truncated to one item per array (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "total_results": 49,
     "resultats": [
@@ -13,9 +13,13 @@
         "statut_diffusion": "totale",
         "etat_administratif": "actif",
         "activite_principale": "70.10Z",
+        "activite_principale_nomenclature": "NAFRev2",
+        "activite_principale_naf25": "70.10Y",
+        "activite_principale_naf25_statut": "code",
         "commune_siege": "PARIS",
         "code_postal_siege": "75009",
-        "score_confiance": 1
+        "score_confiance": 1,
+        "correspondance_nom": "exacte"
       }
     ],
     "tronque": true,

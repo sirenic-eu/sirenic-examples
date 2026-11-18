@@ -3,7 +3,7 @@
   "_price": "$0.01",
   "_request": "GET https://api.sirenic.eu/v1/eu/agrements?q=BNP+Paribas",
   "_sample_of": "2026-09-17",
-  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-agrements.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, trimmed by removal (one item per array, some fields left out, never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
+  "_note": "Same sample as the API serves at https://api.sirenic.eu/exemples/eu-agrements.json, in its OpenAPI spec and in its x402 quote. Captured from a real response or from the source's own records, truncated to one item per array (never rewritten); natural persons and bearer tokens appear only as placeholders. A dated snapshot, not live data.",
   "response": {
     "requete": {
       "q": "BNP Paribas",
@@ -21,6 +21,10 @@
         "statut": "Active"
       }
     ],
+    "agrements_omis": {
+      "personne_physique": 0,
+      "forme_juridique_non_reconnue": 0
+    },
     "supervision_bce": {
       "nombre_total": 10,
       "entites": [
@@ -69,6 +73,6 @@
       }
     },
     "blocs_absents": [],
-    "source": "ESMA Registers — European Securities and Markets Authority (registers.esma.europa.eu). This data is freely available at the source."
+    "source": "ESMA Registers, European Securities and Markets Authority (registers.esma.europa.eu). This data is freely available at the source."
   }
 }
