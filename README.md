@@ -194,17 +194,18 @@ npx tsx examples/a2a.ts   # quote for free; add TEST_WALLET_KEY to pay
 
 ## Quickstart 6 · LangChain & CrewAI SDKs
 
-Ready-made paying tools with a hard price cap ([sdk/typescript](sdk/typescript),
-[sdk/python](sdk/python)):
+Ready-made paying tools with a per-call cap ([sdk/typescript](sdk/typescript),
+[sdk/python](sdk/python)), paid with an API key (prepaid credits) or per call in x402 with a wallet:
 
 ```ts
 import { sirenicTools } from "sirenic-agents";           // LangChain.js
-const tools = sirenicTools({ walletKey, maxPriceUsd: 0.25 });
+const tools = sirenicTools({ apiKey: process.env.SIRENIC_API_KEY, maxCredits: 0.25 });   // or { walletKey, maxPriceUsd: 0.25 }
 ```
 
 ```python
+import os
 from sirenic_agents import SirenicClient, build_crewai_tools   # CrewAI / LangChain
-tools = build_crewai_tools(SirenicClient(wallet_key=key, max_price_usd=0.25))
+tools = build_crewai_tools(SirenicClient(api_key=os.environ["SIRENIC_API_KEY"], max_credits=0.25))   # or wallet_key=..., max_price_usd=0.25
 ```
 
 CrewAI can also use Sirenic's MCP server directly, no SDK:
