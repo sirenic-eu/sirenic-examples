@@ -2,7 +2,6 @@
 
 > 🚀 Sirenic launched on Product Hunt in July 2026: https://www.producthunt.com/products/sirenic
 
-[![smithery badge](https://smithery.ai/badge/contact-erkc/sirenic)](https://smithery.ai/servers/contact-erkc/sirenic)
 [![Listed on x402-list](https://x402-list.com/badge/sirenic.svg)](https://x402-list.com/services/sirenic?utm_source=badge&utm_medium=referral&utm_campaign=embed)
 
 Working examples for [Sirenic](https://api.sirenic.eu), official French and
@@ -318,6 +317,8 @@ Two things this is **not**:
 | **`GET /v1/facturation/dossier?siren=&iban=`** | **$0.03** | **Verify a French supplier before payment**: e-invoicing prep + live VIES + IBAN/bank check + a deterministic `pret_a_facturer` verdict |
 | `GET /v1/eu/facturation/dossier?pays=&id=&iban=` | $0.03 | Verify a Belgian or Polish supplier before payment: registry identity + VIES + Peppol reachability (BE) + White List account check (PL) + the same verdict |
 | `GET /v1/recherche?q=` | $0.002 | French company search by name **or any French identifier**: SIREN, SIRET or VAT number, spaced or labelled (`SIREN : 552 032 534`), resolved directly. Company lookup over the INSEE Sirene register |
+| `GET /v1/entreprises/requete/compter` | $0.002 | Count French companies matching free cross-criteria (pre-joined registry table, exact count) |
+| `GET /v1/entreprises/requete/lister` | $0.02 | List French companies matching free cross-criteria (sorted pages, exact total) |
 | `GET /v1/entreprise/{siren}` | $0.005 | Full French company profile: identity, officers, NAF code, VAT number, plus `groupe_lei` for LEI holders: GLEIF level-2 consolidating parents (direct and ultimate, named) or the declared reason for none (17/09/2026) |
 | `GET /v1/entreprise/{siren}/etablissements` | $0.003 | All establishments (SIRET) |
 | `GET /v1/entreprise/{siren}/alertes` | $0.01 | BODACC legal alerts (insolvency…) |
@@ -342,7 +343,7 @@ Two things this is **not**:
 | `GET /v1/bodacc/recherche?famille=&depuis=` | $0.03 | **Which companies, not which company**: search the BODACC gazette by family (insolvency proceedings, accounts filings, deregistrations, sales…), date window and optionally a French department. Up to 100 announcements, newest first, each with SIREN, court and town. Built for scheduled monitoring. Sole traders are excluded (their name is personal data) and counted; the judgment is served STRUCTURED because its free text names court-appointed administrators with their address |
 | `GET /v1/kyb/{siren}` | $0.15 | Full KYB file + sanctions screening + commercial-court decisions (Judilibre, since 2026-09-24) |
 | `GET /v1/entreprise/{siren}/dossier?blocs=` | $0.005 + per block, max $0.35 | **One call, you pick the blocks**: identity base plus any of `etablissements`, `alertes_bodacc`, `finances`, `marches_publics`, `marches_publics_ue`, `lobbying`, `risques_industriels`, `agrements`, `pi`, `documents`, `facturation_prep`, `score`. Each block costs what its own endpoint costs, so grouping never costs more than calling separately. A block that cannot be served is named with a reason (`aucune_donnee`, `non_diffusible`, `panne_amont`); if every requested block is down you get a 503 and pay nothing |
-| `GET /v1/kyb/batch?sirens=` | $0.105/co | Batch KYB (2–100 companies) |
+| `GET /v1/kyb/batch?sirens=` | $0.105/co | Batch KYB (2–100 companies): full KYB files, or `vue=synthese` for one line per SIREN (supplier list); both views are in [`kyb-batch.json`](examples/responses/kyb-batch.json) |
 | `GET /v1/comparer?sirens=` | $0.12/co | Compare 2–5 French companies side by side (identity, financials, score), with guards against false-but-plausible comparisons (different fiscal years, consolidated vs social accounts, holdings). Nine rankings (risk, revenue, net result, EBITDA margin, lowest debt, liquidity, revenue growth, cash vs short-term debt, seniority) each carry a status in `eligibilite_classements` with their data, scope, years and coverage: the evaluative risk ranking is served only when the batch is comparable and the ranked scores rest on the same axes; amounts are forbidden across fiscal years, ratios also across sectors or sizes; a forbidden ranking is absent, with its reasons |
 | `GET /v1/sanctions/check?name=` | $0.02 | 6 official sanctions lists (UN, EU, OFAC, UK, FR, Swiss SECO), scored |
 | `GET /v1/regulateurs/fr/alertes?nom=\|siren=` | $0.01 | AMF blacklists + PSAN/SGP registers (scam check, crypto providers) |

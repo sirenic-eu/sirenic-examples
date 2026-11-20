@@ -6,7 +6,8 @@ Sirenic exposes a remote MCP server (streamable HTTP) at:
 https://api.sirenic.eu/mcp
 ```
 
-25 tools, including `search_french_companies`, `get_french_company_profile`,
+Every tool and its price is listed by the server itself (MCP `tools/list`), including
+`search_french_companies`, `get_french_company_profile`,
 `get_french_company_kyb_file`, `get_french_company_kyb_batch`,
 `screen_sanctions_lists`, `get_french_company_financials`,
 `get_french_company_default_risk`, `get_french_sector_benchmarks`,
@@ -14,8 +15,7 @@ https://api.sirenic.eu/mcp
 `get_french_company_accounts_notes`, `get_french_company_intellectual_property`,
 `get_french_company_legal_alerts`, `get_french_company_changes`,
 `search_french_company_directors`, `get_french_company_health_summary`,
-`search_european_companies`, `get_french_company_pdf_report`, and more —
-the full list is in the manifest: https://api.sirenic.eu/.well-known/mcp.json
+`search_european_companies`, `get_french_company_pdf_report`, and more.
 
 ## Claude Code (CLI)
 

@@ -30,8 +30,12 @@
         "fonction": "Commissaire aux comptes titulaire"
       }
     ],
+    "conventions_collectives": [
+      "9999"
+    ],
     "tva_intracommunautaire": "FR27552032534",
     "nombre_etablissements": 19,
+    "nombre_etablissements_ouverts": 3,
     "index_egapro": [
       {
         "annee": 2025,
