@@ -272,7 +272,7 @@ def build_langchain_tools(client: SirenicClient) -> list:
         StructuredTool.from_function(
             func=lambda siren: client.get(f"/v1/entreprise/{siren}/agrements"),
             name="sirenic_company_licences",
-            description="Is this French company actually authorised, and for what? Payment institution, e-money, account information, payment agent or exempt entity (EBA PSD2 register, daily), insurer (EIOPA), telecom operator (ARCEP): dates, licensed services, EEA passporting, withdrawals. Price: $0.02.",
+            description="Is this French company actually authorised, and for what? Payment institution, e-money, account information, payment agent or exempt entity (EBA PSD2 register, daily), insurer (EIOPA), telecom identifiers (ARCEP): dates, licensed services, EEA passporting, withdrawals. Price: $0.02.",
             args_schema=Siren,
         ),
         StructuredTool.from_function(

@@ -1,9 +1,11 @@
 /**
- * LangChain.js tools for Sirenic — official French & European company data,
- * paid per call via x402 (USDC/EURC on Base). Each tool pays automatically
- * with your wallet (hard price cap) or, without a wallet, returns the quote.
+ * LangChain.js tools for Sirenic: official French and European company data.
+ * Each tool pays with your API key (prepaid credits, per-call cap in
+ * credits) or your wallet (x402 in USDC or EURC on Base, hard price cap), or,
+ * with neither, returns the payment quote.
  *
- * Prices are stated in each description so the agent can budget.
+ * Prices are stated in each description so the agent can budget; they are the
+ * `x-price` of each route in https://api.sirenic.eu/openapi.json.
  */
 import { z } from "zod";
 import { tool } from "@langchain/core/tools";
@@ -11,9 +13,12 @@ import { Sirenic, type SirenicOptions } from "./client.js";
 
 const SIREN = z.string().regex(/^\d{9}$/).describe("9-digit SIREN of the French company");
 
-/** Build the Sirenic tool belt for a LangChain.js agent. */
-export function sirenicTools(options: SirenicOptions = {}) {
-  const client = new Sirenic(options);
+/**
+ * Build the Sirenic tool belt for a LangChain.js agent, from client options
+ * (API key, wallet, caps) or from an existing `Sirenic` client.
+ */
+export function sirenicTools(options: SirenicOptions | Sirenic = {}) {
+  const client = options instanceof Sirenic ? options : new Sirenic(options);
 
   return [
     tool(
@@ -21,7 +26,7 @@ export function sirenicTools(options: SirenicOptions = {}) {
       {
         name: "sirenic_search_companies",
         description:
-          "French company search and company lookup by name or SIREN in the official French company registry (INSEE Sirene / INPI data), 30M companies. Top 10 matches with a 0-1 confidence score. Price: $0.001.",
+          "French company search and company lookup by name or SIREN in the official French company registry (INSEE Sirene / INPI data). Top 10 matches with a 0-1 confidence score. Price: $0.002.",
         schema: z.object({ q: z.string().min(1).max(100).describe("Company name or SIREN") }),
       },
     ),
@@ -40,7 +45,7 @@ export function sirenicTools(options: SirenicOptions = {}) {
       {
         name: "sirenic_kyb_file",
         description:
-          "Complete KYB (Know Your Business) due-diligence file in one call: identity, officers, BODACC legal alerts, filed financials, sanctions screening of the company and each officer (6 official lists), completeness score. Price: $0.15.",
+          "Complete KYB (Know Your Business) due-diligence file in one call: identity, officers, BODACC legal alerts, filed financials, sanctions screening of the company and each officer, completeness score. Price: $0.15.",
         schema: z.object({ siren: SIREN }),
       },
     ),
@@ -53,7 +58,7 @@ export function sirenicTools(options: SirenicOptions = {}) {
       {
         name: "sirenic_screen_sanctions",
         description:
-          "AML sanctions screening: screen a person or company name against 6 official sanctions lists (UN, EU, OFAC, UK, FR, Swiss SECO). Scored fuzzy matches, never a bare yes/no. Price: $0.02.",
+          "AML sanctions screening: screen a person or company name against the official sanctions lists (UN, EU, OFAC, UK, FR, Swiss SECO). Scored fuzzy matches, never a bare yes/no. Price: $0.02.",
         schema: z.object({
           name: z.string().min(2).max(100).describe("Person or company name"),
           birth_year: z.string().regex(/^\d{4}$/).optional().describe("Optional birth year (YYYY)"),
@@ -86,7 +91,7 @@ export function sirenicTools(options: SirenicOptions = {}) {
       {
         name: "sirenic_eu_financial_authorisations",
         description:
-          "Is this financial firm regulated in the EU? Search ESMA Registers (~14,000 MiFID entities, all EU/EEA) by name or LEI: status, competent authority, home/host states. Price: $0.01.",
+          "Is this financial firm regulated in the EU? Search by name or LEI the ESMA Registers (MiFID), ECB supervised entities, ESMA benchmark administrators and money market funds, and EIOPA pension institutions: status, competent authority, home and host states. Price: $0.01.",
         schema: z.object({
           q: z.string().min(1).max(100).describe("Entity name or 20-char LEI"),
           pays: z.string().regex(/^[A-Za-z]{2}$/).optional().describe("ISO-3166 alpha-2 home state filter"),
@@ -105,7 +110,7 @@ export function sirenicTools(options: SirenicOptions = {}) {
           "Can you invoice this French company? One call: legal identity, computed intra-EU VAT number checked live against VIES, the payee's bank identified from the IBAN, and the date it falls under the French e-invoicing mandate (every French company must RECEIVE e-invoices from 1 Sept 2026). Returns a deterministic pret_a_facturer verdict with closed-list reasons. Price: $0.03.",
         schema: z.object({
           siren: SIREN,
-          iban: z.string().min(15).max(34).optional().describe("Payee IBAN — optional, adds the bank check"),
+          iban: z.string().min(15).max(34).optional().describe("Payee IBAN (optional): adds the bank check"),
         }),
       },
     ),
@@ -118,11 +123,11 @@ export function sirenicTools(options: SirenicOptions = {}) {
       {
         name: "sirenic_invoice_file_europe",
         description:
-          "Same invoicing check for BELGIUM (mandate live since 1 Jan 2026, adds Peppol reachability — can they even receive an e-invoice?) or POLAND. In Poland it also answers a question with legal weight: is this IBAN actually DECLARED by that taxpayer in the official White List? Paying above 15,000 PLN into an undeclared account costs the buyer the VAT deduction and creates joint liability. Price: $0.03.",
+          "Same invoicing check for BELGIUM (mandate live since 1 Jan 2026, adds Peppol reachability: can they even receive an e-invoice?) or POLAND. In Poland it also answers a question with legal weight: is this IBAN actually DECLARED by that taxpayer in the official White List? Paying above 15,000 PLN into an undeclared account costs the buyer the VAT deduction and creates joint liability. Price: $0.03.",
         schema: z.object({
           pays: z.enum(["BE", "PL"]).describe("BE (Belgium) or PL (Poland)"),
           id: z.string().describe("Belgian enterprise number or Polish NIP (10 digits)"),
-          iban: z.string().min(15).max(34).optional().describe("Payee IBAN — unlocks the Polish account check"),
+          iban: z.string().min(15).max(34).optional().describe("Payee IBAN (optional): unlocks the Polish account check"),
         }),
       },
     ),
@@ -131,7 +136,7 @@ export function sirenicTools(options: SirenicOptions = {}) {
       {
         name: "sirenic_company_licences",
         description:
-          "Is this French company actually authorised, and for what? Payment institution, e-money, account information, payment agent or exempt entity (EBA PSD2 register, refreshed daily), insurer (EIOPA), telecom operator (ARCEP) — with authorisation dates, licensed services, EEA passporting and withdrawals. Use before paying or contracting with a regulated counterparty. Not authorised is an answer too. Price: $0.02.",
+          "Is this French company actually authorised, and for what? Payment institution, e-money, account information, payment agent or exempt entity (EBA PSD2 register, refreshed daily), insurer (EIOPA), telecom identifiers (ARCEP), with authorisation dates, licensed services, EEA passporting and withdrawals. Use before paying or contracting with a regulated counterparty. Not authorised is an answer too. Price: $0.02.",
         schema: z.object({ siren: SIREN }),
       },
     ),
@@ -187,7 +192,7 @@ export function sirenicTools(options: SirenicOptions = {}) {
       {
         name: "sirenic_get",
         description:
-          "Call ANY other Sirenic endpoint by path (catalog and prices: https://api.sirenic.eu/llms.txt — e.g. /v1/entreprise/{siren}/risques-industriels $0.01 Seveso, /v1/entreprise/{siren}/lobbying $0.01, /v1/score/defaillance/{siren} $0.10, /v1/entreprise/{siren}/marches-publics-ue $0.02, /v1/tva/verifier/{n} $0.003, /v1/iban/verifier/{iban} $0.005, /v1/entreprise/{siren}/capital $0.35, /v1/eu/entreprise/{pays}/{id} $0.01). Free sample: /preview/entreprise/55203253400646.",
+          "Call ANY other Sirenic endpoint by path (catalog and prices: https://api.sirenic.eu/llms.txt), e.g. /v1/entreprise/{siren}/risques-industriels $0.01 Seveso, /v1/entreprise/{siren}/lobbying $0.01, /v1/score/defaillance/{siren} $0.10, /v1/entreprise/{siren}/marches-publics-ue $0.02, /v1/tva/verifier/{numero} $0.003, /v1/iban/verifier/{iban} $0.005, /v1/entreprise/{siren}/capital $0.35, /v1/eu/entreprise/{pays}/{id} $0.01. Free sample: /preview/entreprise/55203253400646.",
         schema: z.object({ path: z.string().regex(/^\/(v1|preview)\//).describe("Sirenic path with query string") }),
       },
     ),
